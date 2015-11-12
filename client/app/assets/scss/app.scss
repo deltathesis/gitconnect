@@ -1,7 +1,11 @@
-// @import "reset";
+@import "reset";
 @import "bootstrap";
 @import "font-awesome";
 @import "variables";
+@import "mixins";
+@import "header";
+@import "footer";
+@import "homepage";
 
 html {
   background-color: $mainColor;
@@ -16,4 +20,9 @@ html {
 }
 body {
   background: none;
+}
+
+// Style for all pages
+.page {
+
 }

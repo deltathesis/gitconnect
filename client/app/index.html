@@ -10,59 +10,31 @@
   <link type="image/x-icon" rel="shortcut icon" href="favicon.ico">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="dist/css/app.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="assets/js/modernizr-2.8.3.min.js"></script>
+  <!-- App style files -->
+  <link rel="stylesheet" href="dist/css/app.css">
+
+  <!-- Javascript assets -->
   <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
 </head>
-<body class="container-full">
+<body class="body-container">
 
-  <header>
-    <nav class="container">
-      <ul class="menu">
-      <li><a href="#/"><i class="fa fa-compass"></i></a></li>
-        <li><a href="#/">Home</a></li>
-        <li><a href="#/view1">View1</a></li>
-        <li><a href="#/view2">View2</a></li>
-        <li class="login-tab"><a href="#/login">Login | Signup</a></li>
-        <li class="user-tab">
-          Hello User<button class="btn">Logout</button></a>
-        </li>
-      </ul>
-    </nav>
-  </header>
- 
+  <!-- Header section injection -->
+  <header-directive class="header container-full"></header-directive>
 
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
-  
+  <!-- Main container and views -->
   <div class="main-container container" ng-view></div>
 
-
-  <footer>
-    <div class="inner-footer container">
-      <div class="app-version">App version: v<span app-version></span></div>
-      <div class="footer-links">
-        <ul>
-          <li>Contact Us</li>
-          <li>Team</li>
-          <li>Legals</li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+  <!-- Footer section injection -->
+  <footer-directive class="footer container-full"></footer-directive>
   
-
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
+  <!-- App Scripts -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
 
-  <script src="dist/js/app.min.js"></script>
+  <script src="dist/js/app.concat.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

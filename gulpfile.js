@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var sass = require('gulp-sass');
+var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');

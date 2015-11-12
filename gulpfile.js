@@ -3,11 +3,12 @@ var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var exec = require('child_process').exec;
 var opn = require('opn');
 
-var DEVELOPMENT_FILES = ['client/app/**/*.js', '!client/app/assets/js/*.js', '!client/app/bower_components/**/*.js', '!client/app/dist/**/*.js'];
+var DEVELOPMENT_FILES = ['client/app/**/*.js', '!client/app/assets/js/*.js', '!client/app/bower_components/**/*.js', '!client/app/dist/**/*.js', '!client/app/components/**/*.js'];
 
 var SASS_FILES = ['client/app/assets/scss/*.scss'];
 
@@ -49,7 +50,8 @@ gulp.task('sass', function() {
 });
  
 gulp.task('compress', function() {
-  return gulp.src('client/app/dist/js/app.min.js')
+  return gulp.src('client/app/dist/js/app.concat.js')
     .pipe(uglify())
+    .pipe(rename('app.min.js'))
     .pipe(gulp.dest('client/app/dist/js'));
 });

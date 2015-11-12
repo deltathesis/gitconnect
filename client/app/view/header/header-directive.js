@@ -4,4 +4,6 @@ angular.module('myApp.headerDirective', [])
   return {
     templateUrl: 'view/header/header.html'
   };
-});
+})
+
+;

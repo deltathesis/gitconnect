@@ -33,7 +33,7 @@ gulp.task('start', ['build'], function () {
 
 gulp.task('concat', function() {
   return gulp.src(DEVELOPMENT_FILES)
-    .pipe(concat('app.js'))
+    .pipe(concat('app.concat.js'))
     .pipe(gulp.dest('client/app/dist/js'));
 });
 

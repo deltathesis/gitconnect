@@ -13,7 +13,8 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.version',
   'myApp.auth',
-  'myApp.services'
+  'myApp.services',
+  'myApp.chatpage'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

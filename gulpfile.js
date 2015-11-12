@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var jshint = require('gulp-jshint');
 var sass = require('gulp-sass');
+var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
@@ -32,7 +33,7 @@ gulp.task('start', ['build'], function () {
 
 gulp.task('concat', function() {
   return gulp.src(DEVELOPMENT_FILES)
-    .pipe(concat('app.concat.js'))
+    .pipe(concat('app.js'))
     .pipe(gulp.dest('client/app/dist/js'));
 });
 

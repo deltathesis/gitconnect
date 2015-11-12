@@ -20,5 +20,6 @@
   "noarg": false,
   "trailing": false,
   "loopfunc": true,
-  "smarttabs": true
+  "smarttabs": true,
+  "-W058": true
 }

@@ -16,7 +16,8 @@ angular.module('myApp', [
 
 ;
 
-;'use strict';
+
+'use strict';
 
 angular.module('myApp.homepage', ['ngRoute'])
 
@@ -29,7 +30,8 @@ angular.module('myApp.homepage', ['ngRoute'])
 
 .controller('homepage', ['$scope', function($scope) {
 
-}]);;'use strict';
+}]);
+'use strict';
 
 angular.module('myApp.login-logout', ['ngRoute'])
 
@@ -42,7 +44,8 @@ angular.module('myApp.login-logout', ['ngRoute'])
 
 .controller('loginLogout', ['$scope', function($scope) {
 
-}]);;'use strict';
+}]);
+'use strict';
 
 angular.module('myApp.view1', ['ngRoute'])
 
@@ -55,7 +58,8 @@ angular.module('myApp.view1', ['ngRoute'])
 
 .controller('View1Ctrl', ['$scope', function($scope) {
 
-}]);;'use strict';
+}]);
+'use strict';
 
 angular.module('myApp.view2', ['ngRoute'])
 
@@ -69,3 +73,77 @@ angular.module('myApp.view2', ['ngRoute'])
 .controller('View2Ctrl', [function() {
 
 }]);
+'use strict';
+
+angular.module('myApp.version.interpolate-filter', [])
+
+.filter('interpolate', ['version', function(version) {
+  return function(text) {
+    return String(text).replace(/\%VERSION\%/mg, version);
+  };
+}]);
+
+'use strict';
+
+describe('myApp.version module', function() {
+  beforeEach(module('myApp.version'));
+
+  describe('interpolate filter', function() {
+    beforeEach(module(function($provide) {
+      $provide.value('version', 'TEST_VER');
+    }));
+
+    it('should replace VERSION', inject(function(interpolateFilter) {
+      expect(interpolateFilter('before %VERSION% after')).toEqual('before TEST_VER after');
+    }));
+  });
+});
+
+'use strict';
+
+angular.module('myApp.version.version-directive', [])
+
+.directive('appVersion', ['version', function(version) {
+  return function(scope, elm, attrs) {
+    elm.text(version);
+  };
+}]);
+
+'use strict';
+
+describe('myApp.version module', function() {
+  beforeEach(module('myApp.version'));
+
+  describe('app-version directive', function() {
+    it('should print current version', function() {
+      module(function($provide) {
+        $provide.value('version', 'TEST_VER');
+      });
+      inject(function($compile, $rootScope) {
+        var element = $compile('<span app-version></span>')($rootScope);
+        expect(element.text()).toEqual('TEST_VER');
+      });
+    });
+  });
+});
+
+'use strict';
+
+angular.module('myApp.version', [
+  'myApp.version.interpolate-filter',
+  'myApp.version.version-directive'
+])
+
+.value('version', '0.1');
+
+'use strict';
+
+describe('myApp.version module', function() {
+  beforeEach(module('myApp.version'));
+
+  describe('version service', function() {
+    it('should return current version', inject(function(version) {
+      expect(version).toEqual('0.1');
+    }));
+  });
+});

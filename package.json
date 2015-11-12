@@ -5,23 +5,23 @@
   "description": "todo",
   "repository": "todo",
   "license": "MIT",
-  "devDependencies": {
-    "http-server": "^0.6.1"
-  },
   "scripts": {
     "postinstall": "bower install",
     "start": "node server/server.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "bower": "^1.6.5",
+    "dotenv": "^1.2.0",
     "express": "^4.13.3",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^1.12.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.0",
     "gulp-uglify": "^1.4.2",
     "jshint-stylish": "^2.0.1",
     "opn": "^3.0.3",
+    "passport-github": "^1.0.0",
     "run-sequence": "^1.1.4"
   }
 }

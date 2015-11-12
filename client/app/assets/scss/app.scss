@@ -1,0 +1,19 @@
+// @import "reset";
+@import "bootstrap";
+@import "font-awesome";
+@import "variables";
+
+html {
+  background-color: $mainColor;
+  -webkit-font-smoothing: antialiased;
+  * {
+    font-family:"Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  button, .btn:focus, .btn, .btn.active {
+    outline: 0 !important;
+  }
+}
+body {
+  background: none;
+}

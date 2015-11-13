@@ -17,14 +17,19 @@ angular.module('myApp', [
 ])
 
 .config(['$routeProvider', function($routeProvider) {
-	$routeProvider.when('/login', {
-		templateUrl: 'view/auth/login.html',
-		controller: 'AuthController'
-	})
-	.otherwise({
+	$routeProvider.otherwise({
 		redirectTo: '/'
 	});
 }])
 
-;
+.run(['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) {
+
+  $rootScope.$on("$routeChangeStart", function(event, next, curr) {
+    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+      console.log('Please login before visiting ' + next.$$route.originalPath);
+      $location.path('/');
+    }
+  });
+
+}])
 

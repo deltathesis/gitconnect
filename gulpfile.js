@@ -57,3 +57,7 @@ gulp.task('compress', function() {
     .pipe(rename('app.min.js'))
     .pipe(gulp.dest('client/app/dist/js'));
 });
+
+gulp.task('test', function() {
+  //todo
+});

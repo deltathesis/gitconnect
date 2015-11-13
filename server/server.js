@@ -51,7 +51,10 @@ app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
   	req.session.username = req.user.username;
-    res.cookie('github', req.user.username);
+
+    // Store github cookie for 7 days
+    res.cookie('github', req.user.username, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
+
   	console.log('Attached username to session object.');
     res.redirect('/');
   });

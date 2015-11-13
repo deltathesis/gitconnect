@@ -28,7 +28,8 @@ gulp.task('watch', function() {
 
 gulp.task('start', ['build'], function () {
   exec('node server/server.js');
-  opn('http://localhost:3000');
+  // Serve at this specific address for cookie saving
+  opn('http://127.0.0.1:3000');
 });
 
 gulp.task('concat', function() {

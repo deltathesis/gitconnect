@@ -23,5 +23,7 @@ angular.module('myApp', [
 	.otherwise({
 		redirectTo: '/'
 	});
-}]);
+}])
+
+;
 

@@ -8,7 +8,8 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "gulp build",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "test": "gulp test"
   },
   "dependencies": {
     "body-parser": "^1.14.1",

@@ -11,12 +11,17 @@ angular.module('myApp', [
   'myApp.view1',
   'myApp.view2',
   'myApp.version',
-  'myApp.login-logout'
+  'myApp.auth',
+  'myApp.services'
 ])
 
-// .config(['$routeProvider', function($routeProvider) {
-//   $routeProvider.otherwise({redirectTo: '/'});
-// }])
-
-;
+.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.when('/login', {
+		templateUrl: 'view/auth/login.html',
+		controller: 'AuthController'
+	})
+	.otherwise({
+		redirectTo: '/'
+	});
+}]);
 

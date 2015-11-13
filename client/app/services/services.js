@@ -1,6 +1,6 @@
 angular.module('myApp.services', [])
 
-.factory('Auth', [ '$http', function($http) {
+.factory('Auth', [ '$http', '$cookies', function($http, $cookies) {
 
 	var user = null;
 
@@ -22,9 +22,14 @@ angular.module('myApp.services', [])
 		});
 	};
 
+	var isAuth = function() {
+		return !!$cookies.get('github');
+	};
+
 	return {
 		getUser: getUser,
-		logout: logout
+		logout: logout,
+		isAuth: isAuth
 	};
 
 }])

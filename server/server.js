@@ -55,7 +55,6 @@ app.get('/auth/github/callback',
     // Store github cookie for 7 days
     res.cookie('github', req.user.username, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
 
-  	console.log('Attached username to session object.');
     res.redirect('/');
   });
 

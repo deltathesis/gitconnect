@@ -5,6 +5,7 @@ var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 var app = express();
 
@@ -40,6 +41,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 app.use(express.static(__dirname + '/../client/app'));
 
 app.get('/auth/github',
@@ -49,12 +51,14 @@ app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
   	req.session.username = req.user.username;
+    res.cookie('github', req.user.username);
   	console.log('Attached username to session object.');
     res.redirect('/');
   });
 
 app.get('/logout', function(req, res) {
 	req.logout();
+  res.clearCookie('github');
 	res.redirect('/');
 });
 

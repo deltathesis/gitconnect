@@ -1,6 +1,6 @@
 require('dotenv').config({path: '../../../.env'})
 var rp = require('request-promise');
-var URL = process.env.NEO4J_UFL || 'http://app43775504:Q9OxlkqHDlLgCqj4UjXx@app43775504.sb02.stations.graphenedb.com:24789';
+var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL)
 
 var db = require("seraph")({

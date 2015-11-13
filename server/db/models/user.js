@@ -1,5 +1,14 @@
 require('dotenv').config({path: '../../../.env'})
 var rp = require('request-promise');
+var neo4js = require('neo4j');
+var URL = process.env.NEO4J_UFL || 'http://app43775504:Q9OxlkqHDlLgCqj4UjXx@app43775504.sb02.stations.graphenedb.com:24789';
+var url = require('url').parse(URL)
+
+var db = require("seraph")({
+  server: url.protocol + '//' + url.host,
+  user: url.auth.split(':')[0],
+  pass: url.auth.split(':')[1]
+});
 
 
 var options = {
@@ -117,7 +126,41 @@ var createUser = function(username){
 }
 
 module.exports = createUser
-// console.log(pipes.userInfo(options, 'ccnixon'))
+
+
+
+
+var User = module.exports = function User(_node){  //do not change the node
+  //the node wil be an array returned from our database. the array will contain an obj to access it use node[0].nameOfProperty
+  this._node = _node 
+}
+
+//object with key value pairs already filtered to contain only data to be stored in user node
+User.create = function(githubObj){
+  var obj = {};
+  obj.name = githubObj.name || "No Name";
+  obj.location = githubObj.location || "No location";
+  obj.idNum = githubObj.id || "no Id num";            //cannot have a property with name ID
+  obj.blog = githubObj.blog || "no blog";            //cannot set null properties
+  console.log('obj inside create: ', obj)
+
+  db.save(obj, function(err, node){
+    db.label(node, 'USER', function(err){
+      if(err){
+        console.error('error creating User label on user', err)
+      }
+    })
+    console.log('the node that is created: ', node);
+  })
+}
+
+//pass in a username and callback the callback will act on the new User object 
+User.get = function(userName, cb){  
+  db.find({name: userName}, 'USER', function(err, person){
+    var user = new User(person);
+    cb('the user you retrieved is', user._node[0]);
+  })
+}
 
 
 

@@ -1,6 +1,5 @@
 require('dotenv').config({path: '../../../.env'})
 var rp = require('request-promise');
-var neo4js = require('neo4j');
 var URL = process.env.NEO4J_UFL || 'http://app43775504:Q9OxlkqHDlLgCqj4UjXx@app43775504.sb02.stations.graphenedb.com:24789';
 var url = require('url').parse(URL)
 
@@ -23,46 +22,13 @@ var options = {
   json: true
 }
 
-var pipes = {}
-
-pipes.userInfo = function(options, username){
-  options.url += username;
-  console.log(options)
-  rp(options).then(function(userInfo){
-    console.log(userInfo)
-    return userInfo
-  });
-};
-
-pipes.repoLanguages = function(options, username){
-  options.url + username + '/repos';
-  rp(options).then(function(reposArray){
-    return reposArray;
-  });
-};
-
-pipes.starredRepos = function(options, username){
-  options.url + username + '/starred'
-  rp(options).then(function(starredRepos){
-    return starredRepos;
-  });
-};
-
-pipes.organizations = function(options, username){
-  options.url + username + '/orgs';
-  rp(options).then(function(orgs){
-    return orgs;
-  });
-};
-
-
 var newUser = {
   languages: {},
   starredRepos: [],
   organizations: []
 };
 
-var createUser = function(username){
+var createUser = function(username, callback){
   options.url += username;
   rp(options)
   .then(function(user){
@@ -118,16 +84,12 @@ var createUser = function(username){
   })
   .then(function(){
     console.log(newUser)
-    return newUser;
+    callback(newUser);
   })
   .catch(function(err){
     console.log(err)
   })
 }
-
-module.exports = createUser
-
-
 
 
 var User = module.exports = function User(_node){  //do not change the node
@@ -136,21 +98,23 @@ var User = module.exports = function User(_node){  //do not change the node
 }
 
 //object with key value pairs already filtered to contain only data to be stored in user node
-User.create = function(githubObj){
-  var obj = {};
-  obj.name = githubObj.name || "No Name";
-  obj.location = githubObj.location || "No location";
-  obj.idNum = githubObj.id || "no Id num";            //cannot have a property with name ID
-  obj.blog = githubObj.blog || "no blog";            //cannot set null properties
-  console.log('obj inside create: ', obj)
+User.create = function(username){
+  createUser(username, function(githubObj){
+    var obj = {};
+    obj.name = githubObj.name || "No Name";
+    obj.location = githubObj.location || "No location";
+    obj.idNum = githubObj.id || "no Id num";            //cannot have a property with name ID
+    obj.blog = githubObj.blog || "no blog";            //cannot set null properties
+    console.log('obj inside create: ', obj)
 
-  db.save(obj, function(err, node){
-    db.label(node, 'USER', function(err){
-      if(err){
-        console.error('error creating User label on user', err)
-      }
+    db.save(obj, function(err, node){
+      db.label(node, 'USER', function(err){
+        if(err){
+          console.error('error creating User label on user', err)
+        }
+      })
+      console.log('the node that is created: ', node);
     })
-    console.log('the node that is created: ', node);
   })
 }
 
@@ -161,6 +125,8 @@ User.get = function(userName, cb){
     cb('the user you retrieved is', user._node[0]);
   })
 }
+
+
 
 
 

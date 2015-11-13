@@ -2,19 +2,21 @@
 
 angular.module('myApp.auth', [])
 
-.controller('AuthController', ['$scope', '$http', 'Auth', function($scope, $http, Auth) {
+.controller('AuthController', ['$scope', '$http', 'Auth', '$cookies', function($scope, $http, Auth, $cookies) {
 
-	$scope.user = null;
+	// Setup cookies for github user connexion information
+  $scope.githubCookie = false;
+  var githubCookie = $cookies.get('github');  // get cookie from github
 
-	$scope.getUser = function() {
-		Auth.getUser().then(function(data) {
-			console.log(data.username);
-			$scope.user = data.username;
-		});
-	};
+  if (githubCookie) {
+  	// Create user object for cookie information
+    var user = {
+      // 'githubUserId' : githubCookie.fbId,
+      'githubUserName' : githubCookie
+    }
+    $scope.user = user;
+    $scope.githubCookie = true;
+  }
 
-	$scope.logout = function() {
-		$scope.user = null;
-	};
 
 }]);

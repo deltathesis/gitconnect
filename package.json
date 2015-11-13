@@ -27,6 +27,7 @@
     "opn": "^3.0.3",
     "passport": "^0.3.2",
     "passport-github": "^1.0.0",
+    "request-promise": "^1.0.2",
     "run-sequence": "^1.1.4"
   }
 }

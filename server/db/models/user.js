@@ -137,17 +137,12 @@ User.create = function(username){
 
 //pass in a username and callback the callback will act on the new User object 
 
-User.findRecommendations = function(user){
-  
-}
-
 User.get = function(userName, cb){  
   db.find({username: userName}, 'USER', function(err, person){
     var user = new User(person);
     cb(user._node[0]);
   })
 }
-
 
 
 

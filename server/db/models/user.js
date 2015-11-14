@@ -119,8 +119,7 @@ User.create = function(username){
     })
   })
 };
-
-//pass in a username and callback the callback will act on the new User object 
+ 
 
 
 

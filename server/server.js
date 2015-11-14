@@ -79,7 +79,7 @@ app.get('/api/user', function(req, res) {
 // });
 
 
-httpServer.listen(process.env.Port);
+httpServer.listen(process.env.PORT);
 console.log('Server now running on port: ' + process.env.PORT);
 
 

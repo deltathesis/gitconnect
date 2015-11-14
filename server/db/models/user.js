@@ -1,4 +1,4 @@
-require('dotenv').config({path:'../../../.env'});
+// require('dotenv').config({path:'../../../.env'});
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL);
@@ -133,6 +133,20 @@ User.create = function(username){
     })
   })
 };
+
+
+//pass in a username and callback the callback will act on the new User object 
+
+User.findRecommendations = function(user){
+  
+}
+
+User.get = function(userName, cb){  
+  db.find({username: userName}, 'USER', function(err, person){
+    var user = new User(person);
+    cb(user._node[0]);
+  })
+}
 
 
 

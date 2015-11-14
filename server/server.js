@@ -6,8 +6,14 @@ var GitHubStrategy = require('passport-github').Strategy;
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
+var http = require('http');
+var sockets = require('socket.io');
 
-var app = express();
+var app = module.exports = express();
+
+var httpServer = http.Server(app);
+//Hook socket.io into express
+var io = sockets(httpServer);
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -68,6 +74,15 @@ app.get('/api/user', function(req, res) {
 	res.json({username: req.session.username});
 });
 
-app.listen(process.env.PORT, function() {
-	console.log('Server now running on port: ' + process.env.PORT);
-});
+// app.listen(process.env.Port, function(){
+// console.log('Server now running on port: ' + process.env.PORT);
+// });
+
+
+httpServer.listen(process.env.Port);
+console.log('Server now running on port: ' + process.env.PORT);
+
+
+/** Socket.io Messaging **/
+var socketRoute = require('./routes/socket.js');
+io.on('connection', socketRoute);

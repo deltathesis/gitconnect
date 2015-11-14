@@ -4,6 +4,7 @@ angular.module('myApp.chatpage', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/chat', {
+    authenticate: true,
     templateUrl: 'view/chat/chat.html',
     controller: 'chatController',
   });

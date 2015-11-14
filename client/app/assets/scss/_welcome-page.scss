@@ -1,0 +1,11 @@
+.welcome-page {
+  .section {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    .inner-section {
+    }
+    &.second, &.fourth {
+      background-color: #2682D5
+    }
+  }
+}

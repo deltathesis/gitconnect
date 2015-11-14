@@ -8,6 +8,7 @@ angular.module('myApp', [
   'myApp.headerDirective',
   'myApp.footer',
   'myApp.footerDirective',
+  'myApp.welcome',
   'myApp.homepage',
   'myApp.view1',
   'myApp.view2',
@@ -29,7 +30,7 @@ angular.module('myApp', [
   $rootScope.$on("$routeChangeStart", function(event, next, curr) {
     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
       console.log('Please login before visiting ' + next.$$route.originalPath);
-      $location.path('/');
+      $location.path('/welcome');
     }
   });
 

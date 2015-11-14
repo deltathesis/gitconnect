@@ -18,5 +18,4 @@ angular.module('myApp.auth', [])
     $scope.githubCookie = true;
   }
 
-
 }]);

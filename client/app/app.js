@@ -14,7 +14,8 @@ angular.module('myApp', [
   'myApp.version',
   'myApp.auth',
   'myApp.services',
-  'myApp.chatpage'
+  'myApp.chatpage',
+  'myApp.signup'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

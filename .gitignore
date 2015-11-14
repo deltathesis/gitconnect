@@ -4,6 +4,7 @@ node_modules/
 bower_components/
 client/app/dist/
 .env
+npm-debug.log
 
 
 tmp

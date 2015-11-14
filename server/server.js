@@ -8,6 +8,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var http = require('http');
 var sockets = require('socket.io');
+var User = require('./db/models/user.js');
 
 var app = module.exports = express();
 
@@ -61,7 +62,15 @@ app.get('/auth/github/callback',
     // Store github cookie for 7 days
     res.cookie('github', req.user.username, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
 
-    res.redirect('/');
+    User.get(req.user.username, function(user) {
+      if (!user) {
+        User.create(req.user.username);
+        res.redirect('/');
+      } else {
+        res.redirect('/');
+      }
+    });
+
   });
 
 app.get('/logout', function(req, res) {

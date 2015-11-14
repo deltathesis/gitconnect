@@ -1,4 +1,3 @@
-require('dotenv').config({path: '../../../.env'})
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL)
@@ -34,6 +33,7 @@ var createUser = function(username, callback){
   .then(function(user){
     newUser.apiUrl = user.url
     newUser.name = user.name;
+    newUser.username = user.login;
     newUser.location = user.location;
     newUser.id = user.id;
     newUser.company = user.company;
@@ -83,7 +83,7 @@ var createUser = function(username, callback){
     });
   })
   .then(function(){
-    console.log(newUser)
+    //console.log(newUser)
     callback(newUser);
   })
   .catch(function(err){
@@ -102,10 +102,11 @@ User.create = function(username){
   createUser(username, function(githubObj){
     var obj = {};
     obj.name = githubObj.name || "No Name";
+    obj.username = githubObj.username;
     obj.location = githubObj.location || "No location";
     obj.idNum = githubObj.id || "no Id num";            //cannot have a property with name ID
     obj.blog = githubObj.blog || "no blog";            //cannot set null properties
-    console.log('obj inside create: ', obj)
+    //console.log('obj inside create: ', obj)
 
     db.save(obj, function(err, node){
       db.label(node, 'USER', function(err){
@@ -113,16 +114,16 @@ User.create = function(username){
           console.error('error creating User label on user', err)
         }
       })
-      console.log('the node that is created: ', node);
+      //console.log('the node that is created: ', node);
     })
   })
 }
 
 //pass in a username and callback the callback will act on the new User object 
 User.get = function(userName, cb){  
-  db.find({name: userName}, 'USER', function(err, person){
+  db.find({username: userName}, 'USER', function(err, person){
     var user = new User(person);
-    cb('the user you retrieved is', user._node[0]);
+    cb(user._node[0]);
   })
 }
 

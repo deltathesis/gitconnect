@@ -18,6 +18,8 @@
   <!-- Javascript assets -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/wow.min.js"></script>
+
 </head>
 <body class="body-container">
 
@@ -26,20 +28,24 @@
 
 
   <!-- Main container and views -->
-  <div class="main-container container" ng-view></div>
+  <div class="main-container container-full" ng-view></div>
 
   <!-- Footer section injection -->
   <footer-directive class="footer container-full"></footer-directive>
   
-  <!-- App Scripts -->
+  <!-- App Dependecies Scripts -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
   <script src="bower_components/angular-socket-io/socket.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+
+  <!-- App Scripts -->
   <script src="dist/js/app.concat.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+  <script src="assets/js/app.custom.js"></script>
+  
 </body>
 </html>

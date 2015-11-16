@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('myApp.auth', [])
 
 .controller('AuthController', ['$scope', '$http', 'Auth', '$cookies', function($scope, $http, Auth, $cookies) {

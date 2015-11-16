@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('myApp.chatpage', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {

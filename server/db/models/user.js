@@ -1,3 +1,4 @@
+require('dotenv').config({path:'../../../.env'});
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL);
@@ -83,7 +84,7 @@ var createUser = function(username, callback){
     });
   })
   .then(function(){
-    //console.log(newUser)
+    console.log(newUser)
     callback(newUser);
   })
   .catch(function(err){

@@ -22,9 +22,11 @@ return {
                     a.parent().addClass('active');
                 } else {
                     a.parent().removeClass('active');   
-                };
+                }
             });     
         });
     }
 }
-}]);
+}])
+
+;

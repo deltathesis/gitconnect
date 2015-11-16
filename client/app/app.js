@@ -10,7 +10,6 @@ angular.module('myApp', [
   'myApp.homepage',
   'myApp.profilepage',
   'myApp.connect',
-  'myApp.view2',
   'myApp.version',
   'myApp.auth',
   'myApp.services',

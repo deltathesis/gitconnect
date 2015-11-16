@@ -145,7 +145,18 @@ User.get = function(userName, cb){
 }
 
 // User.create("bhamodi")
+//match users to other users based on a label or variable. pass in username and callback to handle result
+User.matchBy = function(matchBasedOn, username, cb){
+  var cypher = 'MATCH (me {name:"'+username+'"})-[:'+matchBasedOn+']->(stuff)<-[:'+matchBasedOn+']-(person)'+
+               'RETURN person.name, count(stuff)';
+  db.query(cypher, function(err, result){
+    if(err){
+      console.log('error completing raw cypher query: ', err);
+    }
+    cb(result)
 
+  })
+}
 
 
 

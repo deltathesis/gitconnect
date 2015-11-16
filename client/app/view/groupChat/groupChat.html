@@ -1,0 +1,61 @@
+<div id="chat-page" class="container page chat-page">
+  <!-- <div class="chat-users col-xs-12 col-sm-6 ">
+    <h3>Dudes</h3>
+    <div ng-repeat="users in users" class="users-container">
+      <a>{{users}}</a>
+    </div>
+  </div> -->
+  <div class="chat-users col-xs-12 col-sm-6">
+    <div class="btn-group pull-center">
+    <button type="button" class="btn btn-default">All Messages</button>
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#">Private Messages</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="#">Group Messages</a></li>
+      </ul>
+    </div>
+    <ul class="allUsers-list">
+      <li ng-repeat="elm in fakeUsers" class="allUsers-list-elm">
+        <div class="listOverview">
+          <a href="">
+            <div><img class="user-pic col-xs-3" style="background-image:url({{elm.picture}})"></div>
+            <p>{{elm.name}}</p>
+            <p>{{elm.bio}}</p>
+          </a>
+        </div>
+        <br>
+      </li>
+    </ul>
+  </div>
+  <div class="chat-messages col-xs-12 col-sm-6" id="chat-messages">
+    <h3>{{fakeUsers[2].name}}</h3>
+    <h5 style="text-align:center">{{fakeUsers[2].bio}}</h5>
+    <div class="bigMessage-container">
+      <div ng-repeat="message in messages" class="messages-container">
+        <div ng-show="message.user === name" class="message-body personnal"> <p>{{message.text}} </p>
+        </div>
+        <div ng-hide="message.user === name" class="message-body other"> <p>{{message.text}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="chat-typing" id="inputMessageBox">
+      <form class="wat">
+        <div class="form-group">
+          <textarea class="form-control" rows="5" name="sendingMessage" id="sendingMessage" placeholder="type your message here" ng-model="message"></textarea>
+          <button type="submit" ng-click="sendMessage()" class="btn btn-success messageButton">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+      <!-- <form ng-submit="sendMessage()">
+        <input ng-model="message" class="ng-pristine ng-valid">
+        <input type="submit" value="Send">
+      </form> -->
+      <!-- <script src="/socket.io/socket.io.js"></script> -->
+      <!-- <script async src="bower_components/socket.io-client/socket.io.js"></script> -->
+

@@ -1,0 +1,100 @@
+.chat-page {
+  margin-top:8px;
+  h3 {
+    text-align: center;
+  }
+  .chat-users {
+    padding-left:5px;
+    background-color: white;
+    width:250px;
+    height:800px;
+    .btn-group {
+      text-align:center;
+    }
+    .allUsers-list {
+      li:hover {
+        background-color: #80ffff;
+      }
+      .allUsers-list-elm {
+        border-bottom: 1px dashed #CCC;
+        margin-top:5px;
+        margin-right:-12px;
+        .listOverview {
+          a:hover
+          {
+            text-decoration:none;
+            color: black;
+          }
+          .user-pic {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            background-size: cover;
+            background-position: 50% 50%;
+            border-radius: 50%;
+            border: 2px solid $mainColor;
+
+          }
+          p {
+            margin: 0px 5px;
+            color: black;
+          }
+        }
+      }
+    }
+  }
+  .chat-messages {
+    padding-bottom:0px;
+    background-color: #F2F2F2;
+    height: 800px;
+    box-shadow: 10px 10px 100px #888888;
+    overflow-x: hidden;
+    overflow-y: visible;
+    .bigMessage-container {
+      height: 600px;
+      .messages-container {
+        .message-body {
+          margin-bottom: 3px;
+          p {
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            font-size:16px;
+          }
+          &.personnal {
+            text-align: right;
+            p {
+              color: black;
+              background-color: $chatColor1;
+            }
+          }
+          &.other {
+            text-align: left;
+            p {
+              color: white;
+              background-color: $chatColor2;
+            }         
+          }
+        }
+      }
+    }
+    .chat-typing {
+      text-align: right;
+      .form-group {
+        position:relative;
+        background-color: transparent;
+        .form-control {
+          padding: 5px;
+          position: relative;
+          height: 20px;
+          min-height: 100px;
+        }
+        .messageButton {
+          position: absolute;
+          top:60px;
+          right:5px;
+        }
+      }
+    }
+  }
+}

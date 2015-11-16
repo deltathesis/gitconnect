@@ -2,7 +2,7 @@
   <h1>Chat with Friends</h1>
   <div class="chat.message col-xs-12 col-sm-6">
     <h3>Messages</h3>
-    <p ng-repeat="message in messages">{{message}}</p>
+    <p ng-repeat="message in messages">{{message.user}}: {{message.text}}</p>
   </div>
   <div class="chat.uers col-xs-12 col-sm-6 ">
     <h3>Dudes</h3>

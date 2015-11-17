@@ -1,3 +1,160 @@
 .home-page {
-  
+
+  // Global Post
+  .post {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
+    .post-top-info {
+      position: relative;
+      .post-thumbnail {
+        float: left;
+        width: 40px;
+        height: 40px;
+        a {
+          background-size: cover;
+          background-position: 50% 50%;
+          width: 100%;
+          height: 100%;
+          display: block;
+          border-radius: 50%;
+          border: 2px solid $mainColor;
+        }
+      }
+      .post-top-details {
+        float: left;
+        padding-left: 10px;
+        .post-title {}
+        .post-subdetails{
+          .subdetail {
+            &.time {}
+          }
+        }
+      }
+    }
+    .post-content {
+      margin-top: 10px;
+      .description {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  // User Project Post Model
+  .user-project-post {
+    .post-content {
+      .description {
+        .project-link {
+          font-weight: bold;
+        }
+      }
+      .project-picture-container {
+        height: 300px;
+        .project-picture {
+          background-size: cover;
+          background-position: 50% 50%;
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+    }
+  }
+
+  // Highlighted Project Post Model
+  .highlight-project-post {
+    .post-top-info {
+      .highlight-pic {
+        a {
+          border-radius: 0;
+        }
+      }
+      .post-top-details {
+        .post-subdetails {
+          .subdetail {
+            .star {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+    }
+    .post-content {
+      .description {
+        margin-bottom: 10px;
+        .project-link {
+          font-weight: bold;
+        }
+      }
+      .project-picture-container {
+        height: 200px;
+        .picture-container {
+          height: 100%;
+          .project-picture {
+            height: 100%;
+            background-size: cover;
+            background-position: 50% 50%;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  // Developer Around Post Model
+  .developer-around-post {
+    .post-top-info {
+      .developer-number {
+        span {
+          font-weight: bold;
+          font-size: 30px;
+        }
+      }
+    }
+    .post-content {
+      .developers-list {
+        margin-bottom: 0px;
+        .developer {
+          display: inline-block;
+          width: 50px;
+          margin: 0 10px;
+          &:first-child {
+            margin-left: 0px;
+          }
+          &:last-child {
+            margin-right: 0px;
+          }
+          .developer-pic {
+            width: 50px;
+            height: 50px;
+            display: block;
+            background-size: cover;
+            background-position: 50% 50%;
+            border-radius: 50%;
+            border: 2px solid $mainColor;
+          }
+          .developer-name {
+            margin-top: 5px;
+            color: $mainColor;
+            margin-bottom: 0px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  // User comment Post Model
+  .user-comment-post {
+    .post-content {
+      .description {
+        font-weight: bold;
+        .project-link {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+
 }

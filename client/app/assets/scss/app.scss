@@ -10,7 +10,7 @@
 @import "homepage";
 
 html {
-  background-color: $mainColor;
+  background-color: $bgColor;
   -webkit-font-smoothing: antialiased;
   * {
     font-family:"Lucida Sans Unicode", Helvetica, Arial, sans-serif;
@@ -26,5 +26,14 @@ body {
 
 // Style for all pages
 .page {
-
+  padding-top: 52px;
 }
+
+// Clearfix
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.cf:after {clear: both;}
+.cf {*zoom: 1;}

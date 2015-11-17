@@ -1,17 +1,17 @@
 <div class="container page connect-page">
   <!-- Slider main container -->
-  <div class="swiper-container">
+  <div class="swiper-container fadein-effect">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
-      <div class="swiper-slide" ng-repeat="user in users" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.picture}})"></div>
+      <div class="swiper-slide slide" ng-repeat="user in users" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.picture}})"></div>
     </div>
     <!-- If we need navigation buttons -->
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
   </div>
 
-  <div class="col-xs-12 developer-connect-details">
+  <div class="col-xs-12 developer-connect-details fadein-effect">
     <div class="connection">
       <button class="btn connect-btn">Connect</button>
     </div>

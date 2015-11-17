@@ -4,3 +4,13 @@
   bottom: $bottom;
   left: $left;
 }
+
+// Animation effect when page load
+@mixin animationEffect($time, $effect) {
+  animation-duration: $time;
+  -webkit-animation-duration: $time;
+  -moz-animation-duration: $time;
+  animation-name: $effect;
+  -webkit-animation-name: $effect;
+  -moz-animation-name: $effect;
+}

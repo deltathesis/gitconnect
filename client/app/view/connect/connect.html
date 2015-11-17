@@ -1,0 +1,44 @@
+<div class="container page connect-page">
+  <!-- Slider main container -->
+  <div class="swiper-container">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      <div class="swiper-slide" ng-repeat="user in users" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.picture}})"></div>
+    </div>
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+
+  <div class="col-xs-12 developer-connect-details">
+    <div class="connection">
+      <button class="btn connect-btn">Connect</button>
+    </div>
+    <div class="developer-detail">
+      <p class="developer-name">{{selectedUser.name}}</p>
+      <p class="developer-bio">{{selectedUser.bio}}</p>
+    </div>
+    <div class="developer-tech">
+      <div class="col-xs-12 col-sm-6 languages">
+        <h3>Languages</h3>
+        <ul>
+          <li ng-repeat="language in selectedUser.languages">
+            {{language}}
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-12 col-sm-6 projects">
+      <h3>Projects</h3>
+        <ul>
+          <li ng-repeat="projects in selectedUser.projects">
+            {{projects}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

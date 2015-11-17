@@ -48,7 +48,10 @@ var createUser = function(username, callback){
   .then(function(repos){
     var reposLength = repos.length;
     repos.forEach(function(element){
-      if(!newUser.languages[element['language']] && element['language'] !== null){
+      if(element['language'] === null){
+        return;
+      }
+      if(!newUser.languages[element['language']]){
         newUser.languages[element['language']] = 1;
       } else {
         newUser.languages[element['language']] += 1;
@@ -141,6 +144,7 @@ User.get = function(userName, cb){
  })
 }
 
+// User.create("bhamodi")
 
 
 

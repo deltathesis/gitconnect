@@ -142,14 +142,6 @@ User.get = function(userName, cb){
 }
 
 
-User.get = function(userName, cb){  
-  db.find({username: userName}, 'USER', function(err, person){
-    var user = new User(person);
-    cb(user._node[0]);
-  })
-}
-
-
 
 
 

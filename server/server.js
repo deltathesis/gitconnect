@@ -8,11 +8,11 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var http = require('http');
 var sockets = require('socket.io');
-var User = require('./db/models/user.js');
+var User = require('./db/models/user.js').User;
 
-var app = module.exports = express();
+var app = express();
 
-var httpServer = http.Server(app);
+var httpServer = module.exports = http.Server(app);
 //Hook socket.io into express
 var io = sockets(httpServer);
 

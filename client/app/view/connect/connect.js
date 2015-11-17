@@ -41,7 +41,8 @@ angular.module('myApp.connect', ['ngRoute'])
         prevButton: '.swiper-button-prev',
         // CallBack functions
         // Might define onInit if necessary
-        onTransitionEnd: function() {
+        onTransitionStart: function() {
+          $('.developer-connect-details').fadeOut(0).fadeIn(500);
           var selectedUser = $('.swiper-slide-active').data('dev-id');
           for (var i = 0; i < users.length; i++) {
             if (users[i].id === selectedUser) {
@@ -49,7 +50,7 @@ angular.module('myApp.connect', ['ngRoute'])
             }
           }
           $scope.$apply();
-        }
+        },
       }); 
   });
 

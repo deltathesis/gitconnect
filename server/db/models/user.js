@@ -100,23 +100,36 @@ var User = exports.User = function User(_node){  //do not change the node
 
 //object with key value pairs already filtered to contain only data to be stored in user node
 User.create = function(username){
-  createUser(username, function(githubObj){
-    var obj = {};
-    obj.languages = githubObj.languages;
-    obj.name = githubObj.name || "No Name";
-    obj.username = githubObj.username;
-    obj.location = githubObj.location || "No location";
-    obj.idNum = githubObj.id || "no Id num";            //cannot have a property with name ID
-    obj.blog = githubObj.blog || "no blog";            //cannot set null properties
-    //console.log('obj inside create: ', obj)
-
-    db.save(obj, function(err, node){
-      db.label(node, 'USER', function(err){
+  createUser(username, function(obj){
+    var txn = db.batch();
+    var username = JSON.stringify(obj.username)
+    
+    for(var language in obj.languages){
+      var lang = JSON.stringify(language)
+      var languageCypher =  "MERGE (user:User {id: " + obj.id + ", username: " + username + "}) MERGE (language:Language {name: " + lang + "}) "
+                          + "MERGE (user)-[:KNOWS]-(language) "
+                          + "RETURN language, user";
+      txn.query(languageCypher, function(err, result){
         if(err){
-          console.error('error creating User label on user', err)
+          console.log(err)
         }
       })
-      //console.log('the node that is created: ', node);
+    }
+    for(var i = 0; i < obj.starredRepos.length; i++){
+      var currRepoId = obj.starredRepos[i].id
+      var repoCypher =  "MERGE (user:User {id: " + obj.id + "}) MERGE (repo:Repo {id: " + currRepoId + "}) "
+                      + "MERGE (user)-[:WATCHES]-(repo) "
+                      + "RETURN repo, user";
+      txn.query(repoCypher, function(err, results){
+        if(err){
+          console.log(err)
+        }
+      })
+    }
+    txn.commit(function(err, results){
+      if(err){
+        console.log(err)
+      }
     })
   })
 };

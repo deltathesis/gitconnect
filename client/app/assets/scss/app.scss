@@ -4,10 +4,12 @@
 @import "animate";
 @import "variables";
 @import "mixins";
+@import "swiper";
 @import "header";
 @import "footer";
 @import "welcome-page";
 @import "homepage";
+@import "connect";
 
 html {
   background-color: $bgColor;

@@ -1,4 +1,4 @@
-require('dotenv').config({path:'../../../.env'});
+// require('dotenv').config({path:'../../../.env'});
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL);
@@ -134,6 +134,12 @@ User.create = function(username){
   })
 };
 
+User.get = function(userName, cb){  
+ db.find({username: userName}, 'USER', function(err, person){
+   var user = new User(person);
+   cb(user._node[0]);
+ })
+}
 
 
 

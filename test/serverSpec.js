@@ -1,21 +1,14 @@
-require('dotenv').load(); //load environmental variables
-
 var expect = require('chai').expect;
 var http = require('http');
 var server = require('../server/server');
 
-var BASE_URL = 'http://localhost:' + process.env.PORT;
+var PORT = 3000;
+var BASE_URL = 'http://localhost:' + PORT;
 
 describe('server', function() {
 
-	before(function(done) {
-		server.listen(process.env.PORT);
-		done();
-	});
-
 	after(function(done) {
-		server.close();
-		done();
+		server.close(done);
 	});
 
 	it('should be true', function() {

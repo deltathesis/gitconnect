@@ -1,8 +1,8 @@
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
-var url = require('url').parse(URL)
+var url = require('url').parse(URL);
 
-var db = require("seraph")({
+var db = exports.db = require("seraph")({
   server: url.protocol + '//' + url.host,
   user: url.auth.split(':')[0],
   pass: url.auth.split(':')[1]
@@ -92,7 +92,7 @@ var createUser = function(username, callback){
 }
 
 
-var User = module.exports = function User(_node){  //do not change the node
+var User = exports.User = function User(_node){  //do not change the node
   //the node wil be an array returned from our database. the array will contain an obj to access it use node[0].nameOfProperty
   this._node = _node 
 }
@@ -117,7 +117,7 @@ User.create = function(username){
       //console.log('the node that is created: ', node);
     })
   })
-}
+};
 
 //pass in a username and callback the callback will act on the new User object 
 User.get = function(userName, cb){  
@@ -125,11 +125,7 @@ User.get = function(userName, cb){
     var user = new User(person);
     cb(user._node[0]);
   })
-}
-
-
-
-
+};
 
 
 

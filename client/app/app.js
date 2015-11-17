@@ -8,6 +8,7 @@ angular.module('myApp', [
   'myApp.footerDirective',
   'myApp.welcome',
   'myApp.homepage',
+  'myApp.profilepage',
   'myApp.connect',
   'myApp.view2',
   'myApp.version',

@@ -7,6 +7,11 @@
     border-bottom: 1px dotted #CCC;
     .post-top-info {
       position: relative;
+      .user-pic {
+        a {
+          background-image:url('../../assets/pictures/users/default-user.jpg');
+        }
+      }
       .post-thumbnail {
         float: left;
         width: 40px;
@@ -34,6 +39,9 @@
     }
     .post-content {
       margin-top: 10px;
+      .developer-pic {
+        background-image:url('../../assets/pictures/users/default-user.jpg');
+      }
       .description {
         margin-bottom: 10px;
       }

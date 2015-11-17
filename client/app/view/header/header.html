@@ -17,7 +17,7 @@
         <li ng-show='!user'><a href="#/welcome" class="link-welcome">Welcome</a></li>
         <li ng-show='user' class="active"><a href="#/" class="link-home">Home <span class="sr-only">(current)</span></a></li>
         <li ng-show='user'><a href="#/connect" class="link-connect">Connect</a></li>
-        <li ng-show='user'><a href="#/view2" class="link-view2">View2</a></li>
+        <li ng-show='user'><a href="#/profile" class="link-view2">Profile</a></li>
         <li ng-show='user'><a href="#/chat">Chat with Friends</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
@@ -28,7 +28,8 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>
-        <li ng-show='user'><a href='javascript:void(0)'>Hello, {{ user.githubUserName }}</a></li>
+        <li ng-show='user'><a href='#/profile' class="user-pic"></a></li>
+        <li ng-show='user'><a href='#/profile'>Hello, {{ user.githubUserName }}</a></li>
         <li ng-show='user'><a href="/logout" ng-click='logout()'>Logout</a></li>
       </ul>
     </div>

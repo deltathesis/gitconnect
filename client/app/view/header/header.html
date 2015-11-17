@@ -28,6 +28,7 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>
+        <li ng-show='user'><a href='javascript:void(0)' class="user-pic"></a></li>
         <li ng-show='user'><a href='javascript:void(0)'>Hello, {{ user.githubUserName }}</a></li>
         <li ng-show='user'><a href="/logout" ng-click='logout()'>Logout</a></li>
       </ul>

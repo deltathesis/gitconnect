@@ -5,5 +5,25 @@
     width: 100%;
     z-index: 999;
     margin-bottom: 0px;
+    .user-pic {
+      background-image:url('../../assets/pictures/users/default-user.jpg');
+      background-size: cover;
+      background-position: 50% 50%;
+      width: 40px;
+      height: 40px;
+      top: 5px;
+      border-radius: 50%;
+      border: 2px solid $mainColor;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    .header-menu {
+      .user-pic {
+        margin-left: 15px;
+      }
+    }
   }
 }

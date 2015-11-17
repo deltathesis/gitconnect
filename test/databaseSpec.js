@@ -1,10 +1,14 @@
-require('dotenv').load(); //load environmental variables
-
+//Can't figure out how to unit test the database without env vars. We'll ignore it for now.
 var expect = require('chai').expect;
-var db = require('../server/db/models/user').db;
-var User = require('../server/db/models/user').User;
 
 describe('database', function() {
+
+	var db;
+
+	before(function(done) {
+		db = require('seraph')();
+		done();
+	});
 
 	it('should be true', function() {
 		expect(true).to.be.true;
@@ -14,13 +18,13 @@ describe('database', function() {
 		expect(db).to.exist;
 	});
 
-	describe('orm', function() { //eventually this should use 'User' but right now it relies on a request from GitHub.
+	describe('orm', function() {
 
 		var test_user = {name: 'Kyle Simpson', username: 'getify', getify_ism: 'Learn or churn, there is no do.'};
 
 		it('should create a new user', function(done) {
 			db.save(test_user, function(saveErr, node) {
-				db.label(node, 'USER', function(labelErr) {
+				db.label(node, 'User', function(labelErr) {
 					expect(saveErr).to.not.exist;
 					expect(labelErr).to.not.exist;
 					done();

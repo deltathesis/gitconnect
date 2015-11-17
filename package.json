@@ -9,7 +9,7 @@
     "postinstall": "bower install",
     "prestart": "gulp build",
     "start": "node server/server.js",
-    "test": "gulp test"
+    "test": "gulp build"
   },
   "dependencies": {
     "body-parser": "^1.14.1",

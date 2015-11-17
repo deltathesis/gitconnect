@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var http = require('http');
 var sockets = require('socket.io');
 var User = require('./db/models/user.js').User;
+var sql = require('./db/models/sqlModels/sqlModels.js');
 
 var app = express();
 

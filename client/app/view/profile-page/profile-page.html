@@ -1,4 +1,96 @@
 <div class="container page profile-page">
-<h1>Profile page</h1>
 
-</div>
+  <div class="row user-details-container">
+    <div class="col-xs-12 user-details">
+      <div class="post-thumbnail user-pic">
+        <a href="" alt="" style="background-image:url({{user.picture}})"></a>
+      </div>
+      <div class="user-subdetails">
+        <a href="" class="user-name">{{user.name}}</a>
+        <div class="subdetail time">
+          <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
+        </div>
+        <div class="subdetail ratings">
+          <div id="stars-existing" class="stars" ng-init="ratings()"></div>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row user-projects-container user-profile-block">
+    <div class="projects-details details-container">
+      <h3 class="col-xs-12">Project</h3>
+      <div class="project-list list">
+        <ul>
+          <li class="col-xs-6 col-sm-4" ng-repeat="project in user.projects">
+            <a href="">{{project.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row user-languages-container user-profile-block">
+    <div class="language-details details-container">
+      <h3 class="col-xs-12">Project</h3>
+      <div class="language-list list">
+        <ul>
+          <li class="col-xs-6 col-sm-4" ng-repeat="project in user.projects">
+            <a href="">{{project.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row user-recents-container user-profile-block">
+    <div class="recents-details details-container">
+      <h3 class="col-xs-12">Recent activities</h3>
+
+      <!-- Participation Example *** START *** -->
+      <div class="col-xs-12 recent participation">
+        <div class="time">
+          <i class="fa fa-clock-o"></i> 1 hour ago
+        </div>
+        <p class="subtitle">{{user.name}} participate a new project</p>
+      </div>
+      <!-- Participation Example *** END *** -->
+
+      <!-- Project Example *** START *** -->
+      <div class="col-xs-12 recent project">
+        <div class="time">
+          <i class="fa fa-clock-o"></i> 2 hours ago
+        </div>
+        <p class="subtitle">{{user.name}} posted a new project: <a href="">Foodly</a></p>
+        <div class="project-post">
+          <div class="col-xs-12 col-sm-5 picture-container">
+            <a href="" class="project-picture" style="background-image:url('assets/pictures/projects/koti.jpg')"></a>
+          </div>
+          <div class="col-xs-12 col-sm-7 project-desc-container">
+            <p class="project-subdescription">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat.<br>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Project Example *** END *** -->
+
+      <!-- Comments Example *** START *** -->
+      <div class="col-xs-12 recent comments">
+        <div class="time">
+          <i class="fa fa-clock-o"></i> 3 hours ago
+        </div>
+        <p class="subtitle">{{user.name}} add a comment to the project <a href="">Foodly</a></p>
+        <p class="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+        </div>
+        <!-- Comments Example *** END *** -->
+
+      </div>
+    </div>
+
+  </div>

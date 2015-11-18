@@ -1,12 +1,7 @@
-<div class="container page projects-page">
-  <div class="projects-container">
+<div class="container page project-page">
+  <!-- <div class="row project-container"> -->
 
-    <div class="col-xs-12 time-range-form" ng-init="selected = 'weekly'">
-      <button class="btn" ng-class="{'active':selected === 'weekly'}" ng-click="selected = 'weekly'">Weekly</button>
-      <button class="btn" ng-class="{'active':selected === 'overall'}" ng-click="selected = 'overall'">Overall</button>
-    </div>
-
-    <div class="row project-post fadein-effect" ng-repeat="project in projects | orderBy:'-upVote'">
+    <div class="row project-post fadein-effect">
       <div class="col-xs-12 post-top-info">
         <div class="post-thumbnail thumbnail-pic">
           <a href="" alt="" style="background-image:url({{project.thumbnail}})"></a>
@@ -37,6 +32,13 @@
         <p class="description">
           {{project.shortDesc}}
         </p>
+        <div class="tech-list">
+          <ul class="row">
+            <li class="col-xs-4" ng-repeat="tech in project.languages">
+              {{tech}}
+            </li>
+          </ul>
+        </div>
         <ul class="developers-list">
           <li class="developer" ng-repeat="developer in project.teams">
             <a href="" class="developer-pic" style="background-image:url({{developer.picture}})"></a>
@@ -44,10 +46,10 @@
           </li>
         </ul>
         <div class="row project-picture-container">
-          <div class="col-xs-12 col-sm-5 picture-container">
-            <a href="" class="project-picture" style="background-image:url({{project.picture}})"></a>
+          <div class="col-xs-12 picture-container">
+            <img class="project-picture" ng-src="{{project.picture}}">
           </div>
-          <div class="col-xs-12 col-sm-7 project-desc-container">
+          <div class="col-xs-12 project-desc-container">
             <p class="project-subdescription">
               {{project.description}}
             </p>
@@ -55,6 +57,33 @@
         </div>
       </div>
     </div>
+
+    <!-- User Comment example *** START *** -->
+  <div class="row post user-comment-post" ng-repeat="comment in comments">
+    <div class="col-xs-12 post-top-info">
+      <div class="post-thumbnail user-pic">
+        <a href="" alt="" style="background-image:url({{comment.thumbnail}})"></a>
+      </div>
+      <div class="post-top-details">
+        <div class="post-title user-name">
+          <a href="">{{comment.user}}</a>
+        </div>
+        <div class="post-subdetails">
+          <div class="subdetail time">
+            <i class="fa fa-clock-o"></i> {{comment.publishDate | date:'MMM d, y h:mm:ss'}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 post-content">
+      <div class="project-comment">
+        <p>
+          {{comment.message}}
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- User Comment example *** END *** -->
 
   </div>
 </div>

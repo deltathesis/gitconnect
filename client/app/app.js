@@ -10,6 +10,7 @@ angular.module('myApp', [
   'myApp.homepage',
   'myApp.profilepage',
   'myApp.projectslist',
+  'myApp.projectpage',
   'myApp.connect',
   'myApp.version',
   'myApp.auth',

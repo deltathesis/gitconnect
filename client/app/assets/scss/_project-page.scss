@@ -1,0 +1,160 @@
+.project-page {
+
+  .project-post {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
+    .post-top-info {
+      position: relative;
+      .thumbnail-pic {
+        float: left;
+        width: 40px;
+        height: 40px;
+        a {
+          background-image:url('../../assets/pictures/users/default-user.jpg');
+          background-size: cover;
+          background-position: 50% 50%;
+          width: 100%;
+          height: 100%;
+          display: block;
+          border: 2px solid $mainColor;
+        }
+      }
+      .post-top-details {
+        float: left;
+        padding-left: 10px;
+        .project-name {
+          font-weight: bold;
+        }
+        .post-subdetails {
+          .subdetail {
+            .comments {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+      .voting {
+        float: left;
+        padding-left: 30px;
+        .vote {
+          button {
+            background: none;
+            border: none;
+            height: 22px;
+          }
+        }
+      }
+    }
+    .post-content {
+      margin-top: 10px;
+      .developer-pic {
+        background-image:url('../../assets/pictures/users/default-user.jpg');
+      }
+      .description {
+        margin-bottom: 10px;
+        .project-link {
+          font-weight: bold;
+        }
+      }
+      .tech-list {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        ul {
+          li {
+            margin-bottom: 10px;
+          }
+        }
+      }
+      .developers-list {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        .developer {
+          display: inline-block;
+          width: 50px;
+          margin: 0 10px;
+          &:first-child {
+            margin-left: 0px;
+          }
+          &:last-child {
+            margin-right: 0px;
+          }
+          .developer-pic {
+            width: 50px;
+            height: 50px;
+            display: block;
+            background-size: cover;
+            background-position: 50% 50%;
+            border-radius: 50%;
+            border: 2px solid $mainColor;
+            background-image:url('../../assets/pictures/users/default-user.jpg');
+          }
+          .developer-name {
+            margin-top: 5px;
+            color: $mainColor;
+            margin-bottom: 0px;
+            text-align: center;
+          }
+        }
+      }
+      .project-picture-container {
+        .picture-container {
+          .project-picture {
+            max-width: 100%;
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  // Post
+  .post {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
+    .post-top-info {
+      position: relative;
+      .user-pic {
+        a {
+          background-image:url('../../assets/pictures/users/default-user.jpg');
+        }
+      }
+      .post-thumbnail {
+        float: left;
+        width: 40px;
+        height: 40px;
+        a {
+          background-size: cover;
+          background-position: 50% 50%;
+          width: 100%;
+          height: 100%;
+          display: block;
+          border-radius: 50%;
+          border: 2px solid $mainColor;
+        }
+      }
+      .post-top-details {
+        float: left;
+        padding-left: 10px;
+        .post-title {}
+        .post-subdetails{
+          .subdetail {
+            &.time {}
+          }
+        }
+      }
+    }
+    .post-content {
+      margin-top: 10px;
+      .developer-pic {
+        background-image:url('../../assets/pictures/users/default-user.jpg');
+      }
+      .description {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+
+}

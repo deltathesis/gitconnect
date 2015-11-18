@@ -22,7 +22,7 @@
       <li ng-repeat="elm in fakeUsers" class="allUsers-list-elm">
         <div class="listOverview">
           <a href="">
-            <div><img class="user-pic col-xs-3" style="background-image:url({{elm.picture}})"></div>
+            <div><a href="" class="user-pic col-xs-3" style="background-image:url({{elm.picture}})"></a></div>
             <p>{{elm.name}}</p>
             <p>{{elm.bio}}</p>
           </a>
@@ -34,11 +34,11 @@
   <div class="chat-messages col-xs-12 col-sm-6" id="chat-messages">
     <h3>{{fakeUsers[2].name}}</h3>
     <h5 style="text-align:center">{{fakeUsers[2].bio}}</h5>
-    <div class="bigMessage-container">
-      <div ng-repeat="message in messages" class="messages-container">
-        <div ng-show="message.user === name" class="message-body personnal"> <p>{{message.text}} </p>
+    <div class="bigMessage-container" id="bigMessage-container">
+      <div ng-repeat="message in rooms[0]" class="messages-container">
+        <div ng-show="message.user === name" class="message-body personnal fadein-effect"> <p>{{message.text}} </p>
         </div>
-        <div ng-hide="message.user === name" class="message-body other"> <p>{{message.text}}</p>
+        <div ng-hide="message.user === name" class="message-body other fadein-effect"> <p>{{message.text}}</p>
         </div>
       </div>
     </div>

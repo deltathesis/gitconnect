@@ -47,31 +47,34 @@ var userNames = (function () {
   };
 }());
 
-var users = [];
+var users = {};
 // export function for listening to the socket
 module.exports = function (socket) {
   console.log('user connected');
-  // users.push({ name: socket.id});
-  console.log('Users', users);
 
   var name = userNames.getGuestName();
-
+  users[name] = socket;
   // send the new user their name and a list of users
   socket.emit('init', {
     name: name,
     users: userNames.get()
   });
 
-  // socket.join(name); // We are using room of socket io
+
+  socket.on('join', function (data) {
+    // console.log('USERS', users);
+    for(var key in users) {
+      users[key].join(data.room);
+    }
+  });
 
   // notify other clients that a new user has joined
   socket.broadcast.emit('user:join', {
     name: name
   });
-
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
-    console.log('data', data);
+    console.log('socket', socket.rooms);
     socket.broadcast.emit('send:message', {
       user: name,
       text: data.message

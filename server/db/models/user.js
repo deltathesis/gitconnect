@@ -107,7 +107,7 @@ var User = exports.User = function User(_node){  //do not change the node
 //object with key value pairs already filtered to contain only data to be stored in user node
 User.create = function(username){
   createUser(username, function(obj){
-    addToSql(obj);
+    User.addToSql(obj);
     var txn = db.batch();
     var username = JSON.stringify(obj.username)
     

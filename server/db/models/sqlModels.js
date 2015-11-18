@@ -20,23 +20,14 @@ var User = sequelize.define('user', {
   userName:{
     type: Sequelize.STRING
   },
-  firstName: {
-    type: Sequelize.STRING
-  },
-  lastName: {
+  name:{
     type: Sequelize.STRING
   },
   interests: {
-    type: Sequelize.STRING
-  },
-  languages: {
-    type: Sequelize.STRING
-  },
-  starredRepos: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   bio: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   ratingAverage: {
     type: Sequelize.INTEGER
@@ -56,8 +47,14 @@ var User = sequelize.define('user', {
   githubId:{
     type: Sequelize.INTEGER
   },
-  picture:{
-    type: Sequelize.STRING
+  pictureUrl:{
+    type: Sequelize.TEXT
+  },
+  blog:{
+    type: Sequelize.TEXT
+  },
+  company:{
+    type: Sequelize.TEXT
   }
 },{
   freezeTableName: true
@@ -71,16 +68,16 @@ var Project = sequelize.define('project', {
     autoIncrement: true
   },
   name: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   info: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   photoUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   technologies: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   ratingAverage: {
     type: Sequelize.INTEGER
@@ -92,13 +89,13 @@ var Project = sequelize.define('project', {
     type: Sequelize.INTEGER
   },
   githubLink: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   projectDescription: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   thumbnail: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   }
 },{
   freezeTableName: true
@@ -123,7 +120,7 @@ var findUsers = function(usersArray){
     })
 }
 //DO NOT REMOVE THE THREE LINES OF CODE BELOW
-// UserProject.sync({force: true});
+UserProject.sync({force: true});
 // User.sync({force: true});
 // Project.sync({force: true});
 

@@ -2,6 +2,7 @@
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL);
+var sqlUser = require('./sqlModels.js').User
 
 var db = exports.db = require("seraph")({
   server: url.protocol + '//' + url.host,
@@ -89,7 +90,6 @@ var createUser = function(username, callback){
     });
   })
   .then(function(){
-    console.log(newUser)
     callback(newUser);
   })
   .catch(function(err){
@@ -106,6 +106,7 @@ var User = exports.User = function User(_node){  //do not change the node
 //object with key value pairs already filtered to contain only data to be stored in user node
 User.create = function(username){
   createUser(username, function(obj){
+    User.addToSql(obj);
     var txn = db.batch();
     var username = JSON.stringify(obj.username)
     
@@ -139,8 +140,8 @@ User.create = function(username){
   })
 };
 
-User.get = function(userName, cb){  
- db.find({username: userName}, 'USER', function(err, person){
+User.get = function(username, cb){  
+ db.find({username: username}, 'USER', function(err, person){
    var user = new User(person);
    cb(user._node[0]);
  })
@@ -177,8 +178,9 @@ User.addToSql = function(obj){
   anotherObj.company = obj.company;
   anotherObj.pictureUrl = obj.avatar_url;
   
-  sqlUser.create(anotherObj)
+  sqlUser.create(anotherObj);
 };
+
 
 
 

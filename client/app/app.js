@@ -12,11 +12,13 @@ angular.module('myApp', [
   'myApp.projectslist',
   'myApp.projectpage',
   'myApp.connect',
+  'myApp.groupChat',
   'myApp.version',
   'myApp.auth',
   'myApp.services',
   'myApp.chatpage',
-  'myApp.signup'
+  'myApp.signup',
+  'btford.socket-io'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

@@ -16,7 +16,7 @@ var userNames = (function () {
       nextUserId = 1;
 
     do {
-      name = 'Royces Child ' + nextUserId;
+      name = 'Dude' + nextUserId;
       nextUserId += 1;
     } while (!claim(name));
 
@@ -47,8 +47,13 @@ var userNames = (function () {
   };
 }());
 
+var users = [];
 // export function for listening to the socket
 module.exports = function (socket) {
+  console.log('user connected');
+  // users.push({ name: socket.id});
+  console.log('Users', users);
+
   var name = userNames.getGuestName();
 
   // send the new user their name and a list of users
@@ -57,6 +62,8 @@ module.exports = function (socket) {
     users: userNames.get()
   });
 
+  // socket.join(name); // We are using room of socket io
+
   // notify other clients that a new user has joined
   socket.broadcast.emit('user:join', {
     name: name
@@ -64,6 +71,7 @@ module.exports = function (socket) {
 
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
+    console.log('data', data);
     socket.broadcast.emit('send:message', {
       user: name,
       text: data.message
@@ -72,6 +80,7 @@ module.exports = function (socket) {
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
+    console.log('user disconnected');
     socket.broadcast.emit('user:left', {
       name: name
     });

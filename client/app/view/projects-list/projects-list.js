@@ -16,7 +16,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
       name: 'Koti',
       publishDate: 1447797324755,
       commentCount: 25,
-      upVote: 328,
+      upVote: 38,
       downVote: 12,
       shortDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       teams: [
@@ -33,7 +33,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
       name: 'Fetch',
       publishDate: 1447797324755,
       commentCount: 3,
-      upVote: 28,
+      upVote: 52,
       downVote: 2,
       shortDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       teams: [

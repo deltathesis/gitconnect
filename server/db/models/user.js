@@ -170,7 +170,7 @@ User.getMatches = function(username, cb){
 
 
 User.addToSql = function(obj){
-  sqlUser.findOne({where: {userName: obj.userName}}).then(function(user){
+  sqlUser.findOne({where: {githubId: obj.id}}).then(function(user){
     if(user){
       console.log('NO');
     }else{
@@ -181,11 +181,23 @@ User.addToSql = function(obj){
       anotherObj.blog = obj.blog;
       anotherObj.company = obj.company;
       anotherObj.pictureUrl = obj.avatar_url;
+      anotherObj.githubId = obj.id;
       
       sqlUser.create(anotherObj);
     }
   })
 };
+
+User.getData = function(gitId, cb){
+  sqlUser.findOne({where: {githubId: gitId}})
+  .then(function(user){
+    cb(user);
+  })
+}
+
+User.addInterests = function(interestsString){
+
+}
 
 // User.addBio = function()
 

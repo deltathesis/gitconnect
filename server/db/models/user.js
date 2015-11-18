@@ -2,6 +2,7 @@
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL);
+var sqlUser = require('./sqlModels.js').User
 
 var db = exports.db = require("seraph")({
   server: url.protocol + '//' + url.host,
@@ -177,7 +178,7 @@ User.addToSql = function(obj){
   anotherObj.company = obj.company;
   anotherObj.pictureUrl = obj.avatar_url;
   
-  sqlUser.create(anotherObj)
+  sqlUser.create(anotherObj);
 };
 
 

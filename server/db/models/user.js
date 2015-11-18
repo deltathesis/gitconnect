@@ -90,7 +90,6 @@ var createUser = function(username, callback){
     });
   })
   .then(function(){
-    console.log(newUser)
     callback(newUser);
   })
   .catch(function(err){
@@ -141,8 +140,8 @@ User.create = function(username){
   })
 };
 
-User.get = function(userName, cb){  
- db.find({username: userName}, 'USER', function(err, person){
+User.get = function(username, cb){  
+ db.find({username: username}, 'USER', function(err, person){
    var user = new User(person);
    cb(user._node[0]);
  })

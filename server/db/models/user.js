@@ -167,7 +167,18 @@ User.matchBy = function(username, cb){
   })
 }
 
-// User.matchBy('ccnixon')
+
+User.addToSql = function(obj){
+  var anotherObj = {};
+  anotherObj.userName = obj.username;
+  anotherObj.name = obj.name;
+  anotherObj.location = obj.location;
+  anotherObj.blog = obj.blog;
+  anotherObj.company = obj.company;
+  anotherObj.pictureUrl = obj.avatar_url;
+  
+  sqlUser.create(anotherObj)
+};
 
 
 

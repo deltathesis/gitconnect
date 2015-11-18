@@ -16,7 +16,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
       name: 'Koti',
       publishDate: 1447797324755,
       commentCount: 25,
-      upVote: 38,
+      upVote: 48,
       downVote: 12,
       shortDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       teams: [
@@ -47,5 +47,13 @@ angular.module('myApp.projectslist', ['ngRoute'])
   ];
 
   $scope.projects = projects;
+
+  $scope.increment = function(project){
+    project.upVote += 1;
+  }
+
+  $scope.decrement = function(project){
+    project.downVote += 1;
+  }
 
 }]);

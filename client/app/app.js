@@ -18,7 +18,8 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.chatpage',
   'myApp.signup',
-  'btford.socket-io'
+  'btford.socket-io',
+  'myApp.collaboration-page'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

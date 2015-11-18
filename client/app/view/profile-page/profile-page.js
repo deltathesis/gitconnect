@@ -1,14 +1,14 @@
-angular.module('myApp.projectslist', ['ngRoute'])
+angular.module('myApp.profilepage', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/projects', {
+  $routeProvider.when('/profile', {
     authenticate: true,
-    templateUrl: 'view/projects-list/projects-list.html',
-    controller: 'projectsPage',
+    templateUrl: 'view/profile-page/profile-page.html',
+    controller: 'profilePage',
   });
 }])
 
-.controller('projectsPage', ['$scope', function($scope) {
+.controller('profilePage', ['$scope', function($scope) {
 
   var user = {
     picture: 'assets/pictures/users/royce.jpg',
@@ -27,5 +27,16 @@ angular.module('myApp.projectslist', ['ngRoute'])
   }
 
   $scope.user = user;
+
+  $scope.ratings = function() {
+    // Ratings Module
+    $ratings = $('.stars');
+    for (var pos = 0; pos < 5; pos++) {
+      $ratings.append("<i class='fa fa-star-o position-" + pos + "'></i>");
+    }
+    for (var i = 0; i < user.ratings; i++) {
+      $('.position-' + i).removeClass('fa-star-o').addClass('fa-star');
+    }
+  }
 
 }]);

@@ -1,25 +1,60 @@
 <div class="container page projects-page">
   <div class="row projects-container">
-  
-    <div class="col-xs-12 time-range-form">
-      <button class="btn">Weekly</button>
-      <button class="btn">Overall</button>
+
+    <div class="col-xs-12 time-range-form" ng-init="selected = 'weekly'">
+      <button class="btn" ng-class="{'active':selected === 'weekly'}" ng-click="selected = 'weekly'">Weekly</button>
+      <button class="btn" ng-class="{'active':selected === 'overall'}" ng-click="selected = 'overall'">Overall</button>
     </div>
 
-    <div class="col-xs-12 project-details">
-      <div class="post-thumbnail user-pic">
-        <a href="" alt="" style="background-image:url({{user.picture}})"></a>
-      </div>
-      <div class="user-subdetails">
-        <a href="" class="user-name">{{user.name}}</a>
-        <div class="subdetail time">
-          <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
+    <div class="row project-post" ng-repeat="project in projects">
+      <div class="col-xs-12 post-top-info">
+        <div class="post-thumbnail thumbnail-pic">
+          <a href="" alt="" style="background-image:url({{project.thumbnail}})"></a>
         </div>
-        <div class="subdetail ratings">
-          <div id="stars-existing" class="stars" ng-init="ratings()"></div>  
+        <div class="post-top-details">
+          <div class="post-title project-name">
+            <a href="">{{project.name}}</a>
+          </div>
+          <div class="post-subdetails">
+            <div class="subdetail">
+              <i class="fa fa-clock-o"></i> {{project.publishDate | date:'mediumDate'}}
+              <i class="fa fa-comment comments"></i> {{project.commentCount}}
+            </div>
+          </div>
+        </div>
+        <div class="voting">
+          <div class="upvote vote">
+            <button><i class="fa fa-chevron-circle-up"></i></button>
+            <span class="count">{{project.upVote}}</span>
+          </div>
+          <div class="downvote vote">
+            <button><i class="fa fa-chevron-circle-down"></i></button>
+            <span class="count">{{project.downVote}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 post-content">
+        <p class="description">
+          {{project.shortDesc}}
+        </p>
+        <ul class="developers-list">
+          <li class="developer" ng-repeat="developer in project.teams">
+            <a href="" class="developer-pic" style="background-image:url({{developer.picture}})"></a>
+            <p class="developer-name">{{developer.name}}</p>
+          </li>
+        </ul>
+        <div class="project-picture-container">
+          <div class="col-xs-12 col-sm-5 picture-container">
+            <a href="" class="project-picture" style="background-image:url({{project.picture}})"></a>
+          </div>
+          <div class="col-xs-12 col-sm-7 project-desc-container">
+            <p class="project-subdescription">
+              {{project.description}}
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
   </div>
+</div>

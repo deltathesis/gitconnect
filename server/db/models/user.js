@@ -170,18 +170,24 @@ User.getMatches = function(username, cb){
 
 
 User.addToSql = function(obj){
-  var anotherObj = {};
-  anotherObj.userName = obj.username;
-  anotherObj.name = obj.name;
-  anotherObj.location = obj.location;
-  anotherObj.blog = obj.blog;
-  anotherObj.company = obj.company;
-  anotherObj.pictureUrl = obj.avatar_url;
-  
-  sqlUser.create(anotherObj);
+  sqlUser.findOne({where: {userName: obj.userName}}).then(function(user){
+    if(user){
+      console.log('NO');
+    }else{
+      var anotherObj = {};
+      anotherObj.userName = obj.username;
+      anotherObj.name = obj.name;
+      anotherObj.location = obj.location;
+      anotherObj.blog = obj.blog;
+      anotherObj.company = obj.company;
+      anotherObj.pictureUrl = obj.avatar_url;
+      
+      sqlUser.create(anotherObj);
+    }
+  })
 };
 
-
+// User.addBio = function()
 
 
 

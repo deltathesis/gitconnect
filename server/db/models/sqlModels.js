@@ -121,7 +121,7 @@ var findUsers = function(usersArray, cb){
 };
 
 //DO NOT REMOVE THE THREE LINES OF CODE BELOW
-UserProject.sync({force: true});
+// UserProject.sync({force: true});
 // User.sync({force: true});
 // Project.sync({force: true});
 

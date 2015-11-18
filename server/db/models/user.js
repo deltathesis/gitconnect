@@ -141,7 +141,7 @@ User.create = function(username){
 };
 
 User.get = function(username, cb){  
- db.find({username: username}, 'USER', function(err, person){
+ db.find({username: username}, 'User', function(err, person){
    var user = new User(person);
    cb(user._node[0]);
  })
@@ -149,7 +149,7 @@ User.get = function(username, cb){
 
 
 //match users to other users based on a label or variable. pass in username and callback to handle result
-User.matchBy = function(username, cb){
+User.getMatches = function(username, cb){
   var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User) '
              + 'RETURN DISTINCT x, COUNT(x) '
              + 'ORDER BY COUNT(x) DESC '
@@ -163,7 +163,7 @@ User.matchBy = function(username, cb){
       usernames.push(result[i].x.username)
     }
     findUsers(usernames, function(users){
-      cb(users)
+      cb(users);
     })
   })
 }

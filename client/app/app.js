@@ -9,6 +9,7 @@ angular.module('myApp', [
   'myApp.welcome',
   'myApp.homepage',
   'myApp.profilepage',
+  'myApp.projectslist',
   'myApp.connect',
   'myApp.version',
   'myApp.auth',

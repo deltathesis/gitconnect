@@ -1,0 +1,25 @@
+<div class="container page projects-page">
+  <div class="row projects-container">
+  
+    <div class="col-xs-12 time-range-form">
+      <button class="btn">Weekly</button>
+      <button class="btn">Overall</button>
+    </div>
+
+    <div class="col-xs-12 project-details">
+      <div class="post-thumbnail user-pic">
+        <a href="" alt="" style="background-image:url({{user.picture}})"></a>
+      </div>
+      <div class="user-subdetails">
+        <a href="" class="user-name">{{user.name}}</a>
+        <div class="subdetail time">
+          <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
+        </div>
+        <div class="subdetail ratings">
+          <div id="stars-existing" class="stars" ng-init="ratings()"></div>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>

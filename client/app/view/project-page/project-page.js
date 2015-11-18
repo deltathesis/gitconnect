@@ -12,6 +12,7 @@ angular.module('myApp.projectpage', ['ngRoute'])
 
   var project = {
     thumbnail: 'assets/pictures/projects-thumbnails/koti.jpg',
+    github: 'http://www.github.com',
     name: 'Koti',
     publishDate: 1447797324755,
     commentCount: 25,

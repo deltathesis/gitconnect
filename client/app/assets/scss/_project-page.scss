@@ -1,19 +1,4 @@
-.projects-page {
-
-  .time-range-form {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    text-align: center;
-    .btn {
-      margin: 0px 20px;
-      background-color: #CCC;
-      color: #FFF;
-      &.active {
-        background-color: $mainColor;
-      }
-    }
-  }
-
+.project-page {
 
   .project-post {
     padding-top: 20px;
@@ -72,6 +57,22 @@
           font-weight: bold;
         }
       }
+      .tech-list {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        ul {
+          li {
+            margin-bottom: 10px;
+          }
+        }
+      }
+      .github-link {
+        margin-bottom: 30px;
+        i {
+          font-size: 15px;
+          margin-right: 5px;
+        }
+      }
       .developers-list {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -104,18 +105,63 @@
         }
       }
       .project-picture-container {
-        height: 200px;
         .picture-container {
-          height: 100%;
           .project-picture {
-            height: 100%;
-            background-size: cover;
-            background-position: 50% 50%;
-            display: block;
+            max-width: 100%;
+            margin-bottom: 20px;
           }
         }
       }
     }
   }
+
+  // Post
+  .post {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
+    .post-top-info {
+      position: relative;
+      .user-pic {
+        a {
+          background-image:url('../../assets/pictures/users/default-user.jpg');
+        }
+      }
+      .post-thumbnail {
+        float: left;
+        width: 40px;
+        height: 40px;
+        a {
+          background-size: cover;
+          background-position: 50% 50%;
+          width: 100%;
+          height: 100%;
+          display: block;
+          border-radius: 50%;
+          border: 2px solid $mainColor;
+        }
+      }
+      .post-top-details {
+        float: left;
+        padding-left: 10px;
+        .post-title {}
+        .post-subdetails{
+          .subdetail {
+            &.time {}
+          }
+        }
+      }
+    }
+    .post-content {
+      margin-top: 10px;
+      .developer-pic {
+        background-image:url('../../assets/pictures/users/default-user.jpg');
+      }
+      .description {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
 
 }

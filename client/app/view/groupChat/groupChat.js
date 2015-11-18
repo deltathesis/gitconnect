@@ -68,18 +68,16 @@ angular.module('myApp.groupChat', ['ngRoute'])
     $scope.message = '';
   };
 
-  console.log('am i even doing shit');
  $('#sendingMessage').on('keyup', function(e) {
-  console.log('wattup');
     if (e.which === 13 && ! e.shiftKey) {
         $('.messageButton').click();
     }
 });
 
-window.setInterval(function() {
-  var elem = document.getElementById('chat-messages');
-  elem.scrollTop = elem.scrollHeight;
-}, 100);
+// window.setInterval(function() {
+//   var elem = document.getElementById('chat-messages');
+//   elem.scrollTop = elem.scrollHeight;
+// }, 100);
 
 
 

@@ -9,6 +9,8 @@ var db = exports.db = require("seraph")({
   pass: url.auth.split(':')[1]
 });
 
+var findUsers = require('./sqlModels.js').findUsers;
+
 
 var options = {
   qs: {
@@ -146,7 +148,7 @@ User.get = function(userName, cb){
 
 
 //match users to other users based on a label or variable. pass in username and callback to handle result
-User.matchBy = function(username){
+User.matchBy = function(username, cb){
   var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User) '
              + 'RETURN DISTINCT x, COUNT(x) '
              + 'ORDER BY COUNT(x) DESC '
@@ -155,11 +157,17 @@ User.matchBy = function(username){
     if(err){
       console.log(err);
     }
-    console.log(result)
+    var usernames = []
+    for(var i = 0; i < result.length; i++){
+      usernames.push(result[i].x.username)
+    }
+    findUsers(usernames, function(users){
+      cb(users)
+    })
   })
 }
 
-User.matchBy('ccnixon')
+// User.matchBy('ccnixon')
 
 
 

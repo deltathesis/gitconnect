@@ -5,15 +5,52 @@
     width: 100%;
     z-index: 999;
     margin-bottom: 0px;
-    .user-pic {
-      background-image:url('../../assets/pictures/users/default-user.jpg');
-      background-size: cover;
-      background-position: 50% 50%;
-      width: 40px;
-      height: 40px;
-      top: 5px;
-      border-radius: 50%;
-      border: 2px solid $mainColor;
+    .links-menu {
+      .navbar-left {
+      }
+      .navbar-right {
+        li {
+          &.messaging {
+            a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+              font-size: 28px;
+            }
+            &.notifications {
+              &:before {
+                content: attr(data-messages);
+                position: absolute;
+                top: 5px;
+                left: 28px;
+                z-index: 999;
+                background-color: #E32636;
+                color: #FFF;
+                font-weight: bold;
+                width: 20px;
+                text-align: center;
+                font-size: 14px;
+                line-height: 14px;
+                padding-top: 4px;
+                padding-bottom: 2px;
+                border-radius: 50%;
+              }
+            }
+          }
+          &.user-pic {
+            a {
+              background-image:url('../../assets/pictures/users/default-user.jpg');
+              background-size: cover;
+              background-position: 50% 50%;
+              width: 40px;
+              height: 40px;
+              margin-left: 10px;
+              top: 5px;
+              border-radius: 50%;
+              border: 2px solid $mainColor;
+            }
+          }
+        }
+      }
     }
   }
 }

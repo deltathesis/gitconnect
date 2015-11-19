@@ -84,6 +84,12 @@ app.get('/api/user', function(req, res) {
 	res.json({username: req.session.username});
 });
 
+app.get('/api/user/:name/matches', function(req, res) {
+  User.getMatches(req.params.name, function(users) {
+    res.json({matches: users});
+  });
+});
+
 // app.listen(process.env.Port, function(){
 // console.log('Server now running on port: ' + process.env.PORT);
 // });

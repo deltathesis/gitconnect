@@ -111,7 +111,7 @@ User.create = function(username){
     
     for(var language in obj.languages){
       var lang = JSON.stringify(language)
-      var languageCypher =  "MERGE (user:User {id: " + obj.id + ", username: " + username + "}) MERGE (language:Language {name: " + lang + "}) "
+      var languageCypher =  "MERGE (user:User {id: " + obj.id + ", username: " + username + ", availability: true}) MERGE (language:Language {name: " + lang + "}) "
                           + "MERGE (user)-[:KNOWS]-(language) "
                           + "RETURN language, user";
       txn.query(languageCypher, function(err, result){
@@ -150,7 +150,7 @@ User.get = function(username, cb){
 
 //match users to other users
 User.getMatches = function(username, cb){
-  var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User) '
+  var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: "true"}) '
              + 'RETURN DISTINCT x, COUNT(x) '
              + 'ORDER BY COUNT(x) DESC '
              + 'LIMIT 10';
@@ -167,6 +167,8 @@ User.getMatches = function(username, cb){
     })
   })
 }
+
+
 
 
 // User.addToSql = function(obj){

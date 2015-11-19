@@ -150,7 +150,11 @@ User.get = function(username, cb){
 
 //match users to other users
 User.getMatches = function(username, cb){
+<<<<<<< f06e5ab96951a750cf9b5f4deede293ff8ca6e98
   var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: true}) '
+=======
+  var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: "true"}) '
+>>>>>>> [feat] add availability field to User.create with default to true. Also add availability as a filter in matching function
              + 'RETURN DISTINCT x, COUNT(x) '
              + 'ORDER BY COUNT(x) DESC '
              + 'LIMIT 10';
@@ -166,4 +170,51 @@ User.getMatches = function(username, cb){
       cb(users);
     })
   })
+<<<<<<< f06e5ab96951a750cf9b5f4deede293ff8ca6e98
 };
+=======
+}
+
+
+
+
+// User.addToSql = function(obj){
+//   sqlUser.findOne({where: {githubId: obj.id}}).then(function(user){
+//     if(user){
+//       console.log('NO');
+//     }else{
+//       var anotherObj = {};
+//       anotherObj.userName = obj.username;
+//       anotherObj.name = obj.name;
+//       anotherObj.location = obj.location;
+//       anotherObj.blog = obj.blog;
+//       anotherObj.company = obj.company;
+//       anotherObj.pictureUrl = obj.avatar_url;
+//       anotherObj.githubId = obj.id;
+      
+//       sqlUser.create(anotherObj);
+//     }
+//   })
+// };
+
+// User.getData = function(gitId, cb){
+//   sqlUser.findOne({where: {githubId: gitId}})
+//   .then(function(user){
+//     cb(user);
+//   })
+// }
+
+// User.addInterests = function(interestsString){
+
+// }
+
+// User.addBio = function()
+
+
+
+
+
+
+
+
+>>>>>>> [feat] add availability field to User.create with default to true. Also add availability as a filter in matching function

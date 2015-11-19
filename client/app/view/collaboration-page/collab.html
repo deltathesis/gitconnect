@@ -26,54 +26,72 @@
     </ul>
   </div>
   <div class="row links">
-    <h1>Links</h1>
+    <div class="link-header">
+      <h1>Resources</h1>
+    </div>
     <ul>
       <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-github fa-2x"></i> <a href="https://github.com/deltathesis/gitconnect">GitHub Repo</a>
-        <p class="link-description">This is describing something</p>
+        <i class="fa fa-github fa-2x fa-fw link-icon"></i>
+        <span class="link-options">
+          <span class="link-info">Project Repo</span>
+          <a href="" class="add-link"><i class="fa fa-pencil"></i></a>
+        </span>
+      </li>
+      <li class="col-xs-6 col-sm-4">`
+        <i class="fa fa-jsfiddle fa-2x fa-fw link-icon"></i>
+        <span class="link-options">
+          <span class="link-info">Code Library</span>
+          <a href="" class="add-link"><i class="fa fa-pencil"></i></a>
+        </span>
       </li>
       <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-jsfiddle fa-2x"></i> <a href="https://jsfiddle.net/">JSfiddle</a>
-        <p class="link-description">This is describing something</p>
+        <i class="fa fa-cloud fa-2x fa-fw link-icon"></i> 
+        <span class="link-options">
+          <span class="link-info">Cloud Storage</span>
+          <a href="" class="add-link"><i class="fa fa-pencil"></i></a>
+        </span>
       </li>
       <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-dropbox fa-2x"></i> <a href="https://github.com/deltathesis/gitconnect">GitHub Repo</a>
-        <p class="link-description">This is describing something</p>
+        <i class="fa fa-trello fa-2x fa-fw link-icon"></i>
+        <span class="link-options">
+          <span class="link-info">Kanban Board</span>
+          <a href="" class="add-link"><i class="fa fa-pencil"></i></a>
+        </span>
       </li>
       <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-stack-exchange fa-2x"></i> <a href="https://github.com/deltathesis/gitconnect">GitHub Repo</a>
-        <p class="link-description">This is describing something</p>
+        <i class="fa fa-link fa-2x fa-fw link-icon"></i> 
+        <span class="link-options">
+          <span class="link-info">Project Website</span>
+          <a href="" class="add-link"><i class="fa fa-pencil"></i></a>
+        </span>
       </li>
       <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-github fa-2x"></i> <a href="https://github.com/deltathesis/gitconnect">GitHub Repo</a>
-        <p class="link-description">This is describing something</p>
-      </li>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-github fa-2x"></i> <a href="https://github.com/deltathesis/gitconnect">GitHub Repo</a>
-        <p class="link-description">This is describing something</p>
-      </li>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-github fa-2x"></i> <a href="https://github.com/deltathesis/gitconnect">GitHub Repo</a>
-        <p class="link-description">This is describing something</p>
+        <i class="fa fa-database fa-2x fa-fw link-icon"></i>
+        <span class="link-options">
+          <span class="link-info">Database</span>
+          <a href="" class="add-link"><i class="fa fa-pencil"></i></a>
+        </span>
       </li>
     </ul>
   </div>
   <div class="row team-messages">
     <h1>Messages</h1>
     <ul class="list-group">
-      <li class="list-group-item cf">
+      <li class="list-group-item cf" ng-repeat="message in messages">
         <a href="" class="team-member-chat-picture" style="background-image:url('assets/pictures/users/chris.jpg')"></a>
         <div class="message-content">
-          <span class="username">Chris Nixon</span>
+          <span class="username">{{message.username}}</span>
           <p class="message-content-body">
-            Hey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super coolHey this is super cool
+            {{message.message}}
           </p>
         </div>
       </li>
     </ul>
-    <div class="input-group input-group-lg">
-      <span class="input-group-addon" id="sizing-addon1">+</span>
-      <input type="text" class="form-control" aria-describedby="sizing-addon1">
-    </div>
+    <form ng-submit="messageSubmit()">
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon" id="sizing-addon1">+</span>
+        <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">
+      </div>
+    </form>
   </div>
 </div>

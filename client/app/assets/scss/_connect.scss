@@ -40,12 +40,6 @@
   }
 }
 
-// Fade effect when page load
-.fadein-effect {
- @include animationEffect(1s, fadeEffect);
-}
-
-
 @media (max-width: 480px) {
    .connect-page {
     .swiper-container {

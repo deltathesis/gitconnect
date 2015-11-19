@@ -34,6 +34,8 @@
     }
   }
   .links {
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
     li {
       position: relative;
       padding: 8px;
@@ -41,6 +43,29 @@
         position: relative;
         top: 5px;
         left: -5px;
+      }
+    }
+    p {
+      padding-left: 28px;
+    }
+  }
+  .team-messages {
+    padding-bottom: 20px;
+    .team-member-chat-picture {
+      float: left;
+      width: 50px;
+      height: 50px;
+      display: inline;
+      background-size: cover;
+      background-position: 50% 50%;
+      border-radius: 50%;
+    }
+    .message-content{
+      padding-left: 70px;
+      .username {
+        font-weight: bold;
+      }
+      .message-content-body {
       }
     }
   }

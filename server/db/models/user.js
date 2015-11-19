@@ -175,4 +175,3 @@ User.getMatches = function(username, cb){
     })
   })
 };
-

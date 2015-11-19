@@ -62,6 +62,30 @@
         }
       }
     }
+    &.user-languages-container {
+      .language-details {
+        .language-list {
+          ul {
+            li {
+              position: relative;
+              .tech-icon {
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                background-size: cover;
+                position: absolute;
+                top: 9px;
+              }
+              .tech-name {
+                font-size: 14px;
+                padding-left: 25px;
+                line-height: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
     &.user-recents-container {
       .recents-details {
         .recent {

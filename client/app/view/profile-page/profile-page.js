@@ -23,7 +23,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
       {name:'InstaCutz', id:'0987'},
       {name:'Humus', id:'12883'}
     ],
-    languages: ['Javascript', 'Angular', 'Sass', 'CSS', 'HTML5', 'Firebase']
+    languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase']
   }
 
   $scope.user = user;

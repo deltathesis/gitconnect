@@ -35,8 +35,9 @@
       <h3 class="col-xs-12">Languages</h3>
       <div class="language-list list">
         <ul>
-          <li class="col-xs-6 col-sm-4" ng-repeat="language in user.languages">
-            <a href="">{{language}}</a>
+          <li class="col-xs-4 col-sm-3" ng-repeat="language in user.languages">
+            <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{language}}.jpg')"></span>
+            <span class="tech-name">{{language}}</span>
           </li>
         </ul>
       </div>

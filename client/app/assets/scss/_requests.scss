@@ -1,9 +1,24 @@
 .requests-page {
-  .user-details-container {
+
+  .requests-form {
     margin-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    margin-bottom: 30px;
+    text-align: center;
+    .btn {
+      margin: 0px 20px;
+      background-color: #CCC;
+      color: #FFF;
+      &.active {
+        background-color: $mainColor;
+      }
+    }
+  }
+
+  .user-details-container {
     .user-details {
+      margin-top: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px dotted #CCC;
       .user-pic {
         float: left;
         a {
@@ -39,61 +54,34 @@
           }
         }
       }
-    }
-  }
-
-  .user-profile-block {
-    margin-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
-    .details-container {
-      h3 {
-        margin-top: 0px;
-      }
-      .list {
-        ul {
-          li {
-            padding-top: 10px;
-            a {
-              border-bottom: 1px solid #AAA;
-              display: block;
-            }
-          }
+      .action-button {
+        float: right;
+        .btn {
+          margin-top: 26px;
+          color: #FFF;
+        }
+        &.accept {
+          .btn { background-color: $mainColor; }
+        }
+        &.remove {
+          .btn { background-color: red; }
         }
       }
     }
-    &.user-recents-container {
-      .recents-details {
-        .recent {
-          padding-top: 20px;
-          padding-bottom: 20px;
-          border-bottom: 1px solid #AAA;
-          p {
-            margin-top: 5px;
-            margin-bottom: 0px;
-            &.subtitle {
-              font-weight: bold;
-            }
-          }
-          &.participation {
-          }
-          &.comments {
-          }
-          &.project {
-            .project-post {
-              margin-top: 20px;
-              .picture-container {
-              height: 200px;
-                a {
-                  width: 100%;
-                  height: 100%;
-                  display: block;
-                  background-size:cover;
-                  background-position: 50% 50%;
-                }
-              }
-            }
-          }
+  }
+
+  @media (max-width: 480px) {
+    .requests-form {
+      .btn {
+        margin: 0px 10px;
+      }
+    }
+    .user-details-container {
+      .user-details {
+        text-align: center;
+        .user-pic, .user-subdetails {
+          float: none;
+          padding:0px;
         }
       }
     }

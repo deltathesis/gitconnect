@@ -1,96 +1,48 @@
 <div class="container page requests-page">
 
-  <div class="row user-details-container">
-    <div class="col-xs-12 user-details">
+  <div class="col-xs-12 requests-form fadein-effect" ng-init="selected = 'requests'">
+      <button class="btn" ng-class="{'active':selected === 'requests'}" ng-click="selected = 'requests'">Requests</button>
+      <button class="btn" ng-class="{'active':selected === 'demands'}" ng-click="selected = 'demands'">Demands</button>
+  </div>
+
+  <div class="row user-details-container fadein-effect" ng-show="selected === 'requests'">
+    <div class="col-xs-12 user-details requests " ng-repeat="user in usersRequest track by $index">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url({{user.picture}})"></a>
       </div>
       <div class="user-subdetails">
         <a href="" class="user-name">{{user.name}}</a>
         <div class="subdetail time">
-          <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
+          <i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}
         </div>
         <div class="subdetail ratings">
-          <div id="stars-existing" class="stars" ng-init="ratings()"></div>  
+          <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>  
         </div>
+      </div>
+      <div class="action-button accept">
+        <button class="btn">Accept</button>
       </div>
     </div>
   </div>
 
-  <div class="row user-projects-container user-profile-block">
-    <div class="projects-details details-container">
-      <h3 class="col-xs-12">Projects</h3>
-      <div class="project-list list">
-        <ul>
-          <li class="col-xs-6 col-sm-4" ng-repeat="project in user.projects">
-            <a href="">{{project.name}}</a>
-          </li>
-        </ul>
+  <div class="row user-details-container fadein-effect" ng-show="selected === 'demands'">
+    <div class="col-xs-12 user-details demands" ng-repeat="user in usersDemand track by $index">
+      <div class="post-thumbnail user-pic">
+        <a href="" alt="" style="background-image:url({{user.picture}})"></a>
+      </div>
+      <div class="user-subdetails">
+        <a href="" class="user-name">{{user.name}}</a>
+        <div class="subdetail time">
+          <i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}
+        </div>
+        <div class="subdetail ratings">
+          <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'demands')"></div>  
+        </div>
+      </div>
+      <div class="action-button remove">
+        <button class="btn">Remove</button>
       </div>
     </div>
   </div>
 
-  <div class="row user-languages-container user-profile-block">
-    <div class="language-details details-container">
-      <h3 class="col-xs-12">Languages</h3>
-      <div class="language-list list">
-        <ul>
-          <li class="col-xs-6 col-sm-4" ng-repeat="language in user.languages">
-            <a href="">{{language}}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="row user-recents-container user-profile-block">
-    <div class="recents-details details-container">
-      <h3 class="col-xs-12">Recent activities</h3>
-
-      <!-- Participation Example *** START *** -->
-      <div class="col-xs-12 recent participation">
-        <div class="time">
-          <i class="fa fa-clock-o"></i> 1 hour ago
-        </div>
-        <p class="subtitle">{{user.name}} participate a new project</p>
-      </div>
-      <!-- Participation Example *** END *** -->
-
-      <!-- Project Example *** START *** -->
-      <div class="col-xs-12 recent project">
-        <div class="time">
-          <i class="fa fa-clock-o"></i> 2 hours ago
-        </div>
-        <p class="subtitle">{{user.name}} posted a new project: <a href="">Foodly</a></p>
-        <div class="row project-post">
-          <div class="col-xs-12 col-sm-5 picture-container">
-            <a href="" class="project-picture" style="background-image:url('assets/pictures/projects/koti.jpg')"></a>
-          </div>
-          <div class="col-xs-12 col-sm-7 project-desc-container">
-            <p class="project-subdescription">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat.<br>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- Project Example *** END *** -->
-
-      <!-- Comments Example *** START *** -->
-      <div class="col-xs-12 recent comments">
-        <div class="time">
-          <i class="fa fa-clock-o"></i> 3 hours ago
-        </div>
-        <p class="subtitle">{{user.name}} add a comment to the project <a href="">Foodly</a></p>
-        <p class="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-        </div>
-        <!-- Comments Example *** END *** -->
-
-      </div>
-    </div>
-
-  </div>
+</div>

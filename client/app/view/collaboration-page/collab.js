@@ -17,4 +17,22 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     github_url: 'https://github.com/deltathesis/gitconnect'
     }
 
+  $scope.messages = [
+    {
+      username: "Chris Nixon",
+      message: "Hey this is super cool"
+    }
+  ]
+
+  $scope.messageSubmit = function(){
+    if($scope.text){
+      console.log($scope.text)
+      $scope.messages.push({
+        username: "Chris Nixon",
+        message: $scope.text
+      });
+      $scope.text = "";
+    }
+  }
+
 }]);

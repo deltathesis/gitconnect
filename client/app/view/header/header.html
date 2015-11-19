@@ -12,8 +12,8 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller='AuthController'>
-      <ul class="nav navbar-nav" bs-active-link>
+    <div class="collapse navbar-collapse links-menu" id="bs-example-navbar-collapse-1" ng-controller='AuthController'>
+      <ul class="nav navbar-nav navbar-left" bs-active-link>
         <li ng-show='!user'><a href="#/welcome" class="link-welcome">Welcome</a></li>
         <li ng-show='user' class="active"><a href="#/" class="link-home">Home <span class="sr-only">(current)</span></a></li>
         <li ng-show='user'><a href="#/connect" class="link-connect">Connect</a></li>
@@ -21,7 +21,6 @@
         <li ng-show='user'><a href="#/projects" class="link-projects">Projects</a></li>
         <li ng-show='user'><a href="#/project" class="link-project">Project</a></li>
 <!--         <li ng-show='user'><a href="#/chat">Global Chat</a></li> -->
-        <li ng-show='user'><a href="#/groupChat">Messaging</a></li>
         <li ng-show='user'><a href="#/collaboration-page">Collab Page</a></li>
         <li ng-show='user'><a href="#/requests">Requests</a></li>
       </ul>
@@ -32,9 +31,10 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form> -->
       <ul class="nav navbar-nav navbar-right">
+        <li ng-show='user' class="messaging" data-messages="2"><a href="#/groupChat"><i class="fa fa-comments"></i></a></li>
         <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>
-        <li ng-show='user'><a href='#/profile' class="user-pic"></a></li>
-        <li ng-show='user'><a href='#/profile'>Hello, {{ user.githubUserName }}</a></li>
+        <li ng-show='user' class="user-pic"><a href='#/profile'></a></li>
+        <li ng-show='user'><a href='#/profile'>{{ user.githubUserName }}</a></li>
         <li ng-show='user'><a href="/logout" ng-click='logout()'>Logout</a></li>
       </ul>
     </div>

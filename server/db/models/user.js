@@ -2,15 +2,13 @@
 var rp = require('request-promise');
 var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
 var url = require('url').parse(URL);
-var sqlUser = require('./sqlModels.js').User
+var sqlUser = require('./sqlUserFns.js')
 
 var db = exports.db = require("seraph")({
   server: url.protocol + '//' + url.host,
   user: url.auth.split(':')[0],
   pass: url.auth.split(':')[1]
 });
-
-var findUsers = require('./sqlModels.js').findUsers;
 
 
 var options = {
@@ -31,6 +29,7 @@ var newUser = {
   organizations: []
 };
 
+//do not use createUser function unless you are chris
 var createUser = function(username, callback){
   options.url += username;
   rp(options)
@@ -103,10 +102,10 @@ var User = exports.User = function User(_node){  //do not change the node
   this._node = _node 
 }
 
-//object with key value pairs already filtered to contain only data to be stored in user node
+//create User and add to neo4j and SQL database
 User.create = function(username){
   createUser(username, function(obj){
-    User.addToSql(obj);
+    sqlUser.addToSql(obj);
     var txn = db.batch();
     var username = JSON.stringify(obj.username)
     
@@ -140,6 +139,7 @@ User.create = function(username){
   })
 };
 
+//get username and github id from neo4j node
 User.get = function(username, cb){  
  db.find({username: username}, 'User', function(err, person){
    var user = new User(person);
@@ -148,7 +148,7 @@ User.get = function(username, cb){
 }
 
 
-//match users to other users based on a label or variable. pass in username and callback to handle result
+//match users to other users
 User.getMatches = function(username, cb){
   var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User) '
              + 'RETURN DISTINCT x, COUNT(x) '
@@ -162,42 +162,42 @@ User.getMatches = function(username, cb){
     for(var i = 0; i < result.length; i++){
       usernames.push(result[i].x.username)
     }
-    findUsers(usernames, function(users){
+    sqlUser.findUsers(usernames, function(users){
       cb(users);
     })
   })
 }
 
 
-User.addToSql = function(obj){
-  sqlUser.findOne({where: {githubId: obj.id}}).then(function(user){
-    if(user){
-      console.log('NO');
-    }else{
-      var anotherObj = {};
-      anotherObj.userName = obj.username;
-      anotherObj.name = obj.name;
-      anotherObj.location = obj.location;
-      anotherObj.blog = obj.blog;
-      anotherObj.company = obj.company;
-      anotherObj.pictureUrl = obj.avatar_url;
-      anotherObj.githubId = obj.id;
+// User.addToSql = function(obj){
+//   sqlUser.findOne({where: {githubId: obj.id}}).then(function(user){
+//     if(user){
+//       console.log('NO');
+//     }else{
+//       var anotherObj = {};
+//       anotherObj.userName = obj.username;
+//       anotherObj.name = obj.name;
+//       anotherObj.location = obj.location;
+//       anotherObj.blog = obj.blog;
+//       anotherObj.company = obj.company;
+//       anotherObj.pictureUrl = obj.avatar_url;
+//       anotherObj.githubId = obj.id;
       
-      sqlUser.create(anotherObj);
-    }
-  })
-};
+//       sqlUser.create(anotherObj);
+//     }
+//   })
+// };
 
-User.getData = function(gitId, cb){
-  sqlUser.findOne({where: {githubId: gitId}})
-  .then(function(user){
-    cb(user);
-  })
-}
+// User.getData = function(gitId, cb){
+//   sqlUser.findOne({where: {githubId: gitId}})
+//   .then(function(user){
+//     cb(user);
+//   })
+// }
 
-User.addInterests = function(interestsString){
+// User.addInterests = function(interestsString){
 
-}
+// }
 
 // User.addBio = function()
 

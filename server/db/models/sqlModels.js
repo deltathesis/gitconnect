@@ -113,12 +113,12 @@ var UserProject = sequelize.define('user_projects', {
   }
 });
 
-var findUsers = function(usersArray, cb){
-  User.findAll({ where: {userName: usersArray}})
-    .then(function(users){
-      cb(users);
-  });
-};
+// var findUsers = function(usersArray, cb){
+//   User.findAll({ where: {userName: usersArray}})
+//     .then(function(users){
+//       cb(users);
+//   });
+// };
 
 //DO NOT REMOVE THE THREE LINES OF CODE BELOW
 // UserProject.sync({force: true});
@@ -128,7 +128,6 @@ var findUsers = function(usersArray, cb){
 User.belongsToMany(Project, {as:"projects", through:"user_projects", foreignKey: 'user_id'});
 Project.belongsToMany(User, {as:"users", through:"user_projects", foreignKey: 'project_id'});
 
-module.exports.findUsers = findUsers;
 module.exports.Project = Project;
 module.exports.sequelize = sequelize;
 module.exports.User = User;

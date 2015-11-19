@@ -9,11 +9,8 @@ User.findUsers = function(usersArray, cb){
       cb(users);
   });
 };
+
 User.addToSql = function(obj){
-  sqlDb.findOne({where: {githubId: obj.id}}).then(function(user){
-    if(user){
-      console.log('NO');
-    }else{
       var anotherObj = {};
       anotherObj.userName = obj.username;
       anotherObj.name = obj.name;
@@ -23,16 +20,46 @@ User.addToSql = function(obj){
       anotherObj.pictureUrl = obj.avatar_url;
       anotherObj.githubId = obj.id;
       
-      sqlDb.create(anotherObj);
-    }
-  })
+      sqlDb.findOrCreate({
+        where: anotherObj
+      });
 };
 
-User.getData = function(gitId, cb){
-  sqlDb.findOne({where: {githubId: gitId}})
-  .then(function(user){
-    cb(user);
+//get all of the data for one user except for projects
+User.getData = function(gitIdOrUsername, cb){
+  if(isNaN(gitIdOrUsername)){
+    sqlDb.findOne({where: {userName: gitIdOrUsername}})
+    .then(function(user){
+      cb(user);
+    })
+  }else{
+    sqlDb.findOne({where: {githubId: gitIdOrUsername}})
+    .then(function(user){
+      cb(user);
+    })
+  }
+}
+
+//gets all projects associated with the user
+User.getProjects = function(userObj, cb){
+  userObj.getProjects()
+  .then(function(projectArray){
+    cb(projectArray)
   })
 }
+
+//create a project and associate it with the creator (a user)
+//this does not need a callback
+User.createProject = function(userObj, projectObj, cb){
+  if(cb){
+    userObj.createProject(projectObj)
+    .then(function(project){
+      cb(project);
+    })
+  }else{
+    userObj.createProject(projectObj)
+  }
+}
+
 
 module.exports = User;

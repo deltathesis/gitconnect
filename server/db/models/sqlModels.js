@@ -96,6 +96,9 @@ var Project = sequelize.define('project', {
   },
   thumbnail: {
     type: Sequelize.TEXT
+  },
+  projectLink: {
+    type: Sequelize.STRING
   }
 },{
   freezeTableName: true
@@ -103,6 +106,9 @@ var Project = sequelize.define('project', {
 //DATABASE TODOS:
   //Comments table
   //Ratings table
+  //team table
+
+
 
 var UserProject = sequelize.define('user_projects', {
   project_id: {

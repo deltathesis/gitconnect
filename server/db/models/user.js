@@ -166,3 +166,4 @@ User.getMatches = function(username, cb){
       cb(users);
     })
   })
+};

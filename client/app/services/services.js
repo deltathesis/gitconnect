@@ -38,4 +38,25 @@ angular.module('myApp.services', [])
   return socketFactory();
 }])
 
-;
+.factory('User', ['$http', '$cookies', function($http, $cookies) {
+
+	var matches = null;
+
+	var getMatches = function() {
+		if (matches) return matches;
+		var user = $cookies.get('github');
+		var promise = $http({
+			method: 'GET',
+			url: '/api/user/' + user + '/matches'
+		}).success(function(data) {
+			//console.log(data.matches);
+			return data.matches;
+		});
+		return promise;
+	};
+
+	return {
+		getMatches: getMatches
+	};
+
+}]);

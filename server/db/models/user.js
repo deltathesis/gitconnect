@@ -249,6 +249,3 @@ User.findOrCreateNode = function(props, labels){
 
 Promise.promisifyAll(User);
 
-
-
-

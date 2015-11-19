@@ -38,6 +38,11 @@ body {
   padding-top: 52px;
 }
 
+// Fade effect when page load
+.fadein-effect {
+ @include animationEffect(1s, fadeEffect);
+}
+
 // Clearfix
 .cf:before,
 .cf:after {

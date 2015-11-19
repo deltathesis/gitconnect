@@ -96,6 +96,9 @@ var Project = sequelize.define('project', {
   },
   thumbnail: {
     type: Sequelize.TEXT
+  },
+  projectLink: {
+    type: Sequelize.STRING
   }
 },{
   freezeTableName: true
@@ -103,6 +106,9 @@ var Project = sequelize.define('project', {
 //DATABASE TODOS:
   //Comments table
   //Ratings table
+  //team table
+
+
 
 var UserProject = sequelize.define('user_projects', {
   project_id: {
@@ -113,12 +119,6 @@ var UserProject = sequelize.define('user_projects', {
   }
 });
 
-// var findUsers = function(usersArray, cb){
-//   User.findAll({ where: {userName: usersArray}})
-//     .then(function(users){
-//       cb(users);
-//   });
-// };
 
 //DO NOT REMOVE THE THREE LINES OF CODE BELOW
 // UserProject.sync({force: true});

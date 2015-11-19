@@ -22,7 +22,16 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       username: "Chris Nixon",
       message: "Hey this is super cool"
     }
-  ]
+  ];
+
+  $scope.resources = {
+    project_repo: 'https://github.com/deltathesis/gitconnect',
+    scrum_board: 'https://trello.com/b/QNvGVucJ/gameplan',
+    website: "",
+    storage: "",
+    database: "",
+    code_library: ""
+  }
 
   $scope.messageSubmit = function(){
     if($scope.text){

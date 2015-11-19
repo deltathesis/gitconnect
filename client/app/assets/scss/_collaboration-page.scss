@@ -44,10 +44,15 @@
         top: 5px;
         left: 6px;
       }
-      .link-info {
+
+      .empty-link-info {
         padding-left: 10px;
         color: grey;
         font-style: italic;
+      }
+      .filled-link-info {
+        padding-left: 10px;
+        font-weight: bold;
       }
       .add-link {
         color: rgba(0,0,0,0.5);

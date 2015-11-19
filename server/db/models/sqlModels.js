@@ -79,10 +79,10 @@ var Project = sequelize.define('project', {
   technologies: {
     type: Sequelize.TEXT
   },
-  ratingAverage: {
+  ratingUpvote: {
     type: Sequelize.INTEGER
   },
-  ratingCounter: {
+  ratingDownvote: {
     type: Sequelize.INTEGER
   },
   ratingTotal: {

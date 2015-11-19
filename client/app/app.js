@@ -19,7 +19,8 @@ angular.module('myApp', [
   'myApp.chatpage',
   'myApp.signup',
   'btford.socket-io',
-  'myApp.collaboration-page'
+  'myApp.collaboration-page',
+  'myApp.requests'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

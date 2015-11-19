@@ -1,0 +1,102 @@
+.requests-page {
+  .user-details-container {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
+    .user-details {
+      .user-pic {
+        float: left;
+        a {
+          display: inline-block;
+          background-image:url('../../assets/pictures/users/default-user.jpg');
+          background-size: cover;
+          background-position: 50% 50%;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border: 2px solid $mainColor;
+        }
+      }
+      .user-subdetails {
+        float: left;
+        padding-left: 15px;
+        .user-name {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        .subdetail {
+          &.time {
+            font-size: 14px;
+            margin-top: 6px;
+          }
+          &.ratings {
+            font-size: 20px;
+            margin-top: 5px;
+            .fa-star {
+              color: gold;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .user-profile-block {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
+    .details-container {
+      h3 {
+        margin-top: 0px;
+      }
+      .list {
+        ul {
+          li {
+            padding-top: 10px;
+            a {
+              border-bottom: 1px solid #AAA;
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    &.user-recents-container {
+      .recents-details {
+        .recent {
+          padding-top: 20px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #AAA;
+          p {
+            margin-top: 5px;
+            margin-bottom: 0px;
+            &.subtitle {
+              font-weight: bold;
+            }
+          }
+          &.participation {
+          }
+          &.comments {
+          }
+          &.project {
+            .project-post {
+              margin-top: 20px;
+              .picture-container {
+              height: 200px;
+                a {
+                  width: 100%;
+                  height: 100%;
+                  display: block;
+                  background-size:cover;
+                  background-position: 50% 50%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

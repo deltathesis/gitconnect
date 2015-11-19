@@ -60,18 +60,35 @@ module.exports = function (socket) {
     users: userNames.get()
   });
 
-
-  socket.on('join', function (data) {
-    // console.log('USERS', users);
+  // join two users into a privateMessaging room
+  socket.on('join:privateRoom', function(data) {
     for(var key in users) {
-      users[key].join(data.room);
+      if(key === data.users[0]) {
+        console.log('joined myself to Room: ', data.roomName);
+        users[key].join(data.roomName);
+      }
+      if(key === data.users[1]) {
+        console.log('joined ' + data.users[1] + ' to ' + data.roomName);
+        users[key].join(data.roomName);
+      }
     }
+  });
+
+  socket.on('send:privateMessage', function(data) {
+    console.log('data', data);
+    console.log('socket', socket.rooms);
+    socket.to(data.room).emit('send:message', {
+      room: data.room,
+      user: name,
+      text: data.message
+    });
   });
 
   // notify other clients that a new user has joined
   socket.broadcast.emit('user:join', {
     name: name
   });
+
   // broadcast a user's message to other users
   socket.on('send:message', function (data) {
     console.log('socket', socket.rooms);

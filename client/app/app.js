@@ -16,7 +16,7 @@ angular.module('myApp', [
   'myApp.version',
   'myApp.auth',
   'myApp.services',
-  'myApp.chatpage',
+  'myApp.privateChat',
   'myApp.signup',
   'btford.socket-io',
   'myApp.collaboration-page',

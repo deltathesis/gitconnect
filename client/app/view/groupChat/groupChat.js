@@ -11,8 +11,7 @@ angular.module('myApp.groupChat', ['ngRoute'])
 .controller('groupChatController', ['$scope', 'socket', function($scope, socket) {
 
   $scope.messages = [];
-  $scope.rooms = [];
-  $scope.rooms[0] = [];
+
   /** Socket Listeners **/
 
   // Socket listeners
@@ -21,14 +20,10 @@ angular.module('myApp.groupChat', ['ngRoute'])
   socket.on('init', function (data) {
     $scope.name = data.name;
     $scope.users = data.users;
-    socket.emit('join', {
-      room: $scope.name
-    });
-    console.log('myName', $scope.name);
   });
 
   socket.on('send:message', function (message) {
-    $scope.rooms[0].push(message);
+    $scope.messages.push(message);
   });
 
   socket.on('user:join', function (data) {
@@ -38,12 +33,6 @@ angular.module('myApp.groupChat', ['ngRoute'])
     // });
   $scope.users.push(data.name);
 });
-
-  $scope.sendPrivateMessage = function(target) {
-    socket.emit('send:privateMessage', {
-    message: $scope.message
-    });
-  };
 
   // add a message to the conversation when a user disconnects or leaves the room
   socket.on('user:left', function (data) {
@@ -65,13 +54,10 @@ angular.module('myApp.groupChat', ['ngRoute'])
     socket.emit('send:message', {
       message: $scope.message
     });
-    $scope.rooms[0].push({
+    $scope.messages.push({
       user: $scope.name,
       text: $scope.message
     });
-    // var objDiv = document.getElementById("your_div");
-    // objDiv.scrollTop = objDiv.scrollHeight;
-    // clear message box
     $scope.message = '';
     scrollToBottom();
   };

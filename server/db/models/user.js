@@ -150,7 +150,7 @@ User.get = function(username, cb){
 
 //match users to other users
 User.getMatches = function(username, cb){
-  var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: "true"}) '
+  var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: true}) '
              + 'RETURN DISTINCT x, COUNT(x) '
              + 'ORDER BY COUNT(x) DESC '
              + 'LIMIT 10';

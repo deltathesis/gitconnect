@@ -5,12 +5,13 @@ angular.module('myApp.connect', ['ngRoute'])
   	authenticate: true,
     templateUrl: 'view/connect/connect.html',
     controller: 'connectCtrl',
-    resolve :{
-        matches: ['User', function(User) {
-          return User.getMatches();
-        }]
-      }
-    });
+    resolve: {
+      //The view will not load until this promise is resolved.
+      matches: ['User', function(User) {
+        return User.getMatches();
+      }]
+    }
+  });
 }])
 
 .directive('onFinishRender', ['$timeout', function ($timeout) {
@@ -27,6 +28,8 @@ angular.module('myApp.connect', ['ngRoute'])
 }])
 
 .controller('connectCtrl', ['$scope', 'matches', function($scope, matches) {
+
+  $scope.users = matches;
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       var swiper = new Swiper('.swiper-container', {
@@ -60,6 +63,6 @@ angular.module('myApp.connect', ['ngRoute'])
       }); 
   });
 
-  $scope.users = matches.data.matches;
+  
 
 }]);

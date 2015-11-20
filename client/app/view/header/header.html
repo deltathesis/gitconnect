@@ -33,7 +33,7 @@
         <li ng-show='user' class="requests" data-messages="7"><a href="#/requests"><i class="fa fa-share-alt"></i></a></li>
         <li ng-show='user' class="messaging" data-messages="2"><a href="#/privateChat"><i class="fa fa-comments"></i></a></li>
         <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>
-        <li ng-show='user' class="user-pic"><a href='#/profile'></a></li>
+        <li ng-show='user' class="user-pic"><a href='#/profile' ng-style="{'background-image': 'url({{ user.avatar_url }})'}"></a></li>
         <li ng-show='user'><a href='#/profile'>{{ user.githubUserName }}</a></li>
         <li ng-show='user'><a href="/logout" ng-click='logout()'>Logout</a></li>
       </ul>

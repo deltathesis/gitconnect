@@ -1,0 +1,27 @@
+<div class="container page subscription-page fadein-effect">
+
+  <div class="row user-details-container">
+    <div class="col-xs-12 user-details">
+      
+    </div>
+  </div>
+
+  
+
+  <div class="row user-languages-container user-profile-block">
+    <div class="language-details details-container">
+      <h3 class="col-xs-12">Languages</h3>
+      <div class="language-list list">
+        <ul>
+          <li class="col-xs-6 col-sm-3" ng-repeat="language in user.languages">
+            <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{language}}.jpg')"></span>
+            <span class="tech-name">{{language}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+
+</div>

@@ -20,7 +20,8 @@ angular.module('myApp', [
   'myApp.signup',
   'btford.socket-io',
   'myApp.collaboration-page',
-  'myApp.requests'
+  'myApp.requests',
+  'myApp.subscription'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

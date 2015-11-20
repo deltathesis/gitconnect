@@ -10,94 +10,80 @@ angular.module('myApp.privateChat', ['ngRoute'])
 
 .controller('privateChatController', ['$scope', 'socket', function($scope, socket) {
 
-  $scope.rooms = [];        //list of rooms the user is a part of and the users in that room.
-  $scope.roomMessages = {}; //contains the messages of every room.
-  $scope.name;
-  $scope.users;
-  $scope.currentRoom;
-  $scope.currentTarget;
-  $scope.roomMessages[$scope.currentRoom] = [];
+  $scope.roomMessages; //key is roomName, value is another obj which has keys users and messages
+  $scope.name;                            //users is an array [selfUser, targetuser]
+  $scope.currentRoom;                     //messages is obj with props text, room, otheruser
+  $scope.currentTarget = 'Message your Connections!';
 
 
   /** Socket Listeners **/
 
   socket.on('init', function (data) {
     $scope.name = data.name;
-    $scope.users = data.users;
   });
-
-  socket.on('testing', function(data) {
-    console.log('it worked');
-  })
-
-  //
+  
   socket.on('send:message', function (message) {
-    if(!$scope.roomMessages[message.room]) {
-      $scope.roomMessages[message.room] = [];
 
-      var roomObj = { 
-        roomName : message.room,
-        users : [$scope.name, message.user]
-      };
-      $scope.rooms.push(roomObj);
+    //if room doesn't exist, create it
+    var users = [$scope.name, message.user];
+    if(!$scope.roomMessages) {
+      $scope.roomMessages = {};
     }
+    if(!$scope.roomMessages[message.room]) {
+      //new room Init
+      $scope.roomMessages[message.room] = {};
+      $scope.roomMessages[message.room].users;
+      $scope.roomMessages[message.room].messages = [];
+    }
+
     if(!$scope.currentRoom) {
       $scope.currentRoom = message.room;
     }
-    $scope.roomMessages[message.room].push(message);
-  });
 
-  socket.on('user:join', function (data) {
-    // $scope.messages.push({
-    //   user: 'ALL',
-    //   text: 'User ' + data.name + ' has joined.'
-    // });
-  $scope.users.push(data.name);
-});
+    $scope.roomMessages[message.room].users = users;
+    $scope.roomMessages[message.room].messages.push(message);
+  });
 
   // add a message to the conversation when a user disconnects or leaves the room
   socket.on('user:left', function (data) {
-  var i, user;
-  for (i = 0; i < $scope.users.length; i++) {
-    user = $scope.users[i];
-    if (user === data.name) {
-      $scope.users.splice(i, 1);
-      break;
-    }
-  }
-});
+    console.log('User disconnected');
+  });
 
   /**Scope Functions **/
 
   $scope.changeRoom = function(newRoom) {
-    console.log('Old Room: ', $scope.currentRoom);
-    console.log('changing room to: ', newRoom);
     $scope.currentRoom = newRoom;
 
     //setting current Target to other user
-    for(var i = 0; i < $scope.rooms.length; i++) {
-      console.log('am i here');
-      if($scope.rooms[i].roomName === newRoom) {
-        $scope.currentTarget = $scope.rooms[i].users[1];
-        console.log('Target: ', $scope.currentTarget);
+    for(var i in $scope.roomMessages) {
+      if(i === newRoom) {
+        $scope.currentTarget = $scope.roomMessages[i].users[1];
       }
     }
   }
 
   //Creates A Private Message Room instance
   $scope.createNewRoom = function(targetUser) {
+    console.log($scope.roomMessages);
+    if(!$scope.roomMessages) {
+      $scope.roomMessages = {};
+    }
     var newRoom = $scope.name + targetUser;
-    $scope.currentTarget = targetUser;
     var twoUsers = [$scope.name, targetUser];
     var roomObj = { 
       roomName : newRoom,
       users : twoUsers
     };
     socket.emit('join:privateRoom', roomObj);
-    $scope.rooms.push(roomObj);
-    $scope.roomMessages[newRoom] = [];
+    //init new Room
+    $scope.roomMessages[newRoom] = {};
+    $scope.roomMessages[newRoom].users = twoUsers;
+    $scope.roomMessages[newRoom].messages = [];
+
+    $scope.currentTarget = targetUser;
     $scope.currentRoom = newRoom;
     $scope.newUser = '';
+    console.log($scope.roomMessages);
   }
 
   //send Direct Message
@@ -106,26 +92,10 @@ angular.module('myApp.privateChat', ['ngRoute'])
     message: $scope.message,
     room: target
     });
-    $scope.roomMessages[$scope.currentRoom].push({
+    $scope.roomMessages[$scope.currentRoom].messages.push({
       user: $scope.name,
       text: $scope.message
     });
-    console.log('Messages in current Room: ', $scope.roomMessages[$scope.currentRoom]);
-    $scope.message = '';
-    scrollToBottom();
-  };
-
-  $scope.sendMessage = function () {
-    socket.emit('send:message', {
-      message: $scope.message
-    });
-    $scope.messages.push({
-      user: $scope.name,
-      text: $scope.message
-    });
-    // var objDiv = document.getElementById("your_div");
-    // objDiv.scrollTop = objDiv.scrollHeight;
-    // clear message box
     $scope.message = '';
     scrollToBottom();
   };

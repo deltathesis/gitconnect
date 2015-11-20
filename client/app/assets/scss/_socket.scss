@@ -6,98 +6,103 @@
   .chat-users {
     background-color: white;
     .form-group {
-      float:right;
-      border: 1px solid #CCC;
+      border: 1px solid #000;
       text-align: center;
       padding: 5px 5px;
       background-color: #f2f2f2;
-      position: relative;
+      margin-bottom:0px;
     }
     .allUsers-list {
-      position: absolute;
-      padding-left:30px;
-      margin-top: 70px;
+      height: 500px;
+      .allUsers-list-elm:hover {
+        margin: 0px 0px;
+      }
       .allUsers-list-elm {
-        border-bottom: 1px dashed #CCC;
-        padding:20px 0px;
-        margin: 10px 0px;
-        .listOverview {
-          .user-pic {
-            width: 50px;
-            height: 50px;
+       border-bottom: 1px solid #000;
+       padding-top: 5px;
+       padding-bottom: 5px;
+       margin: 0px 20px;
+       .listOverview {
+        .user-pic {
+          width: 50px;
+          height: 50px;
+          display: inline-block;
+          background-size: cover;
+          background-position: 50% 50%;
+          border-radius: 50%;
+          border: 2px solid $mainColor;
+        }
+        .otherUser-info {
             display: inline-block;
-            background-size: cover;
-            background-position: 50% 50%;
-            border-radius: 50%;
-            border: 2px solid $mainColor;
-
-          }
+            margin-left:10px;
           p {
-            margin: 0px 5px;
+            margin: 5px 5px;
             color: black;
           }
         }
       }
     }
   }
-  .chat-messages {
-    padding-bottom:0px;
-    background-color: #F2F2F2;
-    min-height: 600px;
-    max-height: 600px;
-    box-shadow: 10px 10px 100px #888888;
-    .bigMessage-container {
-      height: 400px;
-      overflow: scroll;
-      overflow-x: hidden;
-      .messages-container {
-        .message-body {
-          margin-bottom: 3px;
+}
+.chat-messages {
+  padding-bottom:0px;
+  border: 1px solid #000;
+  background-color: #F2F2F2;
+  min-height: 600px;
+  max-height: 600px;
+  box-shadow: 10px 10px 100px #888888;
+  .bigMessage-container {
+    height: 400px;
+    overflow: scroll;
+    overflow-x: hidden;
+    .messages-container {
+      .message-body {
+        margin-bottom: 3px;
+        p {
+          padding: 5px 10px;
+          border-radius: 5px;
+          display: inline-block;
+          font-size:16px;
+        }
+        &.personnal {
+          text-align: right;
           p {
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-            font-size:16px;
-          }
-          &.personnal {
-            text-align: right;
-            p {
-              color: black;
-              background-color: $chatColor1;
-            }
-          }
-          &.other {
-            text-align: left;
-            p {
-              color: white;
-              background-color: $chatColor2;
-            }         
+            color: black;
+            background-color: $chatColor1;
           }
         }
-      }
-    }
-    .chat-typing {
-      margin-bottom: 0px;
-      text-align: right;
-      .form-group {
-        position:relative;
-        background-color: transparent;
-        .form-control {
-          padding: 5px;
-          position: relative;
-          height: 20px;
-          min-height: 100px;
-        }
-        .messageButton {
-          position: absolute;
-          top:60px;
-          right:5px;
+        &.other {
+          text-align: left;
+          p {
+            color: white;
+            background-color: $chatColor2;
+          }         
         }
       }
     }
   }
-  // Fade effect when page load
-.fadein-effect {
- @include animationEffect(0.5s, fadeEffect);
+  .chat-typing {
+    margin-bottom: 0px;
+    text-align: right;
+    .form-group {
+      position:relative;
+      background-color: transparent;
+      .form-control {
+        padding: 5px;
+        position: relative;
+        height: 20px;
+        min-height: 100px;
+      }
+      .messageButton {
+        position: absolute;
+        top:60px;
+        right:5px;
+      }
+    }
+  }
 }
+  // Fade effect when page load
+  .fadein-effect {
+   @include animationEffect(0.5s, fadeEffect);
+ }
 }

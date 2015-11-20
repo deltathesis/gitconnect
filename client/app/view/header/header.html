@@ -20,7 +20,7 @@
         <li ng-show='user'><a href="#/profile" class="link-profile">Profile</a></li>
         <li ng-show='user'><a href="#/projects" class="link-projects">Projects</a></li>
         <li ng-show='user'><a href="#/project" class="link-project">Project</a></li>
-<!--         <li ng-show='user'><a href="#/chat">Global Chat</a></li> -->
+        <!-- <li ng-show='user'><a href="#/groupChat">Chat4Projects</a></li> -->
         <li ng-show='user'><a href="#/collaboration-page">Collab Page</a></li>
       </ul>
  <!--      <form class="navbar-form navbar-left" role="search">
@@ -31,7 +31,7 @@
       </form> -->
       <ul class="nav navbar-nav navbar-right">
         <li ng-show='user' class="requests" data-messages="7"><a href="#/requests"><i class="fa fa-share-alt"></i></a></li>
-        <li ng-show='user' class="messaging" data-messages="2"><a href="#/groupChat"><i class="fa fa-comments"></i></a></li>
+        <li ng-show='user' class="messaging" data-messages="2"><a href="#/privateChat"><i class="fa fa-comments"></i></a></li>
         <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>
         <li ng-show='user' class="user-pic"><a href='#/profile'></a></li>
         <li ng-show='user'><a href='#/profile'>{{ user.githubUserName }}</a></li>

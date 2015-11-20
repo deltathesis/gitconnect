@@ -7,7 +7,6 @@
     padding-left:5px;
     background-color: white;
     width:250px;
-    height:800px;
     .btn-group {
       text-align:center;
     }
@@ -46,12 +45,13 @@
   .chat-messages {
     padding-bottom:0px;
     background-color: #F2F2F2;
-    height: 800px;
+    min-height: 600px;
+    max-height: 600px;
     box-shadow: 10px 10px 100px #888888;
-    overflow-x: hidden;
-    overflow-y: visible;
     .bigMessage-container {
-      height: 600px;
+      height: 400px;
+      overflow: scroll;
+      overflow-x: hidden;
       .messages-container {
         .message-body {
           margin-bottom: 3px;
@@ -79,6 +79,7 @@
       }
     }
     .chat-typing {
+      margin-bottom: 0px;
       text-align: right;
       .form-group {
         position:relative;
@@ -97,4 +98,8 @@
       }
     }
   }
+  // Fade effect when page load
+.fadein-effect {
+ @include animationEffect(0.5s, fadeEffect);
+}
 }

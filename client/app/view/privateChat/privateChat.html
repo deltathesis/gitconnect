@@ -1,36 +1,25 @@
 <div id="chat-page" class="container page chat-page">
-  <h4>{{name}}<h4>
   <!-- <div class="chat-users col-xs-12 col-sm-6 ">
     <h3>Dudes</h3>
     <div ng-repeat="users in users" class="users-container">
       <a>{{users}}</a>
     </div>
   </div> -->
-  <div class="chat-users col-xs-12 col-sm-6">
-    <form class="form-inline">
-      <div class="form-group">
+  <div class="chat-users col-xs-12 col-sm-4">
+    <div class="form-group">
+      <form class="form-inline">
+        <h4>{{name}}</h4>
         <input type="text" class="form-control" id="User" placeholder="User" ng-model="newUser">
-      </div>
-      <button type="submit" class="btn btn-default" ng-click="createNewRoom(newUser)">Message</button>
-    </form>
-    <!-- <ul class="allUsers-list">
-      <li ng-repeat="elm in fakeUsers" class="allUsers-list-elm">
-        <div class="listOverview">
-          <a href="">
-            <div><a href="" class="user-pic col-xs-3" style="background-image:url({{elm.picture}})"></a></div>
-            <p>{{elm.id}}</p>
-            <p>{{elm.bio}}</p>
-          </a>
-        </div>
-        <br>
-      </li>
-    </ul> -->
+        <button type="submit" class="btn btn-primary" ng-click="createNewRoom(newUser)">Message</button>
+      </form>
+    </div>
     <ul class="allUsers-list">
-      <li ng-repeat="elm in rooms" class="allUsers-list-elm">
+      <li ng-repeat="elm in rooms"  class="allUsers-list-elm">
         <div class="listOverview">
-          <a href="" ng-click="changeRoom(elm.roomName)">
-            <p>{{elm.roomName}}</p>
+          <a href="" class="user-pic col-xs-3" style="background-image:url({{fakeUsers[2].picture}})" ng-click="changeRoom(elm.roomName)">
           </a>
+          <p>{{elm.roomName}}</p>
+          <p>{{fakeUsers[2].bio}}</p>
         </div>
       </li>
     </ul>

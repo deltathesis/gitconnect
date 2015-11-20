@@ -38,14 +38,15 @@ angular.module('myApp.services', [])
   return socketFactory();
 }])
 
-.factory('User', ['$http', '$cookies', function($http, $cookies) {
+.factory('User', ['$http', '$cookies', 'Cookie', function($http, $cookies, Cookie) {
 
 	var getMatches = function() {
-		var user = $cookies.get('github');
+		var cookie = $cookies.get('github');
+		var user = Cookie.parseCookie(cookie);
 		return $http({
 			cache: true,
 			method: 'GET',
-			url: '/api/user/' + user + '/matches'
+			url: '/api/user/' + user.username + '/matches'
 		}).then(function(res) {
 			return res.data.matches;
 		});
@@ -55,4 +56,17 @@ angular.module('myApp.services', [])
 		getMatches: getMatches
 	};
 
-}]);
+}])
+
+.factory('Cookie', ['$cookies', function($cookies) {
+
+	var parseCookie = function(cookie) {
+		var json = cookie.substring(cookie.indexOf("{"), cookie.lastIndexOf("}") + 1);
+		return angular.fromJson(json);
+	};
+
+	return {
+		parseCookie: parseCookie
+	};
+
+}])

@@ -8,20 +8,30 @@ angular.module('myApp.privateChat', ['ngRoute'])
   });
 }])
 
-.controller('privateChatController', ['$scope', 'socket', function($scope, socket) {
+.controller('privateChatController', ['$scope', 'socket', '$cookies', 'Cookie', function($scope, socket, $cookies, Cookie) {
 
   $scope.roomMessages; //key is roomName, value is another obj which has keys users and messages
   $scope.name;                            //users is an array [selfUser, targetuser]
   $scope.currentRoom;                     //messages is obj with props text, room, otheruser
   $scope.currentTarget = 'Message your Connections!';
-
-
+  var cookie = $cookies.get('github');
+  var cookieObj = Cookie.parseCookie(cookie);
+  $scope.username = cookieObj.username;
   /** Socket Listeners **/
+
+  socket.emit('myusername', $scope.username);
 
   socket.on('init', function (data) {
     $scope.name = data.name;
+    $scope.users = data.users;
+  console.log('allUsers1', $scope.users);
   });
-  
+
+  socket.on('bigInit', function (data) {
+    $scope.users = data.users;
+    console.log('allUsers2: ', $scope.users);
+  })
+
   socket.on('send:message', function (message) {
 
     //if room doesn't exist, create it
@@ -68,8 +78,8 @@ angular.module('myApp.privateChat', ['ngRoute'])
     if(!$scope.roomMessages) {
       $scope.roomMessages = {};
     }
-    var newRoom = $scope.name + targetUser;
-    var twoUsers = [$scope.name, targetUser];
+    var newRoom = $scope.username + targetUser;
+    var twoUsers = [$scope.username, targetUser];
     var roomObj = { 
       roomName : newRoom,
       users : twoUsers

@@ -1,8 +1,11 @@
-// require('dotenv').config({path:'../../../.env'});
+//uncomment if testing db
+require('dotenv').config({path:'../../../.env'});
+var testing = true;
+
 var rp = require('request-promise');
-//var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
-//var url = require('url').parse(URL);
-var sqlUser = require('./sqlUserFns.js')
+var URL = !testing ? process.env.GRAPHENE_DB_URL : process.env.GRAPHENE_DB_DEV_URL
+var url = require('url').parse(URL);
+
 
 var db = exports.db = require("seraph")({
   server: process.env.NEO_AWS,
@@ -105,21 +108,13 @@ var User = exports.User = function User(_node){  //do not change the node
 //create User and add to neo4j and SQL database
 User.create = function(username){
   createUser(username, function(obj){
-    sqlUser.addToSql(obj);
+    // sqlUser.addToSql(obj);
     var txn = db.batch();
-    var username = JSON.stringify(obj.username)
+    var company = !obj.company ? 'null' : JSON.stringify(obj.company)
     
     for(var language in obj.languages){
       var lang = JSON.stringify(language)
-      var languageCypher =  "MERGE (user:User { \
-                            id: " + obj.id + ", \
-                            username: " + username + ", \
-                            availability: true, \
-                            name: '" + obj.name + "', \
-                            avatar_url: '" + obj.avatar_url + "', \
-                            blog: '" + obj.blog + "', \
-                            company: '" + obj.company + "' \
-                          }) MERGE (language:Language {name: " + lang + "}) "
+      var languageCypher =  "MERGE (user:User {githubId: " + obj.id + ", name: '" + obj.name + "', username: '" + obj.username + "', company: '" + company + "', pictureUrl: '" + obj.avatar_url + "', availability: true}) MERGE (language:Language {name: " + lang + "}) "
                           + "MERGE (user)-[:KNOWS]-(language) "
                           + "RETURN language, user";
       txn.query(languageCypher, function(err, result){
@@ -130,7 +125,7 @@ User.create = function(username){
     }
     for(var i = 0; i < obj.starredRepos.length; i++){
       var currRepoId = obj.starredRepos[i].id
-      var repoCypher =  "MERGE (user:User {id: " + obj.id + "}) MERGE (repo:Repo {id: " + currRepoId + "}) "
+      var repoCypher =  "MERGE (user:User {githubId: " + obj.id + "}) MERGE (repo:Repo {id: " + currRepoId + "}) "
                       + "MERGE (user)-[:WATCHES]-(repo) "
                       + "RETURN repo, user";
       txn.query(repoCypher, function(err, results){

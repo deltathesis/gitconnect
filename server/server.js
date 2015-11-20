@@ -59,9 +59,11 @@ app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
   	req.session.username = req.user.username;
+    req.session.avatar_url = req.user.avatar_url;
 
     // Store github cookie for 7 days
     res.cookie('github', req.user.username, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
+    res.cookie('github.avatar', req.user._json.avatar_url, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
 
     User.get(req.user.username, function(user) {
       if (!user) {
@@ -77,11 +79,12 @@ app.get('/auth/github/callback',
 app.get('/logout', function(req, res) {
 	req.logout();
   res.clearCookie('github');
+  res.clearCookie('github.avatar');
 	res.redirect('/');
 });
 
 app.get('/api/user', function(req, res) {
-	res.json({username: req.session.username});
+	res.json({username: req.session.username, avatar_url: req.session.avatar_url});
 });
 
 app.get('/api/user/:name/matches', function(req, res) {

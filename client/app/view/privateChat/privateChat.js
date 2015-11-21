@@ -25,6 +25,14 @@ angular.module('myApp.privateChat', ['ngRoute'])
     $scope.name = data.name;
     $scope.users = data.users;
     $scope.roomMessages = data.rooms;
+
+    for(var key in $scope.roomMessages) {
+      if($scope.roomMessages[key].users[0] !== $scope.name) {
+        var temp = $scope.roomMessages[key].users[0];
+      $scope.roomMessages[key].users[0] = $scope.roomMessages[key].users[1];
+      $scope.roomMessages[key].users[1] = temp;
+      }
+    }
     $scope.changeRoom(Object.keys(data.rooms)[0])
   });
 

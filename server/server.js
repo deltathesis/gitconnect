@@ -74,7 +74,7 @@ app.get('/auth/github/callback',
     User.get(req.user.username, function(user) {
       if (!user) {
         User.create(req.user.username);
-        res.redirect('/subscription');
+        res.redirect('/#/subscription');
       } else {
         res.redirect('/');
       }

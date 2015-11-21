@@ -1,13 +1,13 @@
 // require('dotenv').config({path:'../../../.env'});
 var rp = require('request-promise');
-var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
-var url = require('url').parse(URL);
+//var URL = process.env.NEO4J_UFL || process.env.GRAPHENE_DB_URL;
+//var url = require('url').parse(URL);
 var sqlUser = require('./sqlUserFns.js')
 
 var db = exports.db = require("seraph")({
-  server: url.protocol + '//' + url.host,
-  user: url.auth.split(':')[0],
-  pass: url.auth.split(':')[1]
+  server: process.env.NEO_AWS,
+  user: process.env.NEO_AWS_USR,
+  pass: process.env.NEO_AWS_PWD
 });
 
 

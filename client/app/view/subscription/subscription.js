@@ -56,7 +56,7 @@ angular.module('myApp.subscription', ['ngRoute'])
     } else {
       $scope.existed = false;
       user.languages.push(tech); 
-      $scope.techList.splice(index, 1); 
+      $scope.techList.splice(index, 1);
     }
   }
 

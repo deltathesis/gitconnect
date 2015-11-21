@@ -24,12 +24,11 @@ angular.module('myApp.privateChat', ['ngRoute'])
   socket.on('init', function (data) {
     $scope.name = data.name;
     $scope.users = data.users;
-  console.log('allUsers1', $scope.users);
+    $scope.roomMessages = data.rooms;
   });
 
   socket.on('bigInit', function (data) {
     $scope.users = data.users;
-    console.log('allUsers2: ', $scope.users);
   })
 
   socket.on('send:message', function (message) {
@@ -60,7 +59,6 @@ angular.module('myApp.privateChat', ['ngRoute'])
   });
 
   socket.on('insertData', function(data){
-    console.log("$scope.roomMessages", $scope.roomMessages);
     socket.emit('storeData', angular.copy($scope.roomMessages));
   })
 

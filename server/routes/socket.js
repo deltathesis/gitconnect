@@ -1,33 +1,37 @@
 var Firebase = require('firebase');
-var firebase = new Firebase('https://dage.firebaseio.com');
-
-var users = {};
+var firebase = new Firebase('https://deltadage.firebaseio.com/');
 
 var people = {};
+
+var rooms;
+
+firebase.once("value", function(data) {
+  // do some stuff once
+  rooms = data.val();
+});
 // export function for listening to the socket
 module.exports = function (socket) {
-  console.log('user connected');
 
-  // var name = userNames.getGuestName();
-  // users[name] = socket;
-  // send the new user their name and a list of users
-  // socket.emit('init', {
-  //   name: name,
-  //   users: userNames.get()
-  // });
-var name;
+  console.log('user connected');
+  var name;
 
   socket.on('myusername', function(data) {
     name = data;
-    console.log('data', data);
     people[data] = socket;
     var peopleArray = [];
+    var roomsObj = {};
     for(var key in people) {
       peopleArray.push(key);
     }
+    for(var key in rooms) {
+      if(rooms[key].users.indexOf(name) > -1) {
+       roomsObj[key] = rooms[key];
+      }
+    }
     socket.emit('init', {
       name: data,
-      users: peopleArray
+      users: peopleArray,
+      rooms: roomsObj
     })
     socket.broadcast.emit('bigInit', {
       users: peopleArray
@@ -49,8 +53,6 @@ var name;
   });
 
   socket.on('send:privateMessage', function(data) {
-    console.log('data', data);
-    console.log('socket', socket.rooms);
     socket.to(data.room).emit('send:message', {
       room: data.room,
       user: name,
@@ -66,7 +68,6 @@ var name;
 
   // broadcast a user's message to other people
   socket.on('send:message', function (data) {
-    console.log('socket', socket.rooms);
     socket.broadcast.emit('send:message', {
       user: name,
       text: data.message
@@ -74,9 +75,8 @@ var name;
   });
 
   socket.on('storeData', function(data){
-    console.log('storeData data: ', data);
     if(data){
-    firebase.update(data);
+      firebase.update(data);
     }
   });
 

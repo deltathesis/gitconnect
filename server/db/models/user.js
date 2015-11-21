@@ -111,7 +111,15 @@ User.create = function(username){
     
     for(var language in obj.languages){
       var lang = JSON.stringify(language)
-      var languageCypher =  "MERGE (user:User {id: " + obj.id + ", username: " + username + ", availability: true}) MERGE (language:Language {name: " + lang + "}) "
+      var languageCypher =  "MERGE (user:User { \
+                            id: " + obj.id + ", \
+                            username: " + username + ", \
+                            availability: true, \
+                            name: '" + obj.name + "', \
+                            avatar_url: '" + obj.avatar_url + "', \
+                            blog: '" + obj.blog + "', \
+                            company: '" + obj.company + "' \
+                          }) MERGE (language:Language {name: " + lang + "}) "
                           + "MERGE (user)-[:KNOWS]-(language) "
                           + "RETURN language, user";
       txn.query(languageCypher, function(err, result){

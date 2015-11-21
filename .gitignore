@@ -6,6 +6,8 @@ client/app/dist/
 .env
 npm-debug.log
 
+# Protractor File
+client/testing/userinfo.js
 
 tmp
 .DS_Store

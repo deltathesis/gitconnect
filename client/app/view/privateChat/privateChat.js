@@ -25,6 +25,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
     $scope.name = data.name;
     $scope.users = data.users;
     $scope.roomMessages = data.rooms;
+    $scope.changeRoom(Object.keys(data.rooms)[0])
   });
 
   socket.on('bigInit', function (data) {

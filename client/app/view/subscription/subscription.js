@@ -65,11 +65,13 @@ angular.module('myApp.subscription', ['ngRoute'])
   }
 
   $scope.formSubmit = function() {
-    var city = $('#user-location').val();
+    var userCity = $('#user-location').val();
     var userSelectedTech = user.languages;
+    var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
     var results = {
-      city: city,
+      city: userCity,
+      email: userEmail,
       tech : userSelectedTech,
       bio: userBio
     }

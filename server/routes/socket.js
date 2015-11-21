@@ -104,5 +104,6 @@ module.exports = function (socket) {
     socket.broadcast.emit('user:left', {
       name: name
     });
+    delete people[name];
   });
 };

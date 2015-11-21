@@ -1,27 +1,56 @@
 <div class="container page subscription-page fadein-effect">
-<h1>Welcome</h1>
-  <div class="row user-details-container">
-    <div class="col-xs-12 user-details">
+  <h1>Welcome</h1>
+  <h2>Thanks for joining us {{user.name}}</h2>
+  <h4>We just need few more information about you</h4>
 
+  <form class="form-horizontal subscription-form row" ng-submit="formSubmit()">
+    <div class="form-group col-xs-12 col-sm-8 location-input">
+      <label for="user-location" class="control-label">Your Location</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="user-location" placeholder="Please select Google suggestion" required>
+      </div>
     </div>
-  </div>
 
-
-
-  <div class="row user-languages-container user-profile-block">
-    <div class="language-details details-container">
-      <h3 class="col-xs-12">Languages</h3>
-      <div class="language-list list">
+    <div class="tech-selection col-xs-12">
+      <h3>Your interests</h3>
+      <div class="techs user-selection" >
+        <h4>Tehcnologies you are interested in</h4>
         <ul>
-          <li class="col-xs-6 col-sm-3" ng-repeat="language in user.languages">
-            <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{language}}.jpg')"></span>
-            <span class="tech-name">{{language}}</span>
+        <li class="tech fadein-effect" ng-repeat="tech in user.languages track by $index" data-tech="{{tech}}" ng-click="removeTech(tech, $index)">
+            {{tech}} <i class="fa fa-times-circle"></i>
           </li>
         </ul>
       </div>
-    </div>
+
+      <div class="techs propositions" ng-init="initialTech()">
+        
+        <h4>Technologies you might be interested in</h4>
+        <label class="search-form">Search: <input ng-model="searchText"></label>
+        <p ng-show="existed" class="error-addition"> Already added</p>
+        <ul>
+          <li class="tech fadein-effect" ng-repeat="tech in techList | filter:searchText track by $index" data-tech="{{tech}}" ng-click="addTech(tech, $index)">
+            {{tech}} <i class="fa fa-plus-circle"></i>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group col-xs-12 submit-button">
+          <button type="submit" class="btn btn-default">Sign in</button>
+      </div>
+    </form>
+
   </div>
 
-  
-
-</div>
+  <script type="text/javascript">
+   function initialize() {
+    var input = document.getElementById('user-location');
+    var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+    autocomplete.addListener('place_changed', function() {
+      // Get city name only
+      var place = autocomplete.getPlace();
+      console.log(place.name);
+      $('#user-location').val(place.name);
+    });
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>

@@ -4,7 +4,7 @@ angular.module('myApp.subscription', ['ngRoute'])
   $routeProvider.when('/subscription', {
     authenticate: true,
     templateUrl: 'view/subscription/subscription.html',
-    controller: 'subscriptionPage',
+    controller: 'subscriptionPage'
   });
 }])
 
@@ -28,15 +28,56 @@ angular.module('myApp.subscription', ['ngRoute'])
 
   $scope.user = user;
 
-  $scope.ratings = function() {
-    // Ratings Module
-    $ratings = $('.stars');
-    for (var pos = 0; pos < 5; pos++) {
-      $ratings.append("<i class='fa fa-star-o position-" + pos + "'></i>");
-    }
-    for (var i = 0; i < user.ratings; i++) {
-      $('.position-' + i).removeClass('fa-star-o').addClass('fa-star');
+  $scope.techList = [
+    'JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase',
+    'Ruby', 'Less', 'Scala', 'Python', 'C++', 'Swift', 'Objective-C',
+    'mongoDB', 'Neo4j', 'MySQL', 'SQLite', 'Shell', 'Redis', 'Meteor',
+    'jQuery', 'Java', 'Rails', 'React', 'PHP', 'PostgreSQL', 'Node.js',
+    'Express', 'Stylus', 'Symfony', 'Wordpress', 'Zend', 'socket.io',
+    'Backbone', 'Boostrap', 'Foundation', 'CoffeeScript', 'Bower', 'Django',
+    'ActionScript', 'Ember', 'Go', 'Gulp', 'Grunt', 'Laravel', 'Docker'
+  ];
+
+  // Remove user existing tech
+  $scope.initialTech = function() {
+    setTimeout(function () { 
+      user.languages.forEach(function(element) {
+        // $(".propositions .tech[data-tech='"+element+"']").fadeOut(0);
+        // $(".propositions .tech[data-tech='"+element+"']").remove();
+        var index = $scope.techList.indexOf(element);
+         $scope.techList.splice(index, 1); 
+         $scope.$apply();
+      }) 
+    }, 100);
+  };
+
+  $scope.addTech = function(tech, index) {
+    if (user.languages.indexOf(tech) !== -1) {
+      $scope.existed = true;
+      $scope.techList.splice(index, 1); 
+    } else {
+      $scope.existed = false;
+      user.languages.push(tech); 
+      $scope.techList.splice(index, 1); 
     }
   }
+
+  $scope.removeTech = function(tech, index) {
+    $scope.techList.push(tech); 
+    user.languages.splice(index, 1);  
+    // $(".user-selection .tech[data-tech='"+ tech +"']").remove();
+  }
+
+  $scope.formSubmit = function() {
+    var city = $('#user-location').val();
+    var userSelectedTech = user.languages;
+    var results = {
+      city: city,
+      tech : userSelectedTech
+    }
+    console.log(results);
+  }
+
+
 
 }]);

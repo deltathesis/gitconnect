@@ -1,3 +1,54 @@
 .subscription-page {
+  text-align: center;
+  .subscription-form {
+    padding-top: 30px;
+    text-align: left;
+    .location-input {
+      label {
+        float: left;
+        padding: 6px 15px;
+      }
+    }
+    .tech-selection {
+      .techs {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px dotted #CCC;
+        &.user-selection { padding-top: 10px;}
+        .tech {
+          display: inline-block;
+          padding: 5px 10px;
+          margin-right: 5px;
+          margin-bottom: 5px;
+          background-color: $mainColor;
+          color: #FFF;
+          border-radius: 3px;
+          transition: background-color 0.2s ease;
+          &.fadein-effect {
+            @include animationEffect(0.3s, fadeEffect);
+          }
+        }
+        &.user-selection .tech:hover {
+          background-color: #E32636;
+        }
+        &.propositions .tech:hover {
+          background-color: green;
+        }
+        .search-form {
+          margin-top: 10px;
+          margin-bottom: 20px;
+        }
+        .error-addition {
+          font-weight: bold;
+          color: #E32636;
+        }
+      }
+    }
+    .submit-button {
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+
 
 }

@@ -67,9 +67,9 @@ angular.module('myApp.privateChat', ['ngRoute'])
     console.log('User disconnected');
   });
 
-  socket.on('insertData', function(data){
-    socket.emit('storeData', angular.copy($scope.roomMessages));
-  })
+  // socket.on('insertData', function(data){
+  //   socket.emit('storeData', angular.copy($scope.roomMessages));
+  // })
 
   /**Scope Functions **/
 
@@ -120,6 +120,8 @@ angular.module('myApp.privateChat', ['ngRoute'])
     });
     $scope.message = '';
     scrollToBottom();
+    socket.emit('storeData', angular.copy($scope.roomMessages));
+    socket.emit('notify', {target: angular.copy($scope.currentTarget), currentUser: angular.copy($scope.name)});
   };
 
   var scrollToBottom = function() {

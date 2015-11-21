@@ -34,8 +34,8 @@
           <span class="badge">7</span>
           <a href="#/requests"><i class="fa fa-share-alt"></i></a>
         </li>
-        <li ng-show='user' class="messaging" data-messages="2">
-          <span class="badge">2</span>
+        <li ng-show='user' class="messaging" data-messages={{unreadMessages}}>
+          <span class="badge">{{unreadMessages}}</span>
           <a href="#/privateChat"><i class="fa fa-comments"></i></a>
         </li>
         <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>

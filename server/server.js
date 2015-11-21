@@ -92,6 +92,12 @@ app.get('/api/user', function(req, res) {
 	res.json({username: req.session.username, avatar_url: req.session.avatar_url});
 });
 
+app.get('/api/user/:name', function(req, res) {
+  User.get(req.params.name, function(user) {
+    res.json({user: user});
+  });
+});
+
 app.get('/api/user/:name/matches', function(req, res) {
   User.getMatches(req.params.name, function(users) {
     res.json({matches: users});

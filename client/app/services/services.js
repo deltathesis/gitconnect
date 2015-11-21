@@ -40,6 +40,16 @@ angular.module('myApp.services', [])
 
 .factory('User', ['$http', '$cookies', 'Cookie', function($http, $cookies, Cookie) {
 
+	var getProfile = function(username) {
+		return $http({
+			cache: true,
+			method: 'GET',
+			url: '/api/user/' + username
+		}).then(function(res) {
+			return res.data.user;
+		});
+	};
+
 	var getMatches = function() {
 		var cookie = $cookies.get('github');
 		var user = Cookie.parseCookie(cookie);
@@ -53,7 +63,8 @@ angular.module('myApp.services', [])
 	};
 
 	return {
-		getMatches: getMatches
+		getMatches: getMatches,
+		getProfile: getProfile
 	};
 
 }])

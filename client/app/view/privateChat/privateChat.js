@@ -59,6 +59,11 @@ angular.module('myApp.privateChat', ['ngRoute'])
     console.log('User disconnected');
   });
 
+  socket.on('insertData', function(data){
+    console.log("$scope.roomMessages", $scope.roomMessages);
+    socket.emit('storeData', angular.copy($scope.roomMessages));
+  })
+
   /**Scope Functions **/
 
   $scope.changeRoom = function(newRoom) {

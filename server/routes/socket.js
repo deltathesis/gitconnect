@@ -1,51 +1,5 @@
-var userNames = (function () {
-  var names = {};
-
-  var claim = function (name) {
-    if (!name || names[name]) {
-      return false;
-    } else {
-      names[name] = true;
-      return true;
-    }
-  };
-
-  // find the lowest unused "guest" name and claim it
-  var getGuestName = function () {
-    var name,
-      nextUserId = 1;
-
-    do {
-      name = 'Dude' + nextUserId;
-      nextUserId += 1;
-    } while (!claim(name));
-
-    return name;
-  };
-
-  // serialize claimed names as an array
-  var get = function () {
-    var res = [];
-    for (user in names) {
-      res.push(user);
-    }
-
-    return res;
-  };
-
-  var free = function (name) {
-    if (names[name]) {
-      delete names[name];
-    }
-  };
-
-  return {
-    claim: claim,
-    free: free,
-    get: get,
-    getGuestName: getGuestName
-  };
-}());
+var Firebase = require('firebase');
+var firebase = new Firebase('https://dage.firebaseio.com');
 
 var users = {};
 
@@ -54,15 +8,17 @@ var people = {};
 module.exports = function (socket) {
   console.log('user connected');
 
-  var name = userNames.getGuestName();
-  users[name] = socket;
+  // var name = userNames.getGuestName();
+  // users[name] = socket;
   // send the new user their name and a list of users
   // socket.emit('init', {
   //   name: name,
   //   users: userNames.get()
   // });
+var name;
 
   socket.on('myusername', function(data) {
+    name = data;
     console.log('data', data);
     people[data] = socket;
     var peopleArray = [];
@@ -100,6 +56,7 @@ module.exports = function (socket) {
       user: name,
       text: data.message
     });
+    socket.emit('insertData');
   });
 
   // notify other clients that a new user has joined
@@ -116,12 +73,19 @@ module.exports = function (socket) {
     });
   });
 
+  socket.on('storeData', function(data){
+    console.log('storeData data: ', data);
+    if(data){
+    firebase.update(data);
+    }
+  });
+
   // clean up when a user leaves, and broadcast it to other people
   socket.on('disconnect', function () {
     console.log('user disconnected');
     socket.broadcast.emit('user:left', {
       name: name
     });
-    userNames.free(name);
+    // userNames.free(name);
   });
 };

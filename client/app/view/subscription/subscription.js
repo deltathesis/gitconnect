@@ -51,12 +51,11 @@ angular.module('myApp.subscription', ['ngRoute'])
 
   $scope.addTech = function(tech, index) {
     if (user.languages.indexOf(tech) !== -1) {
-      $scope.existed = true;
       $scope.techList.splice(index, 1); 
     } else {
-      $scope.existed = false;
       user.languages.push(tech); 
       $scope.techList.splice(index, 1);
+      $scope.searchText = '';
     }
   }
 
@@ -68,9 +67,11 @@ angular.module('myApp.subscription', ['ngRoute'])
   $scope.formSubmit = function() {
     var city = $('#user-location').val();
     var userSelectedTech = user.languages;
+    var userBio = $scope.userBio;
     var results = {
       city: city,
-      tech : userSelectedTech
+      tech : userSelectedTech,
+      bio: userBio
     }
     // Here is the results from the submited form
     console.log(results);

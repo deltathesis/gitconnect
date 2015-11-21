@@ -14,7 +14,7 @@
     <div class="bio-input col-xs-12">
       <h3>About you</h3>
       <div class="form-group col-xs-12 col-sm-8">
-        <textarea id="user-bio" class="form-control" rows="4" placeholder="Please tell us more about you" required></textarea>
+        <textarea id="user-bio" class="form-control" rows="4" placeholder="Please tell us more about you" ng-model="userBio" required></textarea>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
       <div class="techs user-selection" >
         <h4>Technologies you are interested in</h4>
         <ul>
-          <li class="tech fadein-effect" ng-repeat="tech in user.languages track by $index" data-tech="{{tech}}" ng-click="removeTech(tech, $index)">
+          <li class="tech fadein-effect" ng-repeat="tech in user.languages track by $index " data-tech="{{tech}}" ng-click="removeTech(tech, $index)">
             {{tech}} <i class="fa fa-times-circle"></i>
           </li>
         </ul>

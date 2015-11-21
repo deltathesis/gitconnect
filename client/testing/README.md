@@ -27,6 +27,19 @@ Go into client/testing and run
 `protractor conf.js`
 
 
+###Github account needed
+You must first have authorize the application with your github account.
+
+Then, add a `userinfo.js` into the testing folder.
+
+Into `userinfo.js`, add these lines with your github account information:
+
+`exports.github = {
+  username: "YOUR_GITHUB_USERNAME",
+  password: "PASSWORD"
+};`
+
+
 
 
 

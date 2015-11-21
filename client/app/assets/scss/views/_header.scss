@@ -56,6 +56,23 @@
               border: 2px solid $mainColor;
             }
           }
+          &.user-dropdown {
+            .dropdown-menu {
+              li {
+                &:first-child {
+                  padding-top: 5px;
+                }
+                a:hover {
+                  background: none;
+                }
+              }
+            }
+            &.open {
+              >a:focus {
+                background: none;
+              }
+            }
+          }
         }
       }
     }

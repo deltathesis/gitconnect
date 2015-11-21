@@ -15,7 +15,7 @@ var mocha = require('gulp-mocha');
 var TRAVIS = !!process.env.TRAVIS;
 
 var DEVELOPMENT_FILES = ['client/app/**/*.js', '!client/app/assets/js/*.js', '!client/app/bower_components/**/*.js', '!client/app/dist/**/*.js', '!client/app/components/**/*.js'];
-var SASS_FILES = ['client/app/assets/scss/*.scss'];
+var SASS_FILES = ['client/app/assets/scss/**/*.scss'];
 var TEST_FILES = ['test/*.js', '!test/databaseSpec.js'];
 
 gulp.task('default', function(cb) {

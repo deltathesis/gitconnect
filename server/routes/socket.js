@@ -5,15 +5,16 @@ var people = {};
 
 var rooms;
 
-firebase.once("value", function(data) {
-  // do some stuff once
-  rooms = data.val();
-});
 // export function for listening to the socket
 module.exports = function (socket) {
 
-  console.log('user connected');
   var name;
+  console.log('user connected');
+  
+  firebase.once("value", function(data) {
+    // do some stuff once
+    rooms = data.val();
+  });
 
   socket.on('myusername', function(data) {
     name = data;

@@ -8,7 +8,7 @@ angular.module('myApp.subscription', ['ngRoute'])
   });
 }])
 
-.controller('subscriptionPage', ['$scope', function($scope) {
+.controller('subscriptionPage', ['$scope', '$location', function($scope, $location) {
 
   var user = {
     picture: 'assets/pictures/users/royce.jpg',
@@ -42,8 +42,6 @@ angular.module('myApp.subscription', ['ngRoute'])
   $scope.initialTech = function() {
     setTimeout(function () { 
       user.languages.forEach(function(element) {
-        // $(".propositions .tech[data-tech='"+element+"']").fadeOut(0);
-        // $(".propositions .tech[data-tech='"+element+"']").remove();
         var index = $scope.techList.indexOf(element);
          $scope.techList.splice(index, 1); 
          $scope.$apply();
@@ -65,7 +63,6 @@ angular.module('myApp.subscription', ['ngRoute'])
   $scope.removeTech = function(tech, index) {
     $scope.techList.push(tech); 
     user.languages.splice(index, 1);  
-    // $(".user-selection .tech[data-tech='"+ tech +"']").remove();
   }
 
   $scope.formSubmit = function() {
@@ -75,7 +72,10 @@ angular.module('myApp.subscription', ['ngRoute'])
       city: city,
       tech : userSelectedTech
     }
+    // Here is the results from the submited form
     console.log(results);
+    // Redirection to the home page
+    $location.path('/');
   }
 
 

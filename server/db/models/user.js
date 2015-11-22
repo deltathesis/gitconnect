@@ -1,10 +1,6 @@
-//uncomment if testing db
-require('dotenv').config({path:'../../../.env'});
-var testing = true;
-
 var rp = require('request-promise');
-var URL = !testing ? process.env.GRAPHENE_DB_URL : process.env.GRAPHENE_DB_DEV_URL
-var url = require('url').parse(URL);
+var Promise = require('bluebird');
+var _ = require('underscore')
 
 
 var db = exports.db = require("seraph")({
@@ -12,6 +8,8 @@ var db = exports.db = require("seraph")({
   user: process.env.NEO_AWS_USR,
   pass: process.env.NEO_AWS_PWD
 });
+
+Promise.promisifyAll(db)
 
 
 var options = {
@@ -32,142 +30,225 @@ var newUser = {
   organizations: []
 };
 
-//do not use createUser function unless you are chris
-var createUser = function(username, callback){
-  options.url += username;
-  rp(options)
-  .then(function(user){
-    newUser.apiUrl = user.url
-    newUser.name = user.name;
-    newUser.username = user.login;
-    newUser.location = user.location;
-    newUser.id = user.id;
-    newUser.company = user.company;
-    newUser.blog = user.blog;
-    newUser.avatar_url = user.avatar_url;
-    options.url = user.repos_url
-  })
-  .then(function(){
-    return rp(options)
-  })
-  .then(function(repos){
-    var reposLength = repos.length;
-    repos.forEach(function(element){
-      if(element['language'] === null){
-        return;
-      }
-      if(!newUser.languages[element['language']]){
-        newUser.languages[element['language']] = 1;
-      } else {
-        newUser.languages[element['language']] += 1;
-      }
-    });
-    options.url = newUser.apiUrl + '/starred';
-  })
-  .then(function(){
-    return rp(options);
-  })
-  .then(function(starredRepos){
-    starredRepos.forEach(function(element){
-      var repo = {
-        id: element['id'],
-        name: element['name'],
-        html_url: element['html_url'],
-        description: element['description']
-      }
-      newUser.starredRepos.push(repo);
-    });
-    options.url = newUser.apiUrl + '/orgs';
-  })
-  .then(function(){
-    return rp(options);
-  })
-  .then(function(orgs){
-    orgs.forEach(function(element){
-      var org = {
-        id: element['id'],
-        name: element['name']
-      }
-      newUser.organizations.push(org);
-    });
-  })
-  .then(function(){
-    callback(newUser);
-  })
-  .catch(function(err){
-    console.log(err)
-  })
-}
-
-
 var User = exports.User = function User(_node){  //do not change the node
   //the node wil be an array returned from our database. the array will contain an obj to access it use node[0].nameOfProperty
   this._node = _node 
 }
 
-//create User and add to neo4j and SQL database
-User.create = function(username){
-  createUser(username, function(obj){
-    // sqlUser.addToSql(obj);
-    var txn = db.batch();
-    var company = !obj.company ? 'null' : JSON.stringify(obj.company)
-    
-    for(var language in obj.languages){
-      var lang = JSON.stringify(language)
-      var languageCypher =  "MERGE (user:User {githubId: " + obj.id + ", name: '" + obj.name + "', username: '" + obj.username + "', company: '" + company + "', pictureUrl: '" + obj.avatar_url + "', availability: true}) MERGE (language:Language {name: " + lang + "}) "
-                          + "MERGE (user)-[:KNOWS]-(language) "
-                          + "RETURN language, user";
-      txn.query(languageCypher, function(err, result){
+//do not use createUser function unless you are chris
+var createUser = function(username){
+  return new Promise(function(resolve, reject){
+    options.url += username;
+    rp(options)
+    .then(function(user){
+      newUser.apiUrl = user.url
+      newUser.name = user.name;
+      newUser.username = user.login;
+      newUser.githubId = user.id;
+      newUser.company = !user.company ? 'null' : user.company
+      newUser.blog = !user.blog ? 'null' : user.blog
+      newUser.avatar_url = user.avatar_url;
+      newUser.languages = [];
+      options.url = user.repos_url
+    })
+    .then(function(){
+      return rp(options)
+    })
+    .then(function(repos){
+      var uniqueRepoList = _.uniq(_.pluck(repos, 'language'))
+      uniqueRepoList.filter(function(element){
+        return element !== null;
+      })
+      .forEach(function(language){
+        newUser.languages.push({name: language});
+      })
+      options.url = newUser.apiUrl + '/starred';
+    })
+    .then(function(){
+      return rp(options);
+    })
+    .then(function(starredRepos){
+      starredRepos.forEach(function(element){
+        var repo = {
+          githubId: element['id'],
+          name: element['name'],
+          html_url: element['html_url'],
+        }
+        newUser.starredRepos.push(repo);
+      });
+      options.url = newUser.apiUrl + '/orgs';
+    })
+    .then(function(){
+      return rp(options);
+    })
+    .then(function(orgs){
+      orgs.forEach(function(element){
+        var org = {
+          id: element['id'],
+          name: element['name']
+        }
+        newUser.organizations.push(org);
+      });
+    })
+    .then(function(){
+      resolve(newUser);
+    })
+  })  
+};
+
+//match users to other users
+User.getMatches = function(username){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: true}) '
+               + 'RETURN DISTINCT x, COUNT(x) '
+               + 'ORDER BY COUNT(x) DESC '
+               + 'LIMIT 10';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element.x
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
+
+User.data = function(data){
+  var storage = {};
+  storage.userData = {
+    apiUrl: data.apiUrl,
+    name: data.name,
+    username: data.username,
+    location: '',
+    githubId: data.githubId,
+    company: !data.company ? 'null' : data.company,
+    blog: !data.blog ? 'null' : data.blog,
+    avatar_url: data.avatar_url,
+    ratingTotal: 0,
+    availability: true,
+    ratingTotal: 0,
+    ratingAverage: 'null'
+  };
+  storage.languages = data.languages;
+  storage.repos = data.starredRepos;
+  return storage;
+};
+
+User.addRelationships = function(params){
+  var join = Promise.join;
+  //baseNode, relNodes, relNodeLabel, relDirection, relLabels
+  return new Promise(function(resolve){
+    var user = db.findAsync(params.baseNode).then(function(data){
+      return data
+    })
+    var nodes = Promise.map(params.relNodes, function(element){
+      return(User.findOrCreateNode(element, params.relNodeLabels))
+    })
+    join(user, nodes, function(user, nodes){
+      var txn = db.batch();
+      nodes.forEach(function(relNode){
+        txn.relate(user[0].id, params.relLabel, relNode.id)
+      })
+      return txn.commit(function(err, results){
         if(err){
           console.log(err)
+        } else {
+          return results;
         }
       })
-    }
-    for(var i = 0; i < obj.starredRepos.length; i++){
-      var currRepoId = obj.starredRepos[i].id
-      var repoCypher =  "MERGE (user:User {githubId: " + obj.id + "}) MERGE (repo:Repo {id: " + currRepoId + "}) "
-                      + "MERGE (user)-[:WATCHES]-(repo) "
-                      + "RETURN repo, user";
-      txn.query(repoCypher, function(err, results){
-        if(err){
-          console.log(err)
-        }
+    }).then(function(data){
+      resolve(data)
+    })
+  })   
+};
+
+User.get = function(props){
+  return new Promise(function(resolve){
+    resolve(db.findAsync(props))
+  }).catch(function(err){
+    console.log(err);
+  })
+};
+
+User.saveNewUser = function(username){
+  var githubData = {};
+  var node = {};
+  return new Promise(function(resolve){
+    createUser(username)
+    .then(function(data){
+      githubData = User.data(data);
+      return githubData;
+    })
+    .then(function(data){
+      return db.saveAsync(data.userData, 'User').then(function(newNode){
+        node = newNode;
+        return newNode;
       })
-    }
-    txn.commit(function(err, results){
-      if(err){
-        console.log(err)
+    })
+    .then(function(data){
+      User.addRelationships({
+        baseNode: {username: githubData.userData.username},
+        relNodes: githubData.languages,
+        relNodeLabels: ['Language'],
+        relLabel: 'KNOWS'
+      })
+      return data;
+    })
+    .then(function(data){
+      User.addRelationships({
+        baseNode: {username: githubData.userData.username},
+        relNodes: githubData.repos,
+        relNodeLabels: ['Repo'],
+        relLabel: 'WATCHES'
+      })
+    })
+    .then(function(data){
+      console.log(node)
+      resolve(node)
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  })
+};
+
+User.findOrCreateUser = function(username){
+  return new Promise(function(resolve){
+    User.get({username: username}).then(function(user){
+      if(user.length){
+        resolve(user)
+      } else {
+        User.saveNewUser(username.username);
       }
     })
   })
 };
 
-//get username and github id from neo4j node
-User.get = function(username, cb){  
- db.find({username: username}, 'User', function(err, person){
-   var user = new User(person);
-   cb(user._node[0]);
- })
-}
-
-
-//match users to other users
-User.getMatches = function(username, cb){
-  var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: true}) '
-             + 'RETURN DISTINCT x, COUNT(x) '
-             + 'ORDER BY COUNT(x) DESC '
-             + 'LIMIT 10';
-  db.query(cypher, function(err, result){
-    if(err){
-      console.log(err);
-    }
-    var usernames = []
-    for(var i = 0; i < result.length; i++){
-      usernames.push(result[i].x.username)
-    }
-    sqlUser.findUsers(usernames, function(users){
-      cb(users);
-    })
+User.findOrCreateNode = function(props, labels){
+  return new Promise(function(resolve){
+    User.get(props).then(function(node){
+        if(!node.length){
+          db.saveAsync(props).then(function(node){
+            if(labels){
+              db.labelAsync(node, labels).then(function(node){
+                resolve(node)
+              })
+            }
+            resolve(node)
+          })
+        } else {
+          resolve(node[0])
+        }
+      })
+    }).catch(function(err){
+        console.log(err)
   })
 };
+
+Promise.promisifyAll(User);
+
+
+
 

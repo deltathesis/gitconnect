@@ -12,7 +12,6 @@ angular.module('myApp.subscription', ['ngRoute'])
 
   var cookie = $cookies.get('github');
   var cookieObj = Cookie.parseCookie(cookie);
-  console.log(cookieObj);
 
   var user = {
     name: cookieObj.username,
@@ -76,6 +75,19 @@ angular.module('myApp.subscription', ['ngRoute'])
     $location.path('/');
   }
 
+  $scope.googleMapInit = function() {
+    google.maps.event.addDomListener(window, 'load', addressInitialize);
+  }
 
+  function addressInitialize() {
+    var input = document.getElementById('user-location');
+    var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+    autocomplete.addListener('place_changed', function() {
+      // Get city name only
+      var place = autocomplete.getPlace();
+      console.log(place.name);
+      $('#user-location').val(place.name);
+    });
+  }
 
 }]);

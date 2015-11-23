@@ -3,7 +3,7 @@
   <h2>Thanks for joining us {{user.name}}</h2>
   <h4>We just need few more information about you</h4>
 
-  <form class="form-horizontal subscription-form row" ng-submit="formSubmit()">
+  <form class="form-horizontal subscription-form row" ng-submit="formSubmit()" ng-init="googleMapInit()">
     <div class="col-xs-12 location-input">
       <h3>Your location</h3>
       <div class="form-group col-xs-12 col-sm-8">
@@ -56,17 +56,3 @@
   </form>
 
 </div>
-
-<script type="text/javascript">
- function initialize() {
-  var input = document.getElementById('user-location');
-  var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
-  autocomplete.addListener('place_changed', function() {
-      // Get city name only
-      var place = autocomplete.getPlace();
-      console.log(place.name);
-      $('#user-location').val(place.name);
-    });
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-</script>

@@ -105,14 +105,30 @@ app.get('/api/user/:name/matches', function(req, res) {
   });
 });
 
-app.post('/api/user/updateformlocation', function(req, res) {
+app.post('/api/user/updateform', function(req, res) {
+  // Get user location
   var objLocation = { 
-    baseNode: {username: req.body.data.username},
-    relNodes: [{uniq_id: req.body.data.cityId, city: req.body.data.cityName}],
+    baseNode: {username: req.body.data.resultsLocation.username},
+    relNodes: [{uniq_id: req.body.data.resultsLocation.cityId, city: req.body.data.resultsLocation.cityName}],
     relNodeLabels: ['City'],
     relLabel: 'Lives'
   };
+
+  // Get all user techs list
+  var techlist = [];
+  req.body.data.resultsTech.forEach(function(tech) {
+    techlist.push({name: tech});
+  })
+
+  var objTech = {
+    baseNode: {username: req.body.data.resultsLocation.username},
+    relNodes: techlist,
+    relNodeLabels: ['Language'],
+    relLabel: 'KNOWS'
+  }
+  
   User.addRelationships(objLocation);
+  User.addRelationships(objTech);
 
   res.end();
 })

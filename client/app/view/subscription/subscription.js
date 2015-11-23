@@ -8,7 +8,7 @@ angular.module('myApp.subscription', ['ngRoute'])
   });
 }])
 
-.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserFormLocation', function($scope, $location, Cookie, $cookies, UserFormLocation) {
+.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', function($scope, $location, Cookie, $cookies, UserForm) {
 
   var cookie = $cookies.get('github');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -80,7 +80,16 @@ angular.module('myApp.subscription', ['ngRoute'])
       cityId: results.cityId,
       cityName: results.cityName
     }
-    UserFormLocation.postForm(resultsLocation)
+    // Get User techs list
+    var resultsTech = results.tech;
+
+    // Prepare data to be posted
+    var postData = {
+      resultsLocation : resultsLocation,
+      resultsTech: resultsTech
+    }
+    // Posting data
+    UserForm.postForm(postData)
 
     // Redirection to the home page
     $location.path('/');

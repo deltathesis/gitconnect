@@ -69,13 +69,13 @@ angular.module('myApp.services', [])
 
 }])
 
-.factory('UserFormLocation', ['$http', function($http) {
+.factory('UserForm', ['$http', function($http) {
 
 	var postForm = function(object) {
 		return $http({
 			cache: true,
 			method: 'POST',
-			url: '/api/user/updateformlocation',
+			url: '/api/user/updateform',
 			data: { data: object }
 		}).then(function successCallback(response) {
 		    console.log('success')

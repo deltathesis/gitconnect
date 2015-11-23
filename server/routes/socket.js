@@ -1,16 +1,25 @@
 var Firebase = require('firebase');
 var firebase = new Firebase('https://deltadage.firebaseio.com/');
 
-
+//all users online that are connected to the socket
 var people = {};
 
+//all private Messaging rooms
 var rooms = {};
 
-firebase.once("value", function(data) {
+//collabMessages, currently not in room format yet
+var collabRooms = [];
+
+var retrieveData = function () {
+  firebase.once("value", function(data) {
     if(data.val()) {  
       rooms = data.val().rooms;
+      collabRooms = data.val().collab;
     }
   });
+}
+
+retrieveData();
 
 // export function for listening to the socket
 module.exports = function (socket) {
@@ -18,11 +27,8 @@ module.exports = function (socket) {
   var name;
   console.log('user connected');
   
-  firebase.once("value", function(data) {
-    if(data.val()) {
-      rooms = data.val().rooms;
-    }
-  });
+  retrieveData();
+  console.log('collabRooms', collabRooms);
 
   //init data for the user
   socket.on('myusername', function(data) {
@@ -51,7 +57,7 @@ module.exports = function (socket) {
     socket.broadcast.emit('bigInit', {
       users: peopleArray
     })
-  })
+  });
 
   // join two users into a privateMessaging room
   socket.on('join:privateRoom', function(data) {
@@ -90,13 +96,38 @@ module.exports = function (socket) {
     });
   });
 
-  //stores data into firebase
-  socket.on('storeData', function(data){
+  //stores private messaging data into firebase
+  socket.on('storeData', function(data) {
     var userRef = firebase.child('rooms');
     if(data){
       userRef.update(data);
     }
   });
+
+  /** Collab Page Socket Functions **/
+
+  //intialized username and adds socket info to people array
+  socket.on('initCollab', function(data) {
+    name = data;
+    people[data] = socket;
+    socket.emit('initCollab', collabRooms);
+  });
+
+  //stores collab message data into firebase
+  socket.on('store:collabData', function(data) {
+    var userRef = firebase.child('collab');
+    if(data) {
+      userRef.update(data);
+    }
+  });
+
+  socket.on('send:collabMessage', function(data) {
+    socket.broadcast.emit('send:collabMessage', {
+      username: name,
+      message: data.message
+    });
+  });
+  /** End of Collab Page Socket Functions **/
 
   // clean up when a user leaves, and broadcast it to other people
   socket.on('disconnect', function () {

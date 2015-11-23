@@ -8,7 +8,12 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   });
 }])
 
-.controller('collaboration-page', ['$scope', function($scope) {
+.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', function($scope, $cookies, Cookie, socket) {
+
+  var cookie = $cookies.get('github');
+  var cookieObj = Cookie.parseCookie(cookie);
+  $scope.username = cookieObj.username;
+  console.log($scope.username);
 
   $scope.projectInfo = {
     name: 'GitConnect',
@@ -16,13 +21,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     tech: ['HTML5', 'JavaScript', 'Firebase', 'MySql'],
     github_url: 'https://github.com/deltathesis/gitconnect'
     }
-
-  $scope.messages = [
-    {
-      username: "Chris Nixon",
-      message: "Hey this is super cool"
-    }
-  ];
 
   $scope.resources = {
     project_repo: 'https://github.com/deltathesis/gitconnect',
@@ -33,13 +31,43 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     code_library: ""
   }
 
+  $scope.messages = [];
+
+  $scope.currentTime = new Date();
+  console.log('the time: ', $scope.currentTime.getTime());
+  console.log("Current Time: " , $scope.currentTime.toJSON().slice(11,16));
+
+  /** Socket Listeners **/
+
+  socket.emit('initCollab', $scope.username);
+
+  //listen to initializer
+  // socket.on('initCollab', function(data) {
+  //   $scope.messages = data.testRoom;
+  // })
+
+  //listens to sent message
+  socket.on('send:collabMessage' , function(data) {
+    $scope.messages.push(data);
+  })
+
   $scope.messageSubmit = function(){
     if($scope.text){
-      console.log($scope.text)
+      socket.emit('send:collabMessage', {
+        message: $scope.text
+      })
+
+   
       $scope.messages.push({
-        username: "Chris Nixon",
+        username: $scope.username,
         message: $scope.text
       });
+
+      console.log('$scope.messages: ', $scope.messages);
+      socket.emit('store:collabData', angular.copy({
+        testRoom: $scope.messages
+      }));
+
       $scope.text = "";
     }
   }

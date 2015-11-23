@@ -46,7 +46,7 @@ angular.module('myApp.services', [])
 			method: 'GET',
 			url: '/api/user/' + username
 		}).then(function(res) {
-			return res.data.user;
+			return res.data.user[0];
 		});
 	};
 

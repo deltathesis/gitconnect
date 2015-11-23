@@ -3,12 +3,16 @@
   <div class="row user-details-container">
     <div class="col-xs-12 user-details">
       <div class="post-thumbnail user-pic">
-        <a href="" alt="" style="background-image:url({{user.picture}})"></a>
+        <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
       </div>
       <div class="user-subdetails">
-        <a href="" class="user-name">Real Name ({{user.username}})</a>
+        <a href="" class="user-name">{{ user.name }} ({{user.username}})</a>
         <div class="subdetail time">
+          <!-- 
+          Right now we don't record when the user is created. We can save this feature for a later date.
           <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
+          -->
+          {{ user.location }}
         </div>
         <div class="subdetail ratings">
           <div id="stars-existing" class="stars" ng-init="ratings()"></div>  
@@ -48,16 +52,14 @@
     <div class="recents-details details-container">
       <h3 class="col-xs-12">Recent activities</h3>
 
-      <!-- Participation Example *** START *** -->
+      <!-- 
       <div class="col-xs-12 recent participation">
         <div class="time">
           <i class="fa fa-clock-o"></i> 1 hour ago
         </div>
         <p class="subtitle">{{user.name}} participate a new project</p>
       </div>
-      <!-- Participation Example *** END *** -->
 
-      <!-- Project Example *** START *** -->
       <div class="col-xs-12 recent project">
         <div class="time">
           <i class="fa fa-clock-o"></i> 2 hours ago
@@ -78,9 +80,7 @@
           </div>
         </div>
       </div>
-      <!-- Project Example *** END *** -->
 
-      <!-- Comments Example *** START *** -->
       <div class="col-xs-12 recent comments">
         <div class="time">
           <i class="fa fa-clock-o"></i> 3 hours ago
@@ -88,8 +88,8 @@
         <p class="subtitle">{{user.name}} add a comment to the project <a href="">Foodly</a></p>
         <p class="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-        </div>
-        <!-- Comments Example *** END *** -->
+        </div>-->
+
 
       </div>
     </div>

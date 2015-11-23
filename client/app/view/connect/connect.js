@@ -49,8 +49,11 @@ angular.module('myApp.connect', ['ngRoute'])
         prevButton: '.swiper-button-prev',
         // CallBack functions
         // Might define onInit if necessary
+        onTransitionStart: function() {
+          $('.developer-connect-details').fadeOut(200);
+        },
         onTransitionEnd: function() {
-          $('.developer-connect-details').fadeOut(0).fadeIn(500);
+          $('.developer-connect-details').fadeIn(300);
           var selectedUser = $('.swiper-slide-active').data('dev-id');
           var users = $scope.users;
           for (var i = 0; i < users.length; i++) {

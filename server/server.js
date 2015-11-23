@@ -105,15 +105,46 @@ app.get('/api/user/:name/matches', function(req, res) {
   });
 });
 
-app.post('/api/user/updateformlocation', function(req, res) {
+app.post('/api/user/updateform', function(req, res) {
+  // Get user location
   var objLocation = { 
-    baseNode: {username: req.body.data.username},
-    relNodes: [{uniq_id: req.body.data.cityId, city: req.body.data.cityName}],
+    baseNode: {username: req.body.data.resultsLocation.username},
+    relNodes: [{uniq_id: req.body.data.resultsLocation.cityId, city: req.body.data.resultsLocation.cityName}],
     relNodeLabels: ['City'],
     relLabel: 'Lives'
   };
+  // Saving location / relationship into the DB
   User.addRelationships(objLocation);
 
+  // Get all user techs list
+  var techlist = [];
+  req.body.data.resultsTech.forEach(function(tech) {
+    techlist.push({name: tech});
+  })
+
+  var objTech = {
+    baseNode: {username: req.body.data.resultsLocation.username},
+    relNodes: techlist,
+    relNodeLabels: ['Language'],
+    relLabel: 'KNOWS'
+  }
+  // Saving user tech / relationship into the DB
+  User.addRelationships(objTech);
+
+  // Get user Bio and Email
+  var userInfos = {
+    email: req.body.data.userInfos.email,
+    bio: req.body.data.userInfos.bio
+  }
+  // Get User Node
+  var objUser = {
+    userNode: User.get({username: req.body.data.userInfos.username})
+  }
+  // Update user info into the DB
+  objUser.userNode.then(function(users) {
+    User.update(users[0], userInfos)
+  })
+  
   res.end();
 })
 

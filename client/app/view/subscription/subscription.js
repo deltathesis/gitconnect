@@ -8,7 +8,7 @@ angular.module('myApp.subscription', ['ngRoute'])
   });
 }])
 
-.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserFormLocation', function($scope, $location, Cookie, $cookies, UserFormLocation) {
+.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', function($scope, $location, Cookie, $cookies, UserForm) {
 
   var cookie = $cookies.get('github');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -59,28 +59,39 @@ angular.module('myApp.subscription', ['ngRoute'])
   }
 
   $scope.formSubmit = function() {
-    var userCity = $('#user-location').val();
+    // var userCity = $('#user-location').val();
     var userSelectedTech = user.languages;
     var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
-    var results = {
-      username: user.name,
-      cityName: userCity,
-      cityId: cityId,
-      email: userEmail,
-      tech : userSelectedTech,
-      bio: userBio
-    }
-    // Here is the results from the submited form
-    console.log(results);
+    // Set Google city unique Id
+    var cityId;
+    var cityName;
 
     // Location user update form submission
     var resultsLocation = {
-      username: results.username,
-      cityId: results.cityId,
-      cityName: results.cityName
+      username: user.name,
+      cityId: cityId,
+      cityName: cityName
     }
-    UserFormLocation.postForm(resultsLocation)
+    // Get User techs list
+    var resultsTech = userSelectedTech;
+
+    // Prepare email and Bio data
+    var userInfos = {
+      username: user.name,
+      email: userEmail,
+      bio: userBio
+    }
+
+    // Prepare data to be posted
+    var postData = {
+      resultsLocation : resultsLocation,
+      resultsTech: resultsTech,
+      userInfos: userInfos
+    }
+
+    // Posting data
+    UserForm.postForm(postData)
 
     // Redirection to the home page
     $location.path('/');
@@ -89,9 +100,6 @@ angular.module('myApp.subscription', ['ngRoute'])
   $scope.googleMapInit = function() {
     google.maps.event.addDomListener(window, 'load', addressInitialize);
   }
-
-  // Set Google city unique Id
-  var cityId;
 
   function addressInitialize() {
     var input = document.getElementById('user-location');
@@ -102,6 +110,7 @@ angular.module('myApp.subscription', ['ngRoute'])
       console.log(place.name, place.place_id);
 
       cityId = place.place_id;
+      cityName = place.name;
       $('#user-location').val(place.name);
     });
   }

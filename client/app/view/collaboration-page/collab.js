@@ -33,18 +33,18 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   $scope.messages = [];
 
-  $scope.currentTime = new Date();
-  console.log('the time: ', $scope.currentTime.getTime());
-  console.log("Current Time: " , $scope.currentTime.toJSON().slice(11,16));
+  $scope.currentTime;
 
   /** Socket Listeners **/
 
   socket.emit('initCollab', $scope.username);
 
-  //listen to initializer
-  // socket.on('initCollab', function(data) {
-  //   $scope.messages = data.testRoom;
-  // })
+  // listen to initializer
+  socket.on('initCollab', function(data) {
+    if(data) {
+      $scope.messages = data.testRoom;
+    }
+  })
 
   //listens to sent message
   socket.on('send:collabMessage' , function(data) {
@@ -53,17 +53,19 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   $scope.messageSubmit = function(){
     if($scope.text){
+    var currentTime = new Date();
       socket.emit('send:collabMessage', {
-        message: $scope.text
+        message: $scope.text,
+        date: currentTime
       })
 
    
       $scope.messages.push({
         username: $scope.username,
-        message: $scope.text
+        message: $scope.text,
+        date: currentTime
       });
 
-      console.log('$scope.messages: ', $scope.messages);
       socket.emit('store:collabData', angular.copy({
         testRoom: $scope.messages
       }));

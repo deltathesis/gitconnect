@@ -124,7 +124,8 @@ module.exports = function (socket) {
   socket.on('send:collabMessage', function(data) {
     socket.broadcast.emit('send:collabMessage', {
       username: name,
-      message: data.message
+      message: data.message,
+      date: data.date
     });
   });
   /** End of Collab Page Socket Functions **/

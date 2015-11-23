@@ -8,7 +8,7 @@ angular.module('myApp.subscription', ['ngRoute'])
   });
 }])
 
-.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', function($scope, $location, Cookie, $cookies) {
+.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserFormLocation', function($scope, $location, Cookie, $cookies, UserFormLocation) {
 
   var cookie = $cookies.get('github');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -64,13 +64,24 @@ angular.module('myApp.subscription', ['ngRoute'])
     var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
     var results = {
-      city: userCity,
+      username: user.name,
+      cityName: userCity,
+      cityId: cityId,
       email: userEmail,
       tech : userSelectedTech,
       bio: userBio
     }
     // Here is the results from the submited form
     console.log(results);
+
+    // Location user update form submission
+    var resultsLocation = {
+      username: results.username,
+      cityId: results.cityId,
+      cityName: results.cityName
+    }
+    UserFormLocation.postForm(resultsLocation)
+
     // Redirection to the home page
     $location.path('/');
   }
@@ -79,13 +90,18 @@ angular.module('myApp.subscription', ['ngRoute'])
     google.maps.event.addDomListener(window, 'load', addressInitialize);
   }
 
+  // Set Google city unique Id
+  var cityId;
+
   function addressInitialize() {
     var input = document.getElementById('user-location');
     var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
     autocomplete.addListener('place_changed', function() {
       // Get city name only
       var place = autocomplete.getPlace();
-      console.log(place.name);
+      console.log(place.name, place.place_id);
+
+      cityId = place.place_id;
       $('#user-location').val(place.name);
     });
   }

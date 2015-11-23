@@ -69,6 +69,27 @@ angular.module('myApp.services', [])
 
 }])
 
+.factory('UserFormLocation', ['$http', function($http) {
+
+	var postForm = function(object) {
+		return $http({
+			cache: true,
+			method: 'POST',
+			url: '/api/user/updateformlocation',
+			data: { data: object }
+		}).then(function successCallback(response) {
+		    console.log('success')
+	  }, function errorCallback(response) {
+	    console.log('error: ', reponse);
+  	});
+	};
+
+	return {
+		postForm: postForm
+	};
+
+}])
+
 .factory('Cookie', ['$cookies', function($cookies) {
 
 	var parseCookie = function(cookie) {

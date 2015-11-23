@@ -10,9 +10,12 @@
       }
       .navbar-right {
         li {
+          .badge {
+            display: none;
+          }
           &.notifications {
-            &:before {
-              content: attr(data-messages);
+            .badge {
+              display: inline-block;
               position: absolute;
               top: 5px;
               left: 28px;
@@ -20,13 +23,6 @@
               background-color: #E32636;
               color: #FFF;
               font-weight: bold;
-              width: 20px;
-              text-align: center;
-              font-size: 14px;
-              line-height: 14px;
-              padding-top: 4px;
-              padding-bottom: 2px;
-              border-radius: 50%;
             }
           }
           &.messaging {

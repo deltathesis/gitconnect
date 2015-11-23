@@ -105,6 +105,18 @@ app.get('/api/user/:name/matches', function(req, res) {
   });
 });
 
+app.post('/api/user/updateformlocation', function(req, res) {
+  var objLocation = { 
+    baseNode: {username: req.body.data.username},
+    relNodes: [{uniq_id: req.body.data.cityId, city: req.body.data.cityName}],
+    relNodeLabels: ['City'],
+    relLabel: 'Lives'
+  };
+  User.addRelationships(objLocation);
+
+  res.end();
+})
+
 // app.listen(process.env.Port, function(){
 // console.log('Server now running on port: ' + process.env.PORT);
 // });

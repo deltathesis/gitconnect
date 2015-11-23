@@ -21,7 +21,10 @@ angular.module('myApp', [
   'btford.socket-io',
   'myApp.collaboration-page',
   'myApp.requests',
-  'myApp.subscription'
+  'myApp.subscription',
+  'myApp.contact',
+  'myApp.team',
+  'myApp.legal',
 ])
 
 .config(['$routeProvider', function($routeProvider) {

@@ -81,6 +81,7 @@
         <a href="" class="team-member-chat-picture" style="background-image:url('assets/pictures/users/chris.jpg')"></a>
         <div class="message-content">
           <span class="username">{{message.username}}</span>
+          <span class="date">{{ message.date | date: 'short' }}</span>
           <p class="message-content-body">
             {{message.message}}
           </p>

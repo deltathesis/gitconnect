@@ -63,16 +63,9 @@ angular.module('myApp.subscription', ['ngRoute'])
     var userSelectedTech = user.languages;
     var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
-    // var results = {
-    //   username: user.name,
-    //   cityName: cityName,
-    //   cityId: cityId,
-    //   email: userEmail,
-    //   tech : userSelectedTech,
-    //   bio: userBio
-    // }
-    // Here is the results from the submited form
-    // console.log(results);
+    // Set Google city unique Id
+    var cityId;
+    var cityName;
 
     // Location user update form submission
     var resultsLocation = {
@@ -107,10 +100,6 @@ angular.module('myApp.subscription', ['ngRoute'])
   $scope.googleMapInit = function() {
     google.maps.event.addDomListener(window, 'load', addressInitialize);
   }
-
-  // Set Google city unique Id
-  var cityId;
-  var cityName;
 
   function addressInitialize() {
     var input = document.getElementById('user-location');

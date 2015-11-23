@@ -113,6 +113,8 @@ app.post('/api/user/updateform', function(req, res) {
     relNodeLabels: ['City'],
     relLabel: 'Lives'
   };
+  // Saving location / relationship into the DB
+  User.addRelationships(objLocation);
 
   // Get all user techs list
   var techlist = [];
@@ -126,10 +128,23 @@ app.post('/api/user/updateform', function(req, res) {
     relNodeLabels: ['Language'],
     relLabel: 'KNOWS'
   }
-  
-  User.addRelationships(objLocation);
+  // Saving user tech / relationship into the DB
   User.addRelationships(objTech);
 
+  // Get user Bio and Email
+  var userInfos = {
+    email: req.body.data.userInfos.email,
+    bio: req.body.data.userInfos.bio
+  }
+  // Get User Node
+  var objUser = {
+    userNode: User.get({username: req.body.data.userInfos.username})
+  }
+  // Update user info into the DB
+  objUser.userNode.then(function(users) {
+    User.update(users[0], userInfos)
+  })
+  
   res.end();
 })
 

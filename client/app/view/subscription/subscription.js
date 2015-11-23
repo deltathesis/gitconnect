@@ -59,35 +59,44 @@ angular.module('myApp.subscription', ['ngRoute'])
   }
 
   $scope.formSubmit = function() {
-    var userCity = $('#user-location').val();
+    // var userCity = $('#user-location').val();
     var userSelectedTech = user.languages;
     var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
-    var results = {
-      username: user.name,
-      cityName: userCity,
-      cityId: cityId,
-      email: userEmail,
-      tech : userSelectedTech,
-      bio: userBio
-    }
+    // var results = {
+    //   username: user.name,
+    //   cityName: cityName,
+    //   cityId: cityId,
+    //   email: userEmail,
+    //   tech : userSelectedTech,
+    //   bio: userBio
+    // }
     // Here is the results from the submited form
-    console.log(results);
+    // console.log(results);
 
     // Location user update form submission
     var resultsLocation = {
-      username: results.username,
-      cityId: results.cityId,
-      cityName: results.cityName
+      username: user.name,
+      cityId: cityId,
+      cityName: cityName
     }
     // Get User techs list
-    var resultsTech = results.tech;
+    var resultsTech = userSelectedTech;
+
+    // Prepare email and Bio data
+    var userInfos = {
+      username: user.name,
+      email: userEmail,
+      bio: userBio
+    }
 
     // Prepare data to be posted
     var postData = {
       resultsLocation : resultsLocation,
-      resultsTech: resultsTech
+      resultsTech: resultsTech,
+      userInfos: userInfos
     }
+
     // Posting data
     UserForm.postForm(postData)
 
@@ -101,6 +110,7 @@ angular.module('myApp.subscription', ['ngRoute'])
 
   // Set Google city unique Id
   var cityId;
+  var cityName;
 
   function addressInitialize() {
     var input = document.getElementById('user-location');
@@ -111,6 +121,7 @@ angular.module('myApp.subscription', ['ngRoute'])
       console.log(place.name, place.place_id);
 
       cityId = place.place_id;
+      cityName = place.name;
       $('#user-location').val(place.name);
     });
   }

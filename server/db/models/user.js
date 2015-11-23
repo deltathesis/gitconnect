@@ -247,8 +247,33 @@ User.findOrCreateNode = function(props, labels){
   })
 };
 
+// Updates node with specified attributes (similar to extend)
+// node: Object
+// attrs: Object
+User.update = function(node, attrs) {
+  return new Promise(function(resolve) {
+    var txn = db.batch();
+    for(var key in attrs) {
+      txn.save(node, key, attrs[key]);
+    }
+    txn.commit(function(err, results) {
+      if (err) console.log(err);
+      resolve();
+    });
+  });
+};
+
+// Gets all relationships of a node
+// node: Object
+// type (optional): String
+User.getRelationships = function(node, type) {
+  type = type || '';
+  return new Promise(function(resolve) {
+    db.relationships(node, 'all', type, function(err, relationships) {
+      if (err) console.log(err);
+      resolve(relationships);
+    });
+  });
+};
+
 Promise.promisifyAll(User);
-
-
-
-

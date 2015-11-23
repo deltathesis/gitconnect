@@ -37,6 +37,7 @@
     "passport-github": "^1.0.0",
     "pg": "^4.4.3",
     "pg-hstore": "^2.3.2",
+    "q": "^1.4.1",
     "request-promise": "^1.0.2",
     "run-sequence": "^1.1.4",
     "sequelize": "^3.13.0",

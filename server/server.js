@@ -71,15 +71,15 @@ app.get('/auth/github/callback',
       location: req.user._json.location
     }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
 
-    User.get(req.user.username, function(user) {
-      if (!user) {
-        User.create(req.user.username);
+    User.get({username: req.user.username}).then(function(user){
+      if(!user.length){
+        console.log(user)
+        User.saveNewUser(req.user.username)
         res.redirect('/#/subscription');
       } else {
-        res.redirect('/');
+        res.redirect('/')
       }
-    });
-
+    })
   });
 
 app.get('/logout', function(req, res) {
@@ -93,13 +93,14 @@ app.get('/api/user', function(req, res) {
 });
 
 app.get('/api/user/:name', function(req, res) {
-  User.get(req.params.name, function(user) {
-    res.json({user: user});
+  User.get({username: req.params.name}).then(function(user){
+    res.json({user: user})
   });
 });
 
 app.get('/api/user/:name/matches', function(req, res) {
-  User.getMatches(req.params.name, function(users) {
+  User.getMatches(req.params.name).then(function(users){
+    console.log(users)
     res.json({matches: users});
   });
 });

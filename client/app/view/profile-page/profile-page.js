@@ -33,6 +33,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
 
   $scope.user = getProfile;
   $scope.user.ratings = Math.round(4.2); //dummy data
+  $scope.user.location = 'San Francisco, CA';
 
   $scope.ratings = function() {
     // Ratings Module

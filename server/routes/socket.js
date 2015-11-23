@@ -30,7 +30,6 @@ module.exports = function (socket) {
   console.log('user connected');
   
   retrieveData();
-  console.log('collabRooms', collabRooms);
 
   //init data for the user
   socket.on('myusername', function(data) {

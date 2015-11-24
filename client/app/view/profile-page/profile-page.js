@@ -13,7 +13,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
   });
 }])
 
-.controller('profilePage', ['$scope', 'getProfile', function($scope, getProfile) {
+.controller('profilePage', ['$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', function($scope, getProfile, Cookie, $cookies, availabilityToggle) {
 
   // var user = {
   //   picture: 'assets/pictures/users/royce.jpg',
@@ -32,8 +32,43 @@ angular.module('myApp.profilepage', ['ngRoute'])
   // }
 
   $scope.user = getProfile;
+  console.log(getProfile);
+  // TODO get from DB
   $scope.user.ratings = Math.round(4.2); //dummy data
+  // TODO get from DB
   $scope.user.location = 'San Francisco, CA';
+
+  // Check if page of the user
+  $scope.ownership = false;
+
+  // Check cookies and if current user own the profile page
+  var cookie = $cookies.get('gitConnectDeltaKS');
+  if(cookie){
+    var cookieObj = Cookie.parseCookie(cookie);
+    if (cookieObj.username === $scope.user.username) {
+      availability = $scope.user.availability;
+      $scope.ownership = true;
+      $scope.availability = (availability) === true ? 'available' : 'unavailable';
+    }
+  }
+
+  $scope.availabilityOn = function() {
+    var data = {
+      username: cookieObj.username,
+      availability: true
+    }
+    availabilityToggle.changeAvailability(data);
+  }
+
+  $scope.availabilityOff = function() {
+    var data = {
+      username: cookieObj.username,
+      availability: false
+    }
+    availabilityToggle.changeAvailability(data);
+  }
+
+
 
   $scope.ratings = function() {
     // Ratings Module

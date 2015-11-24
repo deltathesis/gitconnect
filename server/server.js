@@ -146,7 +146,22 @@ app.post('/api/user/updateform', function(req, res) {
   })
   
   res.end();
-})
+});
+
+app.post('/api/user/availabilitytoggle', function(req, res) {
+  // Get User Node
+  // var objUser = {
+  //   userNode: User.get({username: req.body.data.userInfos.username})
+  // }
+  // 
+  console.log(req.body.data);
+  // // Update user info into the DB
+  // objUser.userNode.then(function(users) {
+  //   // User.update(users[0], userInfos)
+  // })
+
+  res.end();
+});
 
 // app.listen(process.env.Port, function(){
 // console.log('Server now running on port: ' + process.env.PORT);

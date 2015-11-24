@@ -187,6 +187,24 @@ app.post('/api/user/availabilitytoggle', function(req, res) {
   res.end();
 });
 
+app.post('/api/user/connection-request', function(req, res){
+  //Parse out current and selected user info
+  var currentUser = req.body.currentUser;
+  var selectedUser = req.body.selectedUser;
+
+  //Submit to addRelationships
+  User.addRelationships({
+    baseNode: {username: currentUser.username}, 
+    relNodes: [{username: selectedUser.username}],
+    relNodeLabel: 'User',
+    relDirection: 'out',
+    relLabel: 'connection-request'
+  }).then(function(results){
+    console.log(results)
+  })
+  res.end()
+})
+
 // app.listen(process.env.Port, function(){
 // console.log('Server now running on port: ' + process.env.PORT);
 // });

@@ -153,7 +153,7 @@ User.addRelationships = function(params){
   return new Promise(function(resolve){
     User.get(params.baseNode).then(function(userNode){
       userId = userNode[0].id;
-      return User.getRelationships(userId, 'out', params.relLabel); 
+      return User.getRelationships(userId, params.relDirection, params.relLabel); 
     }).then(function(relNodes){
         relNodeIds = relNodes.map(function(rel){
           return rel.end

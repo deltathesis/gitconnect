@@ -32,18 +32,6 @@ angular.module('myApp.subscription', ['ngRoute'])
     }
   }
 
-  // var cookie = $cookies.get('gitConnectDeltaKS');
-  // var cookieObj = Cookie.parseCookie(cookie);
-
-  // var user = {
-  //   name: cookieObj.username,
-  //   githubId: cookieObj.id,
-  //   picture: cookieObj.avatar,
-  //   languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase']
-  // };
-
-  // $scope.user = user;
-
   $scope.user.languages = [];
   $scope.user.relationships.KNOWS.forEach(function(tech) {
     $scope.user.languages.push(tech.name);

@@ -18,6 +18,9 @@
           <div id="stars-existing" class="stars" ng-init="ratings()"></div>  
         </div>
       </div>
+      <a href="#/profile-update/{{user.user.username}}" class="update-profile" ng-show='ownership'>
+        <i class="fa fa-cog"></i> Update our profile
+      </a>
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-show='ownership' ng-init="statusCheck()">
       <h5>Your current status</h5>

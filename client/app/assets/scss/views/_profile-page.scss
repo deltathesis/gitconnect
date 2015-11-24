@@ -39,6 +39,14 @@
           }
         }
       }
+      .update-profile {
+        width: 100%;
+        display: block;
+        float: left;
+        margin-top: 10px;
+        color: $mainColor;
+        font-weight: bold;
+      }
     }
     .user-status {
       text-align: right;

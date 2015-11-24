@@ -70,7 +70,6 @@ angular.module('myApp.services', [])
 }])
 
 .factory('UserForm', ['$http', function($http) {
-
 	var postForm = function(object) {
 		return $http({
 			cache: true,
@@ -87,7 +86,6 @@ angular.module('myApp.services', [])
 	return {
 		postForm: postForm
 	};
-
 }])
 
 .factory('Cookie', ['$cookies', function($cookies) {
@@ -101,4 +99,23 @@ angular.module('myApp.services', [])
 		parseCookie: parseCookie
 	};
 
+}])
+
+.factory('availabilityToggle', ['$http', function($http) {
+	var changeAvailability = function(object) {
+		return $http({
+			cache: true,
+			method: 'POST',
+			url: '/api/user/availabilitytoggle',
+			data: { data: object }
+		}).then(function successCallback(response) {
+		    console.log('success')
+	  }, function errorCallback(response) {
+	    console.log('error: ', reponse);
+  	});
+	};
+
+	return {
+		changeAvailability: changeAvailability
+	};
 }])

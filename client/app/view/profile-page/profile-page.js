@@ -13,7 +13,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
   });
 }])
 
-.controller('profilePage', ['$scope', 'getProfile', function($scope, getProfile) {
+.controller('profilePage', ['$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window) {
 
   // var user = {
   //   picture: 'assets/pictures/users/royce.jpg',
@@ -32,8 +32,60 @@ angular.module('myApp.profilepage', ['ngRoute'])
   // }
 
   $scope.user = getProfile;
+  console.log(getProfile);
+  // TODO get from DB
   $scope.user.ratings = Math.round(4.2); //dummy data
+  // TODO get from DB
   $scope.user.location = 'San Francisco, CA';
+
+  // Check if page of the user
+  $scope.ownership = false;
+
+  $scope.statusCheck = function() {
+    // Check cookies and if current user own the profile page
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    if(cookie){
+      var cookieObj = Cookie.parseCookie(cookie);
+      if (cookieObj.username === $scope.user.username) {
+        $scope.availability = JSON.parse($scope.user.availability);
+        $scope.ownership = true;
+        $scope.availabilityStatus = ($scope.user.availability === "true") ? 'available' : 'unavailable';
+      }
+    }
+  }
+
+  $scope.availabilityOn = function(val) {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+    var data = {
+      username: cookieObj.username,
+      availability: "true"
+    }
+    availabilityToggle.changeAvailability(data);
+    // Update cooking value
+    cookieObj.availability = "true";
+    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+    //refresh to apply cookie to the view
+    $window.location.reload();
+  }
+
+  $scope.availabilityOff = function() {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+    var data = {
+      username: cookieObj.username,
+      availability: "false"
+    }
+    availabilityToggle.changeAvailability(data);
+
+    // Update cooking value
+    cookieObj.availability = "false";
+    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+    //refresh to apply cookie to the view
+    $window.location.reload();
+  }
+
+
 
   $scope.ratings = function() {
     // Ratings Module

@@ -20,8 +20,8 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-show='ownership' ng-init="statusCheck()">
-      <h4>Your current status</h4>
-      <p>{{availabilityStatus}}</p>
+      <h5>Your current status</h5>
+      <p ng-class="{'turn-on': availability, 'turn-off': !availability}"><i class="fa fa-circle"></i> {{availabilityStatus}}</p>
       <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
       <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button>
     </div>

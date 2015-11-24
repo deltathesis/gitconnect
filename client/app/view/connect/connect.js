@@ -32,7 +32,7 @@ angular.module('myApp.connect', ['ngRoute'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', function($scope, matches, getProfile) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', function($scope, matches, getProfile, $http) {
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
@@ -41,7 +41,7 @@ angular.module('myApp.connect', ['ngRoute'])
   $scope.users = matches;
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-      var swiper = new Swiper('.swiper-container', {
+      $scope.swiper = new Swiper('.swiper-container', {
         effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
@@ -74,7 +74,22 @@ angular.module('myApp.connect', ['ngRoute'])
         },
       }); 
   });
-
   
+  $scope.connectionRequest = function(index){
+    console.log(index);
+    // $scope.swiper.removeSlide($scope.swiper.activeIndex);
+    
+    return $http({
+      method: 'POST',
+      url: '/api/user/connection-request',
+      data: { currentUser: $scope.user, 
+              selectedUser: $scope.selectedUser
+            }
+    }).then(function successCallback(response) {
+        console.log('success')
+    }, function errorCallback(response) {
+      console.log('error: ', reponse);
+    });
+  }
 
 }]);

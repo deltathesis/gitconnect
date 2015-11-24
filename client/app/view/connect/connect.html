@@ -4,7 +4,7 @@
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
-      <div class="swiper-slide" ng-repeat="user in users" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.avatar_url}})"></div>
+      <div class="swiper-slide" ng-repeat="user in users track by $index" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.avatar_url}})"></div>
     </div>
     <!-- If we need navigation buttons -->
     <div class="swiper-button-prev"></div>
@@ -13,7 +13,7 @@
 
   <div class="col-xs-12 developer-connect-details">
     <div class="connection">
-      <button class="btn connect-btn">Connect</button>
+      <button class="btn connect-btn" ng-click="connectionRequest($index)">Connect</button>
     </div>
     <div class="developer-detail">
       <p class="developer-name">{{selectedUser.name}}</p>

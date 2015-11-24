@@ -102,6 +102,7 @@ var createUser = function(username){
 User.getMatches = function(username){
   return new Promise(function(resolve){
     var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: "true"}) '
+               + 'WHERE NOT (user)-->(x) '
                + 'RETURN DISTINCT x, COUNT(x) '
                + 'ORDER BY COUNT(x) DESC '
                + 'LIMIT 10';
@@ -153,7 +154,7 @@ User.addRelationships = function(params){
   return new Promise(function(resolve){
     User.get(params.baseNode).then(function(userNode){
       userId = userNode[0].id;
-      return User.getRelationships(userId, 'out', params.relLabel); 
+      return User.getRelationships(userId, params.relDirection, params.relLabel); 
     }).then(function(relNodes){
         relNodeIds = relNodes.map(function(rel){
           return rel.end
@@ -212,6 +213,7 @@ User.saveNewUser = function(username){
       User.addRelationships({
         baseNode: {username: githubData.userData.username},
         relNodes: githubData.languages,
+        relDirection: 'out',
         relNodeLabels: ['Language'],
         relLabel: 'KNOWS'
       })
@@ -221,6 +223,7 @@ User.saveNewUser = function(username){
       User.addRelationships({
         baseNode: {username: githubData.userData.username},
         relNodes: githubData.repos,
+        relDirection: 'out',
         relNodeLabels: ['Repo'],
         relLabel: 'WATCHES'
       })

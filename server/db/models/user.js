@@ -163,13 +163,11 @@ User.addRelationships = function(params){
       return Promise.map(params.relNodes, function(element){
         return User.findOrCreateNode(element, params.relNodeLabels)
       }).filter(function(element){
-        console.log(element)
         return !_.contains(relNodeIds, element.id)
       })
     }).then(function(nodes){
       var txn = db.batch()
       nodes.forEach(function(node){
-        console.log(relNodeIds)
         txn.relate(userId, params.relLabel, node.id)
       })
       return txn.commit(function(err, results){
@@ -228,7 +226,6 @@ User.saveNewUser = function(username){
       })
     })
     .then(function(data){
-      console.log(node)
       resolve(node)
     })
     .catch(function(err){
@@ -285,23 +282,5 @@ User.update = function(node, attrs) {
     });
   });
 };
-
-
-
-// Gets all relationships of a node
-// node: Object
-// type (optional): String
-User.getRelationships = function(node, type) {
-  type = type || '';
-  return new Promise(function(resolve) {
-    db.relationships(node, 'all', type, function(err, relationships) {
-      if (err) console.log(err);
-      resolve(relationships);
-    });
-  });
-};
-
-
-
 Promise.promisifyAll(User);
 

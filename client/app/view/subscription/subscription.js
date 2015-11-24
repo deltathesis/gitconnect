@@ -59,7 +59,7 @@ angular.module('myApp.subscription', ['ngRoute'])
   }
 
   $scope.formSubmit = function() {
-    var userCity = $('#user-location').val();
+    // var userCity = $('#user-location').val();
     var userSelectedTech = user.languages;
     var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
@@ -68,7 +68,7 @@ angular.module('myApp.subscription', ['ngRoute'])
     var resultsLocation = {
       username: user.name,
       cityId: cityId,
-      cityName: userCity
+      cityName: cityName
     }
     console.log(resultsLocation);
     // Get User techs list
@@ -109,7 +109,7 @@ angular.module('myApp.subscription', ['ngRoute'])
 
       cityId = place.place_id;
       cityName = place.name;
-      $('#user-location').val(place.name);
+      // $('#user-location').val(place.name);
     });
   }
 

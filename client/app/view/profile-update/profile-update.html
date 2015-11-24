@@ -1,9 +1,9 @@
-<div class="container page profile-update-page fadein-effect">
-  <h1>Welcome</h1>
-  <h2>Thanks for joining us {{user.name}}</h2>
-  <h4>We just need few more information about you</h4>
+<div class="container page profile-update-page fadein-effect" ng-init="statusCheck()">
+  <h2 ng-show='!ownership'>Your are not allowed to modify these informations</h2>
+  <h2 ng-show='ownership'>Hello {{user.name}} </h2>
+  <h4 ng-show='ownership'>Update your informations</h4>
 
-  <form class="form-horizontal profile-update-form row" ng-submit="formSubmit()" ng-init="googleMapInit()">
+  <form class="form-horizontal profile-update-form row" ng-show='ownership' ng-submit="formSubmit()" ng-init="googleMapInit()">
     <div class="col-xs-12 location-input">
       <h3>Your location</h3>
       <div class="form-group col-xs-12 col-sm-8">

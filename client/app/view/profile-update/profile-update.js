@@ -18,17 +18,31 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   $scope.user = getProfile;
   console.log(getProfile);
 
-  var cookie = $cookies.get('gitConnectDeltaKS');
-  var cookieObj = Cookie.parseCookie(cookie);
+  // Check if page of the user
+  $scope.ownership = false;
+  $scope.statusCheck = function() {
+    // Check cookies and if current user own the profile page
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    if(cookie){
+      var cookieObj = Cookie.parseCookie(cookie);
+      console.log(cookieObj.username,$scope.user.username);
+      if (cookieObj.username === $scope.user.username) {
+        $scope.ownership = true;
+      }
+    }
+  }
 
-  var user = {
-    name: cookieObj.username,
-    githubId: cookieObj.id,
-    picture: cookieObj.avatar,
-    languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase']
-  };
+  // var cookie = $cookies.get('gitConnectDeltaKS');
+  // var cookieObj = Cookie.parseCookie(cookie);
 
-  $scope.user = user;
+  // var user = {
+  //   name: cookieObj.username,
+  //   githubId: cookieObj.id,
+  //   picture: cookieObj.avatar,
+  //   languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase']
+  // };
+
+  $scope.user.languages = ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase'] 
 
   $scope.techList = [
     'JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase',
@@ -43,7 +57,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   // Remove user existing tech
   $scope.initialTech = function() {
     setTimeout(function () { 
-      user.languages.forEach(function(element) {
+      $scope.user.languages.forEach(function(element) {
         var index = $scope.techList.indexOf(element);
          $scope.techList.splice(index, 1); 
          $scope.$apply();
@@ -52,10 +66,10 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   };
 
   $scope.addTech = function(tech, index) {
-    if (user.languages.indexOf(tech) !== -1) {
+    if ($scope.user.languages.indexOf(tech) !== -1) {
       $scope.techList.splice(index, 1); 
     } else {
-      user.languages.push(tech); 
+      $scope.user.languages.push(tech); 
       $scope.techList.splice(index, 1);
       $scope.searchText = '';
     }
@@ -63,44 +77,46 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
   $scope.removeTech = function(tech, index) {
     $scope.techList.push(tech); 
-    user.languages.splice(index, 1);  
+    $scope.user.languages.splice(index, 1);  
   }
 
   $scope.formSubmit = function() {
-    // var userCity = $('#user-location').val();
-    var userSelectedTech = user.languages;
-    var userEmail = $scope.userEmail;
-    var userBio = $scope.userBio;
+    if ($scope.ownership) {
+      // var userCity = $('#user-location').val();
+      var userSelectedTech = $scope.user.languages;
+      var userEmail = $scope.userEmail;
+      var userBio = $scope.userBio;
 
-    // Location user update form submission
-    var resultsLocation = {
-      username: user.name,
-      cityId: cityId,
-      cityName: cityName
+      // Location user update form submission
+      var resultsLocation = {
+        username: $scope.user.username,
+        cityId: cityId,
+        cityName: cityName
+      }
+      console.log(resultsLocation);
+      // Get User techs list
+      var resultsTech = userSelectedTech;
+
+      // Prepare email and Bio data
+      var userInfos = {
+        username: $scope.user.username,
+        email: userEmail,
+        bio: userBio
+      }
+
+      // Prepare data to be posted
+      var postData = {
+        resultsLocation : resultsLocation,
+        resultsTech: resultsTech,
+        userInfos: userInfos
+      }
+
+      // Posting data
+      UserForm.postForm(postData)
+
+      // Redirection to the home page
+      $location.path('/');
     }
-    console.log(resultsLocation);
-    // Get User techs list
-    var resultsTech = userSelectedTech;
-
-    // Prepare email and Bio data
-    var userInfos = {
-      username: user.name,
-      email: userEmail,
-      bio: userBio
-    }
-
-    // Prepare data to be posted
-    var postData = {
-      resultsLocation : resultsLocation,
-      resultsTech: resultsTech,
-      userInfos: userInfos
-    }
-
-    // Posting data
-    UserForm.postForm(postData)
-
-    // Redirection to the home page
-    $location.path('/');
   }
 
   $scope.googleMapInit = function() {

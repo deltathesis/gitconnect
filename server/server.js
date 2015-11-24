@@ -131,6 +131,7 @@ app.post('/api/user/updateform', function(req, res) {
     baseNode: {username: req.body.data.resultsLocation.username},
     relNodes: [{uniq_id: req.body.data.resultsLocation.cityId, city: req.body.data.resultsLocation.cityName}],
     relNodeLabels: ['City'],
+    relDirection: 'out',
     relLabel: 'Lives'
   };
   // Saving location / relationship into the DB
@@ -147,6 +148,7 @@ app.post('/api/user/updateform', function(req, res) {
     baseNode: {username: req.body.data.resultsLocation.username},
     relNodes: techlist,
     relNodeLabels: ['Language'],
+    relDirection: 'out',
     relLabel: 'KNOWS'
   }
   // Saving user tech / relationship into the DB
@@ -198,7 +200,7 @@ app.post('/api/user/connection-request', function(req, res){
     relNodes: [{username: selectedUser.username}],
     relNodeLabel: 'User',
     relDirection: 'out',
-    relLabel: 'connection-request'
+    relLabel: 'CONNECTION_REQUEST'
   }).then(function(results){
     console.log(results)
   })

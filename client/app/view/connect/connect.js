@@ -41,7 +41,7 @@ angular.module('myApp.connect', ['ngRoute'])
   $scope.users = matches;
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
-      var swiper = new Swiper('.swiper-container', {
+      $scope.swiper = new Swiper('.swiper-container', {
         effect: 'coverflow',
         grabCursor: true,
         centeredSlides: true,
@@ -75,8 +75,9 @@ angular.module('myApp.connect', ['ngRoute'])
       }); 
   });
   
-  $scope.connectionRequest = function(){
-    console.log('hell');
+  $scope.connectionRequest = function(index){
+    console.log(index);
+    // $scope.swiper.removeSlide($scope.swiper.activeIndex);
     return $http({
       method: 'POST',
       url: '/api/user/connection-request',
@@ -89,6 +90,5 @@ angular.module('myApp.connect', ['ngRoute'])
       console.log('error: ', reponse);
     });
   }
-  
 
 }]);

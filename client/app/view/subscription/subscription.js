@@ -10,7 +10,7 @@ angular.module('myApp.subscription', ['ngRoute'])
 
 .controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', function($scope, $location, Cookie, $cookies, UserForm) {
 
-  var cookie = $cookies.get('github');
+  var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
 
   var user = {

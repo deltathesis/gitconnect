@@ -4,7 +4,7 @@ angular.module('myApp.auth', [])
 
 	// Setup cookies for github user connexion information
   $scope.githubCookie = false;
-  var cookie = $cookies.get('github');
+  var cookie = $cookies.get('gitConnectDeltaKS');
 
   if (cookie) {
   	// Create user object for cookie information

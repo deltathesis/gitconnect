@@ -64,7 +64,7 @@ app.get('/auth/github/callback',
     req.session.avatar_url = req.user._json.avatar_url;
 
     // Store github cookie for 7 days
-    res.cookie('github', { 
+    res.cookie('gitConnectDeltaKS', { 
       id: req.user.id,
       username: req.user.username,
       avatar: req.user._json.avatar_url,
@@ -84,7 +84,7 @@ app.get('/auth/github/callback',
 
 app.get('/logout', function(req, res) {
 	req.logout();
-  res.clearCookie('github');
+  res.clearCookie('gitConnectDeltaKS');
 	res.redirect('/');
 });
 

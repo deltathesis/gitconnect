@@ -22,6 +22,7 @@ angular.module('myApp', [
   'myApp.collaboration-page',
   'myApp.requests',
   'myApp.subscription',
+  'myApp.profileUpdate',
   'myApp.contact',
   'myApp.team',
   'myApp.legal',

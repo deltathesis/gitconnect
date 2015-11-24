@@ -111,6 +111,14 @@ app.get('/api/user/:name', function(req, res) {
   });
 });
 
+app.get('/api/user/relations/:name', function(req, res) {
+  // Get all type user relationships
+  User.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
+    console.log(user);
+    res.json({user: user})
+  });
+});
+
 app.get('/api/user/:name/matches', function(req, res) {
   User.getMatches(req.params.name).then(function(users){
     res.json({matches: users});

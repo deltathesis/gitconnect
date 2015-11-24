@@ -14,9 +14,11 @@ var collabRooms = [];
 var retrieveData = function () {
   firebase.once("value", function(data) {
     if(data.val()) {  
-      rooms = data.val().rooms;
-      collabRooms = data.val().collab;
+      rooms = data.val().privateRooms;
+      collabRooms = data.val().collabRooms;
       users = data.val().users;
+      projectComments = data.val().projectRooms;
+      console.log('users', rooms);
     }
   });
 }
@@ -30,7 +32,6 @@ module.exports = function (socket) {
   console.log('user connected');
   
   retrieveData();
-  console.log('collabRooms', collabRooms);
 
   //init data for the user
   socket.on('myusername', function(data) {
@@ -100,7 +101,7 @@ module.exports = function (socket) {
 
   //stores private messaging data into firebase
   socket.on('storeData', function(data) {
-    var userRef = firebase.child('rooms');
+    var userRef = firebase.child('privateRooms');
     if(data){
       userRef.update(data);
     }
@@ -117,7 +118,7 @@ module.exports = function (socket) {
 
   //stores collab message data into firebase
   socket.on('store:collabData', function(data) {
-    var userRef = firebase.child('collab');
+    var userRef = firebase.child('collabRooms');
     if(data) {
       userRef.update(data);
     }
@@ -131,6 +132,33 @@ module.exports = function (socket) {
     });
   });
   /** End of Collab Page Socket Functions **/
+
+
+  /** Project-Page Page Socket Functions **/
+
+  //intialized username and adds socket info to people array
+  socket.on('initProject', function(data) {
+    name = data;
+    people[data] = socket;
+    socket.emit('initProject', projectComments);
+  });
+
+  //stores collab message data into firebase
+  socket.on('store:projectData', function(data) {
+    var userRef = firebase.child('projectRooms');
+    if(data) {
+      userRef.update(data);
+    }
+  });
+
+  socket.on('send:projectMessage', function(data) {
+    socket.broadcast.emit('send:projectMessage', {
+      username: name,
+      message: data.message,
+      date: data.date
+    });
+  });
+  /** End of Project-Page Page Socket Functions **/
 
   socket.on('notify', function(data){
      var fireUsers = firebase.child('users');
@@ -167,6 +195,8 @@ module.exports = function (socket) {
   });
 //TODO EMIT ACTUAL FIREBASE DATA SOCKET.EMIT THEDATA
   socket.on('giveMeDATA', function(data){
+    if(users) {
     socket.emit('theDATA', users[data.username]);
+      }
   })
 };

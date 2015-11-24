@@ -8,7 +8,13 @@ angular.module('myApp.projectpage', ['ngRoute'])
   });
 }])
 
-.controller('projectPage', ['$scope', function($scope) {
+.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', function($scope, $cookies, Cookie, socket) {
+
+  var cookie = $cookies.get('gitConnectDeltaKS');
+  var cookieObj = Cookie.parseCookie(cookie);
+  $scope.username = cookieObj.username;
+  $scope.currentTime;
+  $scope.messages = [];
 
   var project = {
     thumbnail: 'assets/pictures/projects-thumbnails/koti.jpg',
@@ -40,27 +46,43 @@ angular.module('myApp.projectpage', ['ngRoute'])
     project.downVote += 1;
   }
 
-  var comments = [
-    {
-      thumbnail: 'assets/pictures/users/chris.jpg',
-      user: 'chris',
-      publishDate: 1447797324755,
-      message: ' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    },
-    {
-      thumbnail: 'assets/pictures/users/royce.jpg',
-      user: 'royce',
-      publishDate: 1447737324755,
-      message: ' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    },
-    {
-      thumbnail: 'assets/pictures/users/yumo.jpg',
-      user: 'yumo',
-      publishDate: 1447297324755,
-      message: ' Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }
-  ]
+  /** Socket Listeners **/
 
-  $scope.comments = comments;
+  socket.emit('initProject', $scope.username);
+
+  // listen to initializer
+  socket.on('initProject', function(data) {
+    if(data) {
+      $scope.messages = data.testRoom;
+    }
+  })
+
+  //listens to sent message
+  socket.on('send:projectMessage' , function(data) {
+    $scope.messages.push(data);
+  })
+
+  $scope.messageSubmit = function(){
+    if($scope.text){
+    var currentTime = new Date();
+      socket.emit('send:projectMessage', {
+        message: $scope.text,
+        date: currentTime
+      })
+
+   
+      $scope.messages.push({
+        username: $scope.username,
+        message: $scope.text,
+        date: currentTime
+      });
+
+      socket.emit('store:projectData', angular.copy({
+        testRoom: $scope.messages
+      }));
+
+      $scope.text = "";
+    }
+  }
 
 }]);

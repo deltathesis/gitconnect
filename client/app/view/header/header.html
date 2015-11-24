@@ -30,11 +30,11 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form> -->
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show='user' class="requests" data-messages="7">
-          <span class="badge">7</span>
+        <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" data-message={{friendRequests}} ng-click=clearNotifications()>
+          <span class="badge">{{friendRequests}}</span>
           <a href="#/requests"><i class="fa fa-share-alt"></i></a>
         </li>
-        <li ng-show='user' class="messaging" data-messages={{unreadMessages}}>
+        <li ng-show='user' ng-class="unreadMessages ? 'notifications' : 'nothing'" class="notify messaging" data-messages={{unreadMessages}}>
           <span class="badge">{{unreadMessages}}</span>
           <a href="#/privateChat"><i class="fa fa-comments"></i></a>
         </li>

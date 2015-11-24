@@ -16,7 +16,7 @@ angular.module('myApp.requests', ['ngRoute'])
   });
 }])
 
-.controller('requestsPage', ['$scope', 'getUserDemands', 'getUserRequests', function($scope, getUserDemands, getUserRequests) {
+.controller('requestsPage', ['$scope', 'getUserDemands', 'getUserRequests', 'socket', function($scope, getUserDemands, getUserRequests, socket) {
 
   var userDemands = getUserDemands;
   // console.log('demands: ',userDemands);
@@ -25,6 +25,7 @@ angular.module('myApp.requests', ['ngRoute'])
 
   $scope.usersRequest = usersRequest;
   $scope.userDemands = userDemands;
+
 
 
   $scope.ratings = function(ratings, index, type) {

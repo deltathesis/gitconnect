@@ -160,24 +160,34 @@ module.exports = function (socket) {
   });
   /** End of Project-Page Page Socket Functions **/
 
+  /*  notify your friend*/
+  socket.on('notify:potentialFriend', function(data){
+    var fireUsers = firebase.child('users');
+    var fireTargetUser = fireUsers.child(data.target);
+    var friendRequests = fireTargetUser.child('friendRequests')
+
+    friendRequests.transaction(function(number){
+     return (number || 0) + 1;
+    });
+  });
+
 
   socket.on('notify:message', function(data){
      var fireUsers = firebase.child('users');
-     var fireTargetUser = fireUsers.child(data.target);
-     var unreadMessages = fireTargetUser.child('messageNotifications');
-     var friendRequests = fireTargetUser.child('friendRequests')
+     var fireTargetUser = fireUsers.child(data.target).child('messageNotifications');
+     var fireCurrentUser = fireUsers.child(data.currentUser).child('messageNotifications');
+     // var currentUserMessages = fireCurrentUser.child('messageNotifications');
+
      for(var key in people){
       if(key === data){
         return
       }
      }
-     unreadMessages.transaction(function(number){
+     fireTargetUser.transaction(function(number){
       return (number || 0) + 1;
      }, function(err, committed, snapshot){
       if(!err){
-        var temporary = {};
-        temporary[data.currentUser] = {messageNotifications: 0};
-        fireUsers.update(temporary);
+        fireCurrentUser.set(0);
         firebase.once("value", function(values) {
           if(values.val()) {  
             users = values.val().users;
@@ -186,6 +196,19 @@ module.exports = function (socket) {
         });
       }
      });
+  })
+
+  socket.on('clear:friendRequests', function(data){
+    var fireUsers = firebase.child('users');
+    var userFriendRequests = fireUsers.child(data.currentUser).child('friendRequests');
+
+    userFriendRequests.set(0);
+    firebase.once("value", function(values) {
+      if(values.val()) {  
+        users = values.val().users;
+        socket.emit('theDATA', users[data.currentUser]);
+      }
+    });
   })
 
   // clean up when a user leaves, and broadcast it to other people

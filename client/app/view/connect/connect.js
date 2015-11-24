@@ -35,7 +35,7 @@ angular.module('myApp.connect', ['ngRoute'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket) {
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
@@ -89,7 +89,7 @@ angular.module('myApp.connect', ['ngRoute'])
         },
       }); 
   });
-  
+
   $scope.connectionRequest = function(index){
     $('.swiper-slide-active').addClass('requested');
     return $http({
@@ -99,6 +99,9 @@ angular.module('myApp.connect', ['ngRoute'])
               selectedUser: $scope.selectedUser
             }
     }).then(function successCallback(response) {
+        socket.emit('notify:potentialFriend', {
+          target: angular.copy($scope.selectedUser.username), currentUser: angular.copy($scope.user.user.username)
+        });
         console.log('success')
     }, function errorCallback(response) {
       console.log('error: ', reponse);

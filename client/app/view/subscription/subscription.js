@@ -59,20 +59,18 @@ angular.module('myApp.subscription', ['ngRoute'])
   }
 
   $scope.formSubmit = function() {
-    // var userCity = $('#user-location').val();
+    var userCity = $('#user-location').val();
     var userSelectedTech = user.languages;
     var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
-    // Set Google city unique Id
-    var cityId;
-    var cityName;
 
     // Location user update form submission
     var resultsLocation = {
       username: user.name,
       cityId: cityId,
-      cityName: cityName
+      cityName: userCity
     }
+    console.log(resultsLocation);
     // Get User techs list
     var resultsTech = userSelectedTech;
 

@@ -64,10 +64,10 @@
     </div>
 
     <!-- User Comment example *** START *** -->
-  <div class="row post user-comment-post" ng-repeat="comment in comments">
+  <!-- <div class="row post user-comment-post" ng-repeat="comment in comments">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail user-pic">
-        <a href="" alt="" style="background-image:url({{comment.thumbnail}})"></a>
+        <a href="" alt="" style="background-image:url(assets/pictures/users/royce.jpg)"></a>
       </div>
       <div class="post-top-details">
         <div class="post-title user-name">
@@ -87,7 +87,28 @@
         </p>
       </div>
     </div>
-  </div>
+  </div> -->
+    <div class="row team-messages">
+      <h1>Comments</h1>
+      <ul class="list-group">
+        <li class="list-group-item cf" ng-repeat="message in messages">
+          <a href="" class="team-member-chat-picture" style="background-image:url('assets/pictures/users/royce.jpg')"></a>
+          <div class="message-content">
+            <span class="username">{{message.username}}</span>
+            <span class="date">{{ message.date | date: 'short' }}</span>
+            <p class="message-content-body">
+              {{message.message}}
+            </p>
+          </div>
+        </li>
+      </ul>
+      <form ng-submit="messageSubmit()">
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" id="sizing-addon1">+</span>
+          <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">
+        </div>
+      </form>
+    </div>
   <!-- User Comment example *** END *** -->
 
   </div>

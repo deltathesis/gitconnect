@@ -113,6 +113,7 @@ app.post('/api/user/updateform', function(req, res) {
     relLabel: 'Lives'
   };
   // Saving location / relationship into the DB
+  console.log('city: ', objLocation);
   User.addRelationships(objLocation);
 
   // Get all user techs list

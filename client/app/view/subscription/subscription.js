@@ -96,7 +96,8 @@ angular.module('myApp.subscription', ['ngRoute'])
   }
 
   $scope.googleMapInit = function() {
-    google.maps.event.addDomListener(window, 'load', addressInitialize);
+    // google.maps.event.addDomListener(window, 'load', addressInitialize);
+    addressInitialize();
   }
 
   function addressInitialize() {

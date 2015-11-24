@@ -52,7 +52,7 @@ angular.module('myApp.services', [])
 
 	var getProfileAndRelations = function(username) {
 		return $http({
-			cache: true,
+			cache: false,
 			method: 'GET',
 			url: '/api/user/relations/' + username
 		}).then(function(res) {
@@ -130,3 +130,24 @@ angular.module('myApp.services', [])
 		changeAvailability: changeAvailability
 	};
 }])
+
+.service('userOwnTech', function() {
+  this.userTech = [];
+  this.userAddress = '';
+
+  this.setTech = function(techlist) {
+        this.userTech = techlist;
+  };
+  this.getTech = function() {
+        return this.userTech;
+  };
+
+  this.setAddress = function(address) {
+        this.userAddress = address;
+  };
+  this.getAddress = function() {
+        return this.userAddress;
+  };
+})
+
+;

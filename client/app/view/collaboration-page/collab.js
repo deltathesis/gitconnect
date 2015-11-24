@@ -10,7 +10,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
 .controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', function($scope, $cookies, Cookie, socket) {
 
-  var cookie = $cookies.get('github');
+  var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
   console.log($scope.username);

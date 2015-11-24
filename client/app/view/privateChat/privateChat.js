@@ -14,7 +14,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
   $scope.name;                            //users is an array [selfUser, targetuser]
   $scope.currentRoom;                     //messages is obj with props text, room, otheruser
   $scope.currentTarget = 'Message your Connections!';
-  var cookie = $cookies.get('github');
+  var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
   /** Socket Listeners **/

@@ -1,7 +1,7 @@
 angular.module('myApp.header', [])
 
 .controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', function($scope, socket, $cookies, Cookie) {
-  var cookie = $cookies.get('github');
+  var cookie = $cookies.get('gitConnectDeltaKS');
   if(cookie){
     var cookieObj = Cookie.parseCookie(cookie);
     console.log('username on cookie', cookieObj.username);

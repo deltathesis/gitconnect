@@ -23,7 +23,7 @@ angular.module('myApp.services', [])
 	};
 
 	var isAuth = function() {
-		return !!$cookies.get('github');
+		return !!$cookies.get('gitConnectDeltaKS');
 	};
 
 	return {
@@ -51,7 +51,7 @@ angular.module('myApp.services', [])
 	};
 
 	var getMatches = function() {
-		var cookie = $cookies.get('github');
+		var cookie = $cookies.get('gitConnectDeltaKS');
 		var user = Cookie.parseCookie(cookie);
 		return $http({
 			cache: true,

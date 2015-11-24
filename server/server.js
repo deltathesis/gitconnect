@@ -100,7 +100,6 @@ app.get('/api/user/:name', function(req, res) {
 
 app.get('/api/user/:name/matches', function(req, res) {
   User.getMatches(req.params.name).then(function(users){
-    console.log(users)
     res.json({matches: users});
   });
 });

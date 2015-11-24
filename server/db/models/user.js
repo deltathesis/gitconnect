@@ -1,3 +1,5 @@
+
+
 var rp = require('request-promise');
 var Promise = require('bluebird');
 var _ = require('underscore')
@@ -136,20 +138,39 @@ User.data = function(data){
   return storage;
 };
 
-User.addRelationships = function(params){
-  var join = Promise.join;
-  //baseNode, relNodes, relNodeLabel, relDirection, relLabels
+User.getRelationships = function(baseNodeId, relDirection, relLabel){
   return new Promise(function(resolve){
-    var user = db.findAsync(params.baseNode).then(function(data){
-      return data
+    return db.relationshipsAsync(baseNodeId, relDirection, relLabel).then(function(rel){
+      resolve(rel);
     })
-    var nodes = Promise.map(params.relNodes, function(element){
-      return(User.findOrCreateNode(element, params.relNodeLabels))
-    })
-    join(user, nodes, function(user, nodes){
-      var txn = db.batch();
-      nodes.forEach(function(relNode){
-        txn.relate(user[0].id, params.relLabel, relNode.id)
+  })
+}
+
+User.addRelationships = function(params){
+  //baseNode, relNodes, relNodeLabel, relDirection, relLabel
+  var userId;
+  var relNodeIds;
+  return new Promise(function(resolve){
+    User.get(params.baseNode).then(function(userNode){
+      userId = userNode[0].id;
+      return User.getRelationships(userId, 'out', params.relLabel); 
+    }).then(function(relNodes){
+        relNodeIds = relNodes.map(function(rel){
+          return rel.end
+        })
+      return;
+    }).then(function(){
+      return Promise.map(params.relNodes, function(element){
+        return User.findOrCreateNode(element, params.relNodeLabels)
+      }).filter(function(element){
+        console.log(element)
+        return !_.contains(relNodeIds, element.id)
+      })
+    }).then(function(nodes){
+      var txn = db.batch()
+      nodes.forEach(function(node){
+        console.log(relNodeIds)
+        txn.relate(userId, params.relLabel, node.id)
       })
       return txn.commit(function(err, results){
         if(err){
@@ -158,8 +179,10 @@ User.addRelationships = function(params){
           return results;
         }
       })
-    }).then(function(data){
-      resolve(data)
+    }).then(function(results){
+      resolve(results)
+    }).catch(function(err){
+      console.log(err)
     })
   })   
 };
@@ -263,6 +286,8 @@ User.update = function(node, attrs) {
   });
 };
 
+
+
 // Gets all relationships of a node
 // node: Object
 // type (optional): String
@@ -276,4 +301,7 @@ User.getRelationships = function(node, type) {
   });
 };
 
+
+
 Promise.promisifyAll(User);
+

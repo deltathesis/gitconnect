@@ -304,3 +304,4 @@ User.getRelationships = function(node, type) {
 
 
 Promise.promisifyAll(User);
+

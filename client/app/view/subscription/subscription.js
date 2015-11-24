@@ -1,26 +1,41 @@
 angular.module('myApp.subscription', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/subscription', {
+  $routeProvider.when('/subscription/:name', {
     authenticate: true,
     templateUrl: 'view/subscription/subscription.html',
-    controller: 'subscriptionPage'
+    controller: 'subscriptionPage',
+    resolve: {
+      getProfile: ['$route', 'User', function($route, User) {
+        return User.getProfileAndRelations($route.current.params.name);
+      }]
+    }
   });
 }])
 
-.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', function($scope, $location, Cookie, $cookies, UserForm) {
+.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', function($scope, $location, Cookie, $cookies, UserForm, getProfile) {
 
-  var cookie = $cookies.get('gitConnectDeltaKS');
-  var cookieObj = Cookie.parseCookie(cookie);
+  $scope.user = getProfile;
+  console.log(getProfile);
 
-  var user = {
-    name: cookieObj.username,
-    githubId: cookieObj.id,
-    picture: cookieObj.avatar,
-    languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase']
-  };
+  // Check if page of the user
+  $scope.ownership = false;
+  $scope.statusCheck = function() {
+    // Check cookies and if current user own the profile page
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    if(cookie){
+      var cookieObj = Cookie.parseCookie(cookie);
+      console.log(cookieObj.username,$scope.user.user.username);
+      if (cookieObj.username === $scope.user.user.username) {
+        $scope.ownership = true;
+      }
+    }
+  }
 
-  $scope.user = user;
+  $scope.user.languages = [];
+  $scope.user.relationships.KNOWS.forEach(function(tech) {
+    $scope.user.languages.push(tech.name);
+  })
 
   $scope.techList = [
     'JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase',
@@ -32,10 +47,10 @@ angular.module('myApp.subscription', ['ngRoute'])
     'ActionScript', 'Ember', 'Go', 'Gulp', 'Grunt', 'Laravel', 'Docker'
   ];
 
-  // Remove user existing tech
+   // Remove user existing tech
   $scope.initialTech = function() {
     setTimeout(function () { 
-      user.languages.forEach(function(element) {
+      $scope.user.languages.forEach(function(element) {
         var index = $scope.techList.indexOf(element);
          $scope.techList.splice(index, 1); 
          $scope.$apply();
@@ -44,10 +59,10 @@ angular.module('myApp.subscription', ['ngRoute'])
   };
 
   $scope.addTech = function(tech, index) {
-    if (user.languages.indexOf(tech) !== -1) {
+    if ($scope.user.languages.indexOf(tech) !== -1) {
       $scope.techList.splice(index, 1); 
     } else {
-      user.languages.push(tech); 
+      $scope.user.languages.push(tech); 
       $scope.techList.splice(index, 1);
       $scope.searchText = '';
     }
@@ -55,44 +70,46 @@ angular.module('myApp.subscription', ['ngRoute'])
 
   $scope.removeTech = function(tech, index) {
     $scope.techList.push(tech); 
-    user.languages.splice(index, 1);  
+    $scope.user.languages.splice(index, 1);  
   }
 
   $scope.formSubmit = function() {
-    // var userCity = $('#user-location').val();
-    var userSelectedTech = user.languages;
-    var userEmail = $scope.userEmail;
-    var userBio = $scope.userBio;
+    if ($scope.ownership) {
+      // var userCity = $('#user-location').val();
+      var userSelectedTech = $scope.user.languages;
+      var userEmail = $scope.userEmail;
+      var userBio = $scope.userBio;
 
-    // Location user update form submission
-    var resultsLocation = {
-      username: user.name,
-      cityId: cityId,
-      cityName: cityName
+      // Location user update form submission
+      var resultsLocation = {
+        username: $scope.user.user.username,
+        cityId: cityId,
+        cityName: cityName
+      }
+      console.log(resultsLocation);
+      // Get User techs list
+      var resultsTech = userSelectedTech;
+
+      // Prepare email and Bio data
+      var userInfos = {
+        username: $scope.user.user.username,
+        email: userEmail,
+        bio: userBio
+      }
+
+      // Prepare data to be posted
+      var postData = {
+        resultsLocation : resultsLocation,
+        resultsTech: resultsTech,
+        userInfos: userInfos
+      }
+
+      // Posting data
+      UserForm.postForm(postData)
+
+      // Redirection to the home page
+      $location.path('/');
     }
-    console.log(resultsLocation);
-    // Get User techs list
-    var resultsTech = userSelectedTech;
-
-    // Prepare email and Bio data
-    var userInfos = {
-      username: user.name,
-      email: userEmail,
-      bio: userBio
-    }
-
-    // Prepare data to be posted
-    var postData = {
-      resultsLocation : resultsLocation,
-      resultsTech: resultsTech,
-      userInfos: userInfos
-    }
-
-    // Posting data
-    UserForm.postForm(postData)
-
-    // Redirection to the home page
-    $location.path('/');
   }
 
   $scope.googleMapInit = function() {

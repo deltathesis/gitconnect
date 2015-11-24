@@ -13,7 +13,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   });
 }])
 
-.controller('profileUpdatePage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', function($scope, $location, Cookie, $cookies, UserForm, getProfile) {
+.controller('profileUpdatePage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', '$window', function($scope, $location, Cookie, $cookies, UserForm, getProfile, $window) {
 
   $scope.user = getProfile;
   console.log(getProfile);
@@ -111,7 +111,8 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       UserForm.postForm(postData)
 
       // Redirection to the home page
-      $location.path('/');
+      $window.location.reload();
+      $location.path('/user/' + $scope.user.user.username);
     }
   }
 

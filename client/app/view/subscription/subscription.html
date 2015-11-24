@@ -1,9 +1,10 @@
-<div class="container page subscription-page fadein-effect">
-  <h1>Welcome</h1>
-  <h2>Thanks for joining us {{user.name}}</h2>
-  <h4>We just need few more information about you</h4>
+<div class="container page subscription-page fadein-effect" ng-init="statusCheck()">
+  <h2 ng-show='!ownership'>Your are not allowed to modify these informations</h2>
+  <h1 ng-show='ownership'>Welcome</h1>
+  <h2 ng-show='ownership'>Thanks for joining us {{user.name}}</h2>
+  <h4 ng-show='ownership'>We just need few more information about you</h4>
 
-  <form class="form-horizontal subscription-form row" ng-submit="formSubmit()" ng-init="googleMapInit()">
+  <form class="form-horizontal subscription-form row" ng-submit="formSubmit()" ng-init="googleMapInit()" ng-show='ownership'>
     <div class="col-xs-12 location-input">
       <h3>Your location</h3>
       <div class="form-group col-xs-12 col-sm-8">

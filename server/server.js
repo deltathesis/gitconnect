@@ -77,7 +77,7 @@ app.get('/auth/github/callback',
           location: req.user._json.location
         }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
 
-        res.redirect('/#/subscription');
+        res.redirect('/#/subscription/' + req.user.username);
 
       } else {
         // Get availability Cookie

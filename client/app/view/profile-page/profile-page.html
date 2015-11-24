@@ -3,10 +3,10 @@
   <div class="row user-details-container">
     <div class="col-xs-12 col-sm-8 user-details">
       <div class="post-thumbnail user-pic">
-        <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
+        <a href="" alt="" style="background-image:url({{user.user.avatar_url}})"></a>
       </div>
       <div class="user-subdetails">
-        <a href="" class="user-name">{{ user.name }} ({{user.username}})</a>
+        <a href="" class="user-name">{{ user.user.name }} ({{user.user.username}})</a>
         <div class="subdetail time">
           <!-- 
           Right now we don't record when the user is created. We can save this feature for a later date.
@@ -18,6 +18,9 @@
           <div id="stars-existing" class="stars" ng-init="ratings()"></div>  
         </div>
       </div>
+      <a href="#/profile-update/{{user.user.username}}" class="update-profile" ng-show='ownership'>
+        <i class="fa fa-cog"></i> Update our profile
+      </a>
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-show='ownership' ng-init="statusCheck()">
       <h5>Your current status</h5>

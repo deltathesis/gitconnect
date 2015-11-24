@@ -41,7 +41,7 @@ __Arguments__
 __Example__
 
 ```javascript
-db.getRelationshipData({username: 'ccnixon'}, 'any', 'all').then(function(result){
+db.getRelationshipData({username: 'ccnixon'}, 'all', '').then(function(result){
   console.log(result) --> 
   /* 
   { relationships:

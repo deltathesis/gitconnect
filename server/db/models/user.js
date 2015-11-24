@@ -101,7 +101,7 @@ var createUser = function(username){
 //match users to other users
 User.getMatches = function(username){
   return new Promise(function(resolve){
-    var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: true}) '
+    var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: "true"}) '
                + 'RETURN DISTINCT x, COUNT(x) '
                + 'ORDER BY COUNT(x) DESC '
                + 'LIMIT 10';
@@ -282,5 +282,40 @@ User.update = function(node, attrs) {
     });
   });
 };
-Promise.promisifyAll(User);
 
+User.getRelationshipData = function(baseNode, relDirection, relLabel){
+  return new Promise(function(resolve){
+    var results = {};
+    results.relationships = {};
+    User.get(baseNode).then(function(node){
+      results.user = node[0];
+      return node[0];
+    }).then(function(node){
+        return User.getRelationships(node.id, relDirection, relLabel)
+    }).then(function(relArray){
+        var relNodes = [];
+        relArray.forEach(function(node){
+          relNodes.push(db.readAsync(node.end).then(function(nodeData){
+            if(!results.relationships[node.type]){
+              results.relationships[node.type] = [];
+            }
+            results.relationships[node.type].push(nodeData);
+            return nodeData;
+        }));
+      })
+      return Promise.all(relNodes)
+    }).then(function(relNodes){
+        resolve(results);
+    })
+  })
+}
+
+User.getNodesWithLabel = function(label){
+  return new Promise(function(resolve){
+    db.nodesWithLabelAsync(label).then(function(nodesArray){
+      resolve(nodesArray)
+    })
+  })
+}
+
+Promise.promisifyAll(User);

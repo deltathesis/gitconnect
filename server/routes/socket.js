@@ -6,6 +6,7 @@ var people = {};
 
 //all private Messaging rooms
 var rooms = {};
+var users = {};
 
 //collabMessages, currently not in room format yet
 var collabRooms = [];
@@ -15,6 +16,7 @@ var retrieveData = function () {
     if(data.val()) {  
       rooms = data.val().rooms;
       collabRooms = data.val().collab;
+      users = data.val().users;
     }
   });
 }
@@ -130,6 +132,31 @@ module.exports = function (socket) {
   });
   /** End of Collab Page Socket Functions **/
 
+  socket.on('notify', function(data){
+     var fireUsers = firebase.child('users');
+     var fireTargetUser = fireUsers.child(data.target);
+     for(var key in people){
+      if(key === data){
+        return
+      }
+     }
+     fireTargetUser.transaction(function(number){
+      return (number || 0) + 1;
+     }, function(err, committed, snapshot){
+      if(!err){
+        var temporary = {};
+        temporary[data.currentUser] = 0;
+        fireUsers.update(temporary);
+        firebase.once("value", function(values) {
+          if(values.val()) {  
+            users = values.val().users;
+            socket.emit('theDATA', users[data.currentUser]);
+          }
+        });
+      }
+     });
+  })
+
   // clean up when a user leaves, and broadcast it to other people
   socket.on('disconnect', function () {
     console.log('user disconnected');
@@ -138,4 +165,8 @@ module.exports = function (socket) {
     });
     delete people[name];
   });
+//TODO EMIT ACTUAL FIREBASE DATA SOCKET.EMIT THEDATA
+  socket.on('giveMeDATA', function(data){
+    socket.emit('theDATA', users[data.username]);
+  })
 };

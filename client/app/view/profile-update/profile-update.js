@@ -13,7 +13,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   });
 }])
 
-.controller('profileUpdatePage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', '$window', function($scope, $location, Cookie, $cookies, UserForm, getProfile, $window) {
+.controller('profileUpdatePage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', '$window', 'userOwnTech', function($scope, $location, Cookie, $cookies, UserForm, getProfile, $window, userOwnTech) {
 
   $scope.user = getProfile;
   console.log(getProfile);
@@ -110,8 +110,12 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       // Posting data
       UserForm.postForm(postData)
 
+      // Set tech into Usertech Service
+      userOwnTech.setTech(resultsTech);
+      userOwnTech.setAddress(cityName);
+
       // Redirection to the home page
-      $window.location.reload();
+      // $window.location.reload();
       $location.path('/user/' + $scope.user.user.username);
     }
   }

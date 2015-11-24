@@ -13,7 +13,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
   });
 }])
 
-.controller('profilePage', ['$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window) {
+.controller('profilePage', ['$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech) {
 
   // var user = {
   //   ratings: Math.round(4.2),
@@ -26,17 +26,46 @@ angular.module('myApp.profilepage', ['ngRoute'])
   //   ],
   // }
 
-  $scope.user = getProfile;
-  console.log(getProfile);
+  // $scope.user = getProfile;
+  // console.log(getProfile);
 
-  // TODO get from DB
-  $scope.user.ratings = Math.round(4.2); //dummy data
   
-  $scope.user.languages = [];
-  $scope.user.relationships.KNOWS.forEach(function(tech) {
-    $scope.user.languages.push(tech.name);
-  })
-  $scope.user.location = $scope.user.relationships.Lives[0].city;
+ 
+
+  $scope.init = function() {  
+      $scope.user = getProfile;
+      console.log(getProfile);
+
+      // TODO get from DB
+      $scope.user.ratings = Math.round(4.2); //dummy data
+
+      var techList = userOwnTech.getTech();
+      console.log("service : ",techList);
+      if (techList.length !== 0) {
+        console.log("from service");
+        $scope.user.languages = techList;
+      } else {
+        console.log("from user");
+        $scope.user.languages = [];
+        $scope.user.relationships.KNOWS.forEach(function(tech) {
+          $scope.user.languages.push(tech.name);
+        })
+      }
+
+      var userLocation = userOwnTech.getAddress();
+      console.log("service : ",userLocation);
+      if (userLocation !== '') {
+        console.log("from service");
+        $scope.user.location = userLocation;
+      } else {
+        console.log("from user");
+        $scope.user.location = $scope.user.relationships.Lives[0].city;
+      }
+  }
+
+  
+  
+
 
   // Check if page of the user
   $scope.ownership = false;

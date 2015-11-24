@@ -107,6 +107,10 @@ angular.module('myApp.subscription', ['ngRoute'])
       // Posting data
       UserForm.postForm(postData)
 
+      // Set tech into Usertech Service
+      userOwnTech.setTech(resultsTech);
+      userOwnTech.setAddress(cityName);
+
       // Redirection to the home page
       $location.path('/');
     }

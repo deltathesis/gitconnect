@@ -121,7 +121,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
     $scope.message = '';
     scrollToBottom();
     socket.emit('storeData', angular.copy($scope.roomMessages));
-    socket.emit('notify', {target: angular.copy($scope.currentTarget), currentUser: angular.copy($scope.name)});
+    socket.emit('notify:message', {target: angular.copy($scope.currentTarget), currentUser: angular.copy($scope.name)});
   };
 
   var scrollToBottom = function() {

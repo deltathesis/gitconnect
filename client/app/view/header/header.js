@@ -7,8 +7,8 @@ angular.module('myApp.header', [])
     console.log('username on cookie', cookieObj.username);
     socket.emit('giveMeDATA', {username: cookieObj.username});
     socket.on('theDATA', function(data){
-      console.log('unread messages', data);
-      $scope.unreadMessages = data;
+      $scope.unreadMessages = data.messageNotifications;
+      $scope.freindRequests = data.freindRequests;
       if (!!$scope.unreadMessages) {
         $('.navbar-right .messaging').addClass('notifications');
       }

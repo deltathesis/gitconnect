@@ -160,20 +160,23 @@ module.exports = function (socket) {
   });
   /** End of Project-Page Page Socket Functions **/
 
-  socket.on('notify', function(data){
+
+  socket.on('notify:message', function(data){
      var fireUsers = firebase.child('users');
      var fireTargetUser = fireUsers.child(data.target);
+     var unreadMessages = fireTargetUser.child('messageNotifications');
+     var friendRequests = fireTargetUser.child('friendRequests')
      for(var key in people){
       if(key === data){
         return
       }
      }
-     fireTargetUser.transaction(function(number){
+     unreadMessages.transaction(function(number){
       return (number || 0) + 1;
      }, function(err, committed, snapshot){
       if(!err){
         var temporary = {};
-        temporary[data.currentUser] = 0;
+        temporary[data.currentUser] = {messageNotifications: 0};
         fireUsers.update(temporary);
         firebase.once("value", function(values) {
           if(values.val()) {  
@@ -196,7 +199,7 @@ module.exports = function (socket) {
 //TODO EMIT ACTUAL FIREBASE DATA SOCKET.EMIT THEDATA
   socket.on('giveMeDATA', function(data){
     if(users) {
-    socket.emit('theDATA', users[data.username]);
-      }
+      socket.emit('theDATA', users[data.username]);
+    }
   })
 };

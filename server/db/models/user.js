@@ -129,7 +129,7 @@ User.data = function(data){
     blog: !data.blog ? 'null' : data.blog,
     avatar_url: data.avatar_url,
     ratingTotal: 0,
-    availability: true,
+    availability: "true",
     ratingTotal: 0,
     ratingAverage: 'null'
   };

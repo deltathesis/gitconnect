@@ -63,20 +63,33 @@ app.get('/auth/github/callback',
     req.session.userlocation = req.user._json.location;
     req.session.avatar_url = req.user._json.avatar_url;
 
-    // Store github cookie for 7 days
-    res.cookie('gitConnectDeltaKS', { 
-      id: req.user.id,
-      username: req.user.username,
-      avatar: req.user._json.avatar_url,
-      location: req.user._json.location
-    }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
-
     User.get({username: req.user.username}).then(function(user){
       if(!user.length){
-        console.log(user)
-        User.saveNewUser(req.user.username)
+        console.log(user);
+        User.saveNewUser(req.user.username);
+        
+        // Store github cookie for 7 days
+        res.cookie('gitConnectDeltaKS', { 
+          id: req.user.id,
+          availability: "true",
+          username: req.user.username,
+          avatar: req.user._json.avatar_url,
+          location: req.user._json.location
+        }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
+
         res.redirect('/#/subscription');
+
       } else {
+        // Get availability Cookie
+        // Store github cookie for 7 days
+        res.cookie('gitConnectDeltaKS', { 
+          id: req.user.id,
+          availability: user[0].availability,
+          username: req.user.username,
+          avatar: req.user._json.avatar_url,
+          location: req.user._json.location
+        }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
+
         res.redirect('/')
       }
     })
@@ -149,16 +162,19 @@ app.post('/api/user/updateform', function(req, res) {
 });
 
 app.post('/api/user/availabilitytoggle', function(req, res) {
-  // Get User Node
-  // var objUser = {
-  //   userNode: User.get({username: req.body.data.userInfos.username})
-  // }
-  // 
-  console.log(req.body.data);
-  // // Update user info into the DB
-  // objUser.userNode.then(function(users) {
-  //   // User.update(users[0], userInfos)
-  // })
+  var availability = {
+    availability: req.body.data.availability
+  }
+  console.log(availability);
+  //Get User Node
+  var objUser = {
+    userNode: User.get({username: req.body.data.username})
+  }
+
+  // Update user availability into the DB
+  objUser.userNode.then(function(users) {
+    User.update(users[0], availability)
+  })
 
   res.end();
 });

@@ -9,6 +9,11 @@ angular.module('myApp.connect', ['ngRoute'])
       //The view will not load until this promise is resolved.
       matches: ['User', function(User) {
         return User.getMatches();
+      }],
+      getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
+        var cookie = $cookies.get('gitConnectDeltaKS');
+        var cookieObj = Cookie.parseCookie(cookie);
+        return User.getProfile(cookieObj.username);
       }]
     }
   });
@@ -27,7 +32,11 @@ angular.module('myApp.connect', ['ngRoute'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', function($scope, matches) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', function($scope, matches, getProfile) {
+
+  // get user information, disable if availabbility is false
+  $scope.user = getProfile;
+  console.log(getProfile);
 
   $scope.users = matches;
 

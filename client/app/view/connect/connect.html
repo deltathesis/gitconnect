@@ -4,7 +4,9 @@
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
-      <div class="swiper-slide" ng-repeat="user in users track by $index" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.avatar_url}})"></div>
+      <div class="swiper-slide" ng-repeat="user in users track by $index" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.avatar_url}})">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg> 
+      </div>
     </div>
     <!-- If we need navigation buttons -->
     <div class="swiper-button-prev"></div>

@@ -78,6 +78,7 @@ angular.module('myApp.connect', ['ngRoute'])
   $scope.connectionRequest = function(index){
     console.log(index);
     // $scope.swiper.removeSlide($scope.swiper.activeIndex);
+    
     return $http({
       method: 'POST',
       url: '/api/user/connection-request',

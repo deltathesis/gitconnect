@@ -63,9 +63,6 @@ angular.module('myApp.subscription', ['ngRoute'])
     var userSelectedTech = user.languages;
     var userEmail = $scope.userEmail;
     var userBio = $scope.userBio;
-    // Set Google city unique Id
-    var cityId;
-    var cityName;
 
     // Location user update form submission
     var resultsLocation = {
@@ -73,6 +70,7 @@ angular.module('myApp.subscription', ['ngRoute'])
       cityId: cityId,
       cityName: cityName
     }
+    console.log(resultsLocation);
     // Get User techs list
     var resultsTech = userSelectedTech;
 
@@ -111,7 +109,7 @@ angular.module('myApp.subscription', ['ngRoute'])
 
       cityId = place.place_id;
       cityName = place.name;
-      $('#user-location').val(place.name);
+      // $('#user-location').val(place.name);
     });
   }
 

@@ -7,7 +7,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
     controller: 'profilePage',
     resolve: {
       getProfile: ['$route', 'User', function($route, User) {
-        return User.getProfile($route.current.params.name);
+        return User.getProfileAndRelations($route.current.params.name);
       }]
     }
   });
@@ -16,11 +16,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
 .controller('profilePage', ['$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window) {
 
   // var user = {
-  //   picture: 'assets/pictures/users/royce.jpg',
-  //   name: 'Royce Leung',
-  //   memberDate: 1447797324755,
   //   ratings: Math.round(4.2),
-  //   bio: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
   //   projects: [
   //     {name:'Ballr', id:'123'},
   //     {name:'GitConnect', id:'987'},
@@ -28,15 +24,19 @@ angular.module('myApp.profilepage', ['ngRoute'])
   //     {name:'InstaCutz', id:'0987'},
   //     {name:'Humus', id:'12883'}
   //   ],
-  //   languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase']
   // }
 
   $scope.user = getProfile;
   console.log(getProfile);
+  
   // TODO get from DB
   $scope.user.ratings = Math.round(4.2); //dummy data
-  // TODO get from DB
-  $scope.user.location = 'San Francisco, CA';
+  
+  $scope.user.languages = [];
+  $scope.user.relationships.KNOWS.forEach(function(tech) {
+    $scope.user.languages.push(tech.name);
+  })
+  $scope.user.location = $scope.user.relationships.Lives[0].city;
 
   // Check if page of the user
   $scope.ownership = false;
@@ -46,10 +46,10 @@ angular.module('myApp.profilepage', ['ngRoute'])
     var cookie = $cookies.get('gitConnectDeltaKS');
     if(cookie){
       var cookieObj = Cookie.parseCookie(cookie);
-      if (cookieObj.username === $scope.user.username) {
-        $scope.availability = JSON.parse($scope.user.availability);
+      if (cookieObj.username === $scope.user.user.username) {
+        $scope.availability = JSON.parse($scope.user.user.availability);
         $scope.ownership = true;
-        $scope.availabilityStatus = ($scope.user.availability === "true") ? 'available' : 'unavailable';
+        $scope.availabilityStatus = ($scope.user.user.availability === "true") ? 'available' : 'unavailable';
       }
     }
   }

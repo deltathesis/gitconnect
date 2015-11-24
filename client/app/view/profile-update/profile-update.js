@@ -7,7 +7,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
     controller: 'profileUpdatePage',
     resolve: {
       getProfile: ['$route', 'User', function($route, User) {
-        return User.getProfile($route.current.params.name);
+        return User.getProfileAndRelations($route.current.params.name);
       }]
     }
   });
@@ -25,24 +25,20 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
     var cookie = $cookies.get('gitConnectDeltaKS');
     if(cookie){
       var cookieObj = Cookie.parseCookie(cookie);
-      console.log(cookieObj.username,$scope.user.username);
-      if (cookieObj.username === $scope.user.username) {
+      console.log(cookieObj.username,$scope.user.user.username);
+      if (cookieObj.username === $scope.user.user.username) {
         $scope.ownership = true;
       }
     }
   }
 
-  // var cookie = $cookies.get('gitConnectDeltaKS');
-  // var cookieObj = Cookie.parseCookie(cookie);
+  $scope.user.languages = [];
+  $scope.user.relationships.KNOWS.forEach(function(tech) {
+    $scope.user.languages.push(tech.name);
+  })
 
-  // var user = {
-  //   name: cookieObj.username,
-  //   githubId: cookieObj.id,
-  //   picture: cookieObj.avatar,
-  //   languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase']
-  // };
-
-  $scope.user.languages = ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase'] 
+  $scope.userEmail = $scope.user.user.email;
+  $scope.userBio = $scope.user.user.bio;
 
   $scope.techList = [
     'JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase',
@@ -89,7 +85,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
       // Location user update form submission
       var resultsLocation = {
-        username: $scope.user.username,
+        username: $scope.user.user.username,
         cityId: cityId,
         cityName: cityName
       }
@@ -99,7 +95,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
       // Prepare email and Bio data
       var userInfos = {
-        username: $scope.user.username,
+        username: $scope.user.user.username,
         email: userEmail,
         bio: userBio
       }

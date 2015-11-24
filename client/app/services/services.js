@@ -50,6 +50,16 @@ angular.module('myApp.services', [])
 		});
 	};
 
+	var getProfileAndRelations = function(username) {
+		return $http({
+			cache: true,
+			method: 'GET',
+			url: '/api/user/relations/' + username
+		}).then(function(res) {
+			return res.data.user;
+		});
+	};
+
 	var getMatches = function() {
 		var cookie = $cookies.get('gitConnectDeltaKS');
 		var user = Cookie.parseCookie(cookie);
@@ -64,6 +74,7 @@ angular.module('myApp.services', [])
 
 	return {
 		getMatches: getMatches,
+		getProfileAndRelations: getProfileAndRelations,
 		getProfile: getProfile
 	};
 

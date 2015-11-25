@@ -110,6 +110,7 @@ angular.module('myApp.subscription', ['ngRoute'])
       // Set tech into Usertech Service
       userOwnTech.setTech(resultsTech);
       userOwnTech.setAddress(cityName);
+      userOwnTech.setBio(userBio);
 
       // Redirection to the home page
       $location.path('/');

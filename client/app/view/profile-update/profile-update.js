@@ -113,6 +113,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       // Set tech into Usertech Service
       userOwnTech.setTech(resultsTech);
       userOwnTech.setAddress(cityName);
+      userOwnTech.setBio(userBio);
 
       // Redirection to the home page
       // $window.location.reload();

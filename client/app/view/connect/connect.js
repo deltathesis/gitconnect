@@ -13,8 +13,11 @@ angular.module('myApp.connect', ['ngRoute'])
       getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
         var cookie = $cookies.get('gitConnectDeltaKS');
         var cookieObj = Cookie.parseCookie(cookie);
-        return User.getProfile(cookieObj.username);
+        // return User.getProfile(cookieObj.username);
+        return User.getProfileAndRelations(cookieObj.username);
+
       }]
+
     }
   });
 }])
@@ -32,14 +35,24 @@ angular.module('myApp.connect', ['ngRoute'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', function($scope, matches, getProfile, $http) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies) {
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
   console.log(getProfile);
 
   $scope.users = matches;
-  console.log($scope.users)
+  console.log($scope.users);
+
+  // Set default user address to the form
+  if ($scope.user.relationships.Lives) {
+    $('#city-input').val($scope.user.relationships.Lives[0].city)
+  }
+
+  // Check availability status on page render
+  $scope.statusCheck = function() {
+    $scope.availability = JSON.parse($scope.user.user.availability);
+  }
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       $scope.swiper = new Swiper('.swiper-container', {
@@ -82,13 +95,63 @@ angular.module('myApp.connect', ['ngRoute'])
     return $http({
       method: 'POST',
       url: '/api/user/connection-request',
-      data: { currentUser: $scope.user, 
+      data: { currentUser: $scope.user.user, 
               selectedUser: $scope.selectedUser
             }
     }).then(function successCallback(response) {
         console.log('success')
     }, function errorCallback(response) {
       console.log('error: ', reponse);
+    });
+  };
+
+  $scope.availabilityOn = function() {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+    var data = {
+      username: cookieObj.username,
+      availability: "true"
+    }
+    availabilityToggle.changeAvailability(data);
+    // Update cooking value
+    cookieObj.availability = "true";
+    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+    //refresh to apply cookie to the view
+    $window.location.reload();
+  };
+
+  $scope.availabilityOff = function() {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+    var data = {
+      username: cookieObj.username,
+      availability: "false"
+    }
+    availabilityToggle.changeAvailability(data);
+
+    // Update cooking value
+    cookieObj.availability = "false";
+    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+    //refresh to apply cookie to the view
+    $window.location.reload();
+  };
+
+  $scope.googleMapInit = function() {
+    // google.maps.event.addDomListener(window, 'load', addressInitialize);
+    addressInitialize();
+  };
+
+  function addressInitialize() {
+    var input = document.getElementById('city-input');
+    var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+    autocomplete.addListener('place_changed', function() {
+      // Get city name only
+      var place = autocomplete.getPlace();
+      console.log(place.name, place.place_id);
+
+      cityId = place.place_id;
+      cityName = place.name;
+      // $('#user-location').val(place.name);
     });
   }
 

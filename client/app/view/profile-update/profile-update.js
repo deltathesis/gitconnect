@@ -69,12 +69,12 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       $scope.techList.splice(index, 1);
       $scope.searchText = '';
     }
-  }
+  };
 
   $scope.removeTech = function(tech, index) {
     $scope.techList.push(tech); 
     $scope.user.languages.splice(index, 1);  
-  }
+  };
 
   $scope.formSubmit = function() {
     if ($scope.ownership) {
@@ -119,12 +119,12 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       // $window.location.reload();
       $location.path('/user/' + $scope.user.user.username);
     }
-  }
+  };
 
   $scope.googleMapInit = function() {
     // google.maps.event.addDomListener(window, 'load', addressInitialize);
     addressInitialize();
-  }
+  };
 
   function addressInitialize() {
     var input = document.getElementById('user-location');

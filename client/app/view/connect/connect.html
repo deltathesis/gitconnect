@@ -1,20 +1,22 @@
 <div class="container page connect-page fadein-effect" ng-init="statusCheck()">
-  <div class="top-container cf">
-    <form class="form-inline city-form">
+  <div class="top-container row">
+    <form class="form-inline city-form col-xs-12 col-sm-8">
       <div class="form-group">
-        <label for="city">City</label>
-        <input type="text" class="form-control" id="city" placeholder="Select a different city">
+        <label for="city">Your City</label>
+        <input type="text" class="form-control" id="city-input" placeholder="Select a different city">
       </div>
       <button type="submit" class="btn btn-default">Send</button>
     </form>
-    <div class="availability">
+    <div class="availability col-xs-12 col-sm-4">
       <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
       <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button>
     </div>
-
+  </div>
+  <div class="availability-required" ng-show="!availability">
+    <h3>You must set yourself available<br>in order to match with other developpers</h3>
   </div>
   <!-- Slider main container -->
-  <div class="swiper-container">
+  <div class="swiper-container" ng-show="availability">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
@@ -27,7 +29,7 @@
     <div class="swiper-button-next"></div>
   </div>
 
-  <div class="col-xs-12 developer-connect-details">
+  <div class="col-xs-12 developer-connect-details" ng-show="availability">
     <div class="connection">
       <button class="btn connect-btn" ng-click="connectionRequest($index)">Connect</button>
     </div>

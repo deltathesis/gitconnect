@@ -13,8 +13,11 @@ angular.module('myApp.connect', ['ngRoute'])
       getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
         var cookie = $cookies.get('gitConnectDeltaKS');
         var cookieObj = Cookie.parseCookie(cookie);
-        return User.getProfile(cookieObj.username);
+        // return User.getProfile(cookieObj.username);
+        return User.getProfileAndRelations(cookieObj.username);
+
       }]
+
     }
   });
 }])
@@ -39,11 +42,16 @@ angular.module('myApp.connect', ['ngRoute'])
   console.log(getProfile);
 
   $scope.users = matches;
-  console.log($scope.users)
+  console.log($scope.users);
+
+  // Set default user address to the form
+  if ($scope.user.relationships.Lives) {
+    $('#city-input').val($scope.user.relationships.Lives[0].city)
+  }
 
   // Check availability status on page render
   $scope.statusCheck = function() {
-    $scope.availability = JSON.parse($scope.user.availability);
+    $scope.availability = JSON.parse($scope.user.user.availability);
   }
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
@@ -87,7 +95,7 @@ angular.module('myApp.connect', ['ngRoute'])
     return $http({
       method: 'POST',
       url: '/api/user/connection-request',
-      data: { currentUser: $scope.user, 
+      data: { currentUser: $scope.user.user, 
               selectedUser: $scope.selectedUser
             }
     }).then(function successCallback(response) {

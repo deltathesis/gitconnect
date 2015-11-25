@@ -3,11 +3,35 @@
 .connect-page {
   min-height: 1000px;
   .top-container {
+    margin:20px 0px;
     .city-form {
-      float: left;
+      label {
+        margin-right: 5px;
+      }
     }
     .availability {
-      float: right;
+      text-align: right;
+      .btn {
+        font-size: 12px;
+        font-weight: bold;
+        color: #FFF;
+        &.turn-on {
+          background-color: $greenColor;
+          i { color: $greenColor; }
+        }
+        &.turn-off {
+          background-color: $redColor;
+          i { color: $redColor; }
+        }
+      }
+    }
+  }
+  .availability-required {
+    text-align: center;
+    margin: 40px 0px;
+    padding: 40px 10px;
+    h3 {
+      line-height: 40px;
     }
   }
   .swiper-container {

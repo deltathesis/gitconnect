@@ -66,19 +66,20 @@ app.get('/auth/github/callback',
     User.get({username: req.user.username}).then(function(user){
       if(!user.length){
         console.log(user);
-        User.saveNewUser(req.user.username);
+        User.saveNewUser(req.user.username).then(function(newUser){
+
+          // Store github cookie for 7 days
+          res.cookie('gitConnectDeltaKS', { 
+            id: req.user.id,
+            availability: "true",
+            username: req.user.username,
+            avatar: req.user._json.avatar_url,
+            location: req.user._json.location
+          }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
+
+          res.redirect('/#/subscription/' + req.user.username);
+        });
         
-        // Store github cookie for 7 days
-        res.cookie('gitConnectDeltaKS', { 
-          id: req.user.id,
-          availability: "true",
-          username: req.user.username,
-          avatar: req.user._json.avatar_url,
-          location: req.user._json.location
-        }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
-
-        res.redirect('/#/subscription/' + req.user.username);
-
       } else {
         // Get availability Cookie
         // Store github cookie for 7 days
@@ -113,6 +114,7 @@ app.get('/api/user/:name', function(req, res) {
 
 app.get('/api/user/relations/:name', function(req, res) {
   // Get all type user relationships
+  console.log("chris: ",req.params.name);
   User.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
     console.log(user);
     res.json({user: user})

@@ -39,6 +39,7 @@ angular.module('myApp.connect', ['ngRoute'])
   console.log(getProfile);
 
   $scope.users = matches;
+  console.log($scope.users)
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       $scope.swiper = new Swiper('.swiper-container', {
@@ -56,6 +57,7 @@ angular.module('myApp.connect', ['ngRoute'])
         // Navigation arrows
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
+        keyboardControl: true,
         // CallBack functions
         // Might define onInit if necessary
         onTransitionStart: function() {
@@ -76,9 +78,7 @@ angular.module('myApp.connect', ['ngRoute'])
   });
   
   $scope.connectionRequest = function(index){
-    console.log(index);
-    // $scope.swiper.removeSlide($scope.swiper.activeIndex);
-    
+    $('.swiper-slide-active').addClass('requested');
     return $http({
       method: 'POST',
       url: '/api/user/connection-request',

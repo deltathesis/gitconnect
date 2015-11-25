@@ -134,6 +134,7 @@ angular.module('myApp.services', [])
 .service('userOwnTech', function() {
   this.userTech = [];
   this.userAddress = '';
+  this.userBio = '';
 
   this.setTech = function(techlist) {
         this.userTech = techlist;
@@ -147,6 +148,13 @@ angular.module('myApp.services', [])
   };
   this.getAddress = function() {
         return this.userAddress;
+  };
+
+  this.setBio = function(bio) {
+        this.userBio = bio;
+  };
+  this.getBio = function() {
+        return this.userBio;
   };
 })
 

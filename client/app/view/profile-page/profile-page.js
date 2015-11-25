@@ -26,41 +26,40 @@ angular.module('myApp.profilepage', ['ngRoute'])
   //   ],
   // }
 
-  // $scope.user = getProfile;
-  // console.log(getProfile);
-
-  
- 
-
   $scope.init = function() {  
       $scope.user = getProfile;
-      console.log(getProfile);
+      // console.log(getProfile);
 
       // TODO get from DB
       $scope.user.ratings = Math.round(4.2); //dummy data
 
+      // Updated User Tech list display
       var techList = userOwnTech.getTech();
-      console.log("service : ",techList);
       if (techList.length !== 0) {
-        console.log("from service");
         $scope.user.languages = techList;
       } else {
-        console.log("from user");
         $scope.user.languages = [];
         $scope.user.relationships.KNOWS.forEach(function(tech) {
           $scope.user.languages.push(tech.name);
         })
       }
 
+      // Updated User Location display
       var userLocation = userOwnTech.getAddress();
-      console.log("service : ",userLocation);
       if (userLocation !== '') {
-        console.log("from service");
         $scope.user.location = userLocation;
       } else {
-        console.log("from user");
         $scope.user.location = $scope.user.relationships.Lives[0].city;
       }
+
+      // Updated User Bio display
+      var userBio = userOwnTech.getBio();
+      if (userBio !== '') {
+        $scope.user.bio = userBio;
+      } else {
+        $scope.user.bio = $scope.user.user.bio;
+      }
+
   }
 
   

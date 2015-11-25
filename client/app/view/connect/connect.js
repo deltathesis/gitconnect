@@ -118,7 +118,7 @@ angular.module('myApp.connect', ['ngRoute'])
     $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
     //refresh to apply cookie to the view
     $window.location.reload();
-  }
+  };
 
   $scope.availabilityOff = function() {
     var cookie = $cookies.get('gitConnectDeltaKS');
@@ -134,6 +134,25 @@ angular.module('myApp.connect', ['ngRoute'])
     $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
     //refresh to apply cookie to the view
     $window.location.reload();
+  };
+
+  $scope.googleMapInit = function() {
+    // google.maps.event.addDomListener(window, 'load', addressInitialize);
+    addressInitialize();
+  };
+
+  function addressInitialize() {
+    var input = document.getElementById('city-input');
+    var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+    autocomplete.addListener('place_changed', function() {
+      // Get city name only
+      var place = autocomplete.getPlace();
+      console.log(place.name, place.place_id);
+
+      cityId = place.place_id;
+      cityName = place.name;
+      // $('#user-location').val(place.name);
+    });
   }
 
 }]);

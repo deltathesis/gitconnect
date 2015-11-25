@@ -32,7 +32,7 @@ angular.module('myApp.connect', ['ngRoute'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', function($scope, matches, getProfile, $http) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies) {
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
@@ -40,6 +40,11 @@ angular.module('myApp.connect', ['ngRoute'])
 
   $scope.users = matches;
   console.log($scope.users)
+
+  // Check availability status on page render
+  $scope.statusCheck = function() {
+    $scope.availability = JSON.parse($scope.user.availability);
+  }
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       $scope.swiper = new Swiper('.swiper-container', {
@@ -90,6 +95,37 @@ angular.module('myApp.connect', ['ngRoute'])
     }, function errorCallback(response) {
       console.log('error: ', reponse);
     });
+  };
+
+  $scope.availabilityOn = function() {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+    var data = {
+      username: cookieObj.username,
+      availability: "true"
+    }
+    availabilityToggle.changeAvailability(data);
+    // Update cooking value
+    cookieObj.availability = "true";
+    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+    //refresh to apply cookie to the view
+    $window.location.reload();
+  }
+
+  $scope.availabilityOff = function() {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+    var data = {
+      username: cookieObj.username,
+      availability: "false"
+    }
+    availabilityToggle.changeAvailability(data);
+
+    // Update cooking value
+    cookieObj.availability = "false";
+    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+    //refresh to apply cookie to the view
+    $window.location.reload();
   }
 
 }]);

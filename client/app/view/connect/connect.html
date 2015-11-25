@@ -1,4 +1,18 @@
-<div class="container page connect-page fadein-effect">
+<div class="container page connect-page fadein-effect" ng-init="statusCheck()">
+  <div class="top-container cf">
+    <form class="form-inline city-form">
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" placeholder="Select a different city">
+      </div>
+      <button type="submit" class="btn btn-default">Send</button>
+    </form>
+    <div class="availability">
+      <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
+      <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button>
+    </div>
+
+  </div>
   <!-- Slider main container -->
   <div class="swiper-container">
     <!-- Additional required wrapper -->

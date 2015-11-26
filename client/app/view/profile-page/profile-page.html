@@ -21,6 +21,9 @@
       <a href="#/profile-update/{{user.user.username}}" class="update-profile" ng-show='ownership'>
         <i class="fa fa-cog"></i> Update our profile
       </a>
+      <a href="#/profile-update/{{user.user.username}}" class="update-profile" ng-show='ownership'>
+        <i class="fa fa-ban"></i> Delete your profile
+      </a>
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-show='ownership' ng-init="statusCheck()">
       <h5>Your current status</h5>

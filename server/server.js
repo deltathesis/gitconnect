@@ -191,6 +191,21 @@ app.post('/api/user/availabilitytoggle', function(req, res) {
   res.end();
 });
 
+app.post('/api/user/delete', function(req, res) {
+
+ var username = req.body.data.username;
+ console.log(username);
+
+  // Update user availability into the DB
+  username.then(function(users) {
+    // User.deleteUser(username)
+  })
+
+  req.logout();
+  res.clearCookie('gitConnectDeltaKS');
+  res.redirect('/');
+});
+
 app.post('/api/user/connection-request', function(req, res){
   //Parse out current and selected user info
   var currentUser = req.body.currentUser;

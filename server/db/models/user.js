@@ -337,6 +337,7 @@ User.getUserDemands = function(username){
     })
   })
 };
+
 // Get user connection demands
 User.getUserRequests = function(username){
   console
@@ -353,5 +354,23 @@ User.getUserRequests = function(username){
     })
   })
 };
+
+
+// Delete a user
+User.deleteUser = function(username){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH (n { username:"'+username+'" })'
+                + ' DETACH DELETE n';
+    db.queryAsync(cypher).then(function(node){
+      resolve(function() {
+        console.log("user deleted");
+      })
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
 
 Promise.promisifyAll(User);

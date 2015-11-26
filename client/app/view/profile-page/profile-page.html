@@ -21,9 +21,11 @@
       <a href="#/profile-update/{{user.user.username}}" class="update-profile" ng-show='ownership'>
         <i class="fa fa-cog"></i> Update our profile
       </a>
-      <a href="#/profile-update/{{user.user.username}}" class="update-profile" ng-show='ownership'>
-        <i class="fa fa-ban"></i> Delete your profile
-      </a>
+      <div class="delete-profile-link">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteProfileModal">
+          <i class="fa fa-ban"></i> Delete your profile
+        </button>
+      </div>
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-show='ownership' ng-init="statusCheck()">
       <h5>Your current status</h5>
@@ -112,7 +114,26 @@
         </div>-->
 
 
+    </div>
+  </div>
+
+    <!-- Modal -->
+  <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Delete Profile</h4>
+        </div>
+        <div class="modal-body">
+          {{user.user.username}},<br>are you sure you want to delete your profile?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" ng-click="deleteProfile()">Delete</button>
+        </div>
       </div>
     </div>
-
   </div>
+
+</div>

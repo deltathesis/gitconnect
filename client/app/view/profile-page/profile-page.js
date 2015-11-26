@@ -13,7 +13,9 @@ angular.module('myApp.profilepage', ['ngRoute'])
   });
 }])
 
-.controller('profilePage', ['$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech) {
+.controller('profilePage', [
+  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http',
+  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http) {
 
   // var user = {
   //   ratings: Math.round(4.2),
@@ -113,7 +115,18 @@ angular.module('myApp.profilepage', ['ngRoute'])
     $window.location.reload();
   }
 
-
+  $scope.deleteProfile = function() {
+    if ($scope.ownership) {
+      console.log("inside");
+      return $http({
+        method: 'GET',
+        url: '/api/user/delete/' + $scope.user.user.username
+      }).then(function(res) {
+        $window.location.reload();
+        return console.log("Your profile has been deleted");
+      });
+    }
+  };
 
   $scope.ratings = function() {
     // Ratings Module

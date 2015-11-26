@@ -39,20 +39,40 @@
               font-size: 28px;
             }
           }
-          &.user-pic {
-            a {
-              background-image:url('../../assets/pictures/users/default-user.jpg');
-              background-size: cover;
-              background-position: 50% 50%;
-              width: 40px;
-              height: 40px;
-              margin-left: 10px;
-              top: 5px;
-              border-radius: 50%;
-              border: 2px solid $mainColor;
-            }
-          }
+          // &.user-pic-container {
+            // a.user-pic {
+            //   background-image:url('../../assets/pictures/users/default-user.jpg');
+            //   background-size: cover;
+            //   background-position: 50% 50%;
+            //   width: 40px;
+            //   height: 40px;
+            //   margin-left: 10px;
+            //   top: 5px;
+            //   border-radius: 50%;
+            //   border: 2px solid $mainColor;
+            // }
+          // }
           &.user-dropdown {
+            height: 50px;
+            a { 
+              display: inline-block;
+              &.dropdown-toggle {
+                position: relative;
+                top: -10px;
+              }
+              &.user-pic {
+                background-image:url('../../assets/pictures/users/default-user.jpg');
+                background-size: cover;
+                background-position: 50% 50%;
+                width: 40px;
+                height: 40px;
+                margin-left: 10px;
+                top: 5px;
+                border-radius: 50%;
+                border: 2px solid $mainColor;
+                display: inline-block;
+              }
+            }
             .dropdown-menu {
               li {
                 &:first-child {
@@ -78,8 +98,17 @@
 @media (max-width: 768px) {
   .header {
     .header-menu {
-      .user-pic {
-        margin-left: 15px;
+      .links-menu {
+        .navbar-right {
+          li {
+            &.messaging, &.requests {
+              display: inline-block;
+            } 
+            &.user-dropdown {
+              height: auto;
+            }
+          }
+        }
       }
     }
   }

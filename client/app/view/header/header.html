@@ -38,11 +38,13 @@
           <span class="badge">{{unreadMessages}}</span>
           <a href="#/privateChat"><i class="fa fa-comments"></i></a>
         </li>
+        <li class="splitter"></li>
         <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>
-        <li ng-show='user' class="user-pic"><a href="#/user/{{user.githubUserName}}" ng-style="{'background-image': 'url({{ user.avatar_url }})'}"></a></li>
-        <!-- <li ng-show='user'><a href="#/user/{{user.githubUserName}}">{{ user.githubUserName }}</a></li>
-        <li ng-show='user'><a href="/logout" ng-click='logout()'>Logout</a></li> -->
+        <!-- Do not delete -->
+        <!-- <li ng-show='user' class="user-pic-container"><a href="#/user/{{user.githubUserName}}" class="user-pic" ng-style="{'background-image': 'url({{ user.avatar_url }})'}"></a></li> -->
         <li ng-show='user' class="dropdown user-dropdown">
+          <a href="#/user/{{user.githubUserName}}" class="user-pic" ng-style="{'background-image': 'url({{ user.avatar_url }})'}"></a>
+
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.githubUserName }} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <!-- <li role="separator" class="divider"></li> -->

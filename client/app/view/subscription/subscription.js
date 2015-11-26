@@ -13,7 +13,9 @@ angular.module('myApp.subscription', ['ngRoute'])
   });
 }])
 
-.controller('subscriptionPage', ['$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', function($scope, $location, Cookie, $cookies, UserForm, getProfile) {
+.controller('subscriptionPage', [
+  '$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', 'userOwnTech', 'techList',
+  function($scope, $location, Cookie, $cookies, UserForm, getProfile, userOwnTech, techList) {
 
   $scope.user = getProfile;
   console.log(getProfile);
@@ -37,15 +39,12 @@ angular.module('myApp.subscription', ['ngRoute'])
     $scope.user.languages.push(tech.name);
   })
 
-  $scope.techList = [
-    'JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase',
-    'Ruby', 'Less', 'Scala', 'Python', 'C++', 'Swift', 'Objective-C',
-    'mongoDB', 'Neo4j', 'MySQL', 'SQLite', 'Shell', 'Redis', 'Meteor',
-    'jQuery', 'Java', 'Rails', 'React', 'PHP', 'PostgreSQL', 'Node.js',
-    'Express', 'Stylus', 'Symfony', 'Wordpress', 'Zend', 'socket.io',
-    'Backbone', 'Boostrap', 'Foundation', 'CoffeeScript', 'Bower', 'Django',
-    'ActionScript', 'Ember', 'Go', 'Gulp', 'Grunt', 'Laravel', 'Docker'
-  ];
+  // Get global tech/languages list
+  $scope.techList = [];
+  var techs = techList.getTechList();
+  techs.forEach(function(element) {
+    $scope.techList.push(element);
+  })
 
    // Remove user existing tech
   $scope.initialTech = function() {

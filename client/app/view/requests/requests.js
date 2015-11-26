@@ -5,10 +5,23 @@ angular.module('myApp.requests', ['ngRoute'])
     authenticate: true,
     templateUrl: 'view/requests/requests.html',
     controller: 'requestsPage',
+    resolve: {
+      getUserDemands: ['userRequests', function(userRequests) {
+          return userRequests.getDemands();
+      }],
+      getUserRequests: ['userRequests', function(userRequests) {
+          return userRequests.getRequests();
+      }]
+    }
   });
 }])
 
-.controller('requestsPage', ['$scope', function($scope) {
+.controller('requestsPage', ['$scope', 'getUserDemands', 'getUserRequests', function($scope, getUserDemands, getUserRequests) {
+
+var userDemands = getUserDemands;
+console.log('demands: ',userDemands);
+var userRequests = getUserRequests;
+console.log('requests: ',userRequests);
 
   var usersRequest = [
     {

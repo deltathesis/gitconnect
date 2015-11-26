@@ -209,6 +209,19 @@ app.post('/api/user/connection-request', function(req, res){
   res.end()
 })
 
+app.get('/api/connectionslistDemands/:name', function(req, res) {
+  console.log("on server side get");
+  User.getUserDemands(req.params.name).then(function(userslist){
+    res.json({users: userslist})
+  });
+});
+app.get('/api/connectionslistRequests/:name', function(req, res) {
+  console.log("on server side get");
+  User.getUserRequests(req.params.name).then(function(userslist){
+    res.json({users: userslist})
+  });
+});
+
 // app.listen(process.env.Port, function(){
 // console.log('Server now running on port: ' + process.env.PORT);
 // });

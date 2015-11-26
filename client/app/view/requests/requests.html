@@ -6,6 +6,7 @@
   </div>
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'requests'">
+    <h2 ng-show="usersRequest.length === 0">No Requests Yet</h2>
     <div class="col-xs-12 user-details requests " ng-repeat="user in usersRequest track by $index">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
@@ -26,6 +27,7 @@
   </div>
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'demands'">
+  <h2 ng-show="userDemands.length === 0">No Demands made</h2>
     <div class="col-xs-12 user-details demands" ng-repeat="user in userDemands track by $index">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>

@@ -44,7 +44,7 @@ var createUser = function(username){
     rp(options)
     .then(function(user){
       newUser.apiUrl = user.url
-      newUser.name = user.name;
+      newUser.name = !user.name ? 'null' : user.name;
       newUser.username = user.login;
       newUser.githubId = user.id;
       newUser.company = !user.company ? 'null' : user.company

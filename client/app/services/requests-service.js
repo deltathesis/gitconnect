@@ -10,7 +10,7 @@ angular.module('myApp.requestsServices', [])
       method: 'GET',
       url: '/api/connectionslistDemands/' + user.username
     }).then(function(res) {
-      return res;
+      return res.data.users;
     });
   };
 
@@ -22,7 +22,7 @@ angular.module('myApp.requestsServices', [])
       method: 'GET',
       url: '/api/connectionslistRequests/' + user.username
     }).then(function(res) {
-      return res;
+      return res.data.users;
     });
   };
 

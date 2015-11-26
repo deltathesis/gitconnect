@@ -325,7 +325,7 @@ User.getNodesWithLabel = function(label){
 User.getUserDemands = function(username){
   console
   return new Promise(function(resolve){
-    var cypher = 'MATCH ({username: "'+username+'"})-[:CONNECTION_REQUEST]-(n)'
+    var cypher = 'MATCH ({username: "'+username+'"})-[:CONNECTION_REQUEST]->(n)'
                + 'RETURN n';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){

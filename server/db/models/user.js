@@ -323,7 +323,6 @@ User.getNodesWithLabel = function(label){
 
 // Get user connection demands
 User.getUserDemands = function(username){
-  console
   return new Promise(function(resolve){
     var cypher = 'MATCH ({username: "'+username+'"})-[:CONNECTION_REQUEST]->(n)'
                + 'RETURN n';
@@ -337,9 +336,9 @@ User.getUserDemands = function(username){
     })
   })
 };
+
 // Get user connection demands
 User.getUserRequests = function(username){
-  console
   return new Promise(function(resolve){
     var cypher = 'MATCH ({username: "'+username+'"})<-[:CONNECTION_REQUEST]-(n)'
                +'RETURN n';
@@ -353,5 +352,23 @@ User.getUserRequests = function(username){
     })
   })
 };
+
+
+// Delete a user
+User.deleteUser = function(username){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH (n { username:"'+username+'" })'
+                + ' DETACH DELETE n';
+    db.queryAsync(cypher).then(function(node){
+      resolve(function() {
+        console.log("user deleted");
+      })
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
 
 Promise.promisifyAll(User);

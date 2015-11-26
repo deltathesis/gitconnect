@@ -7,7 +7,7 @@ angular.module('myApp.techlistService', [])
     'mongoDB', 'Neo4j', 'MySQL', 'SQLite', 'Shell', 'Redis', 'Meteor',
     'jQuery', 'Java', 'Rails', 'React', 'PHP', 'PostgreSQL', 'Node.js',
     'Express', 'Stylus', 'Symfony', 'Wordpress', 'Zend', 'socket.io',
-    'Backbone', 'Boostrap', 'Foundation', 'CoffeeScript', 'Bower', 'Django',
+    'Backbone', 'Bootstrap', 'Foundation', 'CoffeeScript', 'Bower', 'Django',
     'ActionScript', 'Ember', 'Go', 'Gulp', 'Grunt', 'Laravel', 'Docker'
   ];
 

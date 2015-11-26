@@ -47,6 +47,13 @@
         color: $mainColor;
         font-weight: bold;
       }
+      .delete-profile-link {
+        float: left;
+        margin-top: 10px;
+        button {
+          font-size: 12px;
+        }
+      }
     }
     .user-status {
       text-align: right;

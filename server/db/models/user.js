@@ -321,4 +321,37 @@ User.getNodesWithLabel = function(label){
   })
 }
 
+// Get user connection demands
+User.getUserDemands = function(username){
+  console
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({username: "'+username+'"})-[:CONNECTION_REQUEST]->(n)'
+               + 'RETURN n';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+// Get user connection demands
+User.getUserRequests = function(username){
+  console
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({username: "'+username+'"})<-[:CONNECTION_REQUEST]-(n)'
+               +'RETURN n';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
 Promise.promisifyAll(User);

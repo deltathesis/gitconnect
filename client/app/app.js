@@ -26,7 +26,8 @@ angular.module('myApp', [
   'myApp.contact',
   'myApp.team',
   'myApp.legal',
-  'myApp.techlistService'
+  'myApp.techlistService',
+  'myApp.requestsServices'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

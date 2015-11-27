@@ -27,7 +27,8 @@ angular.module('myApp', [
   'myApp.team',
   'myApp.legal',
   'myApp.techlistService',
-  'myApp.requestsServices'
+  'myApp.requestsServices',
+  'ui.bootstrap'
 ])
 
 .config(['$routeProvider', function($routeProvider) {

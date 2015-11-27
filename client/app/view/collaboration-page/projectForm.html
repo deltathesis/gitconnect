@@ -1,0 +1,45 @@
+<div class="container page publish-form fadein-effect">
+    <h3>Please fill out the following fields!</h3>
+</div>
+<form>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Project Name</label>
+            <input type="text" class="form-control" ng-model="projectInfo.name">
+            <label>About the project:</label>
+            <textarea type="text" rows="5" class="form-control"></textarea ng-model="projectInfo.longDesc">
+            <label>Short decription of the project</label>
+            <input ng-model="projectInfo.shortDesc" type="text" class="form-control">
+            <label>project picture url</label>
+            <input ng-model="projectInfo.picture" type="text" class="form-control">
+            <label>Project repo link</label>
+            <input type="text" class="form-control" ng-model="projectInfo.projectRepo">
+            <label>Project Website</label>
+            <input type="text" class="form-control" ng-model="projectInfo.projectWebsite">
+            <!-- Recycled Html from projile-updat.html -->
+            <div class="techs user-selection" >
+              <h4>Technologies you used in this project</h4>
+              <ul>
+                <li class="tech fadein-effect" ng-repeat="tech in yourTechList track by $index " data-tech="{{tech}}" ng-click="removeTech(tech, $index)">
+                  {{tech}} <i class="fa fa-times-circle"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="tech-selection col-xs-12">
+              <div class="techs propositions" ng-init="initialTech()">
+                <h4>Technologies you might be interested in</h4>
+                <label class="search-form">Search: <input class="tech-search-input" ng-model="searchText"></label>
+                <p ng-show="existed" class="error-addition"> Already added</p>
+                <ul>
+                  <li class="tech fadein-effect" ng-repeat="tech in techList | filter:searchText track by $index" data-tech="{{tech}}" ng-click="addTech(tech, $index)">
+                    {{tech}} <i class="fa fa-plus-circle"></i>
+                  </li>
+                </ul>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="sign-small" ng-click="ok()">Submit</button>
+            <button class="cancel-small" ng-click="cancel()">Cancel</button>
+        </div>
+</form>

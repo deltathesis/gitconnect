@@ -9,7 +9,6 @@ var cookieParser = require('cookie-parser');
 var http = require('http');
 var sockets = require('socket.io');
 var User = require('./db/models/user.js').User;
-var sql = require('./db/models/sqlModels.js');
 
 var app = express();
 
@@ -245,6 +244,16 @@ app.post('/api/project/creation', function(req, res){
   User.createProject(req.body.data).then(function(project){
     res.json(project)
   });
+})
+
+app.post('/api/project/update', function(req, res){
+  User.getCurrentProject(req.body.username).then(function(project){
+    console.log('current project ', project[0]);
+    console.log('attrs: ', req.body.data)
+    User.update(project[0] , req.body.data).then(function(){
+    res.sendStatus(200)
+    })
+  })
 })
 
 // WAIT BEFORE DELETE - Do not give the users relationships

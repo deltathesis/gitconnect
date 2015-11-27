@@ -122,9 +122,11 @@ angular.module('myApp.privateChat', ['ngRoute'])
     scrollToBottom();
     socket.emit('storeData', angular.copy($scope.roomMessages));
     socket.emit('notify:message', {target: angular.copy($scope.currentTarget), currentUser: angular.copy($scope.name)});
+    // socket.emit('notify:potentialFriend', {target: angular.copy($scope.currentTarget), currentUser: angular.copy($scope.name)});
   };
 
   var scrollToBottom = function() {
+    //$timeout ROYCE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     setTimeout(function() {
       $('#bigMessage-container').scrollTop($('#bigMessage-container')[0].scrollHeight);
     }, 50);

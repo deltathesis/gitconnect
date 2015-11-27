@@ -5,7 +5,6 @@ angular.module('myApp.header', [])
   if(cookie){
 
     var cookieObj = Cookie.parseCookie(cookie);
-    $log.warn('username on cookie', cookieObj.username);
 
     $scope.username = cookieObj.username;
     
@@ -14,8 +13,6 @@ angular.module('myApp.header', [])
     socket.on('theDATA', function(data){
       $scope.unreadMessages = data.messageNotifications;
       $scope.friendRequests = data.friendRequests;
-      $log.log('the data', data);
-      $log.info($scope.friendRequests)
     })
 
   }

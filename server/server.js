@@ -114,7 +114,6 @@ app.get('/api/user/:name', function(req, res) {
 
 app.get('/api/user/relations/:name', function(req, res) {
   // Get all type user relationships
-  console.log("chris: ",req.params.name);
   User.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
     console.log(user);
     res.json({user: user})
@@ -247,6 +246,27 @@ app.post('/api/project/creation', function(req, res){
     res.json(project)
   });
 })
+
+app.get('/api/project/:id', function(req, res) {
+  // Get all type project relationships and infos
+  User.getRelationshipData({projectId : req.params.id}, 'all', '').then(function(project){
+    res.json({project: project})
+  });
+});
+
+// WAIT BEFORE DELETE
+// app.get('/api/project/:id', function(req, res) {
+//   User.get({projectId : req.params.id}).then(function(project){
+//     res.json({project: project[0]})
+//   });
+// });
+
+// app.get('/api/project/users/:id', function(req, res) {
+//   // Get all type user relationships
+//   User.getRelationshipData({projectId : req.params.id}, 'all', '').then(function(users){
+//     res.json({users: users})
+//   });
+// });
 
 
 httpServer.listen(process.env.PORT);

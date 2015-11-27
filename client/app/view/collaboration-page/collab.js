@@ -1,14 +1,27 @@
 angular.module('myApp.collaboration-page', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/collaboration-page', {
+  $routeProvider.when('/collaboration-page/:id', {
     authenticate: true,
     templateUrl: 'view/collaboration-page/collab.html',
     controller: 'collaboration-page',
+    resolve: {
+      getProjectInfo: ['$route', 'Project', function($route, Project) {
+          return Project.getInfos($route.current.params.id);
+      }]
+    }
   });
 }])
 
-.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', function($scope, $cookies, Cookie, socket) {
+.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', function($scope, $cookies, Cookie, socket, getProjectInfo) {
+
+  var projectInfos = getProjectInfo;
+  console.log(projectInfos);
+  //Here 'user' is actually the project itself
+  $scope.projectDetail = projectInfos.project.user;
+  console.log($scope.projectDetail);
+  $scope.projectUsers = projectInfos.project.relationships.WORKED;
+  console.log($scope.projectUsers);
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);

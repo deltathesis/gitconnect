@@ -158,5 +158,23 @@ angular.module('myApp.services', [])
   };
 })
 
+.factory('Project', ['$http', '$cookies', 'Cookie', function($http, $cookies, Cookie) {
+
+  var getInfos = function(id) {
+    return $http({
+      cache: true,
+      method: 'GET',
+      url: '/api/project/' + id
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
+  return {
+    getInfos: getInfos
+  };
+
+}])
+
 
 ;

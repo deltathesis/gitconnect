@@ -378,6 +378,8 @@ User.createProject = function(usersData){
 
     var storage = {};
     storage.projectData = {
+      // Generate Random Id
+      projectId: '_' + Math.random().toString(36).substr(2, 15),
       name: 'null',
       published: 'false',
       shortDesc: 'null',
@@ -406,9 +408,6 @@ User.createProject = function(usersData){
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
       })
-      return data;
-    })
-    .then(function(data){
       User.addRelationships({
         baseNode: {username: usersData.userSecond},
         relNodes: [node],

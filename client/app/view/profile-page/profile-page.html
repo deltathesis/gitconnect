@@ -21,7 +21,7 @@
       <a href="#/profile-update/{{user.user.username}}" class="update-profile" ng-show='ownership'>
         <i class="fa fa-cog"></i> Update our profile
       </a>
-      <div class="delete-profile-link">
+      <div class="delete-profile-link" ng-show='ownership'>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteProfileModal">
           <i class="fa fa-ban"></i> Delete your profile
         </button>

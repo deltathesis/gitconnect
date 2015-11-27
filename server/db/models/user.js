@@ -337,7 +337,7 @@ User.getUserDemands = function(username){
   })
 };
 
-// Get user connection demands
+// Get user connection requests
 User.getUserRequests = function(username){
   return new Promise(function(resolve){
     var cypher = 'MATCH ({username: "'+username+'"})<-[:CONNECTION_REQUEST]-(n)'
@@ -363,6 +363,78 @@ User.deleteUser = function(username){
       resolve(function() {
         console.log("user deleted");
       })
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
+// TODO, Refactor with a project.js page
+// Project creation
+User.createProject = function(usersData){
+  var node = {};
+  return new Promise(function(resolve, reject){
+
+    var storage = {};
+    storage.projectData = {
+      // Generate Random Id
+      projectId: '_' + Math.random().toString(36).substr(2, 15),
+      name: 'null',
+      published: 'false',
+      shortDesc: 'null',
+      longDesc: 'null',
+      picture: 'null',
+      voteTotal: 0,
+      upVote: 0,
+      downVote: 0,
+      projectRepo: 'null',
+      scrumBoard: 'null',
+      codeLibrary: 'null',
+      projectWebsite: 'null',
+      cloudStorage: 'null',
+      database: 'null'
+    };
+
+    db.saveAsync(storage.projectData, 'Project').then(function(newNode){
+      node = newNode;
+      return newNode;
+    })
+    .then(function(data){
+      User.addRelationships({
+        baseNode: {username: usersData.userFirst},
+        relNodes: [node],
+        relDirection: 'out',
+        relNodeLabels: ['Project'],
+        relLabel: 'WORKED'
+      })
+      User.addRelationships({
+        baseNode: {username: usersData.userSecond},
+        relNodes: [node],
+        relDirection: 'out',
+        relNodeLabels: ['Project'],
+        relLabel: 'WORKED'
+      })
+      return data;
+    })
+    .then(function(data){
+      resolve(node)
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  })
+};
+
+// Get user connection requests
+User.getProjectUsers = function(id){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({projectId: "'+id+'"})<-[:WORKED]-(n)'
+               +'RETURN n';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
     })
     .catch(function(err){
       console.log(err)

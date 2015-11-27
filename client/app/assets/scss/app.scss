@@ -48,6 +48,13 @@ body {
  @include animationEffect(1s, fadeEffect);
 }
 
+// Text truncate
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 // Clearfix
 .cf:before,
 .cf:after {

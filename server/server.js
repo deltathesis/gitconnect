@@ -114,7 +114,6 @@ app.get('/api/user/:name', function(req, res) {
 
 app.get('/api/user/relations/:name', function(req, res) {
   // Get all type user relationships
-  console.log("chris: ",req.params.name);
   User.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
     console.log(user);
     res.json({user: user})
@@ -221,12 +220,14 @@ app.post('/api/user/connection-request', function(req, res){
   res.end()
 })
 
+// Get user connection demands
 app.get('/api/connectionslistDemands/:name', function(req, res) {
   console.log("on server side get");
   User.getUserDemands(req.params.name).then(function(userslist){
     res.json({users: userslist})
   });
 });
+// Get user connection requests
 app.get('/api/connectionslistRequests/:name', function(req, res) {
   console.log("on server side get");
   User.getUserRequests(req.params.name).then(function(userslist){
@@ -237,6 +238,35 @@ app.get('/api/connectionslistRequests/:name', function(req, res) {
 // app.listen(process.env.Port, function(){
 // console.log('Server now running on port: ' + process.env.PORT);
 // });
+
+// Project page creation after matching
+app.post('/api/project/creation', function(req, res){
+  console.log(req.body.data);
+  User.createProject(req.body.data).then(function(project){
+    res.json(project)
+  });
+})
+
+// WAIT BEFORE DELETE - Do not give the users relationships
+// app.get('/api/project/:id', function(req, res) {
+//   // Get all type project relationships and infos
+//   User.getRelationshipData({projectId : req.params.id}, 'all', '').then(function(project){
+//     res.json({project: project})
+//   });
+// });
+
+app.get('/api/project/:id', function(req, res) {
+  User.get({projectId : req.params.id}).then(function(project){
+    res.json({project: project[0]})
+  });
+});
+
+app.get('/api/project/users/:id', function(req, res) {
+  User.getProjectUsers(req.params.id).then(function(userslist){
+    console.log('users project:',userslist)
+    res.json({users: userslist})
+  });
+});
 
 
 httpServer.listen(process.env.PORT);

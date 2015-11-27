@@ -16,17 +16,22 @@ angular.module('myApp.requests', ['ngRoute'])
   });
 }])
 
-.controller('requestsPage', ['$scope', 'getUserDemands', 'getUserRequests', 'socket', function($scope, getUserDemands, getUserRequests, socket) {
+.controller('requestsPage', [
+  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection',
+  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection) {
 
   var userDemands = getUserDemands;
   // console.log('demands: ',userDemands);
   var usersRequest = getUserRequests;
   // console.log('requests: ',usersRequest);
 
+  // Get User username
+  var cookie = $cookies.get('gitConnectDeltaKS');
+  var cookieObj = Cookie.parseCookie(cookie);
+  var userUsername = cookieObj.username;
+
   $scope.usersRequest = usersRequest;
   $scope.userDemands = userDemands;
-
-
 
   $scope.ratings = function(ratings, index, type) {
     // Ratings Module
@@ -38,6 +43,16 @@ angular.module('myApp.requests', ['ngRoute'])
     for (var i = 0; i < ratings; i++) {
       $('.user-details.' + type + ':nth-child(' + index + ') .position-' + i).removeClass('fa-star-o').addClass('fa-star');
     }
-  }
+  };
+
+  $scope.requestAccept = function(username) {
+    console.log('project creation');
+    var usersObject = {
+      userFirst: userUsername,
+      userSecond: username
+    };
+    console.log(usersObject);
+    UserConnection.createConnection(usersObject);
+  };
 
 }]);

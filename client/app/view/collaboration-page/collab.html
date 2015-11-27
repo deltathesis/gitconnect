@@ -3,25 +3,9 @@
   <div class="row team-details">
     <h1>Team</h1>
     <ul class="team-members-list">
-      <li class="team-member">
-        <a href="" class="team-member-pic" style="background-image:url('assets/pictures/users/yumo.jpg')"></a>
-        <p class="team-member-name">Yumo</p>
-      </li>
-      <li class="team-member">
-        <a href="" class="team-member-pic" style="background-image:url('assets/pictures/users/renan.jpg')"></a>
-        <p class="team-member-name">Renan</p>
-      </li>
-      <li class="team-member">
-        <a href="" class="team-member-pic" style="background-image:url('assets/pictures/users/jake.jpg')"></a>
-        <p class="team-member-name">Jake</p>
-      </li>
-      <li class="team-member">
-        <a href="" class="team-member-pic" style="background-image:url('assets/pictures/users/chris.jpg')"></a>
-        <p class="team-member-name">Chris</p>
-      </li>
-      <li class="team-member">
-        <a href="" class="team-member-pic" style="background-image:url('assets/pictures/users/royce.jpg')"></a>
-        <p class="team-member-name">Royce</p>
+      <li class="team-member" ng-repeat="user in projectUsers">
+        <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
+        <p class="team-member-name truncate">{{user.username}}</p>
       </li>
     </ul>
   </div>

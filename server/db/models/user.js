@@ -399,6 +399,26 @@ User.createProject = function(usersData){
       return newNode;
     })
     .then(function(data){
+      User.addRelationships({
+        baseNode: {username: usersData.userFirst},
+        relNodes: [node],
+        relDirection: 'out',
+        relNodeLabels: ['Project'],
+        relLabel: 'WORKED'
+      })
+      return data;
+    })
+    .then(function(data){
+      User.addRelationships({
+        baseNode: {username: usersData.userSecond},
+        relNodes: [node],
+        relDirection: 'out',
+        relNodeLabels: ['Project'],
+        relLabel: 'WORKED'
+      })
+      return data;
+    })
+    .then(function(data){
       resolve(node)
     })
     .catch(function(err){

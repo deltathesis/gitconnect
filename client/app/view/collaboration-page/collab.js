@@ -8,20 +8,23 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     resolve: {
       getProjectInfo: ['$route', 'Project', function($route, Project) {
           return Project.getInfos($route.current.params.id);
+      }],
+      getProjectUsers: ['$route', 'Project', function($route, Project) {
+          return Project.getUsers($route.current.params.id);
       }]
     }
   });
 }])
 
-.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', function($scope, $cookies, Cookie, socket, getProjectInfo) {
+.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers) {
 
-  var projectInfos = getProjectInfo;
-  console.log(projectInfos);
-  //Here 'user' is actually the project itself
-  $scope.projectDetail = projectInfos.project.user;
-  console.log($scope.projectDetail);
-  $scope.projectUsers = projectInfos.project.relationships.WORKED;
-  console.log($scope.projectUsers);
+  var projectInfos = getProjectInfo.project;
+  $scope.projectInfos = projectInfos;
+  
+  var projectUsers = getProjectUsers;
+  $scope.projectUsers = projectUsers.users;
+  console.log('project', projectInfos)
+  console.log('users', projectUsers);
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);

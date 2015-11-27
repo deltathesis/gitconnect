@@ -247,26 +247,26 @@ app.post('/api/project/creation', function(req, res){
   });
 })
 
+// WAIT BEFORE DELETE - Do not give the users relationships
+// app.get('/api/project/:id', function(req, res) {
+//   // Get all type project relationships and infos
+//   User.getRelationshipData({projectId : req.params.id}, 'all', '').then(function(project){
+//     res.json({project: project})
+//   });
+// });
+
 app.get('/api/project/:id', function(req, res) {
-  // Get all type project relationships and infos
-  User.getRelationshipData({projectId : req.params.id}, 'all', '').then(function(project){
-    res.json({project: project})
+  User.get({projectId : req.params.id}).then(function(project){
+    res.json({project: project[0]})
   });
 });
 
-// WAIT BEFORE DELETE
-// app.get('/api/project/:id', function(req, res) {
-//   User.get({projectId : req.params.id}).then(function(project){
-//     res.json({project: project[0]})
-//   });
-// });
-
-// app.get('/api/project/users/:id', function(req, res) {
-//   // Get all type user relationships
-//   User.getRelationshipData({projectId : req.params.id}, 'all', '').then(function(users){
-//     res.json({users: users})
-//   });
-// });
+app.get('/api/project/users/:id', function(req, res) {
+  User.getProjectUsers(req.params.id).then(function(userslist){
+    console.log('users project:',userslist)
+    res.json({users: userslist})
+  });
+});
 
 
 httpServer.listen(process.env.PORT);

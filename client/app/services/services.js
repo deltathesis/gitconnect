@@ -170,8 +170,19 @@ angular.module('myApp.services', [])
     });
   };
 
+  var getUsers = function(id) {
+    return $http({
+      cache: true,
+      method: 'GET',
+      url: '/api/project/users/' + id
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
   return {
-    getInfos: getInfos
+    getInfos: getInfos,
+    getUsers: getUsers
   };
 
 }])

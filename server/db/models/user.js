@@ -337,7 +337,7 @@ User.getUserDemands = function(username){
   })
 };
 
-// Get user connection demands
+// Get user connection requests
 User.getUserRequests = function(username){
   return new Promise(function(resolve){
     var cypher = 'MATCH ({username: "'+username+'"})<-[:CONNECTION_REQUEST]-(n)'
@@ -422,6 +422,22 @@ User.createProject = function(usersData){
     })
     .catch(function(err){
       console.log(err);
+    })
+  })
+};
+
+// Get user connection requests
+User.getProjectUsers = function(id){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({projectId: "'+id+'"})<-[:WORKED]-(n)'
+               +'RETURN n';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
     })
   })
 };

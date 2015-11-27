@@ -41,9 +41,9 @@ angular.module('myApp.requestsServices', [])
       url: '/api/project/creation',
       data: { data: object }
     }).then(function successCallback(response) {
-        console.log('success project creation')
+        console.log('success project creation', response)
     }, function errorCallback(response) {
-      console.log('error project creation', reponse);
+      console.log('error project creation', response);
     });
   };
 

@@ -370,5 +370,42 @@ User.deleteUser = function(username){
   })
 };
 
+// TODO, Refactor with a project.js page
+// Project creation
+User.createProject = function(usersData){
+  var node = {};
+  return new Promise(function(resolve, reject){
+
+    var storage = {};
+    storage.projectData = {
+      name: 'null',
+      published: 'false',
+      shortDesc: 'null',
+      longDesc: 'null',
+      picture: 'null',
+      voteTotal: 0,
+      upVote: 0,
+      downVote: 0,
+      projectRepo: 'null',
+      scrumBoard: 'null',
+      codeLibrary: 'null',
+      projectWebsite: 'null',
+      cloudStorage: 'null',
+      database: 'null'
+    };
+
+    db.saveAsync(storage.projectData, 'Project').then(function(newNode){
+      node = newNode;
+      return newNode;
+    })
+    .then(function(data){
+      resolve(node)
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  })
+};
+
 
 Promise.promisifyAll(User);

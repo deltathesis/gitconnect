@@ -243,7 +243,9 @@ app.get('/api/connectionslistRequests/:name', function(req, res) {
 // Project page creation after matching
 app.post('/api/project/creation', function(req, res){
   console.log(req.body.data);
-  res.end()
+  User.createProject(req.body.data).then(function(project){
+    res.json(project)
+  });
 })
 
 

@@ -221,12 +221,14 @@ app.post('/api/user/connection-request', function(req, res){
   res.end()
 })
 
+// Get user connection demands
 app.get('/api/connectionslistDemands/:name', function(req, res) {
   console.log("on server side get");
   User.getUserDemands(req.params.name).then(function(userslist){
     res.json({users: userslist})
   });
 });
+// Get user connection requests
 app.get('/api/connectionslistRequests/:name', function(req, res) {
   console.log("on server side get");
   User.getUserRequests(req.params.name).then(function(userslist){
@@ -237,6 +239,12 @@ app.get('/api/connectionslistRequests/:name', function(req, res) {
 // app.listen(process.env.Port, function(){
 // console.log('Server now running on port: ' + process.env.PORT);
 // });
+
+// Project page creation after matching
+app.post('/api/project/creation', function(req, res){
+  console.log(req.body.data);
+  res.end()
+})
 
 
 httpServer.listen(process.env.PORT);

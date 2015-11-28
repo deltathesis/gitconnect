@@ -17,8 +17,8 @@ angular.module('myApp.requests', ['ngRoute'])
 }])
 
 .controller('requestsPage', [
-  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection',
-  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection) {
+  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window',
+  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window) {
 
   var userDemands = getUserDemands;
   // console.log('demands: ',userDemands);
@@ -36,7 +36,6 @@ angular.module('myApp.requests', ['ngRoute'])
   $scope.ratings = function(ratings, index, type) {
     // Ratings Module
     index = index + 2;
-    console.log(index)
     $ratings = $('.user-details.' + type + ':nth-child(' + index + ') .stars');
     for (var pos = 0; pos < 5; pos++) {
       $ratings.append("<i class='fa fa-star-o position-" + pos + "'></i>");
@@ -45,6 +44,7 @@ angular.module('myApp.requests', ['ngRoute'])
       $('.user-details.' + type + ':nth-child(' + index + ') .position-' + i).removeClass('fa-star-o').addClass('fa-star');
     }
   };
+
 
   $scope.requestAccept = function(username) {
     console.log('project creation');
@@ -57,7 +57,11 @@ angular.module('myApp.requests', ['ngRoute'])
       $scope.linktoProject = project.projectId;
       $('#projectPageRedirect').modal('show');
     });
-    
   };
+
+  $scope.projectRedirect = function(id) {
+    window.location = '#/collaboration-page/' + id;
+    window.location.reload();
+  }
 
 }]);

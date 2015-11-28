@@ -404,6 +404,11 @@ User.createProject = function(usersData){
       node = newNode;
       return newNode;
     })
+    // ******
+    // *** Add project - users relationships
+    // ******
+
+    // Add user to project relationships
     .then(function(data){
       User.addRelationships({
         baseNode: {username: usersData.userFirst},
@@ -419,16 +424,44 @@ User.createProject = function(usersData){
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
       });
+      // ******
+      // *** Toggle availability 
+      // ******
+
+      // Toggle availability for user 1
+      //Get User Node
+      var objUser1 = {
+        userNode: User.get({username: usersData.userFirst})
+      }
+      // Update user availability into the DB
+      objUser1.userNode.then(function(users) {
+        User.update(users[0], {availability: "false"})
+      });
+      // Toggle availability for user 2
+      //Get User Node
+      var objUser2 = {
+        userNode: User.get({username: usersData.userSecond})
+      }
+      // Update user availability into the DB
+      objUser2.userNode.then(function(users) {
+        User.update(users[0], {availability: "false"})
+      })
+
+      // ******
+      // *** Delete relationships requests/demands
+      // ******
+
       // Delete requests relationship for User 1
       var cypherUserFirstRequests = 'MATCH ({username: "'+ usersData.userFirst +'"})-[r:CONNECTION_REQUEST]-(n)'
-                  + 'DELETE r';
+                                  + 'DELETE r';
       db.queryAsync(cypherUserFirstRequests).then(function(node){
         resolve(function() {
           console.log("user 1 requests relationship deleted");
         })
       });
+      // Delete demands relationship for User 1
       var cypherUserFirstDemands = 'MATCH ({username: "'+ usersData.userFirst +'"})-[r:CONNECTION_REQUEST]->(n)'
-                  + 'DELETE r';
+                                  + 'DELETE r';
       db.queryAsync(cypherUserFirstDemands).then(function(node){
         resolve(function() {
           console.log("user 1 requests relationship deleted");
@@ -436,14 +469,15 @@ User.createProject = function(usersData){
       });
       // Delete requests relationship for User 2
       var cypherUserSecondRequests = 'MATCH ({username: "'+ usersData.userSecond +'"})-[r:CONNECTION_REQUEST]-(n)'
-                  + 'DELETE r';
+                                    + 'DELETE r';
       db.queryAsync(cypherUserSecondRequests).then(function(node){
         resolve(function() {
           console.log("user 2 requests reslationship deleted");
         })
       });
+      // Delete demands relationship for User 2
       var cypherUserSecondDemands = 'MATCH ({username: "'+ usersData.userSecond +'"})-[r:CONNECTION_REQUEST]->(n)'
-                  + 'DELETE r';
+                                  + 'DELETE r';
       db.queryAsync(cypherUserSecondDemands).then(function(node){
         resolve(function() {
           console.log("user 1 requests relationship deleted");

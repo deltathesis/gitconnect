@@ -377,10 +377,14 @@ User.createProject = function(usersData){
   return new Promise(function(resolve, reject){
 
     var storage = {};
+    var dateNow = new Date();
+
     storage.projectData = {
       // Generate Random Id
       projectId: '_' + Math.random().toString(36).substr(2, 15),
       name: 'null',
+      creationDate: dateNow.getTime(),
+      publishData : 'null',
       published: 'false',
       shortDesc: 'null',
       longDesc: 'null',

@@ -35,7 +35,8 @@ angular.module('myApp.requests', ['ngRoute'])
 
   $scope.ratings = function(ratings, index, type) {
     // Ratings Module
-    index++;
+    index = index + 2;
+    console.log(index)
     $ratings = $('.user-details.' + type + ':nth-child(' + index + ') .stars');
     for (var pos = 0; pos < 5; pos++) {
       $ratings.append("<i class='fa fa-star-o position-" + pos + "'></i>");

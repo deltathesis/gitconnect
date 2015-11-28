@@ -18,7 +18,7 @@ var retrieveData = function () {
       collabRooms = data.val().collabRooms;
       users = data.val().users;
       projectComments = data.val().projectRooms;
-      console.log('users', rooms);
+      // console.log('users', rooms);
     }
   });
 }

@@ -395,7 +395,7 @@ User.createProject = function(usersData){
       cloudStorage: 'null',
       database: 'null'
     };
-
+    // Create Project node into the DB
     db.saveAsync(storage.projectData, 'Project').then(function(newNode){
       node = newNode;
       return newNode;
@@ -407,14 +407,44 @@ User.createProject = function(usersData){
         relDirection: 'out',
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
-      })
+      });
       User.addRelationships({
         baseNode: {username: usersData.userSecond},
         relNodes: [node],
         relDirection: 'out',
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
-      })
+      });
+      // Delete requests relationship for User 1
+      var cypherUserFirstRequests = 'MATCH ({username: "'+ usersData.userFirst +'"})-[r:CONNECTION_REQUEST]-(n)'
+                  + 'DELETE r';
+      db.queryAsync(cypherUserFirstRequests).then(function(node){
+        resolve(function() {
+          console.log("user 1 requests relationship deleted");
+        })
+      });
+      var cypherUserFirstDemands = 'MATCH ({username: "'+ usersData.userFirst +'"})-[r:CONNECTION_REQUEST]->(n)'
+                  + 'DELETE r';
+      db.queryAsync(cypherUserFirstDemands).then(function(node){
+        resolve(function() {
+          console.log("user 1 requests relationship deleted");
+        })
+      });
+      // Delete requests relationship for User 2
+      var cypherUserSecondRequests = 'MATCH ({username: "'+ usersData.userSecond +'"})-[r:CONNECTION_REQUEST]-(n)'
+                  + 'DELETE r';
+      db.queryAsync(cypherUserSecondRequests).then(function(node){
+        resolve(function() {
+          console.log("user 2 requests reslationship deleted");
+        })
+      });
+      var cypherUserSecondDemands = 'MATCH ({username: "'+ usersData.userSecond +'"})-[r:CONNECTION_REQUEST]->(n)'
+                  + 'DELETE r';
+      db.queryAsync(cypherUserSecondDemands).then(function(node){
+        resolve(function() {
+          console.log("user 1 requests relationship deleted");
+        })
+      });
       return data;
     })
     .then(function(data){

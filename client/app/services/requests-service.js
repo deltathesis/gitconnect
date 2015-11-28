@@ -42,6 +42,8 @@ angular.module('myApp.requestsServices', [])
       data: { data: object }
     }).then(function successCallback(response) {
         console.log('success project creation', response)
+        var project = response.data;
+        return response.data;
     }, function errorCallback(response) {
       console.log('error project creation', response);
     });

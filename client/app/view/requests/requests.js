@@ -52,8 +52,12 @@ angular.module('myApp.requests', ['ngRoute'])
       userFirst: userUsername,
       userSecond: username
     };
-    console.log(usersObject);
-    UserConnection.createConnection(usersObject);
+    
+    UserConnection.createConnection(usersObject).then(function(project) {
+      $scope.linktoProject = project.projectId;
+      $('#projectPageRedirect').modal('show');
+    });
+    
   };
 
 }]);

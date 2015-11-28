@@ -268,6 +268,15 @@ app.get('/api/project/users/:id', function(req, res) {
   });
 });
 
+// Check for current Project collaboration
+app.get('/api/project/current/:username', function(req, res) {
+  console.log(req.params.username);
+  User.getCurrentProject(req.params.username).then(function(project){
+    console.log(project);
+    res.json({project: project})
+  });
+});
+
 
 httpServer.listen(process.env.PORT);
 console.log('Server now running on port: ' + process.env.PORT);

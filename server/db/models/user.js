@@ -510,5 +510,21 @@ User.getProjectUsers = function(id){
   })
 };
 
+// Get user connection requests
+User.getCurrentProject = function(username){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({username: "'+username+'"})-[:WORKED]->(n {published: "false"})'
+                  + 'RETURN n';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
 
 Promise.promisifyAll(User);

@@ -17,8 +17,8 @@ angular.module('myApp.requests', ['ngRoute'])
 }])
 
 .controller('requestsPage', [
-  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window',
-  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window) {
+  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
+  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
 
   var userDemands = getUserDemands;
   // console.log('demands: ',userDemands);
@@ -56,12 +56,19 @@ angular.module('myApp.requests', ['ngRoute'])
     UserConnection.createConnection(usersObject).then(function(project) {
       $scope.linktoProject = project.projectId;
       $('#projectPageRedirect').modal('show');
+
     });
   };
 
   $scope.projectRedirect = function(id) {
-    window.location = '#/collaboration-page/' + id;
-    window.location.reload();
+    $('#projectPageRedirect').modal('hide');
+
+    $timeout(function() {
+      $rootScope.$broadcast('projectStarted', {projectId: id});
+    }, 1000);
+
+    // window.location = '#/collaboration-page/' + id;
+    // window.location.reload();
   }
 
 }]);

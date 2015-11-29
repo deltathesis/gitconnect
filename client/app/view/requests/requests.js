@@ -17,8 +17,8 @@ angular.module('myApp.requests', ['ngRoute'])
 }])
 
 .controller('requestsPage', [
-  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window',
-  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window) {
+  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', 
+  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location) {
 
   var userDemands = getUserDemands;
   // console.log('demands: ',userDemands);
@@ -60,8 +60,9 @@ angular.module('myApp.requests', ['ngRoute'])
   };
 
   $scope.projectRedirect = function(id) {
-    window.location = '#/collaboration-page/' + id;
-    window.location.reload();
+    $rootScope.$broadcast('projectStarted', {projectId: id});
+    $('#projectPageRedirect').modal('hide');
+    $location.path('/collaboration-page/' + id);
   }
 
 }]);

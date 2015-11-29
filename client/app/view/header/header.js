@@ -1,6 +1,6 @@
 angular.module('myApp.header', [])
 
-.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', function($scope, socket, $cookies, Cookie, $log, projectCheck) {
+.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', function($scope, socket, $cookies, Cookie, $log, projectCheck, $rootScope) {
   var cookie = $cookies.get('gitConnectDeltaKS');
   if(cookie){
 
@@ -21,14 +21,23 @@ angular.module('myApp.header', [])
   };  
 
   $scope.hasProject = false;
+
   $scope.checkProjectPage = function() {
-    projectCheck.getProject(cookieObj.username).then(function(project) {
-      if (project.project.length > 0) {
-        $scope.hasProject = true;
-        $scope.projectLink = project.project[0].projectId;
-      }
-    });
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    if(cookie){
+      projectCheck.getProject(cookieObj.username).then(function(project) {
+        if (project.project.length > 0) {
+          $scope.hasProject = true;
+          $scope.projectLink = project.project[0].projectId;
+        }
+      });
+    }
   };
+
+  $rootScope.$on('projectStarted', function(event, project) { 
+    $scope.hasProject = true;
+    $scope.projectLink = project.projectId;
+  });
 
 }])
 

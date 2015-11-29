@@ -89,9 +89,9 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     }
   };
 
-  // Remove modal backdrop bug display
-  $scope.removeModal = function() {
-    $('.modal-backdrop').remove();
-  }
+  // // Remove modal backdrop bug display
+  // $scope.removeModal = function() {
+  //   $('.modal-backdrop').remove();
+  // }
 
 }]);

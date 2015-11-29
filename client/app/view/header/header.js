@@ -1,6 +1,6 @@
 angular.module('myApp.header', [])
 
-.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', function($scope, socket, $cookies, Cookie, $log, projectCheck, $rootScope) {
+.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', function($scope, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location) {
   var cookie = $cookies.get('gitConnectDeltaKS');
   if(cookie){
 
@@ -37,6 +37,7 @@ angular.module('myApp.header', [])
   $rootScope.$on('projectStarted', function(event, project) { 
     $scope.hasProject = true;
     $scope.projectLink = project.projectId;
+    $location.path('/collaboration-page/' + project.projectId);
   });
 
 }])

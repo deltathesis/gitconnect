@@ -17,8 +17,8 @@ angular.module('myApp.requests', ['ngRoute'])
 }])
 
 .controller('requestsPage', [
-  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection',
-  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection) {
+  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window',
+  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window) {
 
   var userDemands = getUserDemands;
   // console.log('demands: ',userDemands);
@@ -35,7 +35,7 @@ angular.module('myApp.requests', ['ngRoute'])
 
   $scope.ratings = function(ratings, index, type) {
     // Ratings Module
-    index++;
+    index = index + 2;
     $ratings = $('.user-details.' + type + ':nth-child(' + index + ') .stars');
     for (var pos = 0; pos < 5; pos++) {
       $ratings.append("<i class='fa fa-star-o position-" + pos + "'></i>");
@@ -45,14 +45,23 @@ angular.module('myApp.requests', ['ngRoute'])
     }
   };
 
+
   $scope.requestAccept = function(username) {
     console.log('project creation');
     var usersObject = {
       userFirst: userUsername,
       userSecond: username
     };
-    console.log(usersObject);
-    UserConnection.createConnection(usersObject);
+    
+    UserConnection.createConnection(usersObject).then(function(project) {
+      $scope.linktoProject = project.projectId;
+      $('#projectPageRedirect').modal('show');
+    });
   };
+
+  $scope.projectRedirect = function(id) {
+    window.location = '#/collaboration-page/' + id;
+    window.location.reload();
+  }
 
 }]);

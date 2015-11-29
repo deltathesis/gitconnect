@@ -187,5 +187,23 @@ angular.module('myApp.services', [])
 
 }])
 
+.factory('projectCheck', ['$http', function($http) {
+
+  var getProject = function(username) {
+    return $http({
+      cache: true,
+      method: 'GET',
+      url: '/api/project/current/' + username
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
+  return {
+    getProject: getProject
+  };
+
+}])
+
 
 ;

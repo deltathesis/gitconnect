@@ -377,10 +377,14 @@ User.createProject = function(usersData){
   return new Promise(function(resolve, reject){
 
     var storage = {};
+    var dateNow = new Date();
+
     storage.projectData = {
       // Generate Random Id
       projectId: '_' + Math.random().toString(36).substr(2, 15),
       name: 'null',
+      creationDate: dateNow.getTime(),
+      publishData : 'null',
       published: 'false',
       shortDesc: 'null',
       longDesc: 'null',
@@ -395,11 +399,16 @@ User.createProject = function(usersData){
       cloudStorage: 'null',
       database: 'null'
     };
-
+    // Create Project node into the DB
     db.saveAsync(storage.projectData, 'Project').then(function(newNode){
       node = newNode;
       return newNode;
     })
+    // ******
+    // *** Add project - users relationships
+    // ******
+
+    // Add user to project relationships
     .then(function(data){
       User.addRelationships({
         baseNode: {username: usersData.userFirst},
@@ -407,14 +416,73 @@ User.createProject = function(usersData){
         relDirection: 'out',
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
-      })
+      });
       User.addRelationships({
         baseNode: {username: usersData.userSecond},
         relNodes: [node],
         relDirection: 'out',
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
+      });
+      // ******
+      // *** Toggle availability 
+      // ******
+
+      // Toggle availability for user 1
+      //Get User Node
+      var objUser1 = {
+        userNode: User.get({username: usersData.userFirst})
+      }
+      // Update user availability into the DB
+      objUser1.userNode.then(function(users) {
+        User.update(users[0], {availability: "false"})
+      });
+      // Toggle availability for user 2
+      //Get User Node
+      var objUser2 = {
+        userNode: User.get({username: usersData.userSecond})
+      }
+      // Update user availability into the DB
+      objUser2.userNode.then(function(users) {
+        User.update(users[0], {availability: "false"})
       })
+
+      // ******
+      // *** Delete relationships requests/demands
+      // ******
+
+      // Delete requests relationship for User 1
+      var cypherUserFirstRequests = 'MATCH ({username: "'+ usersData.userFirst +'"})-[r:CONNECTION_REQUEST]-(n)'
+                                  + 'DELETE r';
+      db.queryAsync(cypherUserFirstRequests).then(function(node){
+        resolve(function() {
+          console.log("user 1 requests relationship deleted");
+        })
+      });
+      // Delete demands relationship for User 1
+      var cypherUserFirstDemands = 'MATCH ({username: "'+ usersData.userFirst +'"})-[r:CONNECTION_REQUEST]->(n)'
+                                  + 'DELETE r';
+      db.queryAsync(cypherUserFirstDemands).then(function(node){
+        resolve(function() {
+          console.log("user 1 requests relationship deleted");
+        })
+      });
+      // Delete requests relationship for User 2
+      var cypherUserSecondRequests = 'MATCH ({username: "'+ usersData.userSecond +'"})-[r:CONNECTION_REQUEST]-(n)'
+                                    + 'DELETE r';
+      db.queryAsync(cypherUserSecondRequests).then(function(node){
+        resolve(function() {
+          console.log("user 2 requests reslationship deleted");
+        })
+      });
+      // Delete demands relationship for User 2
+      var cypherUserSecondDemands = 'MATCH ({username: "'+ usersData.userSecond +'"})-[r:CONNECTION_REQUEST]->(n)'
+                                  + 'DELETE r';
+      db.queryAsync(cypherUserSecondDemands).then(function(node){
+        resolve(function() {
+          console.log("user 1 requests relationship deleted");
+        })
+      });
       return data;
     })
     .then(function(data){
@@ -431,6 +499,22 @@ User.getProjectUsers = function(id){
   return new Promise(function(resolve){
     var cypher = 'MATCH ({projectId: "'+id+'"})<-[:WORKED]-(n)'
                +'RETURN n';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
+// Get user connection requests
+User.getCurrentProject = function(username){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({username: "'+username+'"})-[:WORKED]->(n {published: "false"})'
+                  + 'RETURN n';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){
         return element

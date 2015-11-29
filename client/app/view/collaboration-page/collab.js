@@ -75,7 +75,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
         date: currentTime
       })
 
-   
       $scope.messages.push({
         username: $scope.username,
         message: $scope.text,
@@ -88,6 +87,11 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
       $scope.text = "";
     }
+  };
+
+  // Remove modal backdrop bug display
+  $scope.removeModal = function() {
+    $('.modal-backdrop').remove();
   }
 
 }]);

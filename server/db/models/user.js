@@ -526,5 +526,39 @@ User.getCurrentProject = function(username){
   })
 };
 
+// Deletes a relationship
+// id: int
+User.deleteRelationship = function(id) {
+  return new Promise(function(resolve) {
+    var cypher = 'start r=rel(' + id + ') delete r;';
+    db.queryAsync(cypher)
+      .then(resolve);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+};
+
+// Updates a relationship, overwriting properties if necessary
+// id: int
+// properties: Object
+// Returns the updated node
+User.updateRelationship = function(id, properties) {
+  return new Promise(function(resolve) {
+    var cypher = 'start r=rel(' + id + ') ';
+    for(var key in properties) {
+      cypher += 'set r.' + key + ' = "' + properties[key] + '" ';
+    }
+    cypher += 'return r;';
+    db.queryAsync(cypher)
+      .then(function(nodes) {
+        resolve(nodes[0]);
+      });
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+};
+
 
 Promise.promisifyAll(User);

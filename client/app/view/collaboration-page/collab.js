@@ -20,6 +20,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   var projectInfos = getProjectInfo.project;
   $scope.projectInfos = projectInfos;
+  var oldProjectInfo = projectInfos
   
   var projectUsers = getProjectUsers;
   $scope.projectUsers = projectUsers.users;
@@ -111,7 +112,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
     modalInstance.result.then(function(projectInformation){
       console.log('project info: ', projectInformation);
-      Project.updateProject(projectInformation, $scope.username);
+      Project.updateProject(projectInformation, oldProjectInfo);
     })
   }
 
@@ -140,6 +141,7 @@ angular.module('myApp.collaboration-page').controller('publish', ['$scope', '$ui
 
   $scope.ok = function(){
     $scope.projectInfo.published = 'true';
+    $scope.projectInfo.publishDate = new Date();
     $uibModalInstance.close($scope.projectInfo);
   }
   $scope.cancel = function(){

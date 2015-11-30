@@ -247,13 +247,14 @@ app.post('/api/project/creation', function(req, res){
 })
 
 app.post('/api/project/update', function(req, res){
-  User.getCurrentProject(req.body.username).then(function(project){
-    console.log('current project ', project[0]);
-    console.log('attrs: ', req.body.data)
-    User.update(project[0] , req.body.data).then(function(){
-    res.sendStatus(200)
-    })
-  })
+  // User.getCurrentProject(req.body.username).then(function(project){
+  //   console.log('current project ', project[0]);
+  //   console.log('attrs: ', req.body.data)
+  //   User.update(project[0] , req.body.data).then(function(){
+  //   res.sendStatus(200)
+  //   })
+  // })
+  User.update(req.body.oldProject, req.body.data)
 })
 
 // WAIT BEFORE DELETE - Do not give the users relationships

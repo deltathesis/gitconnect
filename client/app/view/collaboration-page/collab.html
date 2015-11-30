@@ -63,7 +63,7 @@
     <h1>Messages</h1>
     <ul class="list-group">
       <li class="list-group-item cf" ng-repeat="message in messages">
-        <a href="" class="team-member-chat-picture" style="background-image:url('assets/pictures/users/chris.jpg')"></a>
+        <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
         <div class="message-content">
           <span class="username">{{message.username}}</span>
           <span class="date">{{ message.date | date: 'short' }}</span>

@@ -111,8 +111,9 @@ module.exports = function (socket) {
 
   //intialized username and adds socket info to people array
   socket.on('initCollab', function(data) {
-    name = data;
-    people[data] = socket;
+    name = data.name;
+    people[data.name] = socket;
+    people[data.name].join(data.collabRoom);
     socket.emit('initCollab', collabRooms);
   });
 
@@ -125,10 +126,11 @@ module.exports = function (socket) {
   });
 
   socket.on('send:collabMessage', function(data) {
-    socket.broadcast.emit('send:collabMessage', {
-      username: name,
+    socket.to(data.room).emit('send:collabMessage', {
+      username: data.name,
       message: data.message,
-      date: data.date
+      date: data.date,
+      avatar: data.avatar
     });
   });
   /** End of Collab Page Socket Functions **/

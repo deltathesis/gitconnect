@@ -95,6 +95,43 @@
       }
     }
   }
+  .tech-selection {
+    .techs {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      &.user-selection { padding-top: 10px;}
+      .tech {
+        display: inline-block;
+        padding: 5px 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        background-color: $mainColor;
+        color: #FFF;
+        border-radius: 3px;
+        transition: background-color 0.2s ease;
+        &.fadein-effect {
+          @include animationEffect(0.3s, fadeEffect);
+        }
+        i {
+          margin-left: 5px;
+        }
+      }
+      &.user-selection .tech:hover {
+        background-color: $redColor;
+      }
+      &.propositions .tech:hover {
+        background-color: $greenColor;
+      }
+      .search-form {
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+      .error-addition {
+        font-weight: bold;
+        color: $redColor;
+      }
+    }
+  }
 }
 
 @media (max-width: 480px) {

@@ -1,6 +1,7 @@
 <div class="container page connect-page fadein-effect" ng-init="statusCheck()">
   <div class="top-container row">
-    <form class="form-inline city-form col-xs-12 col-sm-8" ng-init="googleMapInit()">
+    <button type="submit" class="btn col-xs-12 col-sm-2" ng-click="applyFilters()">Filters</button>
+    <form class="form-inline city-form col-xs-12 col-sm-6" ng-init="googleMapInit()">
       <div class="form-group">
         <label for="city">Your City</label>
         <input type="text" class="form-control" id="city-input" placeholder="Select a different city">
@@ -20,7 +21,7 @@
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
-      <div class="swiper-slide" ng-repeat="user in users track by $index" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.avatar_url}})">
+      <div class="swiper-slide" ng-repeat="user in users" on-finish-render="ngRepeatFinished" data-dev-id="{{user.id}}" style="background-image:url({{user.avatar_url}})">
         <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg> 
       </div>
     </div>
@@ -31,7 +32,7 @@
 
   <div class="col-xs-12 developer-connect-details" ng-show="availability">
     <div class="connection">
-      <button class="btn connect-btn" ng-click="connectionRequest($index)">Connect</button>
+      <button class="btn connect-btn" ng-click="connectionRequest()">Connect</button>
     </div>
     <div class="developer-detail">
       <p class="developer-name">{{selectedUser.name}}</p>
@@ -56,6 +57,43 @@
       </div>
     </div>
   </div>
+<!-- Modal -->
+<div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Technology Interests</h4>
+      </div>
+      <div class="modal-body">
+        <div class="tech-selection col-xs-12">
+          <div class="techs propositions">
+            <h4>Add Filters</h4>
+            <label class="search-form">Search: <input class="tech-search-input" ng-model="searchText"></label>
+            <p ng-show="existed" class="error-addition"> Already added</p>
+            <ul>
+              <li class="tech fadein-effect" ng-repeat="tech in techList | filter:searchText track by $index" data-tech="{{tech}}" ng-click="addFilter(tech, $index)">
+                {{tech}} <i class="fa fa-plus-circle"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="tech-selection col-xs-12">
+          <div class="techs user-selection" >
+            <h4>Current Filters</h4>
+            <ul>
+              <li class="tech fadein-effect" ng-repeat="tech in selections track by $index " data-tech="{{tech}}" ng-click="removeFilter(tech, $index)">
+                {{tech}} <i class="fa fa-times-circle"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="submitFilters()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 

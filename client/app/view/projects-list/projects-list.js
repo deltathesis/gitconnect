@@ -13,7 +13,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
   });
 }])
 
-.controller('projectsPage', ['$scope', 'projects', function($scope, projects) {
+.controller('projectsPage', ['$scope', 'projects', 'ProjectList', function($scope, projects, ProjectList) {
 
   // var projects = [
   //   {
@@ -55,10 +55,12 @@ angular.module('myApp.projectslist', ['ngRoute'])
 
   $scope.increment = function(project, index){
     project.upVote += 1;
-  }
+    ProjectList.vote($scope.projects[index].id, true);
+  };
 
   $scope.decrement = function(project, index){
     project.downVote += 1;
-  }
+    ProjectList.vote($scope.projects[index].id, false);
+  };
 
 }]);

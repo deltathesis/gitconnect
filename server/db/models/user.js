@@ -579,6 +579,9 @@ User.getProjects = function() {
   });
 };
 
+// Adds votes to a project
+// id: int - the id of the project
+// up: boolean - true -> upvote, false -> downvote
 User.voteOnProject = function(id, up) {
   var vote = up ? 'upVote' : 'downVote';
   var cypher = 'match (n) where id(n)=' + id + ' set n.' + vote + ' = n.' + vote + ' + 1;'

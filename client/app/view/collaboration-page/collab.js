@@ -30,7 +30,11 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
-  console.log($scope.username);
+  $scope.currentRoom = $scope.projectInfos.projectId;
+  $scope.actualName = cookieObj.displayName;
+  $scope.displayName = cookieObj.displayName + '(' + $scope.username + ')';
+  $scope.avatar = cookieObj.avatar;
+  $scope.messages = [];
 
   $scope.projectInfo = {
     name: 'GitConnect',
@@ -54,12 +58,15 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   /** Socket Listeners **/
 
-  socket.emit('initCollab', $scope.username);
+  socket.emit('initCollab', {
+    name: $scope.username,
+    collabRoom: $scope.projectInfos.projectId
+  });
 
   // listen to initializer
   socket.on('initCollab', function(data) {
-    if(data) {
-      $scope.messages = data.testRoom;
+    if(data[$scope.currentRoom]) {
+      $scope.messages = data[$scope.currentRoom];
     }
   })
 
@@ -72,19 +79,23 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     if($scope.text){
     var currentTime = new Date();
       socket.emit('send:collabMessage', {
+        room: $scope.currentRoom,
         message: $scope.text,
-        date: currentTime
+        date: currentTime,
+        name: $scope.displayName,
+        avatar: $scope.avatar
       })
 
       $scope.messages.push({
-        username: $scope.username,
+        avatar: $scope.avatar,
+        username: $scope.displayName,
         message: $scope.text,
         date: currentTime
       });
 
-      socket.emit('store:collabData', angular.copy({
-        testRoom: $scope.messages
-      }));
+      var roomObj = {};
+      roomObj[$scope.currentRoom] = $scope.messages;
+      socket.emit('store:collabData', angular.copy(roomObj));
 
       $scope.text = "";
     }

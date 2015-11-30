@@ -57,6 +57,7 @@ app.get('/auth/github',
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
+    req.session.displayName = req.user.displayName;
   	req.session.username = req.user.username;
     req.session.userid = req.user.id;
     req.session.userlocation = req.user._json.location;
@@ -72,6 +73,7 @@ app.get('/auth/github/callback',
             id: req.user.id,
             availability: "true",
             username: req.user.username,
+            displayName: req.user.displayName,
             avatar: req.user._json.avatar_url,
             location: req.user._json.location
           }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});
@@ -86,6 +88,7 @@ app.get('/auth/github/callback',
           id: req.user.id,
           availability: user[0].availability,
           username: req.user.username,
+          displayName: req.user.displayName,
           avatar: req.user._json.avatar_url,
           location: req.user._json.location
         }, { expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7))});

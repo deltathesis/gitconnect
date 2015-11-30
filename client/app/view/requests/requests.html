@@ -20,9 +20,9 @@
          <!--  <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div> -->  <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
         </div>
       </div>
-      <div class="action-button accept">
-        <button ng-click="requestAccept(user.username)" class="btn">Accept</button>
-        <button ng-click="deleteRequest(user.username)" class="btn">Decline</button>
+      <div class="action-button requests">
+        <button ng-click="requestAccept(user.username)" class="btn accept"><i class="fa fa-check-circle"></i></button>
+        <button ng-click="deleteRequest(user.username)" class="btn decline"><i class="fa fa-times-circle"></i></button>
       </div>
     </div>
   </div>

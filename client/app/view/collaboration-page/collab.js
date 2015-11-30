@@ -31,10 +31,22 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
   $scope.currentRoom = $scope.projectInfos.projectId;
-  $scope.actualName = cookieObj.displayName;
-  $scope.displayName = cookieObj.displayName + '(' + $scope.username + ')';
   $scope.avatar = cookieObj.avatar;
   $scope.messages = [];
+  $scope.currentTime;
+  $scope.displayName;
+  $scope.actualName;
+  
+  var getOwnName = function() {
+    for(var i = 0; i < $scope.projectUsers.length; i++) {
+      if($scope.projectUsers[i].username === $scope.username) {
+        $scope.actualName = $scope.projectUsers[i].name;
+        return $scope.actualName + '(' + $scope.username + ')';
+      }
+    }
+  }
+
+  $scope.displayName = getOwnName();
 
   $scope.projectInfo = {
     name: 'GitConnect',
@@ -52,9 +64,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     code_library: ""
   }
 
-  $scope.messages = [];
-
-  $scope.currentTime;
 
   /** Socket Listeners **/
 

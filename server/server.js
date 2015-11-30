@@ -160,7 +160,8 @@ app.post('/api/user/updateform', function(req, res) {
   // Get user Bio and Email
   var userInfos = {
     email: req.body.data.userInfos.email,
-    bio: req.body.data.userInfos.bio
+    bio: req.body.data.userInfos.bio,
+    name: req.body.data.userInfos.name
   }
   // Get User Node
   var objUser = {

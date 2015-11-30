@@ -135,26 +135,34 @@ angular.module('myApp.services', [])
   this.userTech = [];
   this.userAddress = '';
   this.userBio = '';
+  this.userFullName = '';
 
   this.setTech = function(techlist) {
-        this.userTech = techlist;
+    this.userTech = techlist;
   };
   this.getTech = function() {
-        return this.userTech;
+    return this.userTech;
   };
 
   this.setAddress = function(address) {
-        this.userAddress = address;
+    this.userAddress = address;
   };
   this.getAddress = function() {
-        return this.userAddress;
+    return this.userAddress;
   };
 
   this.setBio = function(bio) {
-        this.userBio = bio;
+    this.userBio = bio;
   };
   this.getBio = function() {
-        return this.userBio;
+    return this.userBio;
+  };
+
+  this.setFullName = function(name) {
+    this.userFullName = name;
+  };
+  this.getFullName = function() {
+    return this.userFullName;
   };
 })
 

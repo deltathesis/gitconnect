@@ -48,6 +48,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
   $scope.userEmail = $scope.user.user.email;
   $scope.userBio = $scope.user.user.bio;
+  $scope.userFullName = $scope.user.user.name;
 
 
   // Remove user existing tech
@@ -82,6 +83,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       var userSelectedTech = $scope.user.languages;
       var userEmail = $scope.userEmail;
       var userBio = $scope.userBio;
+      var userFullName = $scope.userFullName;
 
       // Location user update form submission
       var resultsLocation = {
@@ -97,7 +99,8 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       var userInfos = {
         username: $scope.user.user.username,
         email: userEmail,
-        bio: userBio
+        bio: userBio,
+        name: userFullName
       }
 
       // Prepare data to be posted
@@ -114,6 +117,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       userOwnTech.setTech(resultsTech);
       userOwnTech.setAddress(cityName);
       userOwnTech.setBio(userBio);
+      userOwnTech.setFullName(userFullName);
 
       // Redirection to the home page
       // $window.location.reload();

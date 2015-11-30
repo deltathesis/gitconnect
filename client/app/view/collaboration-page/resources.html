@@ -1,0 +1,25 @@
+<form name="myForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Project Repo</label>
+            <input name="repo" type="text" class="form-control" ng-model="projectInfo.projectRepo" name="projectRepo">
+            <div role="alert">
+              <span class="error" ng-show="myForm.projectRepo.$error.url">
+                Not valid url!</span>
+            </div>
+            <label>Code Snippet</label>
+            <input name="codeSnippet" type="text" class="form-control" ng-model="projectInfo.projectSnippet" name="snippet">
+            <label>Cloud Storage</label>
+            <input name="cloudStorage" type="text" class="form-control" ng-model="projectInfo.cloudStorage">
+            <label>Scrum Board</label>
+            <input name="scrumBoard" type="text" class="form-control" ng-model="projectInfo.scrumBoard">
+            <label>Project Website</label>
+            <input name="projectWebsite" type="text" class="form-control" ng-model="projectInfo.projectWebsite">
+            <label>Database</label>
+            <input name="database" type="text" class="form-control" ng-model="projectInfo.database">
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="sign-small" ng-click="ok()">Submit</button>
+            <button class="cancel-small" ng-click="cancel()">Cancel</button>
+        </div>
+</form>

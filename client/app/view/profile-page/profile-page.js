@@ -62,6 +62,14 @@ angular.module('myApp.profilepage', ['ngRoute'])
         $scope.user.bio = $scope.user.user.bio;
       }
 
+      // Updated User Full Name
+      var userFullName = userOwnTech.getFullName();
+      if (userFullName !== '') {
+        $scope.user.user.name = userFullName;
+      } else {
+        $scope.user.user.name = $scope.user.user.name;
+      }
+
   }
 
   

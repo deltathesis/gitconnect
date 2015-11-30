@@ -244,11 +244,24 @@ app.get('/api/connectionslistRequests/:name', function(req, res) {
 
 // Project page creation after matching
 app.post('/api/project/creation', function(req, res){
-  console.log(req.body.data);
   User.createProject(req.body.data).then(function(project){
     res.json(project)
   });
-})
+});
+
+// Delete other user request
+app.post('/api/request/delete', function(req, res){
+  User.deleteRequestFromUser(req.body.data.userFirst, req.body.data.userSecond).then(function(data){
+    res.json(data)
+  });
+});
+
+// Delete other user request
+app.post('/api/demand/delete', function(req, res){
+  User.deleteDemandFromUser(req.body.data.userFirst, req.body.data.userSecond).then(function(data){
+    res.json(data)
+  });
+});
 
 app.post('/api/project/update', function(req, res){
   // User.getCurrentProject(req.body.username).then(function(project){
@@ -259,7 +272,7 @@ app.post('/api/project/update', function(req, res){
   //   })
   // })
   User.update(req.body.oldProject, req.body.data)
-})
+});
 
 // WAIT BEFORE DELETE - Do not give the users relationships
 // app.get('/api/project/:id', function(req, res) {

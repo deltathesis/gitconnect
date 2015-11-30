@@ -494,6 +494,38 @@ User.createProject = function(usersData){
   })
 };
 
+// Delete Requests made to user
+User.deleteRequestFromUser = function(username, otherUsername){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({username: "'+ username +'"})<-[r:CONNECTION_REQUEST]-({username: "'+ otherUsername +'"})'
+              + 'DELETE r'
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
+// Delete Demands made by user
+User.deleteDemandFromUser = function(username, otherUsername){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({username: "'+ username +'"})-[r:CONNECTION_REQUEST]->({username: "'+ otherUsername +'"})'
+              + 'DELETE r'
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
 // Get user connection requests
 User.getProjectUsers = function(id){
   return new Promise(function(resolve){

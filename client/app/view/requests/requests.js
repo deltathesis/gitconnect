@@ -21,9 +21,9 @@ angular.module('myApp.requests', ['ngRoute'])
   function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
 
   var userDemands = getUserDemands;
-  // console.log('demands: ',userDemands);
+  console.log('demands: ',userDemands);
   var usersRequest = getUserRequests;
-  // console.log('requests: ',usersRequest);
+  console.log('requests: ',usersRequest);
 
   // Get User username
   var cookie = $cookies.get('gitConnectDeltaKS');
@@ -57,6 +57,30 @@ angular.module('myApp.requests', ['ngRoute'])
       $scope.linktoProject = project.projectId;
       $('#projectPageRedirect').modal('show');
 
+    });
+  };
+
+  $scope.deleteRequest = function(username) {
+    console.log('Delete Request');
+    var usersObject = {
+      userFirst: userUsername,
+      userSecond: username
+    };
+    
+    UserConnection.deleteRequest(usersObject).then(function() {
+      $('.requests.'+ username).slideUp();
+    });
+  };
+
+  $scope.deleteDemand = function(username) {
+    console.log('Delete Request');
+    var usersObject = {
+      userFirst: userUsername,
+      userSecond: username
+    };
+    
+    UserConnection.deleteDemand(usersObject).then(function() {
+      $('.demands.'+username).slideUp();
     });
   };
 

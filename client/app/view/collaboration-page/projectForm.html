@@ -1,21 +1,29 @@
 <div class="container page publish-form fadein-effect">
-    <h3>Please fill out the following fields!</h3>
+    <h3>Please enter additional information on your form</h3>
 </div>
-<form>
+<form name="myForm">
     <div class="modal-body">
         <div class="form-group">
             <label>Project Name</label>
             <input type="text" class="form-control" ng-model="projectInfo.name">
             <label>About the project:</label>
-            <textarea type="text" rows="5" class="form-control"></textarea ng-model="projectInfo.longDesc">
+            <textarea type="text" rows="5" class="form-control" ng-model="projectInfo.longDesc"></textarea>
             <label>Short decription of the project</label>
             <input ng-model="projectInfo.shortDesc" type="text" class="form-control">
-            <label>project picture url</label>
+            <label>project picture</label>
             <input ng-model="projectInfo.picture" type="text" class="form-control">
             <label>Project repo link</label>
-            <input type="text" class="form-control" ng-model="projectInfo.projectRepo">
+            <input type="url" class="form-control" ng-model="projectInfo.projectRepo" name="repo">
+            <div role="alert">
+              <span class="error" ng-show="myForm.repo.$error.url">
+                Not valid url!</span>
+            </div>
             <label>Project Website</label>
-            <input type="text" class="form-control" ng-model="projectInfo.projectWebsite">
+            <input type="url" class="form-control" ng-model="projectInfo.projectWebsite" name="input">
+            <div role="alert">
+              <span class="error" ng-show="myForm.input.$error.url">
+                Not valid url!</span>
+            </div>
             <!-- Recycled Html from projile-updat.html -->
             <div class="techs user-selection" >
               <h4>Technologies you used in this project</h4>
@@ -27,7 +35,7 @@
             </div>
             <div class="tech-selection col-xs-12">
               <div class="techs propositions" ng-init="initialTech()">
-                <h4>Technologies you might be interested in</h4>
+                <h4>Add additional technologies</h4>
                 <label class="search-form">Search: <input class="tech-search-input" ng-model="searchText"></label>
                 <p ng-show="existed" class="error-addition"> Already added</p>
                 <ul>

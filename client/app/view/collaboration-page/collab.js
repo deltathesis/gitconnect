@@ -24,8 +24,8 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   
   var projectUsers = getProjectUsers;
   $scope.projectUsers = projectUsers.users;
-  // console.log('project', projectInfos)
-  console.log('users', projectUsers);
+  console.log('project: ', projectInfos)
+  console.log('users: ', projectUsers);
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -119,14 +119,16 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 }]);
 
 angular.module('myApp.collaboration-page').controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', function($scope, $uibModal, techList, $uibModalInstance, project){
-  //for the drop down everytime the user clicks on a tech push it into an array and bind that to the modal
+  
   $scope.projectInfo = project
   $scope.techList = techList.getTechList();
-  // $scope.yourTechList = $scope.projectInfo.techlist
-  $scope.yourTechList = []
+  $scope.yourTechList = $scope.projectInfo.codeLibrary.split(',');
   $scope.addTech = function(tech, index){
     if ($scope.yourTechList.indexOf(tech) !== -1) {
       $scope.techList.splice(index, 1);
+    } else if ($scope.yourTechList.indexOf('null') !== -1){
+      //remove the default null language if it exists
+      $scope.yourTechList.splice($scope.yourTechList.indexOf('null'), 1) 
     } else {
       $scope.yourTechList.push(tech);
       $scope.techList.splice(index, 1);
@@ -135,11 +137,12 @@ angular.module('myApp.collaboration-page').controller('publish', ['$scope', '$ui
   };
   $scope.removeTech = function(tech, index) {
     $scope.techList.push(tech); 
-    $scope.user.languages.splice(index, 1);  
+    $scope.yourTechList.splice(index, 1);  
   };
 
 
   $scope.ok = function(){
+    $scope.projectInfo.codeLibrary = $scope.yourTechList.toString();
     $scope.projectInfo.published = 'true';
     $scope.projectInfo.publishDate = new Date();
     $uibModalInstance.close($scope.projectInfo);

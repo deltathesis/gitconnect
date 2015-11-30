@@ -579,4 +579,13 @@ User.getProjects = function() {
   });
 };
 
+User.voteOnProject = function(id, up) {
+  var vote = up ? 'upVote' : 'downVote';
+  var cypher = 'match (n) where id(n)=' + id + ' set n.' + vote + ' = n.' + vote + ' + 1;'
+  db.queryAsync(cypher)
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+
 Promise.promisifyAll(User);

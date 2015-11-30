@@ -218,6 +218,8 @@ angular.module('myApp.services', [])
 
 .factory('ProjectList', ['$http', function($http) {
 
+	// Gets all published community projects from the server via http
+	// Returns an array of projects sorted by votes (highest to lowest)
 	var getProjects = function() {
 		return $http({
 			cache: true,
@@ -228,8 +230,23 @@ angular.module('myApp.services', [])
 		});
 	};
 
+	// Updates a project's votes via http
+	// id: int - the id of the project
+	// up: boolean - true -> upvote, false -> downvote
+	var vote = function(id, up) {
+		$http({
+			method: 'POST',
+			url: 'api/project/vote',
+			data: {
+				id: id, 
+				up: up
+			}
+		});
+	};
+
 	return {
-		getProjects: getProjects
+		getProjects: getProjects,
+		vote: vote
 	};
 
 }])

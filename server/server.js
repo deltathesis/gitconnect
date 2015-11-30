@@ -272,6 +272,11 @@ app.get('/api/project/list', function(req, res) {
     });
 });
 
+app.post('/api/project/vote', function(req, res) {
+  User.voteOnProject(req.body.id, req.body.up);
+  res.end();
+});
+
 app.get('/api/project/:id', function(req, res) {
   User.get({projectId : req.params.id}).then(function(project){
     res.json({project: project[0]})

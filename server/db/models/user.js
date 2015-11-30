@@ -560,7 +560,35 @@ User.updateRelationship = function(id, properties) {
   });
 };
 
+// Gets a list of published projects
+// Returns an array of projects sorted by votes (highest to lowest)
+User.getProjects = function() {
+  return new Promise(function(resolve) {
+    var cypher = 'match (n: Project {published:"true"}) return n';
+    db.queryAsync(cypher)
+      .then(function(nodes) {
+        resolve(nodes.sort(function(a, b) {
+          var aVotes = a.upVote - a.downVote;
+          var bVotes = b.upVote - b.downVote;
+          return bVotes - aVotes;
+        }));
+      });
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+};
 
+// Adds votes to a project
+// id: int - the id of the project
+// up: boolean - true -> upvote, false -> downvote
+User.voteOnProject = function(id, up) {
+  var vote = up ? 'upVote' : 'downVote';
+  var cypher = 'match (n) where id(n)=' + id + ' set n.' + vote + ' = n.' + vote + ' + 1;'
+  db.queryAsync(cypher)
+    .catch(function(err) {
+      console.log(err);
+    });
+};
 
 Promise.promisifyAll(User);
-//if you publish 

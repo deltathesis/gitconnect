@@ -269,6 +269,18 @@ app.post('/api/project/update', function(req, res){
 //   });
 // });
 
+app.get('/api/project/list', function(req, res) {
+  User.getProjects()
+    .then(function(projects) {
+      res.json({projects: projects});
+    });
+});
+
+app.post('/api/project/vote', function(req, res) {
+  User.voteOnProject(req.body.id, req.body.up);
+  res.end();
+});
+
 app.get('/api/project/:id', function(req, res) {
   User.get({projectId : req.params.id}).then(function(project){
     res.json({project: project[0]})
@@ -291,10 +303,8 @@ app.get('/api/project/current/:username', function(req, res) {
   });
 });
 
-
 httpServer.listen(process.env.PORT);
 console.log('Server now running on port: ' + process.env.PORT);
-
 
 /** Socket.io Messaging **/
 var socketRoute = require('./routes/socket.js');

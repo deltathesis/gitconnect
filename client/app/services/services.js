@@ -216,5 +216,20 @@ angular.module('myApp.services', [])
 
 }])
 
+.factory('ProjectList', ['$http', function($http) {
 
-;
+	var getProjects = function() {
+		return $http({
+			cache: true,
+			method: 'GET',
+			url: '/api/project/list'
+		}).then(function(res) {
+			return res.data.projects;
+		});
+	};
+
+	return {
+		getProjects: getProjects
+	};
+
+}])

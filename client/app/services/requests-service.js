@@ -49,8 +49,40 @@ angular.module('myApp.requestsServices', [])
     });
   };
 
+  var deleteRequest = function(object) {
+    return $http({
+      cache: false,
+      method: 'POST',
+      url: '/api/request/delete',
+      data: { data: object }
+    }).then(function successCallback(response) {
+        console.log('deleted request', response)
+        // var project = response.data;
+        // return response.data;
+    }, function errorCallback(response) {
+      console.log('error deleted request', response);
+    });
+  };
+
+  var deleteDemand = function(object) {
+    return $http({
+      cache: false,
+      method: 'POST',
+      url: '/api/demand/delete',
+      data: { data: object }
+    }).then(function successCallback(response) {
+        console.log('deleted demand', response)
+        // var project = response.data;
+        // return response.data;
+    }, function errorCallback(response) {
+      console.log('error deleted demand', response);
+    });
+  };
+
   return {
-    createConnection: createConnection
+    createConnection: createConnection,
+    deleteRequest: deleteRequest,
+    deleteDemand: deleteDemand
   };
 }])
 

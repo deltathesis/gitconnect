@@ -16,15 +16,16 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   });
 }])
 
-.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers) {
+.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project) {
 
   var projectInfos = getProjectInfo.project;
   $scope.projectInfos = projectInfos;
+  var oldProjectInfo = projectInfos
   
   var projectUsers = getProjectUsers;
   $scope.projectUsers = projectUsers.users;
-  console.log('project', projectInfos)
-  console.log('users', projectUsers);
+  console.log('project: ', projectInfos)
+  console.log('users: ', projectUsers);
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -94,4 +95,60 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   //   $('.modal-backdrop').remove();
   // }
 
+  /***********************MODALS to publish your project ***************************/
+
+  $scope.publish = function(size){
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'view/collaboration-page/projectForm.html',
+      controller: 'publish',
+      resolve: {
+        project: function(){
+          return $scope.projectInfos
+        }
+      },
+      size: size
+    });
+
+    modalInstance.result.then(function(projectInformation){
+      console.log('project info: ', projectInformation);
+      Project.updateProject(projectInformation, oldProjectInfo);
+    })
+  }
+
+}])
+
+.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', function($scope, $uibModal, techList, $uibModalInstance, project){
+  
+  $scope.projectInfo = project
+  $scope.techList = techList.getTechList();
+  $scope.yourTechList = $scope.projectInfo.codeLibrary.split(',');
+  $scope.addTech = function(tech, index){
+    if ($scope.yourTechList.indexOf(tech) !== -1) {
+      $scope.techList.splice(index, 1);
+    } else if ($scope.yourTechList.indexOf('null') !== -1){
+      //remove the default null language if it exists
+      $scope.yourTechList.splice($scope.yourTechList.indexOf('null'), 1) 
+    } else {
+      $scope.yourTechList.push(tech);
+      $scope.techList.splice(index, 1);
+      $scope.searchText = '';
+    }
+  };
+  $scope.removeTech = function(tech, index) {
+    $scope.techList.push(tech); 
+    $scope.yourTechList.splice(index, 1);  
+  };
+
+
+  $scope.ok = function(){
+    $scope.projectInfo.codeLibrary = $scope.yourTechList.toString();
+    $scope.projectInfo.published = 'true';
+    $scope.projectInfo.publishDate = new Date();
+    $uibModalInstance.close($scope.projectInfo);
+  }
+  $scope.cancel = function(){
+    $uibModalInstance.dismiss('cancel');
+  }
 }]);
+

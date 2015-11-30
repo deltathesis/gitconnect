@@ -384,7 +384,7 @@ User.createProject = function(usersData){
       projectId: '_' + Math.random().toString(36).substr(2, 15),
       name: 'null',
       creationDate: dateNow.getTime(),
-      publishData : 'null',
+      publishDate : 'null',
       published: 'false',
       shortDesc: 'null',
       longDesc: 'null',
@@ -561,4 +561,6 @@ User.updateRelationship = function(id, properties) {
 };
 
 
+
 Promise.promisifyAll(User);
+//if you publish 

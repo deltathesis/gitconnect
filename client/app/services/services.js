@@ -180,9 +180,20 @@ angular.module('myApp.services', [])
     });
   };
 
+  var updateProject = function(projectObj, oldProject){
+    return $http({
+      method: 'POST',
+      url: '/api/project/update',
+      data: {data: projectObj, oldProject: oldProject}
+    }).then(function(res){
+      return res.status;
+    });
+  };
+
   return {
     getInfos: getInfos,
-    getUsers: getUsers
+    getUsers: getUsers,
+    updateProject: updateProject
   };
 
 }])

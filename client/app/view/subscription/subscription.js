@@ -78,6 +78,7 @@ angular.module('myApp.subscription', ['ngRoute'])
       var userSelectedTech = $scope.user.languages;
       var userEmail = $scope.userEmail;
       var userBio = $scope.userBio;
+      var userFullName = $scope.userFullName;
 
       // Location user update form submission
       var resultsLocation = {
@@ -93,7 +94,8 @@ angular.module('myApp.subscription', ['ngRoute'])
       var userInfos = {
         username: $scope.user.user.username,
         email: userEmail,
-        bio: userBio
+        bio: userBio,
+        name: userFullName
       }
 
       // Prepare data to be posted
@@ -110,10 +112,20 @@ angular.module('myApp.subscription', ['ngRoute'])
       userOwnTech.setTech(resultsTech);
       userOwnTech.setAddress(cityName);
       userOwnTech.setBio(userBio);
+      userOwnTech.setFullName(userFullName);
 
       // Redirection to the home page
       $location.path('/');
     }
+  }
+
+  $scope.getUserName = function() {
+    // Updated User FullName display
+    console.log($scope.user.user.name);
+      if ($scope.user.user.name !== 'null') {
+        console.log("test");
+        $scope.userFullName = $scope.user.user.name;
+      }
   }
 
   $scope.googleMapInit = function() {

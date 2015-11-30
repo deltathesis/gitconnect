@@ -116,9 +116,9 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     })
   }
 
-}]);
+}])
 
-angular.module('myApp.collaboration-page').controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', function($scope, $uibModal, techList, $uibModalInstance, project){
+.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', function($scope, $uibModal, techList, $uibModalInstance, project){
   
   $scope.projectInfo = project
   $scope.techList = techList.getTechList();

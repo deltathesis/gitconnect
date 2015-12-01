@@ -277,7 +277,16 @@ app.post('/api/demand/delete', function(req, res){
 });
 
 app.post('/api/project/update', function(req, res){
-  User.update(req.body.oldProject, req.body.data)
+  User.update(req.body.oldProject, req.body.data).then(function(){
+    console.log('techs: ', req.body.langArray, req.body.data);
+    User.addRelationships({
+      baseNode: req.body.data,
+      relNodes: req.body.langArray,
+      relNodeLabels: ['Language'],
+      relLabel: 'Uses',
+      relDirection: 'all'
+     });
+  })
 });
 
 // WAIT BEFORE DELETE - Do not give the users relationships

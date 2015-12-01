@@ -188,31 +188,21 @@ angular.module('myApp.services', [])
     });
   };
 
-  var updateProject = function(projectObj, oldProject){
+  var updateProject = function(projectObj, oldProject, langArray){
     return $http({
       method: 'POST',
       url: '/api/project/update',
-      data: {data: projectObj, oldProject: oldProject}
+      data: {data: projectObj, oldProject: oldProject, langArray: langArray}
     }).then(function(res){
       return res.status;
     });
   };
 
-  var relateProject = function(projectObj, langArray){
-    return $http({
-      method: 'POST',
-      url: 'api/project/relate',
-      data: {data: projectObj, langArray: langArray}
-    }).then(function(res){
-      return res.status;
-    });
-  };
 
   return {
     getInfos: getInfos,
     getUsers: getUsers,
-    updateProject: updateProject,
-    relateProject: relateProject
+    updateProject: updateProject
   };
 
 }])

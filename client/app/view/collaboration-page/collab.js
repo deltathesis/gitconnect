@@ -25,8 +25,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   
   var projectUsers = getProjectUsers;
   $scope.projectUsers = projectUsers.users;
-  console.log('project: ', projectInfos)
-  console.log('users: ', projectUsers);
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -132,13 +130,9 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     });
 
     modalInstance.result.then(function(obj){
-      //update the project in the database
-      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo);
-      Project.relateProject(obj.techs);
+      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs);
+     
       $scope.projectInfos = obj.updatedProjectInfo;
-      //TODO:
-        //make an ajax call to relate the project with all its languages
-
     })
   }
 
@@ -194,8 +188,12 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     $scope.projectInfo.publishDate = new Date();
 
     var obj = {}
-    obj.projectInfo = $scope.projectInfo;
-    obj.techs = $scope.yourTechList;
+    obj.updatedProjectInfo = $scope.projectInfo;
+    obj.techs = [];
+
+    for(var i = 0; i < $scope.yourTechList.length; i++){
+      obj.techs.push({name: $scope.yourTechList[i]});
+    }
 
     $uibModalInstance.close(obj);
 

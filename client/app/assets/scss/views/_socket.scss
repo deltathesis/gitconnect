@@ -3,27 +3,41 @@
   h3 {
     text-align: center;
   }
+  margin-bottom: 50px;
   .chat-users {
     background-color: white;
-    .form-group {
-      border: 1px solid #000;
+    padding: 0px;
+      border: 1px solid #DDD;
+    .search-container {
       text-align: center;
       padding: 5px 5px;
       background-color: #f2f2f2;
       margin-bottom:0px;
+      p {
+        &.error {
+          margin: 5px 0px 3px;
+        }
+      }
     }
     .allUsers-list {
-      height: 500px;
+      height:500px;
+      overflow: scroll;
+      overflow-x: hidden;
       .allUsers-list-elm:hover {
-        margin: 0px 0px;
+        // font-weight: bold;
+        background-color: #f2f2f2;
       }
       .allUsers-list-elm {
-       border-bottom: 1px solid #000;
-       padding-top: 5px;
-       padding-bottom: 5px;
-       margin: 0px 20px;
+       border-bottom: 1px solid #DDD;
+       padding: 10px 10px 5px 10px;
+        transition: all 0.5s ease;
+        background-color: white;
+        // font-weight: normal;
+
+       // margin: 0px 20px;
        .listOverview {
         .user-pic {
+          float:left;
           width: 50px;
           height: 50px;
           display: inline-block;
@@ -33,11 +47,19 @@
           border: 2px solid $mainColor;
         }
         .otherUser-info {
-            display: inline-block;
-            margin-left:10px;
+          float:left;
+          display: inline-block;
+          margin-left:10px;
           p {
-            margin: 5px 5px;
+            margin-top: 6px;
             color: black;
+            font-size: 14px;
+            line-height: 14px;
+            &.username-chat {
+              font-size: 16px;
+              margin-bottom: 8px;
+              line-height: 16px;
+            }
           }
         }
       }
@@ -45,14 +67,21 @@
   }
 }
 .chat-messages {
+  position: relative;
   padding-bottom:0px;
-  border: 1px solid #000;
+  border: 1px solid #DDD;
   background-color: #F2F2F2;
-  min-height: 600px;
-  max-height: 600px;
+  height: 556px;
   box-shadow: 10px 10px 100px #888888;
+  .return-chat {
+    position:absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 30px;
+    display: none;
+  }
   .bigMessage-container {
-    height: 400px;
+    height: 385px;
     overflow: scroll;
     overflow-x: hidden;
     .messages-container {
@@ -105,4 +134,38 @@
   .fadein-effect {
    @include animationEffect(0.5s, fadeEffect);
  }
+}
+
+@media (max-width: 768px) {
+.chat-page {
+  position: relative;
+  .chat-users {
+    .search-container {
+      .form-inline {
+        .form-group {
+          margin-bottom: 5px;
+        }
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .chat-messages {
+    position: absolute;
+    width: 90%;
+    transform: translateX(130%);
+    transition: all 0.3s ease;
+    -webkit-transform: translateX(130%);
+    -moz-transform: translateX(130%);
+    .return-chat {
+      display: inline-block;
+    }
+    &.display {
+      transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    }
+  }
+}
 }

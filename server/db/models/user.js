@@ -616,11 +616,22 @@ User.getProjects = function() {
     var cypher = 'match (n: Project {published:"true"}) return n';
     db.queryAsync(cypher)
       .then(function(nodes) {
-        resolve(nodes.sort(function(a, b) {
+        nodes = nodes.sort(function(a, b) {
           var aVotes = a.upVote - a.downVote;
           var bVotes = b.upVote - b.downVote;
           return bVotes - aVotes;
-        }));
+        });
+
+        var finished = 0;
+        nodes.forEach(function(node, i) {
+          cypher = 'match (n)-[:WORKED*]->(m) where id(m)=' + node.id + ' return n';
+          db.queryAsync(cypher)
+            .then(function(teams) {
+              node.teams = teams;
+              if (++finished === nodes.length) resolve(nodes);
+            });
+        });
+        
       });
   })
   .catch(function(err) {

@@ -199,11 +199,17 @@ angular.module('myApp.services', [])
     });
   };
 
-  var updateProject = function(projectObj, oldProject, langArray){
+  var updateProject = function(projectObj, oldProject, langArray, user1, user2){
     return $http({
       method: 'POST',
       url: '/api/project/update',
-      data: {data: projectObj, oldProject: oldProject, langArray: langArray}
+      data: {
+        data: projectObj, 
+        oldProject: oldProject, 
+        langArray: langArray,
+        user1: user1,
+        user2: user2
+      }
     }).then(function(res){
       return res.status;
     });

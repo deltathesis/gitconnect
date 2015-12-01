@@ -16,7 +16,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   });
 }])
 
-.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project) {
+.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location) {
 
   var projectInfos = getProjectInfo.project;
   $scope.projectInfos = projectInfos;
@@ -130,9 +130,9 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     });
 
     modalInstance.result.then(function(obj){
-      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs);
-     
+      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs, $scope.projectUsers[0].username, $scope.projectUsers[0].username);     
       $scope.projectInfos = obj.updatedProjectInfo;
+      $location.path('/project')
     })
   }
 

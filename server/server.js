@@ -108,6 +108,13 @@ app.get('/api/user', function(req, res) {
 	res.json({username: req.session.username, avatar_url: req.session.avatar_url});
 });
 
+//Returns the Node of all Users
+app.get('/api/user/getAllUsers', function(req, res) {
+  User.getAllUsers().then(function(users) {
+    res.json(users);
+  })
+});
+
 app.get('/api/user/:name', function(req, res) {
   User.get({username: req.params.name}).then(function(user){
     res.json({user: user})
@@ -117,7 +124,7 @@ app.get('/api/user/:name', function(req, res) {
 app.get('/api/user/relations/:name', function(req, res) {
   // Get all type user relationships
   User.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
-    console.log(user);
+    // console.log(user);
     res.json({user: user})
   });
 });
@@ -192,7 +199,7 @@ app.post('/api/user/availabilitytoggle', function(req, res) {
   var availability = {
     availability: req.body.data.availability
   }
-  console.log(availability);
+  // console.log(availability);
   //Get User Node
   var objUser = {
     userNode: User.get({username: req.body.data.username})
@@ -316,7 +323,7 @@ app.get('/api/project/:id', function(req, res) {
 
 app.get('/api/project/users/:id', function(req, res) {
   User.getProjectUsers(req.params.id).then(function(userslist){
-    console.log('users project:',userslist)
+    // console.log('users project:',userslist)
     res.json({users: userslist})
   });
 });
@@ -325,13 +332,16 @@ app.get('/api/project/users/:id', function(req, res) {
 app.get('/api/project/current/:username', function(req, res) {
   console.log(req.params.username);
   User.getCurrentProject(req.params.username).then(function(project){
-    console.log(project);
+    // console.log(project);
     res.json({project: project})
   });
 });
 
+
+
 httpServer.listen(process.env.PORT);
 console.log('Server now running on port: ' + process.env.PORT);
+
 
 /** Socket.io Messaging **/
 var socketRoute = require('./routes/socket.js');

@@ -8,7 +8,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
   });
 }])
 
-.controller('privateChatController', ['$scope', 'socket', '$cookies', 'Cookie', function($scope, socket, $cookies, Cookie) {
+.controller('privateChatController', ['$scope', 'socket', '$cookies', 'Cookie', 'User', function($scope, socket, $cookies, Cookie, User) {
 
   $scope.roomMessages; //key is roomName, value is another obj which has keys users and messages
   $scope.name;                            //users is an array [selfUser, targetuser]
@@ -17,10 +17,17 @@ angular.module('myApp.privateChat', ['ngRoute'])
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
+  $scope.allUsers;
+  User.getAllUsers().then(function(data) {
+    $scope.allUsers = data;
+  });
+
   /** Socket Listeners **/
 
+  //send username to sockets
   socket.emit('myusername', $scope.username);
 
+  //initialze private messages you have
   socket.on('init', function (data) {
     $scope.name = data.name;
     $scope.users = data.users;
@@ -36,10 +43,12 @@ angular.module('myApp.privateChat', ['ngRoute'])
     $scope.changeRoom(Object.keys(data.rooms)[0])
   });
 
+  //list of all users your talking to
   socket.on('bigInit', function (data) {
     $scope.users = data.users;
   })
 
+  //listener for message being sent
   socket.on('send:message', function (message) {
 
     //if room doesn't exist, create it
@@ -86,7 +95,23 @@ angular.module('myApp.privateChat', ['ngRoute'])
 
   //Creates A Private Message Room instance
   $scope.createNewRoom = function(targetUser) {
-    console.log($scope.roomMessages);
+    var userExists = false;
+    console.log('allUsers', $scope.allUsers);
+    for(var i = 0; i < $scope.allUsers.length; i++) {
+      if($scope.allUsers[i].username === targetUser) {
+        userExists = true;
+      }
+      if($scope.allUsers[i].name === targetUser) {
+        targetUser = $scope.allUsers[i].username;
+        userExists = true;
+      }
+    }
+
+    if(!userExists) {
+      console.log('User not Found');
+      return;
+    }
+
     if(!$scope.roomMessages) {
       $scope.roomMessages = {};
     }
@@ -110,6 +135,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
 
   //send Direct Message
   $scope.sendPrivateMessage = function(target) {
+    console.log('allmyUsers', $scope.testingUser);
     socket.emit('send:privateMessage', {
     message: $scope.message,
     room: target

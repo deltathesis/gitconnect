@@ -50,6 +50,17 @@ angular.module('myApp.services', [])
 		});
 	};
 
+  var getAllUsers = function() {
+    return $http({
+      cache: true,
+      method: 'GET',
+      url: '/api/user/getAllUsers'
+    }).then(function(res) {
+      console.log('resDATA', res.data);
+      return res.data;
+    })
+  }
+
 	var getProfileAndRelations = function(username) {
 		return $http({
 			cache: false,
@@ -75,7 +86,8 @@ angular.module('myApp.services', [])
 	return {
 		getMatches: getMatches,
 		getProfileAndRelations: getProfileAndRelations,
-		getProfile: getProfile
+		getProfile: getProfile,
+    getAllUsers: getAllUsers
 	};
 
 }])

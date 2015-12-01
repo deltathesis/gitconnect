@@ -608,6 +608,16 @@ User.updateRelationship = function(id, properties) {
   });
 };
 
+// Get all Users
+User.getAllUsers = function() {
+  return new Promise(function(resolve) {
+    var cypher = 'match (n: User) return n';
+    db.queryAsync(cypher)
+      .then(function(nodes) {
+        resolve(nodes);
+      })
+  })
+}
 
 // Gets a list of published projects
 // Returns an array of projects sorted by votes (highest to lowest)

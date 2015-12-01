@@ -242,7 +242,7 @@ angular.module('myApp.services', [])
 	// Returns an array of projects sorted by votes (highest to lowest)
 	var getProjects = function() {
 		return $http({
-			cache: true,
+			//cache: true,
 			method: 'GET',
 			url: '/api/project/list'
 		}).then(function(res) {

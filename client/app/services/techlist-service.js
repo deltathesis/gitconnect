@@ -2,13 +2,18 @@ angular.module('myApp.techlistService', [])
 
 .service('techList', function() {
   this.techList = [
-    'JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase',
-    'Ruby', 'Less', 'Scala', 'Python', 'C++', 'Swift', 'Objective-C',
-    'mongoDB', 'Neo4j', 'MySQL', 'SQLite', 'Shell', 'Redis', 'Meteor',
-    'jQuery', 'Java', 'Rails', 'React', 'PHP', 'PostgreSQL', 'Node.js',
-    'Express', 'Stylus', 'Symfony', 'Wordpress', 'Zend', 'socket.io',
-    'Backbone', 'Bootstrap', 'Foundation', 'CoffeeScript', 'Bower', 'Django',
-    'ActionScript', 'Ember', 'Go', 'Gulp', 'Grunt', 'Laravel', 'Docker'
+  'AWS', 'ActionScript', 'AngularJS', 'Backbone', 'Bison',
+  'Bootstrap', 'Bower', 'C', 'C#', 'C++', 'CSS',
+  'CoffeeScript', 'Dart', 'Django', 'Docker', 'Drupal',
+  'Ember', 'Express', 'Facebook-API', 'Firebase',
+  'Foundation', 'Github-API', 'Go', 'Google-API', 'Grunt',
+  'Gulp', 'HTML', 'Heroku', 'Ionic', 'Java', 'JavaScript',
+  'Laravel', 'Less', 'LinkedIn-API', 'Meteor', 'MySQL',
+  'Neo4j', 'Node.js', 'Objective-C', 'PHP', 'PostgreSQL',
+  'PowerShell', 'Puppet', 'Python', 'Rails', 'React',
+  'Redis', 'Ruby', 'Rust', 'SQLite', 'Sass', 'Scala',
+  'Shell', 'Stylus', 'Swift', 'Symfony', 'Wordpress',
+  'Zend', 'jQuery', 'mongoDB', 'socket.io'
   ];
 
   this.getTechList = function() {

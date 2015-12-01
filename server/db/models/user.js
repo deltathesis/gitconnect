@@ -653,10 +653,21 @@ User.matches = function(skills, username){
   return new Promise(function(resolve){
     var cypher = "MATCH (user {username:'"+username+"'}) MATCH (n:User)-[:KNOWS]-(x:Language) WHERE NOT n.username = 'ccnixon' AND NOT (user)-->(n) AND  x.name IN {skills} RETURN n, COUNT(x) AS nSkills ORDER BY nSkills DESC;";
     db.queryAsync(cypher, {skills: skills}).then(function(nodes){
-      resolve(nodes.map(function(element){
+      return nodes.map(function(element){
         return element.n;
-      }))
-    });
+      })
+    }).then(function(users){
+      var promises = [];
+      users.forEach(function(user){
+        promises.push(db.queryAsync("match (n {username: '"+user.username+"'})-[:KNOWS]-(l) return l").then(function(skills){
+          user.skills = skills
+          return user;
+        }))
+      })
+      return Promise.all(promises)
+    }).then(function(result){
+      resolve(result)
+    })
   }).catch(function(err){
     console.log(err);
   })
@@ -675,6 +686,9 @@ User.voteOnProject = function(id, up) {
     });
 };
 
+// User.matches(['JavaScript'], 'ccnixon').then(function(data){
+//   console.log(data)
+// })
 
 Promise.promisifyAll(User);
 

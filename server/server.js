@@ -137,6 +137,10 @@ app.post('/api/user/updateform', function(req, res) {
     relDirection: 'out',
     relLabel: 'Lives'
   };
+
+  // Delete all previous city relationship 
+  User.deleteAllRelationships(objLocation.baseNode.username, objLocation.relLabel);
+
   // Saving location / relationship into the DB
   console.log('city: ', objLocation);
   User.addRelationships(objLocation);
@@ -154,6 +158,9 @@ app.post('/api/user/updateform', function(req, res) {
     relDirection: 'out',
     relLabel: 'KNOWS'
   }
+  // Delete all previous city tech and languages 
+  User.deleteAllRelationships(objTech.baseNode.username, objTech.relLabel);
+
   // Saving user tech / relationship into the DB
   User.addRelationships(objTech);
 

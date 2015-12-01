@@ -639,15 +639,30 @@ User.matches = function(skills, username){
 
 
 // Adds votes to a project
-// id: int - the id of the project
+// projectId: int - the id of the project
+// userId: int - the id of the user
 // up: boolean - true -> upvote, false -> downvote
-User.voteOnProject = function(id, up) {
-  var vote = up ? 'upVote' : 'downVote';
-  var cypher = 'match (n) where id(n)=' + id + ' set n.' + vote + ' = n.' + vote + ' + 1;'
-  db.queryAsync(cypher)
-    .catch(function(err) {
-      console.log(err);
-    });
+User.voteOnProject = function(projectId, userId, up) {
+  userId = parseInt(userId);
+  return new Promise(function(resolve, reject) {
+    var vote = up ? 'UPVOTED' : 'DOWNVOTED';
+    var cypher = 'match (a:Project) where id(a)=' + projectId + ' match (a)<-[r:' + vote + ']-(b) where b.githubId=' + userId + ' return b';
+    db.queryAsync(cypher)
+      .then(function(nodes) {
+        if (nodes.length) {
+          reject('User already voted.');
+        } else {
+          var vote2 = up ? 'upVote' : 'downVote';
+          cypher = 'MATCH (a:User),(b:Project) WHERE a.githubId=' + userId + ' AND id(b)=' + projectId + ' CREATE (a)-[r:' + vote + ']->(b) return b';
+          db.queryAsync(cypher)
+            .then(function() {
+              cypher = 'match (b) where id(b)=' + projectId + ' set b.' + vote2 + '= b.' + vote2 + ' + 1';
+              db.queryAsync(cypher)
+                .then(resolve);
+            });
+        }
+      });
+  })
 };
 
 Promise.promisifyAll(User);

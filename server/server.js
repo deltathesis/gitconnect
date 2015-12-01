@@ -316,8 +316,12 @@ app.get('/api/project/list', function(req, res) {
 });
 
 app.post('/api/project/vote', function(req, res) {
-  User.voteOnProject(req.body.id, req.body.up);
-  res.end();
+  User.voteOnProject(req.body.projectId, req.body.userId, req.body.up)
+    .then(function(resolved) {
+      res.json({success: true});
+    }, function(rejected) {
+      res.json({success: false});
+    });
 });
 
 app.get('/api/project/:id', function(req, res) {

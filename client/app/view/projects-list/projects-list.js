@@ -13,7 +13,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
   });
 }])
 
-.controller('projectsPage', ['$scope', 'projects', 'ProjectList', function($scope, projects, ProjectList) {
+.controller('projectsPage', ['$scope', 'projects', 'ProjectList', '$cookies', 'Cookie', function($scope, projects, ProjectList, $cookies, Cookie) {
 
   // var projects = [
   //   {
@@ -55,14 +55,24 @@ angular.module('myApp.projectslist', ['ngRoute'])
 
   $scope.projects = projects;
 
+  var id = Cookie.parseCookie($cookies.get('gitConnectDeltaKS')).id;
+
   $scope.increment = function(project, index){
-    project.upVote += 1;
-    ProjectList.vote($scope.projects[index].id, true);
+    ProjectList.vote($scope.projects[index].id, id, true)
+      .then(function(data) {
+        if (data.success) {
+          project.upVote += 1;
+        }
+      });
   };
 
   $scope.decrement = function(project, index){
-    project.downVote += 1;
-    ProjectList.vote($scope.projects[index].id, false);
+    ProjectList.vote($scope.projects[index].id, id, false)
+      .then(function(data) {
+        if (data.success) {
+          project.downVote += 1;
+        }
+      });
   };
 
 }])

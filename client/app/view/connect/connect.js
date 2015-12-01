@@ -193,6 +193,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         username: $scope.user.user.username
       }
     }).then(function successCallback(response) {
+      console.log(response.data.matches);
       $scope.users = response.data.matches;
     }, function errorCallback(response) {
       console.log('error: ', response);

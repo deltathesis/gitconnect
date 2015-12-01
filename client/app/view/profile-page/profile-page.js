@@ -42,7 +42,10 @@ angular.module('myApp.profilepage', ['ngRoute'])
       } else {
         $scope.user.languages = [];
         $scope.user.relationships.KNOWS.forEach(function(tech) {
-          $scope.user.languages.push(tech.name);
+          $scope.user.languages.push({
+            name:tech.name,
+            nameEncoded: encodeURIComponent(tech.name)
+          });
         })
       }
 

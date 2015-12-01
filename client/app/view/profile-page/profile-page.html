@@ -63,8 +63,8 @@
       <div class="language-list list">
         <ul>
           <li class="col-xs-6 col-sm-3" ng-repeat="language in user.languages">
-            <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{language}}.jpg')"></span>
-            <span class="tech-name">{{language}}</span>
+            <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{language.nameEncoded}}.jpg')"></span>
+            <span class="tech-name">{{language.name}}</span>
           </li>
         </ul>
       </div>

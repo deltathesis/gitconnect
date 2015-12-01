@@ -199,10 +199,15 @@ app.post('/api/user/availabilitytoggle', function(req, res) {
   var availability = {
     availability: req.body.data.availability
   }
-  // console.log(availability);
+  //console.log(availability);
   //Get User Node
   var objUser = {
     userNode: User.get({username: req.body.data.username})
+  }
+
+  // Delete all user connection requests and demands
+  if (availability.availability === 'false') {
+    User.deleteAllRelationships(req.body.data.username, 'CONNECTION_REQUEST');
   }
 
   // Update user availability into the DB

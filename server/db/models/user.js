@@ -495,7 +495,7 @@ User.createProject = function(usersData){
   })
 };
 
-// Delete user all type of relationships
+// Delete user all selected type of relationships
 User.deleteAllRelationships = function(username, relationship){
   return new Promise(function(resolve){
     var cypher = 'MATCH ({username: "'+ username +'"})-[r:'+ relationship +']-(n) DELETE r'

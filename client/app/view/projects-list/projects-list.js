@@ -51,6 +51,8 @@ angular.module('myApp.projectslist', ['ngRoute'])
   //   }
   // ];
 
+  $scope.weekly = true;
+
   $scope.projects = projects;
 
   $scope.increment = function(project, index){
@@ -63,4 +65,13 @@ angular.module('myApp.projectslist', ['ngRoute'])
     ProjectList.vote($scope.projects[index].id, false);
   };
 
-}]);
+}])
+
+.filter('weeklyFilter', function() {
+  return function(input, weekly) {
+    return input.filter(function(node) {
+      if (!weekly) return true;
+      return new Date().getTime() - new Date(node.publishDate).getTime() <= 604800000;
+    });
+  };
+});

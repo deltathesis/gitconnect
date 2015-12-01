@@ -494,6 +494,21 @@ User.createProject = function(usersData){
   })
 };
 
+// Delete user all type of relationships
+User.deleteAllRelationships = function(username, relationship){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH ({username: "'+ username +'"})-[r:'+ relationship +']-(n) DELETE r'
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
 // Delete Requests made to user
 User.deleteRequestFromUser = function(username, otherUsername){
   return new Promise(function(resolve){

@@ -26,11 +26,6 @@ var options = {
   json: true
 }
 
-var newUser = {
-  languages: {},
-  starredRepos: [],
-  organizations: []
-};
 
 var User = exports.User = function User(_node){  //do not change the node
   //the node wil be an array returned from our database. the array will contain an obj to access it use node[0].nameOfProperty
@@ -39,6 +34,7 @@ var User = exports.User = function User(_node){  //do not change the node
 
 //do not use createUser function unless you are chris
 var createUser = function(username){
+  var newUser = {};
   return new Promise(function(resolve, reject){
     options.url += username;
     rp(options)
@@ -64,37 +60,15 @@ var createUser = function(username){
       .forEach(function(language){
         newUser.languages.push({name: language});
       })
-      options.url = newUser.apiUrl + '/starred';
     })
     .then(function(){
-      return rp(options);
-    })
-    .then(function(starredRepos){
-      starredRepos.forEach(function(element){
-        var repo = {
-          githubId: element['id'],
-          name: element['name'],
-          html_url: element['html_url'],
-        }
-        newUser.starredRepos.push(repo);
-      });
-      options.url = newUser.apiUrl + '/orgs';
-    })
-    .then(function(){
-      return rp(options);
-    })
-    .then(function(orgs){
-      orgs.forEach(function(element){
-        var org = {
-          id: element['id'],
-          name: element['name']
-        }
-        newUser.organizations.push(org);
-      });
-    })
-    .then(function(){
+      options.url = 'https://api.github.com/users/';
       resolve(newUser);
+    }).catch(function(err){
+      console.log(err.options)
     })
+  }).catch(function(err){
+    console.log(err)
   })  
 };
 
@@ -135,7 +109,6 @@ User.data = function(data){
     ratingAverage: 'null'
   };
   storage.languages = data.languages;
-  storage.repos = data.starredRepos;
   return storage;
 };
 
@@ -220,15 +193,6 @@ User.saveNewUser = function(username){
       return data;
     })
     .then(function(data){
-      User.addRelationships({
-        baseNode: {username: githubData.userData.username},
-        relNodes: githubData.repos,
-        relDirection: 'out',
-        relNodeLabels: ['Repo'],
-        relLabel: 'WATCHES'
-      })
-    })
-    .then(function(data){
       resolve(node)
     })
     .catch(function(err){
@@ -243,7 +207,7 @@ User.findOrCreateUser = function(username){
       if(user.length){
         resolve(user)
       } else {
-        User.saveNewUser(username);
+        resolve(User.saveNewUser(username))
       }
     })
   })
@@ -266,7 +230,7 @@ User.findOrCreateNode = function(props, labels){
         }
       })
     }).catch(function(err){
-        console.log(err)
+        console.log(err.body)
   })
 };
 
@@ -686,9 +650,54 @@ User.voteOnProject = function(id, up) {
     });
 };
 
-// User.matches(['JavaScript'], 'ccnixon').then(function(data){
-//   console.log(data)
-// })
-
 Promise.promisifyAll(User);
+Promise.promisify(createUser);
+
+var users = [
+'proppy',
+'kazuho',
+'dustin',
+'brho',
+'rakyll',
+'jbarbier',
+'mape',
+'jashkenas',
+'mde',
+'DmitryBaranovskiy',
+'benoitc',
+'rauchg',
+'mikeal',
+'paulsmith',
+'ry',
+'FND',
+'miksago',
+'tj',
+'mscdex',
+'tmpvar',
+'janl',
+'creationix',
+'eaburns',
+'tianon',
+'moraes',
+'mrdoob',
+'diox',
+'jedisct1',
+'kapouer',
+'dennda'
+];
+
+Promise.each(users, function(user){
+  return new Promise(function(resolve){
+    return User.findOrCreateUser(user).then(function(data){
+      console.log(data)
+      resolve(data);
+    })
+  })
+})
+
+
+
+
+
+
 

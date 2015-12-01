@@ -38,7 +38,13 @@ angular.module('myApp.profilepage', ['ngRoute'])
       // Updated User Tech list display
       var techList = userOwnTech.getTech();
       if (techList.length !== 0) {
-        $scope.user.languages = techList;
+        $scope.user.languages = [];
+        techList.forEach(function(tech) {
+          $scope.user.languages.push({
+            name:tech,
+            nameEncoded: encodeURIComponent(tech)
+          });
+        });
       } else {
         $scope.user.languages = [];
         $scope.user.relationships.KNOWS.forEach(function(tech) {
@@ -46,7 +52,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
             name:tech.name,
             nameEncoded: encodeURIComponent(tech.name)
           });
-        })
+        });
       }
 
       // Updated User Location display

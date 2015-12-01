@@ -6,7 +6,7 @@
       <button class="btn" ng-class="{'active':selected === 'overall'}" ng-click="selected = 'overall'">Overall</button>
     </div>
 
-    <div class="row project-post fadein-effect" ng-repeat="project in projects | orderBy:'-upVote'">
+    <div class="row project-post fadein-effect" ng-repeat="project in projects">
       <div class="col-xs-12 post-top-info">
         <div class="post-thumbnail thumbnail-pic">
           <a href="" alt="" style="background-image:url({{project.thumbnail}})"></a>
@@ -39,7 +39,7 @@
         </p>
         <ul class="developers-list">
           <li class="developer" ng-repeat="developer in project.teams">
-            <a href="" class="developer-pic" style="background-image:url({{developer.picture}})"></a>
+            <a href="" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
             <p class="developer-name">{{developer.name}}</p>
           </li>
         </ul>

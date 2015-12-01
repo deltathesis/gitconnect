@@ -122,6 +122,12 @@ app.get('/api/user/relations/:name', function(req, res) {
   });
 });
 
+app.post('/api/user/:name/matches', function(req, res){
+  User.matches(req.body.filters, req.body.username).then(function(users){
+    res.json({matches: users})
+  })
+})
+
 app.get('/api/user/:name/matches', function(req, res) {
   User.getMatches(req.params.name).then(function(users){
     res.json({matches: users});

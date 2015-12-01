@@ -105,7 +105,7 @@ User.getMatches = function(username){
                + 'WHERE NOT (user)-->(x) '
                + 'RETURN DISTINCT x, COUNT(x) '
                + 'ORDER BY COUNT(x) DESC '
-               + 'LIMIT 10';
+               + 'LIMIT 20';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){
         return element.x
@@ -243,7 +243,7 @@ User.findOrCreateUser = function(username){
       if(user.length){
         resolve(user)
       } else {
-        User.saveNewUser(username.username);
+        User.saveNewUser(username);
       }
     })
   })
@@ -608,6 +608,7 @@ User.updateRelationship = function(id, properties) {
   });
 };
 
+
 // Gets a list of published projects
 // Returns an array of projects sorted by votes (highest to lowest)
 User.getProjects = function() {
@@ -627,6 +628,20 @@ User.getProjects = function() {
   });
 };
 
+User.matches = function(skills, username){
+  return new Promise(function(resolve){
+    var cypher = "MATCH (user {username:'"+username+"'}) MATCH (n:User)-[:KNOWS]-(x:Language) WHERE NOT n.username = 'ccnixon' AND NOT (user)-->(n) AND  x.name IN {skills} RETURN n, COUNT(x) AS nSkills ORDER BY nSkills DESC;";
+    db.queryAsync(cypher, {skills: skills}).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element.n;
+      }))
+    });
+  }).catch(function(err){
+    console.log(err);
+  })
+}
+
+
 // Adds votes to a project
 // id: int - the id of the project
 // up: boolean - true -> upvote, false -> downvote
@@ -639,4 +654,6 @@ User.voteOnProject = function(id, up) {
     });
 };
 
+
 Promise.promisifyAll(User);
+

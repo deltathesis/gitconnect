@@ -1,4 +1,4 @@
-angular.module('myApp.connect', ['ngRoute'])
+angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/connect', {
@@ -35,7 +35,7 @@ angular.module('myApp.connect', ['ngRoute'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList) {
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
@@ -43,6 +43,10 @@ angular.module('myApp.connect', ['ngRoute'])
 
   $scope.users = matches;
   console.log($scope.users);
+
+  $scope.skills = ["JavaScript", "CSS", "Python", "Rails", "Django", "Firebase"]
+
+  $scope.selections = [];
 
   // Set default user address to the form
   if ($scope.user.relationships.Lives) {
@@ -53,6 +57,12 @@ angular.module('myApp.connect', ['ngRoute'])
   $scope.statusCheck = function() {
     $scope.availability = JSON.parse($scope.user.user.availability);
   }
+
+  $scope.techList = [];
+  var techs = techList.getTechList();
+  techs.forEach(function(element) {
+    $scope.techList.push(element);
+  })
 
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       $scope.swiper = new Swiper('.swiper-container', {
@@ -76,7 +86,7 @@ angular.module('myApp.connect', ['ngRoute'])
         onTransitionStart: function() {
           $('.developer-connect-details').fadeOut(200);
         },
-        onTransitionEnd: function() {
+        onTransitionEnd: function() { 
           $('.developer-connect-details').fadeIn(300);
           var selectedUser = $('.swiper-slide-active').data('dev-id');
           var users = $scope.users;
@@ -87,10 +97,10 @@ angular.module('myApp.connect', ['ngRoute'])
           }
           $scope.$apply();
         },
-      }); 
+      });
   });
 
-  $scope.connectionRequest = function(index){
+  $scope.connectionRequest = function(){
     $('.swiper-slide-active').addClass('requested');
     return $http({
       method: 'POST',
@@ -107,6 +117,17 @@ angular.module('myApp.connect', ['ngRoute'])
       console.log('error: ', reponse);
     });
   };
+
+  $scope.addFilter = function(tech, index) {
+    $scope.selections.push(tech); 
+    $scope.techList.splice(index, 1);
+    $scope.searchText = '';
+  }
+
+  $scope.removeFilter = function(tech, index) {
+    $scope.techList.push(tech); 
+    $scope.selections.splice(index, 1);  
+  }
 
   $scope.availabilityOn = function() {
     var cookie = $cookies.get('gitConnectDeltaKS');
@@ -143,6 +164,26 @@ angular.module('myApp.connect', ['ngRoute'])
     // google.maps.event.addDomListener(window, 'load', addressInitialize);
     addressInitialize();
   };
+
+  $scope.applyFilters = function(){
+    $('#filters').modal('show');
+  }
+
+  $scope.submitFilters = function(){
+    $('#filters').modal('hide');
+    return $http({
+      method: 'POST',
+      url: '/api/user/:name/matches',
+      data: {
+        filters: $scope.selections,
+        username: $scope.user.user.username
+      }
+    }).then(function successCallback(response) {
+      $scope.users = response.data.matches;
+    }, function errorCallback(response) {
+      console.log('error: ', response);
+    });
+  }
 
   function addressInitialize() {
     var input = document.getElementById('city-input');

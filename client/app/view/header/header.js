@@ -34,6 +34,11 @@ angular.module('myApp.header', [])
     }
   };
 
+  // Catch call and return if user already in a project
+  $rootScope.$on('hasProjectCheck', function() { 
+    $rootScope.$broadcast('hasProjectCheckReturn', $scope.hasProject);
+  });
+
   $rootScope.$on('projectStarted', function(event, project) { 
     $scope.hasProject = true;
     $scope.projectLink = project.projectId;

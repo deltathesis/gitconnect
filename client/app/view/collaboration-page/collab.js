@@ -20,6 +20,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   var projectInfos = getProjectInfo.project;
   $scope.projectInfos = projectInfos;
+  //store old project info for database lookup
   var oldProjectInfo = projectInfos
   
   var projectUsers = getProjectUsers;
@@ -48,21 +49,21 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   $scope.displayName = getOwnName();
 
-  $scope.projectInfo = {
-    name: 'GitConnect',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    tech: ['HTML5', 'JavaScript', 'Firebase', 'MySql'],
-    github_url: 'https://github.com/deltathesis/gitconnect'
-    }
+  // $scope.projectInfo = {
+  //   name: 'GitConnect',
+  //   description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  //   tech: ['HTML5', 'JavaScript', 'Firebase', 'MySql'],
+  //   github_url: 'https://github.com/deltathesis/gitconnect'
+  //   }
 
-  $scope.resources = {
-    project_repo: 'https://github.com/deltathesis/gitconnect',
-    scrum_board: 'https://trello.com/b/QNvGVucJ/gameplan',
-    website: "",
-    storage: "",
-    database: "",
-    code_library: ""
-  }
+  // $scope.resources = {
+  //   project_repo: 'https://github.com/deltathesis/gitconnect',
+  //   scrum_board: 'https://trello.com/b/QNvGVucJ/gameplan',
+  //   website: "",
+  //   storage: "",
+  //   database: "",
+  //   code_library: ""
+  // }
 
 
   /** Socket Listeners **/
@@ -130,9 +131,33 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       size: size
     });
 
-    modalInstance.result.then(function(projectInformation){
-      console.log('project info: ', projectInformation);
-      Project.updateProject(projectInformation, oldProjectInfo);
+    modalInstance.result.then(function(obj){
+      //update the project in the database
+      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo);
+      Project.relateProject(obj.techs);
+      $scope.projectInfos = obj.updatedProjectInfo;
+      //TODO:
+        //make an ajax call to relate the project with all its languages
+
+    })
+  }
+
+  /*******************MODAL to edit resources******************************/
+  $scope.editResources = function(size){
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'view/collaboration-page/resources.html',
+      controller: 'editResources',
+      size: size,
+      resolve: {
+        project: function(){
+          return $scope.projectInfos
+        }
+      }
+    });
+    modalInstance.result.then(function(updatedResources){
+      Project.updateProject(updatedResources, oldProjectInfo);
+      $scope.projectInfos = updatedResources;
     })
   }
 
@@ -142,12 +167,13 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   
   $scope.projectInfo = project
   $scope.techList = techList.getTechList();
-  $scope.yourTechList = $scope.projectInfo.codeLibrary.split(',');
+  $scope.yourTechList = [];
   $scope.addTech = function(tech, index){
     if ($scope.yourTechList.indexOf(tech) !== -1) {
       $scope.techList.splice(index, 1);
-    } else if ($scope.yourTechList.indexOf('null') !== -1){
+
       //remove the default null language if it exists
+    } else if ($scope.yourTechList.indexOf('null') !== -1){
       $scope.yourTechList.splice($scope.yourTechList.indexOf('null'), 1) 
     } else {
       $scope.yourTechList.push(tech);
@@ -162,13 +188,34 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
 
   $scope.ok = function(){
-    $scope.projectInfo.codeLibrary = $scope.yourTechList.toString();
+    // pass change published property to true, add published date and pass in list of languages used to previous controller to relate project node to those technologies
+
     $scope.projectInfo.published = 'true';
     $scope.projectInfo.publishDate = new Date();
-    $uibModalInstance.close($scope.projectInfo);
+
+    var obj = {}
+    obj.projectInfo = $scope.projectInfo;
+    obj.techs = $scope.yourTechList;
+
+    $uibModalInstance.close(obj);
+
   }
+
   $scope.cancel = function(){
     $uibModalInstance.dismiss('cancel');
   }
-}]);
+}])
+
+.controller('editResources', ['$scope', '$uibModal', '$uibModalInstance', 'project', function($scope, $uibModal, $uibModalInstance, project){
+
+  $scope.projectInfo = project;
+
+  $scope.ok = function(){
+    $uibModalInstance.close($scope.projectInfo);
+  }
+
+  $scope.cancel = function(){
+    $uibModalInstance.dismiss('cancel');
+  }
+}])
 

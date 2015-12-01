@@ -198,10 +198,21 @@ angular.module('myApp.services', [])
     });
   };
 
+  var relateProject = function(projectObj, langArray){
+    return $http({
+      method: 'POST',
+      url: 'api/project/relate',
+      data: {data: projectObj, langArray: langArray}
+    }).then(function(res){
+      return res.status;
+    });
+  };
+
   return {
     getInfos: getInfos,
     getUsers: getUsers,
-    updateProject: updateProject
+    updateProject: updateProject,
+    relateProject: relateProject
   };
 
 }])

@@ -10,7 +10,7 @@
             <textarea type="text" rows="5" class="form-control" ng-model="projectInfo.longDesc"></textarea>
             <label>Short decription of the project</label>
             <input ng-model="projectInfo.shortDesc" type="text" class="form-control">
-            <label>project picture</label>
+            <label>Project picture</label>
             <input ng-model="projectInfo.picture" type="text" class="form-control">
             <label>Project repo link</label>
             <input type="url" class="form-control" ng-model="projectInfo.projectRepo" name="repo">
@@ -22,6 +22,13 @@
             <input type="url" class="form-control" ng-model="projectInfo.projectWebsite" name="input">
             <div role="alert">
               <span class="error" ng-show="myForm.input.$error.url">
+                Not valid url!</span>
+            </div>
+            <label>Project Snippet</label>
+            <span class="description">Tip: you can include a snippet of code on jsfiddle or plnkr</span>
+            <input type="url" class="form-control" ng-model="projectInfo.projectSnippet" name="snippet">
+            <div role="alert">
+              <span class="error" ng-show="myForm.snippet.$error.url">
                 Not valid url!</span>
             </div>
             <!-- Recycled Html from projile-updat.html -->

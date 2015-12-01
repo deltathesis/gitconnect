@@ -253,14 +253,17 @@ angular.module('myApp.services', [])
 	// Updates a project's votes via http
 	// id: int - the id of the project
 	// up: boolean - true -> upvote, false -> downvote
-	var vote = function(id, up) {
-		$http({
+	var vote = function(projectId, userId, up) {
+		return $http({
 			method: 'POST',
 			url: 'api/project/vote',
 			data: {
-				id: id, 
+				projectId: projectId,
+				userId: userId,
 				up: up
 			}
+		}).then(function(res) {
+			return res.data;
 		});
 	};
 

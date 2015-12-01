@@ -8,7 +8,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
   });
 }])
 
-.controller('privateChatController', ['$scope', 'socket', '$cookies', 'Cookie', function($scope, socket, $cookies, Cookie) {
+.controller('privateChatController', ['$scope', 'socket', '$cookies', 'Cookie', 'User', function($scope, socket, $cookies, Cookie, User) {
 
   $scope.roomMessages; //key is roomName, value is another obj which has keys users and messages
   $scope.name;                            //users is an array [selfUser, targetuser]
@@ -17,10 +17,24 @@ angular.module('myApp.privateChat', ['ngRoute'])
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
+  $scope.allUsers;
+  $scope.currentUser;
+  $scope.showModal = false;
+  User.getAllUsers().then(function(data) {
+    $scope.allUsers = data;
+    for(var i = 0; i < $scope.allUsers.length; i++) {
+      if($scope.allUsers[i].username === $scope.username) {
+        $scope.currentUser = $scope.allUsers[i];
+      }
+    }
+  });
+
   /** Socket Listeners **/
 
+  //send username to sockets
   socket.emit('myusername', $scope.username);
 
+  //initialze private messages you have
   socket.on('init', function (data) {
     $scope.name = data.name;
     $scope.users = data.users;
@@ -36,10 +50,12 @@ angular.module('myApp.privateChat', ['ngRoute'])
     $scope.changeRoom(Object.keys(data.rooms)[0])
   });
 
+  //list of all users your talking to
   socket.on('bigInit', function (data) {
     $scope.users = data.users;
   })
 
+  //listener for message being sent
   socket.on('send:message', function (message) {
 
     //if room doesn't exist, create it
@@ -86,7 +102,31 @@ angular.module('myApp.privateChat', ['ngRoute'])
 
   //Creates A Private Message Room instance
   $scope.createNewRoom = function(targetUser) {
-    console.log($scope.roomMessages);
+    var userExists = false;
+    var otherAvatar;
+    var otherBio;
+    for(var i = 0; i < $scope.allUsers.length; i++) {
+      if($scope.allUsers[i].username === targetUser) {
+        otherAvatar = $scope.allUsers[i].avatar_url;
+        otherBio = $scope.allUsers[i].bio;
+        userExists = true;
+      }
+      if($scope.allUsers[i].name === targetUser) {
+        targetUser = $scope.allUsers[i].username;
+        userExists = true;
+        otherAvatar = $scope.allUsers[i].avatar_url;
+        otherBio = $scope.allUsers[i].bio;
+      }
+    }
+
+    if(!userExists) {
+      console.log('User not Found');
+      $scope.showModal = true;
+      return;
+    } else {
+      $scope.showModal = false;
+    }
+
     if(!$scope.roomMessages) {
       $scope.roomMessages = {};
     }
@@ -100,6 +140,8 @@ angular.module('myApp.privateChat', ['ngRoute'])
     //init new Room
     $scope.roomMessages[newRoom] = {};
     $scope.roomMessages[newRoom].users = twoUsers;
+    $scope.roomMessages[newRoom].avatar = otherAvatar;
+    $scope.roomMessages[newRoom].bio = otherBio;
     $scope.roomMessages[newRoom].messages = [];
 
     $scope.currentTarget = targetUser;

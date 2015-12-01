@@ -181,6 +181,14 @@ angular.module('myApp.privateChat', ['ngRoute'])
     }
   });
 
+  $('body').on('click', '.allUsers-list-elm', function(e) {
+    $('.chat-messages').addClass('display');
+  });
+
+  $('body').on('click', '.return-chat', function(e) {
+    $('.chat-messages').removeClass('display');
+  })
+
 
 var users = [
 {

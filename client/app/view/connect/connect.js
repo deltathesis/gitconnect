@@ -35,7 +35,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope) {
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
@@ -129,20 +129,34 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     $scope.selections.splice(index, 1);  
   }
 
-  $scope.availabilityOn = function() {
+  $scope.availabilityOn = function(val) {
     var cookie = $cookies.get('gitConnectDeltaKS');
     var cookieObj = Cookie.parseCookie(cookie);
-    var data = {
+    $scope.dataAvailability = {
       username: cookieObj.username,
       availability: "true"
     }
-    availabilityToggle.changeAvailability(data);
-    // Update cooking value
-    cookieObj.availability = "true";
-    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
-    //refresh to apply cookie to the view
-    $window.location.reload();
-  };
+
+    // check if user is already into project
+    $rootScope.$broadcast('hasProjectCheck');
+  }
+  
+  // Get project status result and set availability 
+  $rootScope.$on('hasProjectCheckReturn', function(event, hasProject) {
+
+    if (hasProject) {
+      $('#availabilityInfo').modal('show');
+    } else {
+      var cookie = $cookies.get('gitConnectDeltaKS');
+      var cookieObj = Cookie.parseCookie(cookie);
+      availabilityToggle.changeAvailability($scope.dataAvailability);
+      // Update cooking value
+      cookieObj.availability = "true";
+      $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+      //refresh to apply cookie to the view
+      $window.location.reload();
+    }
+  });
 
   $scope.availabilityOff = function() {
     var cookie = $cookies.get('gitConnectDeltaKS');

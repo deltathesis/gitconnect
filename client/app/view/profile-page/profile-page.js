@@ -14,8 +14,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
 }])
 
 .controller('profilePage', [
-  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http',
-  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http) {
+  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope',
+  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope) {
 
   // var user = {
   //   ratings: Math.round(4.2),
@@ -104,17 +104,31 @@ angular.module('myApp.profilepage', ['ngRoute'])
   $scope.availabilityOn = function(val) {
     var cookie = $cookies.get('gitConnectDeltaKS');
     var cookieObj = Cookie.parseCookie(cookie);
-    var data = {
+    $scope.dataAvailability = {
       username: cookieObj.username,
       availability: "true"
     }
-    availabilityToggle.changeAvailability(data);
-    // Update cooking value
-    cookieObj.availability = "true";
-    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
-    //refresh to apply cookie to the view
-    $window.location.reload();
+
+    // check if user is already into project
+    $rootScope.$broadcast('hasProjectCheck');
   }
+
+  // Get project status result and set availability 
+  $rootScope.$on('hasProjectCheckReturn', function(event, hasProject) {
+
+    if (hasProject) {
+      $('#availabilityInfo').modal('show');
+    } else {
+      var cookie = $cookies.get('gitConnectDeltaKS');
+      var cookieObj = Cookie.parseCookie(cookie);
+      availabilityToggle.changeAvailability($scope.dataAvailability);
+      // Update cooking value
+      cookieObj.availability = "true";
+      $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+      //refresh to apply cookie to the view
+      $window.location.reload();
+    }
+  });
 
   $scope.availabilityOff = function() {
     var cookie = $cookies.get('gitConnectDeltaKS');

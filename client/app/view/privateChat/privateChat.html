@@ -6,18 +6,19 @@
       <form class="form-inline">
         <h4>{{name}}</h4>
         <input type="text" class="form-control" id="User" placeholder="User" ng-model="newUser">
-        <button type="submit" class="btn btn-primary" ng-click="createNewRoom(newUser)">Message</button>
+        <button type="submit" ng-show="!showModal" class="btn btn-primary" ng-click="createNewRoom(newUser)">Message</button>
+        <button type="submit" ng-show="showModal" class="btn btn-danger" ng-click="showModal=false; createNewRoom(newUser)">User Not Found. Try Again</button>
       </form>
     </div>
 
     <ul class="allUsers-list">
       <li ng-repeat="(key, value) in roomMessages"  class="allUsers-list-elm" ng-click="changeRoom(key)">
         <div class="listOverview">
-          <img class="user-pic" src="assets/pictures/users/yumo.jpg">
+          <img class="user-pic" src="{{roomMessages[key].avatar}}">
 
           <div class="otherUser-info">
             <p>{{roomMessages[key].users[1]}}</p>
-            <p>Display most recent message</p>
+            <p>{{roomMessages[key].bio}}</p>
           </div>
         </div>
       </li>

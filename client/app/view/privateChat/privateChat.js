@@ -18,8 +18,15 @@ angular.module('myApp.privateChat', ['ngRoute'])
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
   $scope.allUsers;
+  $scope.currentUser;
+  $scope.showModal = false;
   User.getAllUsers().then(function(data) {
     $scope.allUsers = data;
+    for(var i = 0; i < $scope.allUsers.length; i++) {
+      if($scope.allUsers[i].username === $scope.username) {
+        $scope.currentUser = $scope.allUsers[i];
+      }
+    }
   });
 
   /** Socket Listeners **/
@@ -96,20 +103,28 @@ angular.module('myApp.privateChat', ['ngRoute'])
   //Creates A Private Message Room instance
   $scope.createNewRoom = function(targetUser) {
     var userExists = false;
-    console.log('allUsers', $scope.allUsers);
+    var otherAvatar;
+    var otherBio;
     for(var i = 0; i < $scope.allUsers.length; i++) {
       if($scope.allUsers[i].username === targetUser) {
+        otherAvatar = $scope.allUsers[i].avatar_url;
+        otherBio = $scope.allUsers[i].bio;
         userExists = true;
       }
       if($scope.allUsers[i].name === targetUser) {
         targetUser = $scope.allUsers[i].username;
         userExists = true;
+        otherAvatar = $scope.allUsers[i].avatar_url;
+        otherBio = $scope.allUsers[i].bio;
       }
     }
 
     if(!userExists) {
       console.log('User not Found');
+      $scope.showModal = true;
       return;
+    } else {
+      $scope.showModal = false;
     }
 
     if(!$scope.roomMessages) {
@@ -125,6 +140,8 @@ angular.module('myApp.privateChat', ['ngRoute'])
     //init new Room
     $scope.roomMessages[newRoom] = {};
     $scope.roomMessages[newRoom].users = twoUsers;
+    $scope.roomMessages[newRoom].avatar = otherAvatar;
+    $scope.roomMessages[newRoom].bio = otherBio;
     $scope.roomMessages[newRoom].messages = [];
 
     $scope.currentTarget = targetUser;
@@ -135,7 +152,6 @@ angular.module('myApp.privateChat', ['ngRoute'])
 
   //send Direct Message
   $scope.sendPrivateMessage = function(target) {
-    console.log('allmyUsers', $scope.testingUser);
     socket.emit('send:privateMessage', {
     message: $scope.message,
     room: target

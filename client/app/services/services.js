@@ -56,7 +56,6 @@ angular.module('myApp.services', [])
       method: 'GET',
       url: '/api/user/getAllUsers'
     }).then(function(res) {
-      console.log('resDATA', res.data);
       return res.data;
     })
   }

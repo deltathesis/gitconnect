@@ -158,7 +158,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     modalInstance.result.then(function(updatedResources){
       Project.updateProject(updatedResources, oldProjectInfo);
       $scope.projectInfos = updatedResources;
-      console.log('$scope.projectInfos: ', $scope.projectInfos);
     })
   }
 

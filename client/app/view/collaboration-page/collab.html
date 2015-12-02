@@ -2,7 +2,12 @@
 
   <div class="row team-details">
     <h1>Team</h1>
-    <button ng-click=publish('lg') class='btn btn-danger'>Publish</button>
+    <button ng-click="publish('lg')" class='btn btn-success'>Publish</button>
+    <div class="delete-profile-link">
+      <button type="button" class="btn btn-danger" ng-click="confirmDelete()">
+        <i class="fa fa-ban"></i> Delete your Project
+      </button>
+    </div>
     <ul class="team-members-list">
       <li class="team-member" ng-repeat="user in projectUsers">
         <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>

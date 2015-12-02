@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var http = require('http');
 var sockets = require('socket.io');
 var User = require('./db/models/user.js').User;
+var Project = require('./db/models/project.js').Project;
 
 var app = express();
 
@@ -300,25 +301,19 @@ app.post('/api/project/update', function(req, res){
        })
     }
     if(req.body.user1 || req.body.user2){
-      var objUser1 = {
-        userNode: User.get({username: req.body.user1})
-      }
-      // Update user availability into the DB
-      objUser1.userNode.then(function(users) {
-        User.update(users[0], {availability: "true"})
-      });
-      // Toggle availability for user 2
-      //Get User Node
-      var objUser2 = {
-        userNode: User.get({username: req.body.user2})
-      }
-      // Update user availability into the DB
-      objUser2.userNode.then(function(users) {
-        User.update(users[0], {availability: "true"})
-      })
+      User.makeAvailable(req.body.user1);
+      User.makeAvailable(req.body.user2);
     }
   })
 });
+
+app.post('/api/project/delete', function(req, res){
+  Project.deleteProject(req.body.projectId).then(function(){
+    res.sendStatus(200);
+    User.makeAvailable(req.body.user1);
+    User.makeAvailable(req.body.user2);
+  })
+})
 
 // WAIT BEFORE DELETE - Do not give the users relationships
 // app.get('/api/project/:id', function(req, res) {

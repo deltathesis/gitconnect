@@ -47,23 +47,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   $scope.displayName = getOwnName();
 
-  // $scope.projectInfo = {
-  //   name: 'GitConnect',
-  //   description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  //   tech: ['HTML5', 'JavaScript', 'Firebase', 'MySql'],
-  //   github_url: 'https://github.com/deltathesis/gitconnect'
-  //   }
-
-  // $scope.resources = {
-  //   project_repo: 'https://github.com/deltathesis/gitconnect',
-  //   scrum_board: 'https://trello.com/b/QNvGVucJ/gameplan',
-  //   website: "",
-  //   storage: "",
-  //   database: "",
-  //   code_library: ""
-  // }
-
-
   /** Socket Listeners **/
 
   socket.emit('initCollab', {
@@ -108,6 +91,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       $scope.text = "";
     }
   };
+
 
   // // Remove modal backdrop bug display
   // $scope.removeModal = function() {
@@ -156,67 +140,24 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     })
   }
 
-}])
-
-.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', '$rootScope', function($scope, $uibModal, techList, $uibModalInstance, project, $rootScope){
-  
-  $scope.projectInfo = project
-  $scope.techList = techList.getTechList();
-  $scope.yourTechList = [];
-  $scope.addTech = function(tech, index){
-    if ($scope.yourTechList.indexOf(tech) !== -1) {
-      $scope.techList.splice(index, 1);
-
-      //remove the default null language if it exists
-    } else if ($scope.yourTechList.indexOf('null') !== -1){
-      $scope.yourTechList.splice($scope.yourTechList.indexOf('null'), 1) 
-    } else {
-      $scope.yourTechList.push(tech);
-      $scope.techList.splice(index, 1);
-      $scope.searchText = '';
-    }
-  };
-  $scope.removeTech = function(tech, index) {
-    $scope.techList.push(tech); 
-    $scope.yourTechList.splice(index, 1);  
-  };
-
-
-  $scope.ok = function(){
-    // pass change published property to true, add published date and pass in list of languages used to previous controller to relate project node to those technologies
-    var date = new Date();
-    $scope.projectInfo.published = 'true';
-    $scope.projectInfo.publishDate = date.getTime();
-
-
-
-    var obj = {}
-    obj.updatedProjectInfo = $scope.projectInfo;
-    obj.techs = [];
-
-    for(var i = 0; i < $scope.yourTechList.length; i++){
-      obj.techs.push({name: $scope.yourTechList[i]});
-    }
-
-    $uibModalInstance.close(obj);
-
+  $scope.confirmDelete = function(size){
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'view/collaboration-page/confirmDelete.html',
+      controller: 'confirmDelete',
+      size: size,
+      resolve: {
+        project: function(){
+          return $scope.projectInfos
+        }
+      }
+    });
+    modalInstance.result.then(function(updatedResources){
+      //TODO SET AVAILABILITY FOR BOTH USES WHEN DELETING THE PROJECT
+      Project.deleteProject($scope.projectInfos.projectId, $scope.projectUsers[0].username, $scope.projectUsers[1].username);
+      $rootScope.$broadcast('projectPublished')
+      $location.path('/projects')
+    })
   }
 
-  $scope.cancel = function(){
-    $uibModalInstance.dismiss('cancel');
-  }
-}])
-
-.controller('editResources', ['$scope', '$uibModal', '$uibModalInstance', 'project', function($scope, $uibModal, $uibModalInstance, project){
-
-  $scope.projectInfo = project;
-
-  $scope.ok = function(){
-    $uibModalInstance.close($scope.projectInfo);
-  }
-
-  $scope.cancel = function(){
-    $uibModalInstance.dismiss('cancel');
-  }
-}])
-
+}]);

@@ -666,4 +666,14 @@ User.voteOnProject = function(projectId, userId, up) {
   })
 };
 
+User.makeAvailable = function(username){
+  var objUser = {
+    userNode: User.get({username: username})
+  }
+  // Update user availability into the DB
+  objUser.userNode.then(function(users) {
+    User.update(users[0], {availability: "true"})
+  });
+}
+
 Promise.promisifyAll(User);

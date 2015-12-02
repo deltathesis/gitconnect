@@ -162,6 +162,23 @@ module.exports = function (socket) {
   });
   /** End of Project-Page Page Socket Functions **/
 
+  socket.on('store:firstMessageData', function(data) {
+    var userRef = firebase.child('privateRooms');
+    if(rooms[data.room]) {
+    rooms[data.room].messages.push(data.message);
+    } else {
+      var twoUsers = [data.user, data.target];
+      var roomMessages = [data.message];
+      rooms[data.room] = {};
+      rooms[data.room].messages = roomMessages;
+      rooms[data.room].users = twoUsers;
+      console.log(rooms[data.room]);
+    }
+    if(data) {
+      userRef.update(rooms);
+    }
+  })
+
   /*  notify your friend*/
   socket.on('notify:potentialFriend', function(data){
     var fireUsers = firebase.child('users');

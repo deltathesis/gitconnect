@@ -192,6 +192,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
       target: $scope.user.user.username,
       room: cookieObj.username + $scope.user.user.username
     });
+    $scope.message = '';
   }
 
   /** End of Socket **/

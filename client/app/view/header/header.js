@@ -39,6 +39,10 @@ angular.module('myApp.header', [])
     $rootScope.$broadcast('hasProjectCheckReturn', $scope.hasProject);
   });
 
+  $rootScope.$on('projectPublished', function(){
+    $scope.hasProject = false;
+  })
+
   $rootScope.$on('projectStarted', function(event, project) { 
     $scope.hasProject = true;
     $scope.projectLink = project.projectId;

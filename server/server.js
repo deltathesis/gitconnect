@@ -290,13 +290,33 @@ app.post('/api/demand/delete', function(req, res){
 
 app.post('/api/project/update', function(req, res){
   User.update(req.body.oldProject, req.body.data).then(function(){
-    User.addRelationships({
-      baseNode: req.body.data,
-      relNodes: req.body.langArray,
-      relNodeLabels: ['Language'],
-      relLabel: 'Uses',
-      relDirection: 'all'
-     });
+    if(req.body.langArray.length){
+      User.addRelationships({
+        baseNode: req.body.data,
+        relNodes: req.body.langArray,
+        relNodeLabels: ['Language'],
+        relLabel: 'Uses',
+        relDirection: 'out'
+       })
+    }
+    if(req.body.user1 || req.body.user2){
+      var objUser1 = {
+        userNode: User.get({username: req.body.user1})
+      }
+      // Update user availability into the DB
+      objUser1.userNode.then(function(users) {
+        User.update(users[0], {availability: "true"})
+      });
+      // Toggle availability for user 2
+      //Get User Node
+      var objUser2 = {
+        userNode: User.get({username: req.body.user2})
+      }
+      // Update user availability into the DB
+      objUser2.userNode.then(function(users) {
+        User.update(users[0], {availability: "true"})
+      })
+    }
   })
 });
 

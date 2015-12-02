@@ -81,7 +81,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
   return function(input, weekly) {
     return input.filter(function(node) {
       if (!weekly) return true;
-      return new Date().getTime() - new Date(node.publishDate).getTime() <= 604800000;
+      return new Date().getTime() - node.publishDate <= 604800000;
     });
   };
 });

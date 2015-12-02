@@ -58,7 +58,8 @@
     </div>
 
     <div class="form-group col-xs-12 submit-button">
-      <button type="submit" class="btn btn-default">Update</button>
+      <p class="error" ng-show="error">Please fill all the fields</p>
+      <button type="submit" class="btn btn-default" ng-click="formChecking()">Update</button>
     </div>
   </form>
 

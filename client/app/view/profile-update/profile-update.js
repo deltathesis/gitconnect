@@ -49,6 +49,10 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   $scope.userEmail = $scope.user.user.email;
   $scope.userBio = $scope.user.user.bio;
   $scope.userFullName = $scope.user.user.name;
+  $scope.cityId;
+  $scope.cityName;
+
+  $scope.error = false;
 
 
   // Remove user existing tech
@@ -77,6 +81,12 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
     $scope.user.languages.splice(index, 1);  
   };
 
+  $scope.formChecking = function() {
+    if ($scope.cityId === undefined || $scope.userEmail === undefined || $scope.userBio === undefined || $scope.userFullName === undefined) {
+      $scope.error = true;
+    }
+  }
+
   $scope.formSubmit = function() {
     if ($scope.ownership) {
       // var userCity = $('#user-location').val();
@@ -84,12 +94,13 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       var userEmail = $scope.userEmail;
       var userBio = $scope.userBio;
       var userFullName = $scope.userFullName;
+      
 
       // Location user update form submission
       var resultsLocation = {
         username: $scope.user.user.username,
-        cityId: cityId,
-        cityName: cityName
+        cityId: $scope.cityId,
+        cityName: $scope.cityName
       }
       console.log(resultsLocation);
       // Get User techs list
@@ -115,7 +126,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
       // Set tech into Usertech Service
       userOwnTech.setTech(resultsTech);
-      userOwnTech.setAddress(cityName);
+      userOwnTech.setAddress($scope.cityName);
       userOwnTech.setBio(userBio);
       userOwnTech.setFullName(userFullName);
 
@@ -138,8 +149,8 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       var place = autocomplete.getPlace();
       console.log(place.name, place.place_id);
 
-      cityId = place.place_id;
-      cityName = place.name;
+      $scope.cityId = place.place_id;
+      $scope.cityName = place.name;
       // $('#user-location').val(place.name);
     });
   }

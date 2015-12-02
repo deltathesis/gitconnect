@@ -43,7 +43,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   $scope.defaultUsers = matches;
 
   $scope.users = matches;
-
+  console.log($scope.users)
   $scope.selections = [];
 
   // Set default user address to the form
@@ -171,6 +171,11 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     if(!newUsers.length){
       $scope.selectedUser = {};
     }
+    newUsers.forEach(function(user){
+      user.skills.forEach(function(skill){
+        skill.nameEncoded = encodeURIComponent(skill.name)
+      })
+    })
   })
 
   $scope.availabilityOff = function() {

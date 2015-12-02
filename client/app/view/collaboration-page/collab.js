@@ -22,7 +22,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   $scope.projectInfos = projectInfos;
   //store old project info for database lookup
   var oldProjectInfo = projectInfos
-  console.log('project Info ', $scope.projectInfos);
   
   var projectUsers = getProjectUsers;
   $scope.projectUsers = projectUsers.users;
@@ -47,23 +46,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   }
 
   $scope.displayName = getOwnName();
-
-  // $scope.projectInfo = {
-  //   name: 'GitConnect',
-  //   description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  //   tech: ['HTML5', 'JavaScript', 'Firebase', 'MySql'],
-  //   github_url: 'https://github.com/deltathesis/gitconnect'
-  //   }
-
-  // $scope.resources = {
-  //   project_repo: 'https://github.com/deltathesis/gitconnect',
-  //   scrum_board: 'https://trello.com/b/QNvGVucJ/gameplan',
-  //   website: "",
-  //   storage: "",
-  //   database: "",
-  //   code_library: ""
-  // }
-
 
   /** Socket Listeners **/
 
@@ -110,9 +92,6 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     }
   };
 
-  $scope.deleteProject = function(){
-    Project.deleteProject($scope.projectInfos.projectId);
-  }
 
   // // Remove modal backdrop bug display
   // $scope.removeModal = function() {
@@ -175,7 +154,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     });
     modalInstance.result.then(function(updatedResources){
       //TODO SET AVAILABILITY FOR BOTH USES WHEN DELETING THE PROJECT
-      $scope.deleteProject();
+      Project.deleteProject($scope.projectInfos.projectId, $scope.projectUsers[0].username, $scope.projectUsers[1].username);
       $rootScope.$broadcast('projectPublished')
       $location.path('/projects')
     })

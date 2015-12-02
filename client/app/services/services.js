@@ -215,13 +215,14 @@ angular.module('myApp.services', [])
     });
   };
 
-  var deleteProject = function(projectId){
-    console.log('deleteProject')
+  var deleteProject = function(projectId, user1, user2){
     return $http({
       method: 'POST',
       url: '/api/project/delete',
       data: {
-        projectId: projectId
+        projectId: projectId,
+        user1: user1,
+        user2: user2
       }
     }).then(function(res){
       return res.status

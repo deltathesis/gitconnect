@@ -80,11 +80,13 @@ angular.module('myApp.subscription', ['ngRoute'])
   $scope.formChecking = function() {
     if ($scope.cityId === undefined || $scope.userEmail === undefined || $scope.userBio === undefined || $scope.userFullName === undefined) {
       $scope.error = true;
+    } else {
+      $scope.error = false;
     }
   }
 
   $scope.formSubmit = function() {
-    if ($scope.ownership) {
+    if ($scope.ownership && !$scope.error) {
       // var userCity = $('#user-location').val();
       var userSelectedTech = $scope.user.languages;
       var userEmail = $scope.userEmail;

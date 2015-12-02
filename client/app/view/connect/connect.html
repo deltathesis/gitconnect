@@ -1,23 +1,35 @@
 <div class="container page connect-page fadein-effect" ng-init="statusCheck()">
+
   <div class="top-container row">
-    <button type="submit" class="btn col-xs-12 col-sm-2" ng-click="applyFilters()">Filters</button>
-    <form class="form-inline city-form col-xs-12 col-sm-6" ng-init="googleMapInit()">
+    <button type="button" class="btn select-filters" ng-click="applyFilters()"><i class="fa fa-filter"></i> Filters</button>
+    <!-- <form class="form-inline city-form col-xs-12 col-sm-6" ng-init="googleMapInit()">
       <div class="form-group">
         <label for="city">Your City</label>
         <input type="text" class="form-control" id="city-input" placeholder="Select a different city">
       </div>
       <button type="submit" class="btn btn-default">Send</button>
-    </form>
-    <div class="availability col-xs-12 col-sm-4">
+    </form> -->
+    <div class="availability">
       <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
       <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button>
     </div>
   </div>
+
+  <!--show div if user is unavailable -->
+
   <div class="availability-required" ng-show="!availability">
     <h3>You must set yourself available<br>in order to match with other developpers</h3>
   </div>
+
+  <!--show div if user is available but there are no matches -->
+
+  <div class="no-matches" ng-show="availability && !users.length">
+    <h3>Sorry, no matches :(<br>Please try adjusting some filters or check back later.</h3>
+  </div>
+
   <!-- Slider main container -->
-  <div class="swiper-container" ng-show="availability">
+
+  <div class="swiper-container" ng-show="availability && users.length">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
       <!-- Slides -->
@@ -30,71 +42,88 @@
     <div class="swiper-button-next"></div>
   </div>
 
-  <div class="col-xs-12 developer-connect-details" ng-show="availability">
+  <div class="col-xs-12 developer-connect-details" ng-show="availability && users.length">
     <div class="connection">
       <button class="btn connect-btn" ng-click="connectionRequest()">Connect</button>
     </div>
     <div class="developer-detail">
       <p class="developer-name">{{selectedUser.name}}</p>
-      <p class="developer-bio">{{selectedUser.bio}}</p>
     </div>
-    <div class="row developer-tech">
-      <div class="col-xs-12 col-sm-6 languages">
-        <h3>Languages</h3>
-        <ul>
-          <li ng-repeat="skill in selectedUser.skills">
-            {{skill.name}}
-          </li>
-        </ul>
-      </div>
-      <div class="col-xs-12 col-sm-6 projects">
-      <h3>Projects</h3>
-        <ul>
-          <li ng-repeat="projects in selectedUser.projects">
-            {{projects}}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-<!-- Modal -->
-<div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Technology Interests</h4>
-      </div>
-      <div class="modal-body cf">
-        <div class="tech-selection col-xs-12">
-          <div class="techs propositions">
-            <h4>Add Filters</h4>
-            <label class="search-form">Search: <input class="tech-search-input" ng-model="searchText"></label>
-            <p ng-show="existed" class="error-addition"> Already added</p>
-            <ul>
-              <li class="tech fadein-effect" ng-repeat="tech in techList | filter:searchText track by $index" data-tech="{{tech}}" ng-click="addFilter(tech, $index)">
-                {{tech}} <i class="fa fa-plus-circle"></i>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="tech-selection col-xs-12">
-          <div class="techs user-selection" >
-            <h4>Current Filters</h4>
-            <ul>
-              <li class="tech fadein-effect" ng-repeat="tech in selections track by $index " data-tech="{{tech}}" ng-click="removeFilter(tech, $index)">
-                {{tech}} <i class="fa fa-times-circle"></i>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="submitFilters()">Submit</button>
-      </div>
-  </div>
-</div>
 
+    <div class="row user-bio-container user-profile-block">
+      <div class="bio-detail details-container">
+        <h3 class="col-xs-12">About me</h3>
+        <div class="bio col-xs-12">
+          <p>{{selectedUser.bio}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row user-languages-container user-profile-block">
+      <div class="language-details details-container">
+        <h3 class="col-xs-12">Skills</h3>
+        <div class="language-list list">
+          <ul>
+            <li class="col-xs-6 col-sm-3" ng-repeat="skill in selectedUser.skills">
+              <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{skill.name.nameEncoded}}.jpg')"></span>
+              <span class="tech-name">{{skill.name}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row user-projects-container user-profile-block">
+      <div class="projects-details details-container">
+        <h3 class="col-xs-12">Projects</h3>
+        <div class="project-list list">
+          <ul>
+            <li class="col-xs-6 col-sm-4" ng-repeat="project in user.projects">
+              <a href="">{{project.name}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+<!-- Filters Modal -->
+
+  <div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Technology Interests</h4>
+        </div>
+        <div class="modal-body cf">
+          <div class="tech-selection col-xs-12">
+            <div class="techs propositions">
+              <h4>Add Filters</h4>
+              <label class="search-form">Search: <input class="tech-search-input" ng-model="searchText"></label>
+              <p ng-show="existed" class="error-addition"> Already added</p>
+              <ul>
+                <li class="tech fadein-effect" ng-repeat="tech in techList | filter:searchText track by $index" data-tech="{{tech}}" ng-click="addFilter(tech, $index)">
+                  {{tech}} <i class="fa fa-plus-circle"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="tech-selection col-xs-12">
+            <div class="techs user-selection" >
+              <h4>Current Filters</h4>
+              <ul>
+                <li class="tech fadein-effect" ng-repeat="tech in selections track by $index " data-tech="{{tech}}" ng-click="removeFilter(tech, $index)">
+                  {{tech}} <i class="fa fa-times-circle"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="submitFilters()">Submit</button>
+        </div>
+    </div>
+  </div>
 </div>
 
 

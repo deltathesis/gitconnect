@@ -9,12 +9,18 @@
         margin-right: 5px;
       }
     }
+    .select-filters{
+      background-color: #FFF;
+      border-color: #adadad;
+      float: left;
+    }
     .availability {
       text-align: right;
       .btn {
         font-size: 12px;
         font-weight: bold;
         color: #FFF;
+        float: right;
         &.turn-on {
           background-color: $greenColor;
           i { color: $greenColor; }
@@ -26,7 +32,7 @@
       }
     }
   }
-  .availability-required {
+  .availability-required, .no-matches {
     text-align: center;
     margin: 40px 0px;
     padding: 40px 10px;
@@ -102,6 +108,7 @@
       &.user-selection { padding-top: 10px;}
       .tech {
         display: inline-block;
+        cursor: pointer;
         padding: 5px 10px;
         margin-right: 5px;
         margin-bottom: 5px;
@@ -129,6 +136,87 @@
       .error-addition {
         font-weight: bold;
         color: $redColor;
+      }
+    }
+  }
+  
+  .user-profile-block {
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #CCC;
+    .details-container {
+      h3 {
+        margin-top: 0px;
+      }
+      .list {
+        ul {
+          li {
+            padding-top: 10px;
+            a {
+              border-bottom: 1px solid #AAA;
+              display: block;
+            }
+          }
+        }
+      }
+    }
+    &.user-languages-container {
+      .language-details {
+        .language-list {
+          ul {
+            li {
+              position: relative;
+              .tech-icon {
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                background-size: cover;
+                position: absolute;
+                top: 9px;
+              }
+              .tech-name {
+                font-size: 14px;
+                padding-left: 25px;
+                line-height: 14px;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.user-recents-container {
+      .recents-details {
+        .recent {
+          padding-top: 20px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #AAA;
+          p {
+            margin-top: 5px;
+            margin-bottom: 0px;
+            &.subtitle {
+              font-weight: bold;
+            }
+          }
+          &.participation {
+          }
+          &.comments {
+          }
+          &.project {
+            .project-post {
+              margin-top: 20px;
+              .picture-container {
+              height: 200px;
+                a {
+                  width: 100%;
+                  height: 100%;
+                  display: block;
+                  background-size:cover;
+                  background-position: 50% 50%;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

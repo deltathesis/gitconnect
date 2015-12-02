@@ -41,6 +41,8 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   $scope.user = getProfile;
   console.log(getProfile);
 
+  $scope.defaultUsers = matches;
+
   $scope.users = matches;
   console.log($scope.users);
 
@@ -158,6 +160,12 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     }
   });
 
+  $scope.$watchCollection('users', function(newUsers, oldUsers){
+    if(!newUsers.length){
+      $scope.selectedUser = {};
+    }
+  })
+
   $scope.availabilityOff = function() {
     var cookie = $cookies.get('gitConnectDeltaKS');
     var cookieObj = Cookie.parseCookie(cookie);
@@ -185,18 +193,22 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
   $scope.submitFilters = function(){
     $('#filters').modal('hide');
-    return $http({
-      method: 'POST',
-      url: '/api/user/:name/matches',
-      data: {
-        filters: $scope.selections,
-        username: $scope.user.user.username
-      }
-    }).then(function successCallback(response) {
-      $scope.users = response.data.matches;
-    }, function errorCallback(response) {
-      console.log('error: ', response);
-    });
+    if(!$scope.selections.length){
+      $scope.users = $scope.defaultUsers;      
+    } else {
+      return $http({
+        method: 'POST',
+        url: '/api/user/:name/matches',
+        data: {
+          filters: $scope.selections,
+          username: $scope.user.user.username
+        }
+      }).then(function successCallback(response) {
+        $scope.users = response.data.matches;
+      }, function errorCallback(response) {
+        console.log('error: ', response);
+      });
+    }
   }
 
   function addressInitialize() {

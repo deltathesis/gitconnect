@@ -46,6 +46,11 @@ angular.module('myApp.subscription', ['ngRoute'])
     $scope.techList.push(element);
   })
 
+  $scope.cityId;
+  $scope.cityName;
+
+  $scope.error = false;
+
    // Remove user existing tech
   $scope.initialTech = function() {
     setTimeout(function () { 
@@ -72,6 +77,12 @@ angular.module('myApp.subscription', ['ngRoute'])
     $scope.user.languages.splice(index, 1);  
   }
 
+  $scope.formChecking = function() {
+    if ($scope.cityId === undefined || $scope.userEmail === undefined || $scope.userBio === undefined || $scope.userFullName === undefined) {
+      $scope.error = true;
+    }
+  }
+
   $scope.formSubmit = function() {
     if ($scope.ownership) {
       // var userCity = $('#user-location').val();
@@ -83,8 +94,8 @@ angular.module('myApp.subscription', ['ngRoute'])
       // Location user update form submission
       var resultsLocation = {
         username: $scope.user.user.username,
-        cityId: cityId,
-        cityName: cityName
+        cityId: $scope.cityId,
+        cityName: $scope.cityName
       }
       console.log(resultsLocation);
       // Get User techs list
@@ -110,7 +121,7 @@ angular.module('myApp.subscription', ['ngRoute'])
 
       // Set tech into Usertech Service
       userOwnTech.setTech(resultsTech);
-      userOwnTech.setAddress(cityName);
+      userOwnTech.setAddress($scope.cityName);
       userOwnTech.setBio(userBio);
       userOwnTech.setFullName(userFullName);
 
@@ -123,7 +134,6 @@ angular.module('myApp.subscription', ['ngRoute'])
     // Updated User FullName display
     console.log($scope.user.user.name);
       if ($scope.user.user.name !== 'null') {
-        console.log("test");
         $scope.userFullName = $scope.user.user.name;
       }
   }
@@ -141,8 +151,8 @@ angular.module('myApp.subscription', ['ngRoute'])
       var place = autocomplete.getPlace();
       console.log(place.name, place.place_id);
 
-      cityId = place.place_id;
-      cityName = place.name;
+      $scope.cityId = place.place_id;
+      $scope.cityName = place.name;
       // $('#user-location').val(place.name);
     });
   }

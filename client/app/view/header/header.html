@@ -14,14 +14,14 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse links-menu" id="bs-example-navbar-collapse-1" ng-controller='AuthController'>
       <ul class="nav navbar-nav navbar-left" bs-active-link>
-        <li ng-show='!user'><a href="#/welcome" class="link-welcome">Welcome</a></li>
-        <li ng-show='user' class="active"><a href="#/" class="link-home">Home <span class="sr-only">(current)</span></a></li>
-        <li ng-show='user'><a href="#/connect" class="link-connect">Connect</a></li>
+        <li ng-show='!user'><a href="#/welcome" data-toggle="collapse" data-target=".navbar-collapse" class="link-welcome">Welcome</a></li>
+        <li ng-show='user' class="active"><a href="#/" data-toggle="collapse" data-target=".navbar-collapse" class="link-home">Home <span class="sr-only">(current)</span></a></li>
+        <li ng-show='user'><a href="#/connect" data-toggle="collapse" data-target=".navbar-collapse" class="link-connect">Connect</a></li>
         <!--<li ng-show='user'><a href="#/user/{{user.githubUserName}}" class="link-profile">Profile</a></li>-->
-        <li ng-show='user'><a href="#/projects" class="link-projects">Projects</a></li>
-        <li ng-show='user'><a href="#/project" class="link-project">Project</a></li>
+        <li ng-show='user'><a href="#/projects" data-toggle="collapse" data-target=".navbar-collapse" class="link-projects">Projects</a></li>
+        <li ng-show='user'><a href="#/project" data-toggle="collapse" data-target=".navbar-collapse" class="link-project">Project</a></li>
         <!-- <li ng-show='user'><a href="#/groupChat">Chat4Projects</a></li> -->
-        <li ng-show='user && hasProject'><a href="#/collaboration-page/{{projectLink}}">Collab Page</a></li>
+        <li ng-show='user && hasProject'><a href="#/collaboration-page/{{projectLink}} data-toggle="collapse" data-target=".navbar-collapse"">Collab Page</a></li>
       </ul>
  <!--      <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -32,25 +32,25 @@
       <ul class="nav navbar-nav navbar-right">
         <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" data-message={{friendRequests}} ng-click=clearNotifications()>
           <span class="badge">{{friendRequests}}</span>
-          <a href="#/requests"><i class="fa fa-share-alt"></i></a>
+          <a href="#/requests" data-toggle="collapse" data-target=".navbar-collapse"><i class="fa fa-share-alt"></i></a>
         </li>
         <li ng-show='user' ng-class="unreadMessages ? 'notifications' : 'nothing'" class="notify messaging" data-messages={{unreadMessages}}>
           <span class="badge">{{unreadMessages}}</span>
-          <a href="#/privateChat"><i class="fa fa-comments"></i></a>
+          <a href="#/privateChat" data-toggle="collapse" data-target=".navbar-collapse"><i class="fa fa-comments"></i></a>
         </li>
         <li class="splitter"></li>
-        <li ng-show='!user'><a href="/auth/github" class="link-login">Login | Signup</a></li>
+        <li ng-show='!user'><a href="/auth/github" data-toggle="collapse" data-target=".navbar-collapse" class="link-login">Login | Signup</a></li>
         <!-- Do not delete -->
         <!-- <li ng-show='user' class="user-pic-container"><a href="#/user/{{user.githubUserName}}" class="user-pic" ng-style="{'background-image': 'url({{ user.avatar_url }})'}"></a></li> -->
         <li ng-show='user' class="dropdown user-dropdown">
-          <a href="#/user/{{user.githubUserName}}" class="user-pic" ng-style="{'background-image': 'url({{ user.avatar_url }})'}"></a>
+          <a href="#/user/{{user.githubUserName}}" data-toggle="collapse" data-target=".navbar-collapse" class="user-pic" ng-style="{'background-image': 'url({{ user.avatar_url }})'}"></a>
 
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.githubUserName }} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <!-- <li role="separator" class="divider"></li> -->
-            <li><a href="#/user/{{user.githubUserName}}">Profile</a></li>
+            <li><a href="#/user/{{user.githubUserName}}" data-toggle="collapse" data-target=".navbar-collapse">Profile</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/logout" ng-click='logout()'>Logout</a></li>
+            <li><a href="/logout" data-toggle="collapse" data-target=".navbar-collapse" ng-click='logout()'>Logout</a></li>
           </ul>
         </li>
       </ul>

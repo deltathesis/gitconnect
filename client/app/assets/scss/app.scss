@@ -63,3 +63,10 @@ body {
 }
 .cf:after {clear: both;}
 .cf {*zoom: 1;}
+
+// Disable techs hover color for mobile
+@media (max-width: 767px) {
+  .tech:hover {
+    background-color: $mainColor !important;
+  }
+}

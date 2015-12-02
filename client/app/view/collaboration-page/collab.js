@@ -16,7 +16,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   });
 }])
 
-.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location) {
+.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', '$rootScope', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location, $rootScope) {
 
   var projectInfos = getProjectInfo.project;
   $scope.projectInfos = projectInfos;
@@ -130,9 +130,10 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     });
 
     modalInstance.result.then(function(obj){
-      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs, $scope.projectUsers[0].username, $scope.projectUsers[0].username);     
+      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs, $scope.projectUsers[0].username, $scope.projectUsers[1].username);     
       $scope.projectInfos = obj.updatedProjectInfo;
-      $location.path('/project')
+      $rootScope.$broadcast('projectPublished')
+      $location.path('/projects')
     })
   }
 
@@ -157,7 +158,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
 }])
 
-.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', function($scope, $uibModal, techList, $uibModalInstance, project){
+.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', '$rootScope', function($scope, $uibModal, techList, $uibModalInstance, project, $rootScope){
   
   $scope.projectInfo = project
   $scope.techList = techList.getTechList();
@@ -183,9 +184,11 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   $scope.ok = function(){
     // pass change published property to true, add published date and pass in list of languages used to previous controller to relate project node to those technologies
-
+    var date = new Date();
     $scope.projectInfo.published = 'true';
-    $scope.projectInfo.publishDate = new Date();
+    $scope.projectInfo.publishDate = date.getTime();
+
+
 
     var obj = {}
     obj.updatedProjectInfo = $scope.projectInfo;

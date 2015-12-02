@@ -8,7 +8,7 @@ angular.module('myApp.projectpage', ['ngRoute'])
   });
 }])
 
-.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', function($scope, $cookies, Cookie, socket) {
+.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', function($scope, $cookies, Cookie, socket, $rootScope) {
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);

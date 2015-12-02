@@ -296,7 +296,7 @@ app.post('/api/project/update', function(req, res){
         relNodes: req.body.langArray,
         relNodeLabels: ['Language'],
         relLabel: 'Uses',
-        relDirection: 'all'
+        relDirection: 'out'
        })
     }
     if(req.body.user1 || req.body.user2){

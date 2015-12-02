@@ -167,7 +167,7 @@ module.exports = function (socket) {
     var fireUsers = firebase.child('users');
     var fireTargetUser = fireUsers.child(data.target);
     var friendRequests = fireTargetUser.child('friendRequests')
-
+    socket.emit('notify:potentialFriendSuccess')
     friendRequests.transaction(function(number){
      return (number || 0) + 1;
     });

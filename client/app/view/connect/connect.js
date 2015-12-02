@@ -35,7 +35,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope) {
+.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', '$timeout', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope, $timeout) {
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
@@ -102,6 +102,15 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
       });
   });
 
+  socket.on('notify:potentialFriendSuccess', function(){
+    return $timeout(function(){
+      $scope.users.splice($scope.swiper.activeIndex, 1)
+      $scope.swiper.removeSlide($scope.swiper.activeIndex)
+    },1800).then(function(){
+      $scope.selectedUser = $scope.users[$scope.swiper.activeIndex]
+    })
+  })
+
   $scope.connectionRequest = function(){
     $('.swiper-slide-active').addClass('requested');
     return $http({
@@ -113,8 +122,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     }).then(function successCallback(response) {
         socket.emit('notify:potentialFriend', {
           target: angular.copy($scope.selectedUser.username), currentUser: angular.copy($scope.user.user.username)
-        });
-        console.log('success')
+        })
     }, function errorCallback(response) {
       console.log('error: ', reponse);
     });

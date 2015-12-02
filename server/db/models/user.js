@@ -21,7 +21,7 @@ var options = {
   },
   url: 'https://api.github.com/users/',
   headers: {
-    'User-Agent': 'ccnixon'
+    'User-Agent': 'deltaThesisdeploy'
   },
   json: true
 }
@@ -616,7 +616,7 @@ User.getProjects = function() {
 
 User.matches = function(skills, username){
   return new Promise(function(resolve){
-    var cypher = "MATCH (user {username:'"+username+"'}) MATCH (n:User)-[:KNOWS]-(x:Language) WHERE NOT n.username = 'ccnixon' AND NOT (user)-->(n) AND  x.name IN {skills} RETURN n, COUNT(x) AS nSkills ORDER BY nSkills DESC;";
+    var cypher = "MATCH (user {username:'"+username+"'}) MATCH (n:User)-[:KNOWS]-(x:Language) WHERE NOT n.username = '"+username+"' AND NOT (user)-->(n) AND  x.name IN {skills} RETURN n, COUNT(x) AS nSkills ORDER BY nSkills DESC;";
     db.queryAsync(cypher, {skills: skills}).then(function(nodes){
       return nodes.map(function(element){
         return element.n;
@@ -665,16 +665,5 @@ User.voteOnProject = function(projectId, userId, up) {
       });
   })
 };
-
-// var matchTesting = function(){
-//   var cypher = "MATCH (user {username:'ccnixon'})-[r*1..2]-(x:User {availability: 'true'})-[:KNOWS]-(p) WHERE NOT (user)-->(x) RETURN collect(DISTINCT p) AS skills, x, COUNT(x) AS nUsers ORDER BY nUsers DESC LIMIT 20"
-//   db.queryAsync(cypher).then(function(data){
-//     console.log(data)
-//   })
-// }
-
-// User.getMatches('ccnixon').then(function(result){
-//   console.log(result)
-// })
 
 Promise.promisifyAll(User);

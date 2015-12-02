@@ -74,7 +74,7 @@ angular.module('myApp.services', [])
 		var cookie = $cookies.get('gitConnectDeltaKS');
 		var user = Cookie.parseCookie(cookie);
 		return $http({
-			cache: true,
+			cache: false,
 			method: 'GET',
 			url: '/api/user/' + user.username + '/matches'
 		}).then(function(res) {

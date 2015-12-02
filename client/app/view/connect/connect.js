@@ -39,12 +39,10 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
   // get user information, disable if availabbility is false
   $scope.user = getProfile;
-  console.log(getProfile);
 
   $scope.defaultUsers = matches;
 
   $scope.users = matches;
-  console.log($scope.users);
 
   $scope.skills = ["JavaScript", "CSS", "Python", "Rails", "Django", "Firebase"]
 

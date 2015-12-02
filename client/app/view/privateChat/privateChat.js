@@ -186,9 +186,10 @@ angular.module('myApp.privateChat', ['ngRoute'])
   var searchContainer = $('.search-container').height();
   var fix = 10;
   var hearderHeight = 50;
-  $('.allUsers-list').height(window.innerHeight - searchContainer - hearderHeight);
-  $('.chat-messages').height(window.innerHeight - hearderHeight - fix);
-  $('.bigMessage-container').height(window.innerHeight - hearderHeight - 180);
+  var iPhoneFix = 20;
+  $('.allUsers-list').height(window.innerHeight - searchContainer - hearderHeight - iPhoneFix);
+  $('.chat-messages').height(window.innerHeight - hearderHeight - fix - iPhoneFix);
+  $('.bigMessage-container').height(window.innerHeight - hearderHeight - 180 - iPhoneFix);
 
   $('body').on('click', '.allUsers-list-elm', function(e) {
     $('.chat-messages').addClass('display');

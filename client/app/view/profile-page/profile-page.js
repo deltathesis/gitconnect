@@ -14,8 +14,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
 }])
 
 .controller('profilePage', [
-  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope',
-  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope) {
+  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket',
+  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket) {
 
   // var user = {
   //   ratings: Math.round(4.2),
@@ -170,4 +170,29 @@ angular.module('myApp.profilepage', ['ngRoute'])
     }
   }
 
+  /** Socket Message Sending **/
+
+  $scope.sendMessage = function(targetUser) {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+
+    socket.emit('send:privateMessage', {
+      message: {
+        text: $scope.message,
+        user: cookieObj.username
+      },
+      room: cookieObj.username + $scope.user.user.username
+    });
+    socket.emit('store:firstMessageData', {
+      message: {
+        text: $scope.message,
+        user: cookieObj.username
+      },
+      user: cookieObj.username,
+      target: $scope.user.user.username,
+      room: cookieObj.username + $scope.user.user.username
+    });
+  }
+
+  /** End of Socket **/
 }]);

@@ -1,14 +1,15 @@
 <div class="container page projects-page">
   <div class="projects-container">
 
-    <div class="col-xs-12 time-range-form">
-      <button class="btn" ng-class="{'active':weekly}" ng-click="weekly = true">Weekly</button>
-      <button class="btn" ng-class="{'active':!weekly}" ng-click="weekly = false">Overall</button>
+    <div class="row">
+      <div class="col-xs-12 time-range-form">
+        <button class="btn" ng-class="{'active':weekly}" ng-click="weekly = true">Weekly</button>
+        <button class="btn" ng-class="{'active':!weekly}" ng-click="weekly = false">Overall</button>
+      </div>
     </div>
-    <div class='row'>
-      <div class="col-md-3">
-
-        Search:<input type="text" class="form-control" ng-model='searchText'>
+    <div class="row project-list-search">
+      <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+        <input type="text" class="form-control" ng-model='searchText' placeholder="Search a project">
       </div>
     </div>
     <div class="row project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText">

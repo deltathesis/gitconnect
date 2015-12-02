@@ -37,13 +37,21 @@ angular.module('myApp', [
 	});
 }])
 
-.run(['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) {
+.run(['$rootScope', '$location', 'Auth', '$window', function($rootScope, $location, Auth, $window) {
 
   $rootScope.$on("$routeChangeStart", function(event, next, curr) {
     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
       console.log('Please login before visiting ' + next.$$route.originalPath);
       $location.path('/welcome');
     }
+  });
+
+  // Update analytics data
+  $rootScope.$on('$routeChangeSuccess',function(event){
+    if (!$window.ga) {
+      return;
+    }
+    $window.ga('send', 'pageview', { page: $location.path() });
   });
 
 }])

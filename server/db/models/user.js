@@ -75,14 +75,15 @@ var createUser = function(username){
 //match users to other users
 User.getMatches = function(username){
   return new Promise(function(resolve){
-    var cypher = 'MATCH (user {username:"'+username+'"})-[r*1..2]-(x:User {availability: "true"}) '
-               + 'WHERE NOT (user)-->(x) '
-               + 'RETURN DISTINCT x, COUNT(x) '
-               + 'ORDER BY COUNT(x) DESC '
-               + 'LIMIT 20';
+    var cypher = "MATCH (user {username:'"+username+"'})-[r*1..2]-(x:User {availability: 'true'})-[:KNOWS]-(p) "
+               + "WHERE NOT (user)-->(x) "
+               + "RETURN collect(DISTINCT p) AS skills, x AS userData, "
+               + "COUNT(x) AS nUsers ORDER BY nUsers DESC LIMIT 20";
     db.queryAsync(cypher).then(function(nodes){
-      resolve(nodes.map(function(element){
-        return element.x
+      resolve(nodes.map(function(node){
+        var data = node.userData
+        data.skills = node.skills
+        return data;
       }))
     })
     .catch(function(err){
@@ -664,5 +665,16 @@ User.voteOnProject = function(projectId, userId, up) {
       });
   })
 };
+
+// var matchTesting = function(){
+//   var cypher = "MATCH (user {username:'ccnixon'})-[r*1..2]-(x:User {availability: 'true'})-[:KNOWS]-(p) WHERE NOT (user)-->(x) RETURN collect(DISTINCT p) AS skills, x, COUNT(x) AS nUsers ORDER BY nUsers DESC LIMIT 20"
+//   db.queryAsync(cypher).then(function(data){
+//     console.log(data)
+//   })
+// }
+
+// User.getMatches('ccnixon').then(function(result){
+//   console.log(result)
+// })
 
 Promise.promisifyAll(User);

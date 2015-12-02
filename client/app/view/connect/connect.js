@@ -193,7 +193,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         username: $scope.user.user.username
       }
     }).then(function successCallback(response) {
-      console.log(response.data.matches);
       $scope.users = response.data.matches;
     }, function errorCallback(response) {
       console.log('error: ', response);
@@ -206,7 +205,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     autocomplete.addListener('place_changed', function() {
       // Get city name only
       var place = autocomplete.getPlace();
-      console.log(place.name, place.place_id);
 
       cityId = place.place_id;
       cityName = place.name;

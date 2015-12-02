@@ -10,6 +10,7 @@ var http = require('http');
 var sockets = require('socket.io');
 var User = require('./db/models/user.js').User;
 var Project = require('./db/models/project.js').Project;
+var nodemailer = require('nodemailer');
 
 var app = express();
 
@@ -36,6 +37,15 @@ passport.use(new GitHubStrategy({
     });
   }
 ));
+
+// create reusable transporter object using SMTP transport
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.GMAIL_ACCOUNT,
+        pass: process.env.GMAIL_PWD
+    }
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -192,6 +202,25 @@ app.post('/api/user/updateform', function(req, res) {
   objUser.userNode.then(function(users) {
     User.update(users[0], userInfos)
   })
+
+  if (req.body.data.formType === "subscription" ) {
+    // setup e-mail data with unicode symbols
+    var mailOptions = {
+        from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
+        to: req.body.data.userInfos.email, // list of receivers
+        subject: 'Welcome to GitConnect', // Subject line
+        text: 'Welcome ' + req.body.data.userInfos.name, // plaintext body
+        html: '<h2>Welcome '+ req.body.data.userInfos.name +'</h2>'
+              + '<p>You can know connect, work and share with developers all around the world</p>' // html body
+    };
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+    });
+  }
   
   res.end();
 });
@@ -271,6 +300,26 @@ app.get('/api/connectionslistRequests/:name', function(req, res) {
 // Project page creation after matching
 app.post('/api/project/creation', function(req, res){
   User.createProject(req.body.data).then(function(project){
+
+    var mailOptions = {
+        from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
+        to: req.body.data.userFirstEmail +','+ req.body.data.userSecondEmail, // list of receivers
+        subject: 'Your new project on GitConnect', // Subject line
+        text: 'New project on Gitconnect', // plaintext body
+        html: '<h2>Hello '+ req.body.data.userFirst +' & '+ req.body.data.userSecond +'</h2>'
+              + '<p>You are now working together on the same project</p>'
+              + '<p>Feel free to contact and share information about your project</p>'
+              + '<p>Notice you are set now as unavaible on Gitconnect until you publish or delete your project</p>'
+              + '<p>Have fun!</p>' // html body
+    };
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+    });
+
     res.json(project)
   });
 });

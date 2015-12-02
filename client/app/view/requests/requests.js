@@ -11,19 +11,26 @@ angular.module('myApp.requests', ['ngRoute'])
       }],
       getUserRequests: ['userRequests', function(userRequests) {
           return userRequests.getRequests();
+      }],
+      getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
+        var cookie = $cookies.get('gitConnectDeltaKS');
+        var cookieObj = Cookie.parseCookie(cookie);
+        // return User.getProfile(cookieObj.username);
+        return User.getProfileAndRelations(cookieObj.username);
       }]
     }
   });
 }])
 
 .controller('requestsPage', [
-  '$scope', 'getUserDemands', 'getUserRequests', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
-  function($scope, getUserDemands, getUserRequests, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
+  '$scope', 'getUserDemands', 'getUserRequests', 'getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
+  function($scope, getUserDemands, getUserRequests, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
 
   var userDemands = getUserDemands;
   console.log('demands: ',userDemands);
   var usersRequest = getUserRequests;
   console.log('requests: ',usersRequest);
+  var userInfos = getProfile;
 
   // Get User username
   var cookie = $cookies.get('gitConnectDeltaKS');
@@ -46,17 +53,18 @@ angular.module('myApp.requests', ['ngRoute'])
   };
 
 
-  $scope.requestAccept = function(username) {
+  $scope.requestAccept = function(username, useremail) {
     console.log('project creation');
     var usersObject = {
       userFirst: userUsername,
-      userSecond: username
+      userSecond: username,
+      userFirstEmail:userInfos.user.email,
+      userSecondEmail:useremail
     };
     
     UserConnection.createConnection(usersObject).then(function(project) {
       $scope.linktoProject = project.projectId;
       $('#projectPageRedirect').modal('show');
-
     });
   };
 

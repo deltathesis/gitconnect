@@ -120,7 +120,8 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       var postData = {
         resultsLocation : resultsLocation,
         resultsTech: resultsTech,
-        userInfos: userInfos
+        userInfos: userInfos,
+        formType: 'update'
       }
 
       // Posting data

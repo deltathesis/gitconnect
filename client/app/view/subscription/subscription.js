@@ -115,7 +115,8 @@ angular.module('myApp.subscription', ['ngRoute'])
       var postData = {
         resultsLocation : resultsLocation,
         resultsTech: resultsTech,
-        userInfos: userInfos
+        userInfos: userInfos,
+        formType: 'subscription'
       }
 
       // Posting data

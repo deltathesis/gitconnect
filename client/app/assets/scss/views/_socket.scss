@@ -136,8 +136,9 @@
  }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 .chat-page {
+  overflow-x: hidden;
   position: relative;
   .chat-users {
     .search-container {
@@ -153,7 +154,9 @@
   }
   .chat-messages {
     position: absolute;
-    width: 90%;
+    left: 15px;
+    right: 15px;
+    width: auto;
     transform: translateX(130%);
     transition: all 0.3s ease;
     -webkit-transform: translateX(130%);

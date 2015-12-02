@@ -29,7 +29,7 @@ retrieveData();
 module.exports = function (socket) {
 
   var name;
-  console.log('user connected');
+  console.log('Socket User connected');
   
   retrieveData();
 
@@ -48,7 +48,7 @@ module.exports = function (socket) {
       if(rooms[key].users.indexOf(name) > -1) {
         socket.join(key);
         roomsObj[key] = rooms[key];
-        console.log('joined ' + name + ' to room: ', key);
+        // console.log('joined ' + name + ' to room: ', key);
       }
     }
 
@@ -66,11 +66,11 @@ module.exports = function (socket) {
   socket.on('join:privateRoom', function(data) {
     for(var key in people) {
       if(key === data.users[0]) {
-        console.log('joined myself to Room: ', data.roomName);
+        // console.log('joined myself to Room: ', data.roomName);
         people[key].join(data.roomName);
       }
       if(key === data.users[1]) {
-        console.log('joined ' + data.users[1] + ' to ' + data.roomName);
+        // console.log('joined ' + data.users[1] + ' to ' + data.roomName);
         people[key].join(data.roomName);
       }
     }
@@ -178,7 +178,6 @@ module.exports = function (socket) {
       rooms[data.room] = {};
       rooms[data.room].messages = roomMessages;
       rooms[data.room].users = twoUsers;
-      console.log(rooms[data.room]);
     }
     if(data) {
       userRef.update(rooms);
@@ -238,7 +237,7 @@ module.exports = function (socket) {
 
   // clean up when a user leaves, and broadcast it to other people
   socket.on('disconnect', function () {
-    console.log('user disconnected');
+    // console.log('user disconnected');
     socket.broadcast.emit('user:left', {
       name: name
     });

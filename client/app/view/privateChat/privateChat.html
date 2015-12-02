@@ -15,11 +15,11 @@
     <ul class="allUsers-list">
       <li ng-repeat="(key, value) in roomMessages"  class="allUsers-list-elm" ng-click="changeRoom(key)">
         <div class="listOverview cf">
-          <img class="user-pic" src="{{roomMessages[key].avatar}}">
+          <img class="user-pic" ng-src="{{roomMessages[key].avatar}}" />
 
           <div class="otherUser-info">
             <p class="username-chat">{{roomMessages[key].users[1]}}</p>
-            <p>{{roomMessages[key].messages[0].text | limitTo:15}}...</p>
+            <p>{{roomMessages[key].messages[roomMessages[key].messages.length - 1].text | limitTo:15}}...</p>
           </div>
         </div>
       </li>

@@ -5,8 +5,13 @@
       <button class="btn" ng-class="{'active':weekly}" ng-click="weekly = true">Weekly</button>
       <button class="btn" ng-class="{'active':!weekly}" ng-click="weekly = false">Overall</button>
     </div>
+    <div class='row'>
+      <div class="col-md-3">
 
-    <div class="row project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly">
+        Search:<input type="text" class="form-control" ng-model='searchText'>
+      </div>
+    </div>
+    <div class="row project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText">
       <div class="col-xs-12 post-top-info">
         <div class="post-thumbnail thumbnail-pic">
           <a href="" alt="" style="background-image:url({{project.picture}})"></a>

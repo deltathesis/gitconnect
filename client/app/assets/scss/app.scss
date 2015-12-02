@@ -63,3 +63,9 @@ body {
 }
 .cf:after {clear: both;}
 .cf {*zoom: 1;}
+
+@media (max-width: 767px) {
+  .tech:hover {
+    background-color: $mainColor !important;
+  }
+}

@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var http = require('http');
 var sockets = require('socket.io');
 var User = require('./db/models/user.js').User;
+var Project = require('./db/models/project.js').Project;
 
 var app = express();
 
@@ -319,6 +320,13 @@ app.post('/api/project/update', function(req, res){
     }
   })
 });
+
+app.post('/api/project/delete', function(req, res){
+  console.log('delete')
+  Project.deleteProject(req.body.projectId).then(function(){
+    res.sendstatus(200);
+  })
+})
 
 // WAIT BEFORE DELETE - Do not give the users relationships
 // app.get('/api/project/:id', function(req, res) {

@@ -22,6 +22,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   $scope.projectInfos = projectInfos;
   //store old project info for database lookup
   var oldProjectInfo = projectInfos
+  console.log('project Info ', $scope.projectInfos);
   
   var projectUsers = getProjectUsers;
   $scope.projectUsers = projectUsers.users;
@@ -108,6 +109,11 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       $scope.text = "";
     }
   };
+
+  $scope.deleteProject = function(){
+    //projectInfos.projectId
+    Project.deleteProject($scope.projectInfos.projectId);
+  }
 
   // // Remove modal backdrop bug display
   // $scope.removeModal = function() {

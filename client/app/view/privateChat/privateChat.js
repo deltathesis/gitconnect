@@ -181,6 +181,14 @@ angular.module('myApp.privateChat', ['ngRoute'])
     }
   });
 
+  // Set chat box size adapting to the device window height
+  var searchContainer = $('.search-container').height();
+  var fix = 10;
+  var hearderHeight = 50;
+  $('.allUsers-list').height(window.innerHeight - searchContainer - hearderHeight);
+  $('.chat-messages').height(window.innerHeight - hearderHeight - fix);
+  $('.bigMessage-container').height(window.innerHeight - hearderHeight - 180);
+
   $('body').on('click', '.allUsers-list-elm', function(e) {
     $('.chat-messages').addClass('display');
   });

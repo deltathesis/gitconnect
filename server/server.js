@@ -300,7 +300,8 @@ app.get('/api/connectionslistRequests/:name', function(req, res) {
 // Project page creation after matching
 app.post('/api/project/creation', function(req, res){
   User.createProject(req.body.data).then(function(project){
-
+    res.json(project)
+  }).then(function() {
     var mailOptions = {
         from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
         to: req.body.data.userFirstEmail +','+ req.body.data.userSecondEmail, // list of receivers
@@ -319,8 +320,6 @@ app.post('/api/project/creation', function(req, res){
         }
         console.log('Message sent: ' + info.response);
     });
-
-    res.json(project)
   });
 });
 

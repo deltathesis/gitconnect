@@ -8,9 +8,11 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var http = require('http');
 var sockets = require('socket.io');
-var User = require('./db/models/user.js').User;
-var Project = require('./db/models/project.js').Project;
 var nodemailer = require('nodemailer');
+var User = require('./db/models/user.js');
+var Project = require('./db/models/project');
+var Relationship = require('./db/models/relationship');
+var Node = require('./db/models/node');
 
 var app = express();
 
@@ -76,7 +78,7 @@ app.get('/auth/github/callback',
 
     User.get({username: req.user.username}).then(function(user){
       if(!user.length){
-        console.log(user);
+        //console.log(user);
         User.saveNewUser(req.user.username).then(function(newUser){
 
           // Store github cookie for 7 days
@@ -134,7 +136,7 @@ app.get('/api/user/:name', function(req, res) {
 
 app.get('/api/user/relations/:name', function(req, res) {
   // Get all type user relationships
-  User.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
+  Node.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
     // console.log(user);
     res.json({user: user})
   });
@@ -166,8 +168,8 @@ app.post('/api/user/updateform', function(req, res) {
   User.deleteAllRelationships(objLocation.baseNode.username, objLocation.relLabel);
 
   // Saving location / relationship into the DB
-  console.log('city: ', objLocation);
-  User.addRelationships(objLocation);
+  //console.log('city: ', objLocation);
+  Node.addRelationships(objLocation);
 
   // Get all user techs list
   var techlist = [];
@@ -186,7 +188,7 @@ app.post('/api/user/updateform', function(req, res) {
   User.deleteAllRelationships(objTech.baseNode.username, objTech.relLabel);
 
   // Saving user tech / relationship into the DB
-  User.addRelationships(objTech);
+  Node.addRelationships(objTech);
 
   // Get user Bio and Email
   var userInfos = {
@@ -200,7 +202,7 @@ app.post('/api/user/updateform', function(req, res) {
   }
   // Update user info into the DB
   objUser.userNode.then(function(users) {
-    User.update(users[0], userInfos)
+    Node.update(users[0], userInfos)
   })
 
   if (req.body.data.formType === "subscription" ) {
@@ -242,7 +244,7 @@ app.post('/api/user/availabilitytoggle', function(req, res) {
 
   // Update user availability into the DB
   objUser.userNode.then(function(users) {
-    User.update(users[0], availability)
+    Node.update(users[0], availability)
   })
 
   res.end();
@@ -252,7 +254,7 @@ app.get('/api/user/delete/:name', function(req, res) {
   var username = req.params.name;
 
   User.deleteUser(username).then(function(){
-    console.log("user deleted");
+    //console.log("user deleted");
     req.logout();
     res.clearCookie('gitConnectDeltaKS');
     res.redirect('/');
@@ -266,28 +268,28 @@ app.post('/api/user/connection-request', function(req, res){
   var selectedUser = req.body.selectedUser;
 
   //Submit to addRelationships
-  User.addRelationships({
+  Node.addRelationships({
     baseNode: {username: currentUser.username}, 
     relNodes: [{username: selectedUser.username}],
     relNodeLabel: 'User',
     relDirection: 'out',
     relLabel: 'CONNECTION_REQUEST'
   }).then(function(results){
-    console.log(results)
+    //console.log(results)
   })
   res.end()
 })
 
 // Get user connection demands
 app.get('/api/connectionslistDemands/:name', function(req, res) {
-  console.log("on server side get");
+  //console.log("on server side get");
   User.getUserDemands(req.params.name).then(function(userslist){
     res.json({users: userslist})
   });
 });
 // Get user connection requests
 app.get('/api/connectionslistRequests/:name', function(req, res) {
-  console.log("on server side get");
+  //console.log("on server side get");
   User.getUserRequests(req.params.name).then(function(userslist){
     res.json({users: userslist})
   });
@@ -299,7 +301,7 @@ app.get('/api/connectionslistRequests/:name', function(req, res) {
 
 // Project page creation after matching
 app.post('/api/project/creation', function(req, res){
-  User.createProject(req.body.data).then(function(project){
+  Project.create(req.body.data).then(function(project){
     res.json(project)
   }).then(function() {
     var mailOptions = {
@@ -338,9 +340,9 @@ app.post('/api/demand/delete', function(req, res){
 });
 
 app.post('/api/project/update', function(req, res){
-  User.update(req.body.oldProject, req.body.data).then(function(){
+  Node.update(req.body.oldProject, req.body.data).then(function(){
     if(req.body.langArray.length){
-      User.addRelationships({
+      Node.addRelationships({
         baseNode: req.body.data,
         relNodes: req.body.langArray,
         relNodeLabels: ['Language'],
@@ -351,6 +353,22 @@ app.post('/api/project/update', function(req, res){
     if(req.body.user1 || req.body.user2){
       User.makeAvailable(req.body.user1);
       User.makeAvailable(req.body.user2);
+      var objUser1 = {
+        userNode: User.get({username: req.body.user1})
+      }
+      // Update user availability into the DB
+      objUser1.userNode.then(function(users) {
+        Node.update(users[0], {availability: "true"})
+      });
+      // Toggle availability for user 2
+      //Get User Node
+      var objUser2 = {
+        userNode: User.get({username: req.body.user2})
+      }
+      // Update user availability into the DB
+      objUser2.userNode.then(function(users) {
+        Node.update(users[0], {availability: "true"})
+      })
     }
   })
 });
@@ -372,14 +390,14 @@ app.post('/api/project/delete', function(req, res){
 // });
 
 app.get('/api/project/list', function(req, res) {
-  User.getProjects()
+  Project.getAll()
     .then(function(projects) {
       res.json({projects: projects});
     });
 });
 
 app.post('/api/project/vote', function(req, res) {
-  User.voteOnProject(req.body.projectId, req.body.userId, req.body.up)
+  Project.vote(req.body.projectId, req.body.userId, req.body.up)
     .then(function(resolved) {
       res.json({success: true});
     }, function(rejected) {
@@ -394,7 +412,7 @@ app.get('/api/project/:id', function(req, res) {
 });
 
 app.get('/api/project/users/:id', function(req, res) {
-  User.getProjectUsers(req.params.id).then(function(userslist){
+  Project.getUsers(req.params.id).then(function(userslist){
     // console.log('users project:',userslist)
     res.json({users: userslist})
   });
@@ -402,7 +420,7 @@ app.get('/api/project/users/:id', function(req, res) {
 
 // Check for current Project collaboration
 app.get('/api/project/current/:username', function(req, res) {
-  console.log(req.params.username);
+  //console.log(req.params.username);
   User.getCurrentProject(req.params.username).then(function(project){
     // console.log(project);
     res.json({project: project})

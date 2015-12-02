@@ -29,7 +29,7 @@ retrieveData();
 module.exports = function (socket) {
 
   var name;
-  console.log('Socket User connected');
+  //console.log('Socket User connected');
   
   retrieveData();
 

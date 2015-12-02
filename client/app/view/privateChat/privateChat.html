@@ -19,7 +19,7 @@
 
           <div class="otherUser-info">
             <p class="username-chat">{{roomMessages[key].users[1]}}</p>
-            <p>{{roomMessages[key].messages[0].text | limitTo:15}}...</p>
+            <p>{{roomMessages[key].messages[roomMessages[key].messages.length - 1].text | limitTo:15}}...</p>
           </div>
         </div>
       </li>

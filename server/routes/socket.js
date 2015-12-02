@@ -178,7 +178,6 @@ module.exports = function (socket) {
       rooms[data.room] = {};
       rooms[data.room].messages = roomMessages;
       rooms[data.room].users = twoUsers;
-      console.log(rooms[data.room]);
     }
     if(data) {
       userRef.update(rooms);

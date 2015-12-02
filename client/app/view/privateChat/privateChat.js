@@ -148,7 +148,6 @@ angular.module('myApp.privateChat', ['ngRoute'])
     $scope.currentTarget = targetUser;
     $scope.currentRoom = newRoom;
     $scope.newUser = '';
-    console.log($scope.roomMessages);
   }
 
   //send Direct Message

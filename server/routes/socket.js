@@ -102,6 +102,9 @@ module.exports = function (socket) {
   //stores private messaging data into firebase
   socket.on('storeData', function(data) {
     var userRef = firebase.child('privateRooms');
+    for(var key in data) {
+      delete data[key].avatar;
+    }
     if(data){
       userRef.update(data);
     }
@@ -164,6 +167,9 @@ module.exports = function (socket) {
 
   socket.on('store:firstMessageData', function(data) {
     var userRef = firebase.child('privateRooms');
+    if(!rooms) {
+      rooms = {};
+    }
     if(rooms[data.room]) {
     rooms[data.room].messages.push(data.message);
     } else {

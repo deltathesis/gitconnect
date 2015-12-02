@@ -43,7 +43,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   $scope.defaultUsers = matches;
 
   $scope.users = matches;
-  console.log($scope.users)
+  
   $scope.selections = [];
 
   // Set default user address to the form
@@ -101,16 +101,15 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
   /* Taking this out until we can figure out how to make it work */
 
-  // socket.on('notify:potentialFriendSuccess', function(){
-  //   return $timeout(function(){
-  //     $scope.users.splice($scope.swiper.activeIndex, 1)
-  //     $scope.swiper.removeSlide($scope.swiper.activeIndex)
-  //   },1500).then(function(){
-  //     $scope.selectedUser = $scope.users[$scope.swiper.activeIndex]
-  //   })
-  // })
+  socket.on('notify:potentialFriendSuccess', function(){
+    return $timeout(function(){
+      $scope.users.splice($scope.selectedUserIndex, 1)
+      $scope.swiper.removeSlide($scope.selectedUserIndex)
+    },1500)
+  })
 
   $scope.connectionRequest = function(){
+    $scope.selectedUserIndex = $scope.swiper.activeIndex;
     $('.swiper-slide-active').addClass('requested');
     return $http({
       method: 'POST',

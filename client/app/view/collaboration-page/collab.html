@@ -1,88 +1,94 @@
 <div class="container page collaboration-page fadein-effect">
 
   <div class="row team-details">
-    <h1>Team</h1>
-    <button ng-click="publish('lg')" class='btn btn-success'>Publish</button>
-    <div class="delete-profile-link">
-      <button type="button" class="btn btn-danger" ng-click="confirmDelete()">
-        <i class="fa fa-ban"></i> Delete your Project
-      </button>
+    <div class="col-xs-12">
+      <div class="top-container cf">
+        <h1>Team</h1>
+        <button type="button" class="btn btn-danger project-actions" ng-click="confirmDelete()">
+          <i class="fa fa-ban"></i> Delete your Project
+        </button>
+        <button ng-click="publish('lg')" class='btn btn-success project-actions'>Publish</button>
+      </div>
+      <ul class="team-members-list cf">
+        <li class="team-member" ng-repeat="user in projectUsers">
+          <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
+          <p class="team-member-name">{{user.name}}</p>
+        </li>
+      </ul>
     </div>
-    <ul class="team-members-list cf">
-      <li class="team-member" ng-repeat="user in projectUsers">
-        <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
-        <p class="team-member-name">{{user.name}}</p>
-      </li>
-    </ul>
   </div>
   <div class="row links">
-    <div class="link-header">
-      <h1>Resources</h1>
+    <div class="col-xs-12">
+      <div class="link-header">
+        <h1>Resources</h1>
+      </div>
+      <ul class="row">
+        <li class="col-xs-12 col-sm-4">
+          <i class="fa fa-github fa-2x fa-fw link-icon"></i>
+          <span class="link-options">
+            <a href={{projectInfos.projectRepo}} ng-class="{'filled-link-info': projectInfos.projectRepo !== 'null', 'empty-link-info': projectInfos.projectRepo === 'null'}">Project Repo</a>
+            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+          </span>
+        </li>
+        <li class="col-xs-12 col-sm-4">
+          <i class="fa fa-jsfiddle fa-2x fa-fw link-icon"></i>
+          <span class="link-options">
+            <a href={{projectInfos.codeLibrary}} ng-class="{'filled-link-info': resources.code_library !== 'null', 'empty-link-info': resources.code_library === 'null'}">Code Library</a>
+            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+          </span>
+        </li>
+        <li class="col-xs-12 col-sm-4">
+          <i class="fa fa-cloud fa-2x fa-fw link-icon"></i> 
+          <span class="link-options">
+            <a href={{projectInfos.cloudStorage}} ng-class="{'filled-link-info': projectInfos.cloudStorage !== 'null', 'empty-link-info': projectInfos.cloudStorage === 'null'}">Cloud Storage</a>
+            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+          </span>
+        </li>
+        <li class="col-xs-12 col-sm-4">
+          <i class="fa fa-trello fa-2x fa-fw link-icon"></i>
+          <span class="link-options">
+            <a href={{projectInfos.scrumBoard}} ng-class="{'filled-link-info': projectInfos.scrumBoard !== 'null', 'empty-link-info': projectInfos.scrumBoard === 'null'}">Scrum Board</a>
+            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+          </span>
+        </li>
+        <li class="col-xs-12 col-sm-4">
+          <i class="fa fa-link fa-2x fa-fw link-icon"></i> 
+          <span class="link-options">
+            <a href={{projectInfos.projectWebsite}} ng-class="{'filled-link-info': projectInfos.projectWebsite !== 'null', 'empty-link-info': projectInfos.projectWebsite === 'null'}">Project Website</a>
+            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+          </span>
+        </li>
+        <li class="col-xs-12 col-sm-4">
+          <i class="fa fa-database fa-2x fa-fw link-icon"></i>
+          <span class="link-options">
+            <a href={{projectInfos.database}} ng-class="{'filled-link-info': projectInfos.database !== 'null', 'empty-link-info': projectInfos.database === 'null'}">Database</a>
+            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+          </span>
+        </li>
+      </ul>
     </div>
-    <ul>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-github fa-2x fa-fw link-icon"></i>
-        <span class="link-options">
-          <a href={{projectInfos.projectRepo}} ng-class="{'filled-link-info': projectInfos.projectRepo !== 'null', 'empty-link-info': projectInfos.projectRepo === 'null'}">Project Repo</a>
-          <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
-        </span>
-      </li>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-jsfiddle fa-2x fa-fw link-icon"></i>
-        <span class="link-options">
-          <a href={{projectInfos.codeLibrary}} ng-class="{'filled-link-info': resources.code_library !== 'null', 'empty-link-info': resources.code_library === 'null'}">Code Library</a>
-          <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
-        </span>
-      </li>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-cloud fa-2x fa-fw link-icon"></i> 
-        <span class="link-options">
-          <a href={{projectInfos.cloudStorage}} ng-class="{'filled-link-info': projectInfos.cloudStorage !== 'null', 'empty-link-info': projectInfos.cloudStorage === 'null'}">Cloud Storage</a>
-          <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
-        </span>
-      </li>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-trello fa-2x fa-fw link-icon"></i>
-        <span class="link-options">
-          <a href={{projectInfos.scrumBoard}} ng-class="{'filled-link-info': projectInfos.scrumBoard !== 'null', 'empty-link-info': projectInfos.scrumBoard === 'null'}">Scrum Board</a>
-          <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
-        </span>
-      </li>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-link fa-2x fa-fw link-icon"></i> 
-        <span class="link-options">
-          <a href={{projectInfos.projectWebsite}} ng-class="{'filled-link-info': projectInfos.projectWebsite !== 'null', 'empty-link-info': projectInfos.projectWebsite === 'null'}">Project Website</a>
-          <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
-        </span>
-      </li>
-      <li class="col-xs-6 col-sm-4">
-        <i class="fa fa-database fa-2x fa-fw link-icon"></i>
-        <span class="link-options">
-          <a href={{projectInfos.database}} ng-class="{'filled-link-info': projectInfos.database !== 'null', 'empty-link-info': projectInfos.database === 'null'}">Database</a>
-          <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
-        </span>
-      </li>
-    </ul>
   </div>
   <div class="row team-messages">
-    <h1>Messages</h1>
-    <ul class="list-group">
-      <li class="list-group-item cf" ng-repeat="message in messages">
-        <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
-        <div class="message-content">
-          <span class="username">{{message.username}}</span>
-          <span class="date">{{ message.date | date: 'short' }}</span>
-          <p class="message-content-body">
-            {{message.message}}
-          </p>
+    <div class="col-xs-12">
+      <h1>Messages</h1>
+      <ul class="list-group">
+        <li class="list-group-item cf" ng-repeat="message in messages">
+          <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
+          <div class="message-content">
+            <span class="username">{{message.username}}</span>
+            <span class="date">{{ message.date | date: 'short' }}</span>
+            <p class="message-content-body">
+              {{message.message}}
+            </p>
+          </div>
+        </li>
+      </ul>
+      <form ng-submit="messageSubmit()">
+        <div class="input-group input-group-lg">
+          <span class="input-group-addon" id="sizing-addon1">+</span>
+          <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">
         </div>
-      </li>
-    </ul>
-    <form ng-submit="messageSubmit()">
-      <div class="input-group input-group-lg">
-        <span class="input-group-addon" id="sizing-addon1">+</span>
-        <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

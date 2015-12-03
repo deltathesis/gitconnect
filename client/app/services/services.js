@@ -238,16 +238,16 @@ angular.module('myApp.services', [])
     });
   };
 
-  var get_signed_request = function(file){
+  var signRequest = function(file, fn){
 
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+      
+      xhr.open("GET", "/api/sign_s3?file_name="+fn+"&file_type="+file.type);
       xhr.onreadystatechange = function(){
           if(xhr.readyState === 4){
               if(xhr.status === 200){
                   var response = JSON.parse(xhr.responseText);
                   upload_file(file, response.signed_request, response.url);
-
               }
               else{
                   alert("Could not get signed URL.");
@@ -258,22 +258,15 @@ angular.module('myApp.services', [])
   }
 
   var upload_file = function(file, signed_request, url){
-    console.log('upload_file... file: ', file,' signed_request: ', signed_request, 'url: ',url)
     var xhr = new XMLHttpRequest();
     xhr.open("PUT", signed_request);
     xhr.setRequestHeader('x-amz-acl', 'public-read');
-    // xhr.setRequestHeader("Content-Type","img/jpeg");
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            console.log('upload_file worked!!!!!!!')
-        }
-    };
     xhr.onerror = function() {
         alert("Oops it looks like your picture was not uploaded properly");
     };
     xhr.send(file);
 
-}
+  }
 
 
   return {
@@ -282,7 +275,8 @@ angular.module('myApp.services', [])
     updateProject: updateProject,
     deleteProject: deleteProject,
     getLanguages: getLanguages,
-    get_signed_request: get_signed_request
+    signRequest: signRequest,
+    upload_file: upload_file
   };
 
 }])

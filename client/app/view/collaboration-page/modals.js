@@ -6,6 +6,9 @@ angular.module('myApp.collaboration-page')
   $scope.projectInfo = project
   $scope.techList = techList.getTechList();
   $scope.yourTechList = [];
+
+  var fileNamePrefix = Math.random().toString(36).substr(2, 15);
+
   $scope.addTech = function(tech, index){
     if ($scope.yourTechList.indexOf(tech) !== -1) {
       $scope.techList.splice(index, 1);
@@ -24,6 +27,12 @@ angular.module('myApp.collaboration-page')
     $scope.yourTechList.splice(index, 1);  
   };
 
+  $scope.submitPicture = function(){
+    var fileName = fileNamePrefix + $scope.profilePic.name;
+    Project.signRequest($scope.profilePic, fileName)
+    $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
+  }
+
 
   $scope.ok = function(){
     // pass change published property to true, add published date and pass in list of languages used to previous controller to relate project node to those technologies
@@ -40,11 +49,13 @@ angular.module('myApp.collaboration-page')
     for(var i = 0; i < $scope.yourTechList.length; i++){
       obj.techs.push({name: $scope.yourTechList[i]});
     }
+
     if($scope.profilePic.size < 5242880){
-      Project.get_signed_request($scope.profilePic);
+      var fileName = fileNamePrefix + $scope.profilePic.name;
+      Project.signRequest($scope.profilePic, fileName)
+      $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
+      $uibModalInstance.close(obj);
     }
-    
-    $uibModalInstance.close(obj);
 
   }
 

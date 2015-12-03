@@ -16,3 +16,4 @@ require('./passport')(app);
 require('./middleware')(app);
 
 server.listen(process.env.PORT);
+console.log('Server now running on port: ' + process.env.PORT);

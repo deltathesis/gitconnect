@@ -88,6 +88,33 @@ module.exports = function (socket) {
     socket.emit('insertData');
   });
 
+  socket.on('store:firstMessageData', function(data) {
+    var userRef = firebase.child('privateRooms');
+    var foundRoom = data.user + data.target;
+    if(!rooms) {
+      rooms = {};
+    }
+    if(rooms[data.user + data.target]) {
+      rooms[data.user + data.target].messages.push(data.message);
+      foundRoom = data.user + data.target;
+    } else if(rooms[data.target + data.user]) {
+      rooms[data.target + data.user].messages.push(data.message);
+      foundRoom = data.target = data.user;
+    } else {
+      var twoUsers = [data.user, data.target];
+      var roomMessages = [data.message];
+      rooms[foundRoom] = {};
+      rooms[foundRoom].messages = roomMessages;
+      rooms[foundRoom].users = twoUsers;
+    }
+    socket.emit('send:foundRoom', {
+      room: foundRoom
+    })
+    if(data) {
+      userRef.update(rooms);
+    }
+  })
+
   // notify other clients that a new user has joined
   socket.broadcast.emit('user:join', {
     name: name
@@ -167,26 +194,9 @@ module.exports = function (socket) {
       avatar: data.avatar
     });
   });
+  
   /** End of Project-Page Page Socket Functions **/
 
-  socket.on('store:firstMessageData', function(data) {
-    var userRef = firebase.child('privateRooms');
-    if(!rooms) {
-      rooms = {};
-    }
-    if(rooms[data.room]) {
-    rooms[data.room].messages.push(data.message);
-    } else {
-      var twoUsers = [data.user, data.target];
-      var roomMessages = [data.message];
-      rooms[data.room] = {};
-      rooms[data.room].messages = roomMessages;
-      rooms[data.room].users = twoUsers;
-    }
-    if(data) {
-      userRef.update(rooms);
-    }
-  })
 
   /*  notify your friend*/
   socket.on('notify:potentialFriend', function(data){

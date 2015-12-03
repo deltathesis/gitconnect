@@ -115,4 +115,10 @@ project.getCurrent = function(req, res) {
   });
 };
 
+project.getLanguages = function(req, res) {
+  Project.getLanguages(req.params.id).then(function(languages) {
+    res.json({languages: languages});
+  });
+};
+
 module.exports = project;

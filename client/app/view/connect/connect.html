@@ -44,7 +44,10 @@
 
   <div class="col-xs-12 developer-connect-details" ng-show="availability && users.length">
     <div class="connection">
-      <button class="btn connect-btn" ng-click="connectionRequest()">Connect</button>
+      <!-- <div class="alert alert-success confirm-connect" role="alert" ng-show="selectedUser.connectionRequest">Connection Request Sent!</div> -->
+      <button class="btn connect-btn" ng-click="connectionRequest()" ng-class="(!selectedUser.connectionRequest) ? '' : 'confirm-connect'">
+        {{!selectedUser.connectionRequest ? 'Send Connection Request' : 'Connection Request Sent!'}}
+      </button>
     </div>
     <div class="developer-detail">
       <p class="developer-name">{{selectedUser.name}}</p>
@@ -85,6 +88,7 @@
         </div>
       </div>
     </div>
+  </div>
 
 <!-- Filters Modal -->
 

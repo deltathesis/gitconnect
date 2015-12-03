@@ -63,6 +63,9 @@
       .swiper-slide-shadow-right {
         border-radius: 15px;
       }
+      .swiper-slide-shadow-left {
+        border-radius: 15px;
+      }
       .checkmark {
         display: none;
       }
@@ -89,7 +92,13 @@
       .connect-btn {
         background-color: $mainColor;
         color: #FFF;
-      }  
+        // transition: all, 0.5s, ease;
+        &.confirm-connect {
+          cursor: not-allowed;
+          background-color: #dff0d8;
+          color: #3c763d;
+        }
+      }
     }
     .developer-detail {
       margin-top: 30px;

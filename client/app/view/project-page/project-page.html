@@ -13,17 +13,17 @@
           <div class="post-subdetails">
             <div class="subdetail">
               <i class="fa fa-clock-o"></i> {{myproject.publishDate | date:'mediumDate'}}
-              <i class="fa fa-comment comments"></i> {{myproject.commentCount}}
+              <i class="fa fa-comment comments"></i> {{messages.length}}
             </div>
           </div>
         </div>
         <div class="voting">
           <div class="upvote vote">
-            <button ng-click="increment(myproject, $index)"><i class="fa fa-chevron-circle-up"></i></button>
+            <button ng-click="increment(myproject)"><i class="fa fa-chevron-circle-up"></i></button>
             <span class="count">{{myproject.upVote}}</span>
           </div>
           <div class="downvote vote">
-            <button ng-click="decrement(myproject, $index)"><i class="fa fa-chevron-circle-down"></i></button>
+            <button ng-click="decrement(myproject)"><i class="fa fa-chevron-circle-down"></i></button>
             <span class="count">{{myproject.downVote}}</span>
           </div>
         </div>
@@ -46,7 +46,7 @@
         </div>
         <ul class="developers-list cf">
           <li class="developer" ng-repeat="developer in myproject.teams">
-            <a href="" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
+            <a href="#/user/{{developer.username}}" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
             <p class="developer-name">{{developer.name}}</p>
           </li>
         </ul>

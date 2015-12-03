@@ -19,10 +19,11 @@ angular.module('myApp.projectpage', ['ngRoute'])
   });
 }])
 
-.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', 'getProject', 'getUsers', 'getLanguages', function($scope, $cookies, Cookie, socket, $rootScope, getProject, getUsers, getLanguages) {
+.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', 'getProject', 'getUsers', 'getLanguages', 'ProjectList', function($scope, $cookies, Cookie, socket, $rootScope, getProject, getUsers, getLanguages, ProjectList) {
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
+  var id = cookieObj.id;
   $scope.username = cookieObj.username;
   $scope.avatar = cookieObj.avatar;
   $scope.currentTime;
@@ -30,6 +31,7 @@ angular.module('myApp.projectpage', ['ngRoute'])
 
   $scope.init = function() {
     $scope.myproject = getProject.project;
+    console.log($scope.myproject);
     $scope.myproject.teams = getUsers.users;
     var techList = getLanguages.languages;
     socket.emit('initProject', {
@@ -57,13 +59,23 @@ angular.module('myApp.projectpage', ['ngRoute'])
   }
   
 
-  // $scope.increment = function(project, index){
-  //   project.upVote += 1;
-  // }
+  $scope.increment = function(project){
+    ProjectList.vote(project.id, id, true)
+      .then(function(data) {
+        if (data.success) {
+          project.upVote += 1;
+        }
+      });
+  };
 
-  // $scope.decrement = function(project, index){
-  //   project.downVote += 1;
-  // }
+  $scope.decrement = function(project){
+    ProjectList.vote(project.id, id, false)
+      .then(function(data) {
+        if (data.success) {
+          project.downVote += 1;
+        }
+      });
+  };
 
   /** Socket Listeners **/
 

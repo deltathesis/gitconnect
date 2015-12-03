@@ -18,7 +18,7 @@ angular.module('myApp.subscription', ['ngRoute'])
   function($scope, $location, Cookie, $cookies, UserForm, getProfile, userOwnTech, techList) {
 
   $scope.user = getProfile;
-  console.log(getProfile);
+  //console.log(getProfile);
 
   // Check if page of the user
   $scope.ownership = false;

@@ -1,7 +1,16 @@
 var User = require('../db/models/user');
 var Node = require('../db/models/node');
+var nodemailer = require('nodemailer');
 
 var user = {};
+
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.GMAIL_ACCOUNT,
+        pass: process.env.GMAIL_PWD
+    }
+});
 
 user.getCurrentUser = function(req, res) {
 	res.json({username: req.session.username, avatar_url: req.session.avatar_url});
@@ -161,5 +170,27 @@ user.requestFriend = function(req, res) {
   })
   res.end()
 };
+
+user.contactMessage = function(req, res) {
+  var mailOptions = {
+        from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
+        to: 'gitconnect.app@gmail.com', // list of receivers
+        subject: 'Contact message from ' + req.body.email, // Subject line
+        text: 'Contact message from ' + req.body.email, // plaintext body
+        html: '<h2>Contact message from ' + req.body.email +'</h2><br>'
+              + '<h4>Subject</h4><br>'
+              + req.body.subject + '<br>'
+              + '<h4>message</h4><br>'
+              + req.body.message
+    };
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            return console.log(error);
+        }
+        //console.log('Message sent: ' + info.response);
+    });
+  res.end()
+}
 
 module.exports = user;

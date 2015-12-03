@@ -23,6 +23,7 @@ router.post('/api/user/updateform', user.updateForm);
 router.post('/api/user/availabilitytoggle', user.toggleAvailable);
 router.get('/api/user/delete/:name', user.deleteUser);
 router.post('/api/user/connection-request', user.requestFriend);
+router.post('/api/contactmessage', user.contactMessage);
 
 // Connection Routes
 router.get('/api/connectionslistDemands/:name', connectionslist.getDemands);

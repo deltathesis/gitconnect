@@ -16,7 +16,7 @@ angular.module('myApp.services', [])
 	var logout = function() {
 		return $http({
 			method: 'GET',
-			url: '/logout'
+			url: '/auth/logout'
 		}).then(function(res) {
 			return res.data;
 		});

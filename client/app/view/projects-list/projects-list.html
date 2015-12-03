@@ -45,7 +45,7 @@
         </p>
         <ul class="developers-list cf">
           <li class="developer" ng-repeat="developer in project.teams">
-            <a href="" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
+            <a href="#/user/{{developer.username}}" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
             <p class="developer-name">{{developer.name}}</p>
           </li>
         </ul>

@@ -64,13 +64,13 @@ Node.getNodesWithLabel = function(label){
 Node.getRelationshipData = function(baseNode, relDirection, relLabel){
   return new Promise(function(resolve){
     var results = {};
-    results.relationships = {};
     User.get(baseNode).then(function(node){
-      results.user = node[0];
+      results = node[0];
       return node[0];
     }).then(function(node){
         return Node.getRelationships(node.id, relDirection, relLabel)
     }).then(function(relArray){
+        results.relationships = {};
         var relNodes = [];
         relArray.forEach(function(node){
           relNodes.push(db.readAsync(node.end).then(function(nodeData){

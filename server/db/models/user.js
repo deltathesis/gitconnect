@@ -74,16 +74,20 @@ var createUser = function(username){
 //match users to other users
 User.getMatches = function(username){
   return new Promise(function(resolve){
-    var cypher = "MATCH (user {username:'"+username+"'})-[r*1..2]-(x:User {availability: 'true'})-[:KNOWS]-(p) "
-               + "WHERE NOT (user)-->(x) AND NOT x.username = '"+username+"' "
-               + "RETURN collect(DISTINCT p) AS skills, x AS userData, "
-               + "COUNT(x) AS nUsers ORDER BY nUsers DESC LIMIT 20";
+    var cypher = "MATCH (user {username:'"+username+"'})-[r*1..2]-(x:User) "
+               + "WHERE NOT (user)-->(x) AND NOT x.username = '"+username+"' AND x.availability = 'true'"
+               + "RETURN DISTINCT x,  "
+               + "COUNT(x) ORDER BY COUNT(x) DESC LIMIT 20";
     db.queryAsync(cypher).then(function(nodes){
-      resolve(nodes.map(function(node){
-        var data = node.userData
-        data.skills = node.skills
-        return data;
-      }))
+      var getRelationshipData = require('./node.js').getRelationshipData
+      var promises = [];
+      nodes.forEach(function(user){
+        promises.push(getRelationshipData({username: user.x.username}, 'all', ''))
+      })
+      return Promise.all(promises)
+    })
+    .then(function(users){
+      resolve(users);
     })
     .catch(function(err){
       console.log(err)
@@ -298,12 +302,10 @@ User.matches = function(skills, username){
         return element.n;
       })
     }).then(function(users){
+      var getRelationshipData = require('./node.js').getRelationshipData
       var promises = [];
       users.forEach(function(user){
-        promises.push(db.queryAsync("match (n {username: '"+user.username+"'})-[:KNOWS]-(l) return l").then(function(skills){
-          user.skills = skills
-          return user;
-        }))
+        promises.push(getRelationshipData({username: user.username}, 'all', ''))
       })
       return Promise.all(promises)
     }).then(function(result){

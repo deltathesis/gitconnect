@@ -43,6 +43,8 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   $scope.defaultUsers = matches;
 
   $scope.users = matches;
+  console.log($scope.users)
+  console.log($scope.selectedUser)
 
   $scope.selections = [];
 
@@ -53,7 +55,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
   // Check availability status on page render
   $scope.statusCheck = function() {
-    $scope.availability = JSON.parse($scope.user.user.availability);
+    $scope.availability = JSON.parse($scope.user.availability);
   }
 
   $scope.techList = [];
@@ -114,15 +116,15 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     return $http({
       method: 'POST',
       url: '/api/user/connection-request',
-      data: { currentUser: $scope.user.user, 
+      data: { currentUser: $scope.user, 
               selectedUser: $scope.selectedUser
             }
     }).then(function successCallback(response) {
         socket.emit('notify:potentialFriend', {
-          target: angular.copy($scope.selectedUser.username), currentUser: angular.copy($scope.user.user.username)
+          target: angular.copy($scope.selectedUser.username), currentUser: angular.copy($scope.user.username)
         })
     }, function errorCallback(response) {
-      console.log('error: ', reponse);
+      console.log('error: ', response);
     });
   };
 
@@ -171,7 +173,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
       $scope.selectedUser = {};
     }
     newUsers.forEach(function(user){
-      user.skills.forEach(function(skill){
+      user.relationships.KNOWS.forEach(function(skill){
         skill.nameEncoded = encodeURIComponent(skill.name)
       })
     })
@@ -217,7 +219,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         url: '/api/user/:name/matches',
         data: {
           filters: $scope.selections,
-          username: $scope.user.user.username
+          username: $scope.user.username
         }
       }).then(function successCallback(response) {
         $scope.users = response.data.matches;

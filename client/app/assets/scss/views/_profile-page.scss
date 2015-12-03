@@ -129,6 +129,42 @@
         }
       }
     }
+    &.user-projects-container {
+      .projects-details {
+        .project-list {
+          .project {
+            margin-bottom: 10px;
+            padding-bottom:10px;
+            .inner-container {
+              padding: 10px;
+              border:1px solid #CCC;
+              border-radius: 3px;
+              overflow: hidden;
+              -moz-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
+              -webkit-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
+              box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
+              .project-name {
+                border: none;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #000;
+              }
+              .project-picture {
+                height: 200px;
+                background-size: cover;
+                background-position: 50% 50%;
+              }
+              .description {
+                overflow: hidden;
+                height: 60px;
+                margin-top: 10px;
+                margin-bottom: 0px;
+              }
+            }
+          }
+        }
+      }
+    }
     &.user-recents-container {
       .recents-details {
         .recent {

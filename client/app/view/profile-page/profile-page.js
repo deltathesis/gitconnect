@@ -68,15 +68,15 @@ angular.module('myApp.profilepage', ['ngRoute'])
       if (userBio !== '') {
         $scope.user.bio = userBio;
       } else {
-        $scope.user.bio = $scope.user.user.bio;
+        $scope.user.bio = $scope.user.bio;
       }
 
       // Updated User Full Name
       var userFullName = userOwnTech.getFullName();
       if (userFullName !== '') {
-        $scope.user.user.name = userFullName;
+        $scope.user.name = userFullName;
       } else {
-        $scope.user.user.name = $scope.user.user.name;
+        $scope.user.name = $scope.user.name;
       }
 
       // Get user projects
@@ -98,10 +98,10 @@ angular.module('myApp.profilepage', ['ngRoute'])
     var cookie = $cookies.get('gitConnectDeltaKS');
     if(cookie){
       var cookieObj = Cookie.parseCookie(cookie);
-      if (cookieObj.username === $scope.user.user.username) {
-        $scope.availability = JSON.parse($scope.user.user.availability);
+      if (cookieObj.username === $scope.user.username) {
+        $scope.availability = JSON.parse($scope.user.availability);
         $scope.ownership = true;
-        $scope.availabilityStatus = ($scope.user.user.availability === "true") ? 'available' : 'unavailable';
+        $scope.availabilityStatus = ($scope.user.availability === "true") ? 'available' : 'unavailable';
       }
     }
   }
@@ -156,7 +156,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
       console.log("inside");
       return $http({
         method: 'GET',
-        url: '/api/user/delete/' + $scope.user.user.username
+        url: '/api/user/delete/' + $scope.user.username
       }).then(function(res) {
         $window.location.reload();
         return console.log("Your profile has been deleted");
@@ -186,7 +186,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
         text: $scope.message,
         user: cookieObj.username
       },
-      room: cookieObj.username + $scope.user.user.username
+      room: cookieObj.username + $scope.user.username
     });
     socket.emit('store:firstMessageData', {
       message: {
@@ -194,8 +194,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
         user: cookieObj.username
       },
       user: cookieObj.username,
-      target: $scope.user.user.username,
-      room: cookieObj.username + $scope.user.user.username
+      target: $scope.user.username,
+      room: cookieObj.username + $scope.user.username
     });
     $scope.message = '';
   }

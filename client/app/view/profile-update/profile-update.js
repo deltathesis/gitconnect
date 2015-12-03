@@ -34,8 +34,8 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
     var cookie = $cookies.get('gitConnectDeltaKS');
     if(cookie){
       var cookieObj = Cookie.parseCookie(cookie);
-      console.log(cookieObj.username,$scope.user.user.username);
-      if (cookieObj.username === $scope.user.user.username) {
+      console.log(cookieObj.username,$scope.user.username);
+      if (cookieObj.username === $scope.user.username) {
         $scope.ownership = true;
       }
     }
@@ -46,9 +46,9 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
     $scope.user.languages.push(tech.name);
   })
 
-  $scope.userEmail = $scope.user.user.email;
-  $scope.userBio = $scope.user.user.bio;
-  $scope.userFullName = $scope.user.user.name;
+  $scope.userEmail = $scope.user.email;
+  $scope.userBio = $scope.user.bio;
+  $scope.userFullName = $scope.user.name;
   $scope.cityId;
   $scope.cityName;
 
@@ -100,7 +100,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
       // Location user update form submission
       var resultsLocation = {
-        username: $scope.user.user.username,
+        username: $scope.user.username,
         cityId: $scope.cityId,
         cityName: $scope.cityName
       }
@@ -110,7 +110,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
       // Prepare email and Bio data
       var userInfos = {
-        username: $scope.user.user.username,
+        username: $scope.user.username,
         email: userEmail,
         bio: userBio,
         name: userFullName
@@ -135,7 +135,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
       // Redirection to the home page
       // $window.location.reload();
-      $location.path('/user/' + $scope.user.user.username);
+      $location.path('/user/' + $scope.user.username);
     }
   };
 

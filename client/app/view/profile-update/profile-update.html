@@ -1,6 +1,6 @@
 <div class="container page profile-update-page fadein-effect" ng-init="statusCheck()">
   <h2 ng-show='!ownership'>Your are not allowed to modify these informations</h2>
-  <h2 ng-show='ownership'>Hello {{user.user.username}} </h2>
+  <h2 ng-show='ownership'>Hello {{user.username}} </h2>
   <h4 ng-show='ownership'>Update your informations</h4>
 
   <form class="form-horizontal profile-update-form row" ng-show='ownership' ng-submit="formSubmit()" ng-init="googleMapInit()">

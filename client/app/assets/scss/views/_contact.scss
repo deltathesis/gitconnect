@@ -1,10 +1,15 @@
 .contact-page {
   .contact-container {
+    padding-bottom: 30px;
     .top-info {
       h1 {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
       }
+    }
+    .msg-sending-info {
+      text-align: center;
+      margin: 20px 0px;
     }
   }
 }

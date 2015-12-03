@@ -320,7 +320,7 @@ User.makeAvailable = function(username){
   }
   // Update user availability into the DB
   objUser.userNode.then(function(users) {
-    User.update(users[0], {availability: "true"})
+    require('./node').update(users[0], {availability: "true"})
   });
 }
 

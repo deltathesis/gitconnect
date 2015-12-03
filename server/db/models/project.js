@@ -1,6 +1,7 @@
 var Promise = require('bluebird');
 var User = require('./user');
 var db = require('../database');
+var Node = require('./node');
 
 var Project = {};
 
@@ -116,14 +117,14 @@ Project.create = function(usersData){
 
     // Add user to project relationships
     .then(function(data){
-      User.addRelationships({
+      Node.addRelationships({
         baseNode: {username: usersData.userFirst},
         relNodes: [node],
         relDirection: 'out',
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
       });
-      User.addRelationships({
+      Node.addRelationships({
         baseNode: {username: usersData.userSecond},
         relNodes: [node],
         relDirection: 'out',
@@ -141,7 +142,7 @@ Project.create = function(usersData){
       }
       // Update user availability into the DB
       objUser1.userNode.then(function(users) {
-        User.update(users[0], {availability: "false"})
+        Node.update(users[0], {availability: "false"})
       });
       // Toggle availability for user 2
       //Get User Node
@@ -150,7 +151,7 @@ Project.create = function(usersData){
       }
       // Update user availability into the DB
       objUser2.userNode.then(function(users) {
-        User.update(users[0], {availability: "false"})
+        Node.update(users[0], {availability: "false"})
       })
 
       // ******
@@ -197,9 +198,7 @@ Project.deleteProject = function(projectId){
     var cypher = 'MATCH (n { projectId:"'+projectId+'" })'
                 + ' DETACH DELETE n';
     db.queryAsync(cypher).then(function(node){
-      resolve(function() {
-        console.log("project deleted");
-      })
+      resolve();
     })
     .catch(function(err){
       console.log(err)

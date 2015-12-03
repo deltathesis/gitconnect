@@ -67,7 +67,7 @@
         <h3 class="col-xs-12">Skills</h3>
         <div class="language-list list">
           <ul>
-            <li class="col-xs-6 col-sm-3" ng-repeat="skill in selectedUser.skills">
+            <li class="col-xs-6 col-sm-3" ng-repeat="skill in selectedUser.relationships.KNOWS">
               <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{skill.nameEncoded}}.jpg')"></span>
               <span class="tech-name">{{skill.name}}</span>
             </li>
@@ -81,7 +81,7 @@
         <h3 class="col-xs-12">Projects</h3>
         <div class="project-list list">
           <ul>
-            <li class="col-xs-6 col-sm-4" ng-repeat="project in user.projects">
+            <li class="col-xs-6 col-sm-4" ng-repeat="project in user.relationships.WORKED">
               <a href="">{{project.name}}</a>
             </li>
           </ul>

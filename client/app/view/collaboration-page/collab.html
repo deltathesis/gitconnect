@@ -9,19 +9,13 @@
         </button>
         <button ng-click="publish('lg')" class='btn btn-success project-actions'>Publish</button>
       </div>
-      <ul class="team-members-list">
+      <ul class="team-members-list cf">
         <li class="team-member" ng-repeat="user in projectUsers">
           <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
-          <p class="team-member-name truncate">{{user.username}}</p>
+          <p class="team-member-name">{{user.name}}</p>
         </li>
       </ul>
     </div>
-    <ul class="team-members-list cf">
-      <li class="team-member" ng-repeat="user in projectUsers">
-        <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
-        <p class="team-member-name">{{user.name}}</p>
-      </li>
-    </ul>
   </div>
   <div class="row links">
     <div class="col-xs-12">

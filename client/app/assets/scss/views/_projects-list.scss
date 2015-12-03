@@ -19,6 +19,91 @@
   }
 
 
+  .projects-list {
+    .project-post {
+      font-size: 18px;
+      min-height: 62px;
+      line-height: 17px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      clear: both;
+      box-sizing: border-box;
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      border-radius: 3px;
+      cursor: pointer;
+      margin: 0 -10px;
+      padding: 10px;
+      position: relative;
+      transition: background, 0.1s;
+      &:hover {
+        background: #f7f7fa;
+      }
+      .vote-block {
+        margin: 0 11px 0 0;
+        text-align: center;
+        .project-vote-button {
+          min-width: 16px;
+          width: 34px;
+        }
+        .project-vote-count {
+          display: block;
+          line-height: 16px;
+          margin: 2px 0 0;
+        }
+      }
+      .project-thumbnail {
+        display: block;
+        height: 140px;
+        margin-right: 20px;
+        width: 180px;
+        border-radius: 3px;
+        background-size: cover;
+        background-image: url(http://media.indiatimes.in/media/content/2014/Jan/lynx-mark-1-spaceship-by-space-expedition-corporation_1390290288_540x540.jpg);
+      }
+      .post-text {
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        box-flex: 1;
+        flex: 1;
+        .date-and-comments {
+          font-size: 14px;
+          display: block;
+          margin-bottom: 20px;
+          .comments {
+            padding-left: 10px;
+          }
+        }
+        .project-name {
+          text-decoration: none;
+          color: black;
+          margin: 6px 2px 0 0px;
+          line-height: 22px;
+        }
+        .project-short-description {
+          font-size: 14px;
+          margin: 5px 0 0 0px;
+          line-height: 20px;
+          display: flex;
+          -webkit-box-align: center;
+          align-items: center;
+        }
+      }
+      .post-user-info {
+        .user-image {
+          border-radius: 50%;
+          background-size: cover;
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 20px;
+          height: 40px;
+          width: 40px;
+        }
+      } 
+    }
+  }
+  
   .project-post {
     padding-top: 20px;
     padding-bottom: 20px;

@@ -199,6 +199,15 @@ angular.module('myApp.services', [])
     });
   };
 
+  var getLanguages = function(id) {
+    return $http({
+      cache: true,
+      method: 'GET',
+      url: '/api/project/languages/' + id
+    }).then(function(res) {
+      return res.data;
+    })
+  }
   var updateProject = function(projectObj, oldProject, langArray, user1, user2){
     return $http({
       method: 'POST',
@@ -234,7 +243,8 @@ angular.module('myApp.services', [])
     getInfos: getInfos,
     getUsers: getUsers,
     updateProject: updateProject,
-    deleteProject: deleteProject
+    deleteProject: deleteProject,
+    getLanguages: getLanguages
   };
 
 }])

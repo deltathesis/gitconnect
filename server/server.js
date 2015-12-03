@@ -411,6 +411,12 @@ app.get('/api/project/:id', function(req, res) {
   });
 });
 
+app.get('/api/project/languages/:id', function(req, res) {
+  Project.getLanguages(req.params.id).then(function(languages) {
+    res.json({languages: languages});
+  })
+})
+
 app.get('/api/project/users/:id', function(req, res) {
   Project.getUsers(req.params.id).then(function(userslist){
     // console.log('users project:',userslist)

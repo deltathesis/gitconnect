@@ -4,7 +4,7 @@
     <div class="row project-post fadein-effect">
       <div class="col-xs-12 post-top-info">
         <div class="post-thumbnail thumbnail-pic">
-          <a href="" alt="" style="background-image:url({{myproject.thumbnail}})"></a>
+          <a href="" alt="" style="background-image:url({{myproject.picture}})"></a>
         </div>
         <div class="post-top-details">
           <div class="post-title project-name">
@@ -46,7 +46,7 @@
         </div>
         <ul class="developers-list">
           <li class="developer" ng-repeat="developer in myproject.teams">
-            <a href="" class="developer-pic" style="background-image:url({{developer.picture}})"></a>
+            <a href="" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
             <p class="developer-name">{{developer.name}}</p>
           </li>
         </ul>
@@ -92,7 +92,7 @@
       <h1>Comments</h1>
       <ul class="list-group">
         <li class="list-group-item cf" ng-repeat="message in messages">
-          <a href="" class="team-member-chat-picture" style="background-image:url('assets/pictures/users/royce.jpg')"></a>
+          <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
           <div class="message-content">
             <span class="username">{{message.username}}</span>
             <span class="date">{{ message.date | date: 'short' }}</span>

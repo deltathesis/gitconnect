@@ -163,7 +163,8 @@ module.exports = function (socket) {
     socket.broadcast.emit('send:projectMessage', {
       username: name,
       message: data.message,
-      date: data.date
+      date: data.date,
+      avatar: data.avatar
     });
   });
   /** End of Project-Page Page Socket Functions **/

@@ -77,10 +77,16 @@
   <div class="row user-projects-container user-profile-block">
     <div class="projects-details details-container">
       <h3 class="col-xs-12">Projects</h3>
+      <p class="no-projects col-xs-12" ng-hide="hasProjects">No project yet</p>
+
       <div class="project-list list">
         <ul>
-          <li class="col-xs-6 col-sm-4" ng-repeat="project in user.projects">
-            <a href="">{{project.name}}</a>
+          <li class="project col-xs-12 col-sm-4" ng-repeat="project in user.projects" ng-click="redirect(project.projectId)">
+            <div class="inner-container">
+              <a href="" class="project-name truncate">{{project.name}}</a>
+              <div class="project-picture" style="background-image:url('{{project.picture}}')"></div>
+              <p class="description">{{project.shortDesc}}</p>
+            </div>
           </li>
         </ul>
       </div>

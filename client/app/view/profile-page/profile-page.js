@@ -14,8 +14,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
 }])
 
 .controller('profilePage', [
-  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket',
-  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket) {
+  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket', '$location',
+  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket, $location) {
 
   // var user = {
   //   ratings: Math.round(4.2),
@@ -79,10 +79,15 @@ angular.module('myApp.profilepage', ['ngRoute'])
         $scope.user.user.name = $scope.user.user.name;
       }
 
+      // Get user projects
+      $scope.user.projects = $scope.user.relationships.WORKED;
+      $scope.hasProjects = ($scope.user.projects === undefined) ? false:true;
   }
 
   
-  
+  $scope.redirect = function(id) {
+    $location.path('/project/' + id);
+  }
 
 
   // Check if page of the user

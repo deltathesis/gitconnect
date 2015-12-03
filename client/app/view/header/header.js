@@ -16,9 +16,13 @@ angular.module('myApp.header', [])
     })
 
   }
-  $scope.clearNotifications = function(){
+  $scope.clearFriendRequestNotifications = function(){
     socket.emit('clear:friendRequests', {currentUser: angular.copy($scope.username)});
   };  
+
+  $scope.clearMessageNotifications = function() {
+    socket.emit('notify:message', {target: angular.copy($scope.username), currentUser: angular.copy($scope.username)});
+  }
 
   $scope.hasProject = false;
 

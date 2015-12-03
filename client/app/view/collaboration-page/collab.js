@@ -35,6 +35,9 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   $scope.currentTime;
   $scope.displayName;
   $scope.actualName;
+
+  // Set default min height regarding screen height
+  $('.page').css('min-height', window.innerHeight - 40 + 'px');
   
   var getOwnName = function() {
     for(var i = 0; i < $scope.projectUsers.length; i++) {

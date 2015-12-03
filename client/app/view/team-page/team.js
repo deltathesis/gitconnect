@@ -10,4 +10,7 @@ angular.module('myApp.team', ['ngRoute'])
 
 .controller('teamCtrl', ['$scope', function($scope) {
 
+  // Set default min height regarding screen height
+  $('.page').css('min-height', window.innerHeight - 40 + 'px');
+
 }]);

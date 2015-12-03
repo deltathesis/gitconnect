@@ -40,6 +40,9 @@ angular.module('myApp.requests', ['ngRoute'])
   $scope.usersRequest = usersRequest;
   $scope.userDemands = userDemands;
 
+  // Set default min height regarding screen height
+  $('.page').css('min-height', window.innerHeight - 40 + 'px');
+
   $scope.ratings = function(ratings, index, type) {
     // Ratings Module
     index = index + 2;

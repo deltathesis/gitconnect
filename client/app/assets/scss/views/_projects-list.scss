@@ -80,7 +80,7 @@
         margin-top: 20px;
         margin-bottom: 20px;
         .developer {
-          display: inline-block;
+          float: left;
           width: 50px;
           margin: 0 10px;
           &:first-child {

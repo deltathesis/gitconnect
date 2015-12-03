@@ -6,7 +6,7 @@
     border-bottom: 1px dotted #CCC;
     .team-members-list {
       .team-member {
-        display: inline-block;
+        float: left;
         width: 50px;
         margin: 0 10px;
         &:first-child {

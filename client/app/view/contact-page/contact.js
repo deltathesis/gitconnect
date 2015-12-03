@@ -10,4 +10,9 @@ angular.module('myApp.contact', ['ngRoute'])
 
 .controller('contactCtrl', ['$scope', function($scope) {
 
+  // Set default min height regarding screen height
+  $('.page').css({
+    'min-height': window.innerHeight - 40
+  });
+
 }]);

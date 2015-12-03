@@ -1,4 +1,52 @@
 .team-page {
   .team-container {
+    .top-info {
+      h1, h2 {
+        text-align: center;
+      }
+    }
+    .split {
+      padding-top: 30px;
+      border-bottom: 1px dotted #CCC;
+    }
+    .team-display {
+      padding-top: 40px;
+      .member {
+        text-align: center;
+        margin-bottom: 40px;
+        .picture {
+          background-size: cover;
+          background-position: 50%  50%;
+          width: 50%;
+          border-radius: 50%;
+          padding-bottom: 50%;
+          margin: 0 auto;
+        }
+        .member-name {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 15px 0px;
+        }
+        .member-role {
+          font-size: 14px;
+          margin:0px 0px 15px;
+        }
+        .member-github {
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width : 768px) and (max-width : 991px) {
+  .team-page {
+    .team-container {
+      .team-display {
+        .member {
+          min-height: 250px;
+        }
+      }
+    }
   }
 }

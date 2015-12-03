@@ -61,7 +61,7 @@ angular.module('myApp.requests', ['ngRoute'])
     var usersObject = {
       userFirst: userUsername,
       userSecond: username,
-      userFirstEmail:userInfos.user.email,
+      userFirstEmail:userInfos.email,
       userSecondEmail:useremail
     };
     

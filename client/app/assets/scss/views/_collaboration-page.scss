@@ -1,9 +1,21 @@
 .collaboration-page {
-
   .team-details {
     padding-top: 20px;
     padding-bottom: 20px;
     border-bottom: 1px dotted #CCC;
+    .top-container {
+      margin-bottom: 10px;
+      h1 {
+        margin-top: 0px;
+        float: left;
+      }
+      .btn.project-actions {
+        float: right;
+        &.btn-danger {
+          margin-left: 10px;
+        }
+      }
+    }
     .team-members-list {
       .team-member {
         float: left;
@@ -85,5 +97,23 @@
       .message-content-body {
       }
     }
+  }
+}
+
+@media (max-width: 450px) {
+  .collaboration-page {
+    .team-details {
+      .top-container {
+        h1 {
+          width: 100%;
+        }
+        .btn.project-actions {
+         float: left;
+         &.btn-danger {
+            margin-right: 10px;
+          }
+        }
+      }
+    } 
   }
 }

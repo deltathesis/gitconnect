@@ -176,18 +176,11 @@ angular.module('myApp.profilepage', ['ngRoute'])
   }
 
   /** Socket Message Sending **/
+  var cookie = $cookies.get('gitConnectDeltaKS');
+  var cookieObj = Cookie.parseCookie(cookie);
 
   $scope.sendMessage = function(targetUser) {
-    var cookie = $cookies.get('gitConnectDeltaKS');
-    var cookieObj = Cookie.parseCookie(cookie);
 
-    socket.emit('send:privateMessage', {
-      message: {
-        text: $scope.message,
-        user: cookieObj.username
-      },
-      room: cookieObj.username + $scope.user.username
-    });
     socket.emit('store:firstMessageData', {
       message: {
         text: $scope.message,
@@ -199,6 +192,15 @@ angular.module('myApp.profilepage', ['ngRoute'])
     });
     $scope.message = '';
   }
+  socket.on('send:foundRoom', function(data) {
+    socket.emit('send:privateMessage', {
+      message: {
+        text: $scope.message,
+        user: cookieObj.username
+      },
+      room: data.room
+    });
+  })
 
   /** End of Socket **/
 }]);

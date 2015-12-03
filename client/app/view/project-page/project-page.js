@@ -31,7 +31,6 @@ angular.module('myApp.projectpage', ['ngRoute'])
 
   $scope.init = function() {
     $scope.myproject = getProject.project;
-    console.log($scope.myproject);
     $scope.myproject.teams = getUsers.users;
     var techList = getLanguages.languages;
     socket.emit('initProject', {

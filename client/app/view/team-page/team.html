@@ -1,9 +1,20 @@
 <div class="container page team-page fadein-effect">
-  
+
   <div class="row team-container">
     <div class="col-xs-12 top-info">
       <h1>Who is behind GitConnect</h1>
       <h2>Our team</h2>
+    </div>
+    <span class="col-xs-4 col-xs-offset-4 split"></span>
+    <div class="col-xs-12 team-display">
+      <ul class="row">
+      <li class="member col-xs-12 col-sm-4"ng-repeat="member in team">
+          <div class="picture" style="background-image:url({{member.picture}})"></div>
+          <p class="member-name">{{member.name}}</p>
+          <p class="member-role">{{member.role}}</p>
+          <a class="member-github" href="{{member.github}}" target="_blank"><i class="fa fa-github"></i> Github</a>
+        </li>
+      </ul>
     </div>
   </div>
 

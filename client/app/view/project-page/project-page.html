@@ -35,8 +35,8 @@
         <div class="tech-list">
           <ul class="row">
             <li class="col-xs-6 col-sm-3" ng-repeat="tech in myproject.languages">
-              <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{tech}}.jpg')"></span>
-              <span class="tech-name">{{tech}}</span>
+              <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{tech.nameEncoded}}.jpg')"></span>
+              <span class="tech-name">{{tech.name}}</span>
             </li>
           </ul>
         </div>

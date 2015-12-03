@@ -11,12 +11,15 @@ angular.module('myApp.projectpage', ['ngRoute'])
       }],
       getUsers: ['$route', 'Project', function($route, Project) {
         return Project.getUsers($route.current.params.id);
+      }],
+      getLanguages: ['$route', 'Project', function($route, Project) {
+        return Project.getLanguages($route.current.params.id);
       }]
     }
   });
 }])
 
-.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', 'getProject', 'getUsers', function($scope, $cookies, Cookie, socket, $rootScope, getProject, getUsers) {
+.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', 'getProject', 'getUsers', 'getLanguages', function($scope, $cookies, Cookie, socket, $rootScope, getProject, getUsers, getLanguages) {
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -28,11 +31,20 @@ angular.module('myApp.projectpage', ['ngRoute'])
   $scope.init = function() {
     $scope.myproject = getProject.project;
     $scope.myproject.teams = getUsers.users;
+    var techList = getLanguages.languages;
     socket.emit('initProject', {
       name: $scope.username,
       projectRoom: $scope.myproject.projectId
     });
     $scope.displayName = getOwnName();
+    $scope.myproject.languages = [];
+
+    techList.forEach(function(tech) {
+      $scope.myproject.languages.push({
+        name:tech.name,
+        nameEncoded: encodeURIComponent(tech.name)
+      });
+    });
   }
 
   var getOwnName = function() {

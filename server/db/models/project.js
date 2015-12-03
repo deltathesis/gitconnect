@@ -77,6 +77,21 @@ Project.getUsers = function(id){
   })
 };
 
+// Get languages of project requests
+Project.getLanguages = function(id) {
+  return new Promise(function(resolve) {
+    var cypher = 'MATCH ({projectId: "'+id+'"})-[:Uses]->(n)' +'RETURN n';
+    db.queryAsync(cypher).then(function(nodes) {
+      resolve(nodes.map(function(element) {
+        return element;
+      }))
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  })
+};
+
 // Project creation
 Project.create = function(usersData){
   var node = {};

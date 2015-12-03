@@ -11,6 +11,8 @@ var users = {};
 //collabMessages, currently not in room format yet
 var collabRooms = [];
 
+var projectComments;
+
 var retrieveData = function () {
   firebase.once("value", function(data) {
     if(data.val()) {  
@@ -143,8 +145,9 @@ module.exports = function (socket) {
 
   //intialized username and adds socket info to people array
   socket.on('initProject', function(data) {
-    name = data;
-    people[data] = socket;
+    name = data.name;
+    people[data.name] = socket;
+    people[data.name].join(data.projectRoom);
     socket.emit('initProject', projectComments);
   });
 
@@ -160,7 +163,8 @@ module.exports = function (socket) {
     socket.broadcast.emit('send:projectMessage', {
       username: name,
       message: data.message,
-      date: data.date
+      date: data.date,
+      avatar: data.avatar
     });
   });
   /** End of Project-Page Page Socket Functions **/

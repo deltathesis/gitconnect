@@ -1,59 +1,66 @@
 angular.module('myApp.projectpage', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/project', {
+  $routeProvider.when('/project/:id', {
     authenticate: true,
     templateUrl: 'view/project-page/project-page.html',
     controller: 'projectPage',
+    resolve: {
+      getProject: ['$route', 'Project', function($route, Project) {
+        return Project.getInfos($route.current.params.id);
+      }],
+      getUsers: ['$route', 'Project', function($route, Project) {
+        return Project.getUsers($route.current.params.id);
+      }]
+    }
   });
 }])
 
-.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', function($scope, $cookies, Cookie, socket, $rootScope) {
+.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', 'getProject', 'getUsers', function($scope, $cookies, Cookie, socket, $rootScope, getProject, getUsers) {
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
+  $scope.avatar = cookieObj.avatar;
   $scope.currentTime;
   $scope.messages = [];
 
-  var project = {
-    thumbnail: 'assets/pictures/projects-thumbnails/koti.jpg',
-    github: 'http://www.github.com',
-    name: 'Koti',
-    publishDate: 1447797324755,
-    commentCount: 25,
-    upVote: 48,
-    downVote: 12,
-    shortDesc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    teams: [
-      {name:'Royce', id:'123', picture:'assets/pictures/users/royce.jpg'},
-      {name:'Renan', id:'987', picture:'assets/pictures/users/renan.jpg'},
-      {name:'Chris', id:'567', picture:'assets/pictures/users/chris.jpg'},
-      {name:'Jake', id:'0987', picture:'assets/pictures/users/jake.jpg'}
-    ],
-    picture: 'assets/pictures/projects/koti.jpg',
-    languages: ['JavaScript', 'AngularJS', 'Sass', 'CSS', 'HTML', 'Firebase'],
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-  };
-
-  $scope.project = project;
-
-  $scope.increment = function(project, index){
-    project.upVote += 1;
+  $scope.init = function() {
+    $scope.myproject = getProject.project;
+    $scope.myproject.teams = getUsers.users;
+    socket.emit('initProject', {
+      name: $scope.username,
+      projectRoom: $scope.myproject.projectId
+    });
+    $scope.displayName = getOwnName();
   }
 
-  $scope.decrement = function(project, index){
-    project.downVote += 1;
+  var getOwnName = function() {
+    for(var i = 0; i < $scope.myproject.teams.length; i++) {
+      if($scope.myproject.teams[i].username === $scope.username) {
+        $scope.actualName = $scope.myproject.teams[i].name;
+        return $scope.actualName + '(' + $scope.username + ')';
+      }
+    }
   }
+  
+
+  // $scope.increment = function(project, index){
+  //   project.upVote += 1;
+  // }
+
+  // $scope.decrement = function(project, index){
+  //   project.downVote += 1;
+  // }
 
   /** Socket Listeners **/
 
-  socket.emit('initProject', $scope.username);
+ 
 
   // listen to initializer
   socket.on('initProject', function(data) {
-    if(data) {
-      $scope.messages = data.testRoom;
+    if(data[$scope.myproject.projectId]) {
+      $scope.messages = data[$scope.myproject.projectId];
     }
   })
 
@@ -66,20 +73,23 @@ angular.module('myApp.projectpage', ['ngRoute'])
     if($scope.text){
     var currentTime = new Date();
       socket.emit('send:projectMessage', {
+        room: $scope.myproject.projectId,
         message: $scope.text,
-        date: currentTime
+        date: currentTime,
+        name: $scope.displayName,
+        avatar: $scope.avatar
       })
 
    
       $scope.messages.push({
         username: $scope.username,
         message: $scope.text,
-        date: currentTime
+        date: currentTime,
+        avatar: $scope.avatar
       });
-
-      socket.emit('store:projectData', angular.copy({
-        testRoom: $scope.messages
-      }));
+      var roomObj = {};
+      roomObj[$scope.myproject.projectId] = $scope.messages;
+      socket.emit('store:projectData', angular.copy(roomObj));
 
       $scope.text = "";
     }

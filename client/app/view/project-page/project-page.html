@@ -1,40 +1,40 @@
-<div class="container page project-page">
+<div class="container page project-page" ng-init= "init()">
   <!-- <div class="row project-container"> -->
 
     <div class="row project-post fadein-effect">
       <div class="col-xs-12 post-top-info">
         <div class="post-thumbnail thumbnail-pic">
-          <a href="" alt="" style="background-image:url({{project.thumbnail}})"></a>
+          <a href="" alt="" style="background-image:url({{myproject.picture}})"></a>
         </div>
         <div class="post-top-details">
           <div class="post-title project-name">
-            <a href="">{{project.name}}</a>
+            <a href="">{{myproject.name}}</a>
           </div>
           <div class="post-subdetails">
             <div class="subdetail">
-              <i class="fa fa-clock-o"></i> {{project.publishDate | date:'mediumDate'}}
-              <i class="fa fa-comment comments"></i> {{project.commentCount}}
+              <i class="fa fa-clock-o"></i> {{myproject.publishDate | date:'mediumDate'}}
+              <i class="fa fa-comment comments"></i> {{myproject.commentCount}}
             </div>
           </div>
         </div>
         <div class="voting">
           <div class="upvote vote">
-            <button ng-click="increment(project, $index)"><i class="fa fa-chevron-circle-up"></i></button>
-            <span class="count">{{project.upVote}}</span>
+            <button ng-click="increment(myproject, $index)"><i class="fa fa-chevron-circle-up"></i></button>
+            <span class="count">{{myproject.upVote}}</span>
           </div>
           <div class="downvote vote">
-            <button ng-click="decrement(project, $index)"><i class="fa fa-chevron-circle-down"></i></button>
-            <span class="count">{{project.downVote}}</span>
+            <button ng-click="decrement(myproject, $index)"><i class="fa fa-chevron-circle-down"></i></button>
+            <span class="count">{{myproject.downVote}}</span>
           </div>
         </div>
       </div>
       <div class="col-xs-12 post-content">
         <p class="description">
-          {{project.shortDesc}}
+          {{myproject.shortDesc}}
         </p>
         <div class="tech-list">
           <ul class="row">
-            <li class="col-xs-6 col-sm-3" ng-repeat="tech in project.languages">
+            <li class="col-xs-6 col-sm-3" ng-repeat="tech in myproject.languages">
               <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{tech}}.jpg')"></span>
               <span class="tech-name">{{tech}}</span>
             </li>
@@ -42,21 +42,21 @@
         </div>
         <div class="github-link">
           <i class="fa fa-github"></i>
-          <a href="{{project.github}}">{{project.github}}</a>
+          <a href="{{myproject.projectRepo}}">{{myproject.projectRepo}}</a>
         </div>
         <ul class="developers-list">
-          <li class="developer" ng-repeat="developer in project.teams">
-            <a href="" class="developer-pic" style="background-image:url({{developer.picture}})"></a>
+          <li class="developer" ng-repeat="developer in myproject.teams">
+            <a href="" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
             <p class="developer-name">{{developer.name}}</p>
           </li>
         </ul>
         <div class="row project-picture-container">
           <div class="col-xs-12 picture-container">
-            <img class="project-picture" ng-src="{{project.picture}}">
+            <img class="project-picture" ng-src="{{myproject.picture}}">
           </div>
           <div class="col-xs-12 project-desc-container">
             <p class="project-subdescription">
-              {{project.description}}
+              {{myproject.longDesc}}
             </p>
           </div>
         </div>
@@ -92,7 +92,7 @@
       <h1>Comments</h1>
       <ul class="list-group">
         <li class="list-group-item cf" ng-repeat="message in messages">
-          <a href="" class="team-member-chat-picture" style="background-image:url('assets/pictures/users/royce.jpg')"></a>
+          <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
           <div class="message-content">
             <span class="username">{{message.username}}</span>
             <span class="date">{{ message.date | date: 'short' }}</span>

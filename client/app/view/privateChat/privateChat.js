@@ -53,6 +53,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
       }
     }
     $scope.changeRoom(Object.keys(data.rooms)[0])
+    scrollToBottom();
   });
 
   //list of all users your talking to
@@ -103,6 +104,8 @@ angular.module('myApp.privateChat', ['ngRoute'])
         $scope.currentTarget = $scope.roomMessages[i].users[1];
       }
     }
+    scrollToBottom();
+
   }
 
   //Creates A Private Message Room instance
@@ -147,6 +150,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
 
     $scope.currentTarget = targetUser;
     $scope.currentRoom = newRoom;
+    scrollToBottom();
     $scope.newUser = '';
   }
 

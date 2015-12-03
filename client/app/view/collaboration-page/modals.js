@@ -1,7 +1,7 @@
 angular.module('myApp.collaboration-page')
 
 
-.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', '$rootScope', function($scope, $uibModal, techList, $uibModalInstance, project, $rootScope){
+.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', '$rootScope', 'Project', function($scope, $uibModal, techList, $uibModalInstance, project, $rootScope, Project){
   
   $scope.projectInfo = project
   $scope.techList = techList.getTechList();
@@ -40,7 +40,10 @@ angular.module('myApp.collaboration-page')
     for(var i = 0; i < $scope.yourTechList.length; i++){
       obj.techs.push({name: $scope.yourTechList[i]});
     }
-
+    if($scope.profilePic.size < 5242880){
+      Project.get_signed_request($scope.profilePic);
+    }
+    
     $uibModalInstance.close(obj);
 
   }
@@ -78,4 +81,21 @@ angular.module('myApp.collaboration-page')
   }
 
 }])
+
+.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                scope.$apply(function () {
+                    scope.fileread = changeEvent.target.files[0];
+                    // or all selected files:
+                    // scope.fileread = changeEvent.target.files;
+                });
+            });
+        }
+    }
+}]);
 

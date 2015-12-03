@@ -37,17 +37,13 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
 .controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', '$timeout', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope, $timeout) {
 
-  // get user information, disable if availabbility is false
+  // get user information, disable if availability is false
   $scope.user = getProfile;
-  console.log(getProfile);
 
   $scope.defaultUsers = matches;
 
   $scope.users = matches;
-  console.log($scope.users);
-
-  $scope.skills = ["JavaScript", "CSS", "Python", "Rails", "Django", "Firebase"]
-
+  
   $scope.selections = [];
 
   // Set default user address to the form
@@ -70,6 +66,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
       $scope.swiper = new Swiper('.swiper-container', {
         effect: 'coverflow',
         grabCursor: true,
+        noSwiping: true,
         centeredSlides: true,
         slidesPerView: 'auto',
         coverflow: {
@@ -102,16 +99,17 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
       });
   });
 
+  /* Taking this out until we can figure out how to make it work */
+
   socket.on('notify:potentialFriendSuccess', function(){
     return $timeout(function(){
-      $scope.users.splice($scope.swiper.activeIndex, 1)
-      $scope.swiper.removeSlide($scope.swiper.activeIndex)
-    },1800).then(function(){
-      $scope.selectedUser = $scope.users[$scope.swiper.activeIndex]
-    })
+      $scope.users.splice($scope.selectedUserIndex, 1)
+      $scope.swiper.removeSlide($scope.selectedUserIndex)
+    },1500)
   })
 
   $scope.connectionRequest = function(){
+    $scope.selectedUserIndex = $scope.swiper.activeIndex;
     $('.swiper-slide-active').addClass('requested');
     return $http({
       method: 'POST',
@@ -172,6 +170,11 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     if(!newUsers.length){
       $scope.selectedUser = {};
     }
+    newUsers.forEach(function(user){
+      user.skills.forEach(function(skill){
+        skill.nameEncoded = encodeURIComponent(skill.name)
+      })
+    })
   })
 
   $scope.availabilityOff = function() {
@@ -183,7 +186,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     }
     availabilityToggle.changeAvailability(data);
 
-    // Update cooking value
+    // Update cookie value
     cookieObj.availability = "false";
     $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
     //refresh to apply cookie to the view
@@ -200,10 +203,15 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   }
 
   $scope.submitFilters = function(){
+    // Check to see if filters is empty and if so, return default results
+
     $('#filters').modal('hide');
     if(!$scope.selections.length){
       $scope.users = $scope.defaultUsers;      
     } else {
+
+      // If filters is not empty --> submit a POST request with filters
+
       return $http({
         method: 'POST',
         url: '/api/user/:name/matches',

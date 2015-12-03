@@ -75,7 +75,7 @@ var createUser = function(username){
 User.getMatches = function(username){
   return new Promise(function(resolve){
     var cypher = "MATCH (user {username:'"+username+"'})-[r*1..2]-(x:User {availability: 'true'})-[:KNOWS]-(p) "
-               + "WHERE NOT (user)-->(x) "
+               + "WHERE NOT (user)-->(x) AND NOT x.username = '"+username+"' "
                + "RETURN collect(DISTINCT p) AS skills, x AS userData, "
                + "COUNT(x) AS nUsers ORDER BY nUsers DESC LIMIT 20";
     db.queryAsync(cypher).then(function(nodes){

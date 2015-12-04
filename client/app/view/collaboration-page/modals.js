@@ -7,7 +7,7 @@ angular.module('myApp.collaboration-page')
   $scope.techList = techList.getTechList();
   $scope.yourTechList = [];
 
-  var fileNamePrefix = Math.random().toString(36).substr(2, 15);
+  var fileName = Math.random().toString(36).substr(2, 15);
 
   $scope.addTech = function(tech, index){
     if ($scope.yourTechList.indexOf(tech) !== -1) {
@@ -28,7 +28,6 @@ angular.module('myApp.collaboration-page')
   };
 
   $scope.submitPicture = function(){
-    var fileName = fileNamePrefix + $scope.profilePic.name;
     Project.signRequest($scope.profilePic, fileName)
     $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
   }
@@ -51,7 +50,6 @@ angular.module('myApp.collaboration-page')
     }
 
     if($scope.profilePic.size < 5242880){
-      var fileName = fileNamePrefix + $scope.profilePic.name;
       Project.signRequest($scope.profilePic, fileName)
       $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
       $uibModalInstance.close(obj);
@@ -77,10 +75,11 @@ angular.module('myApp.collaboration-page')
   }
 }])
 
-.controller('confirmDelete', ['$scope', '$uibModal', '$uibModalInstance', 'project', function($scope, $uibModal, $uibModalInstance, project){
+.controller('confirmDelete', ['$scope', '$uibModal', '$uibModalInstance', 'project', 'username', function($scope, $uibModal, $uibModalInstance, project, username){
   
   $scope.projectInfo = project;
   $scope.userInput = '';
+  $scope.username = username;
 
 
   $scope.ok = function(){

@@ -171,9 +171,11 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
       $scope.selectedUser = {};
     }
     newUsers.forEach(function(user){
-      user.relationships.KNOWS.forEach(function(skill){
-        skill.nameEncoded = encodeURIComponent(skill.name)
-      })
+      if(user.relationships.KNOWS){
+        user.relationships.KNOWS.forEach(function(skill){
+          skill.nameEncoded = encodeURIComponent(skill.name)
+        })
+      }
     })
   })
 

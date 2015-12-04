@@ -13,7 +13,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
   });
 }])
 
-.controller('projectsPage', ['$scope', 'projects', 'ProjectList', '$cookies', 'Cookie', function($scope, projects, ProjectList, $cookies, Cookie) {
+.controller('projectsPage', ['$scope', '$location', 'projects', 'ProjectList', '$cookies', 'Cookie', function($scope, $location, projects, ProjectList, $cookies, Cookie) {
 
   // var projects = [
   //   {
@@ -67,6 +67,10 @@ angular.module('myApp.projectslist', ['ngRoute'])
         }
       });
   };
+
+  $scope.projectPageRedirect = function(projectId){
+    $location.path('/project/' + projectId)
+  }
 
   $scope.decrement = function(project, index){
     ProjectList.vote($scope.projects[index].id, id, false)

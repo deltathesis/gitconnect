@@ -16,23 +16,23 @@
 
   
   <div class="projects-list">
-    <div class="project-post" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText">
-      <a class="vote-block" ng-click="increment(project, projects.indexOf(project))">
+    <div class="project-post" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText" ng-click="projectPageRedirect(project.projectId)">
+      <a class="vote-block" ng-click="$event.stopPropagation(); increment(project, projects.indexOf(project))">
         <span class="project-vote-button"><i class="fa fa-caret-up fa-lg"></i></span>
         <span class="project-vote-count">{{project.upVote}}</span>
       </a>
-      <div class="project-thumbnail" style="background-image:url({{project.picture}})">
+      <div class="project-thumbnail" style="background-image:url({{project.picture}})" ng-click="projectPageRedirect(project.projectId)">
       </div>
       <div class="post-text">
         <div class="date-and-comments">
           <span class="post-date"><i class="fa fa-clock-o"></i> {{project.publishDate | date:'mediumDate'}}</span>
           <span class="post-comments"><i class="fa fa-comments-o fa-lg comments"></i> {{project.commentCount}}</span>
         </div>
-        <a href="#" class="project-name">{{project.name}}</a>
+        <a href="" class="project-name">{{project.name}}</a>
         <span class="project-short-description">{{project.shortDesc}}</span>
       </div>
       <div class="post-user-info">
-        <a href="#" class="user-image" ng-repeat="developer in project.teams"style="background-image: url({{developer.avatar_url}})"></a>
+        <a href="#/user/{{developer.username}}" class="user-image" ng-click = "$event.stopPropagation()" ng-repeat="developer in project.teams"style="background-image: url({{developer.avatar_url}})"></a>
       </div>
     </div>
   </div>

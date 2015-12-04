@@ -12,10 +12,6 @@ angular.module('myApp.collaboration-page')
   $scope.addTech = function(tech, index){
     if ($scope.yourTechList.indexOf(tech) !== -1) {
       $scope.techList.splice(index, 1);
-
-      //remove the default null language if it exists
-    } else if ($scope.yourTechList.indexOf('null') !== -1){
-      $scope.yourTechList.splice($scope.yourTechList.indexOf('null'), 1) 
     } else {
       $scope.yourTechList.push(tech);
       $scope.techList.splice(index, 1);

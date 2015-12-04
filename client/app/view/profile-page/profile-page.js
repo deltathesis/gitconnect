@@ -14,8 +14,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
 }])
 
 .controller('profilePage', [
-  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket', '$location',
-  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket, $location) {
+  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket', '$location', 'User',
+  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket, $location, User) {
 
   // var user = {
   //   ratings: Math.round(4.2),
@@ -27,10 +27,14 @@ angular.module('myApp.profilepage', ['ngRoute'])
   //     {name:'Humus', id:'12883'}
   //   ],
   // }
+  var cookie = $cookies.get('gitConnectDeltaKS');
+  var cookieObj = Cookie.parseCookie(cookie);
+  User.getProfileAndRelations(cookieObj.username).then(function(data) {
+    $scope.cookieUser = data;
+  })
 
   $scope.init = function() {  
       $scope.user = getProfile;
-      // console.log(getProfile);
 
       // TODO get from DB
       $scope.user.ratings = Math.round(4.2); //dummy data
@@ -175,12 +179,26 @@ angular.module('myApp.profilepage', ['ngRoute'])
     }
   }
 
+  $scope.sendConnectionRequests = function() {
+    return $http({
+      method: 'POST',
+      url: '/api/user/connection-request',
+      data: { currentUser: $scope.cookieUser, 
+              selectedUser: $scope.user
+            }
+    }).then(function successCallback(response) {
+        console.log('it worked');
+        socket.emit('notify:potentialFriend', {
+          target: angular.copy($scope.user.username), currentUser: angular.copy($scope.cookieUser.username)
+        })
+    }, function errorCallback(response) {
+      console.log('error: ', response);
+    });
+  }
+
   /** Socket Message Sending **/
-  var cookie = $cookies.get('gitConnectDeltaKS');
-  var cookieObj = Cookie.parseCookie(cookie);
 
   $scope.sendMessage = function(targetUser) {
-
     socket.emit('store:firstMessageData', {
       message: {
         text: $scope.message,

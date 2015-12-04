@@ -9,8 +9,8 @@
         <a href="" class="user-name">{{ user.name }} ({{user.username}})</a>
         <div class="subdetail time">
           <!-- 
-          Right now we don't record when the user is created. We can save this feature for a later date.
-          <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
+            Right now we don't record when the user is created. We can save this feature for a later date.
+            <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
           -->
           {{ user.location }}
         </div>
@@ -33,83 +33,87 @@
       <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
       <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button>
     </div>
-    <!-- Button trigger modal -->
-     <div class="col-xs-12 col-sm-4 user-status" ng-hide="ownership" ng-init="statusCheck()">
-       <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-         Send a Message to {{user.username}}!
-       </button>
+    <div class="col-xs-12 col-sm-4 user-status" ng-init="statusCheck()" ng-show="!ownership">
+      <button type="button" class="btn btn-primary" ng-click="sendConnectionRequests()">Connect with {{user.name}}!</button>
+    </div>
 
-       <!-- Modal -->
-       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-         <div class="modal-dialog" role="document">
-           <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-               <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Message to {{user.user.name}}</h4>
-             </div>
-             <div class="modal-body">
-               <form class="wat">
-                 <div class="form-group">
-                   <textarea class="form-control" rows="5" name="sendingMessage" id="sendingMessage" placeholder="type your message here" ng-model="message"></textarea>
-                 </div>
-               </form>
-             </div>
-             <div class="modal-footer">
-               <button type="button" class="btn btn-primary" ng-click="sendMessage(user.user.username)" data-dismiss="modal">Send</button>
-             </div>
+    <!-- Button trigger modal for Message Sending-->
+    <div class="col-xs-12 col-sm-4 user-status" ng-hide="ownership" ng-init="statusCheck()">
+      <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">
+       Send a Message to {{user.name}}!
+     </button>
+
+     <!-- Modal -->
+     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <h4 class="modal-title" id="myModalLabel" style="text-align: center;">Message to {{user.user.name}}</h4>
+           </div>
+           <div class="modal-body">
+             <form class="wat">
+               <div class="form-group">
+                 <textarea class="form-control" rows="5" name="sendingMessage" id="sendingMessage" placeholder="type your message here" ng-model="message"></textarea>
+               </div>
+             </form>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-primary" ng-click="sendMessage(user.user.username)" data-dismiss="modal">Send</button>
            </div>
          </div>
        </div>
      </div>
-     <!-- end of trigger modal -->
-     
-  </div>
+   </div>
+   <!-- end of trigger modal for Message Sending -->
 
-  <div class="row user-bio-container user-profile-block">
-    <div class="bio-detail details-container">
-      <h3 class="col-xs-12">About me</h3>
-      <div class="bio col-xs-12">
-        <p>{{user.bio}}</p>
-      </div>
+ </div>
+
+ <div class="row user-bio-container user-profile-block">
+  <div class="bio-detail details-container">
+    <h3 class="col-xs-12">About me</h3>
+    <div class="bio col-xs-12">
+      <p>{{user.bio}}</p>
     </div>
   </div>
+</div>
 
-  <div class="row user-projects-container user-profile-block">
-    <div class="projects-details details-container">
-      <h3 class="col-xs-12">Projects</h3>
-      <p class="no-projects col-xs-12" ng-hide="hasProjects">No project yet</p>
+<div class="row user-projects-container user-profile-block">
+  <div class="projects-details details-container">
+    <h3 class="col-xs-12">Projects</h3>
+    <p class="no-projects col-xs-12" ng-hide="hasProjects">No project yet</p>
 
-      <div class="project-list list">
-        <ul>
-          <li class="project col-xs-12 col-sm-4" ng-repeat="project in user.projects" ng-click="redirect(project.projectId)">
-            <div class="inner-container">
-              <a href="" class="project-name truncate">{{project.name}}</a>
-              <div class="project-picture" style="background-image:url('{{project.picture}}')"></div>
-              <p class="description">{{project.shortDesc}}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <div class="project-list list">
+      <ul>
+        <li class="project col-xs-12 col-sm-4" ng-repeat="project in user.projects" ng-click="redirect(project.projectId)">
+          <div class="inner-container">
+            <a href="" class="project-name truncate">{{project.name}}</a>
+            <div class="project-picture" style="background-image:url('{{project.picture}}')"></div>
+            <p class="description">{{project.shortDesc}}</p>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
+</div>
 
-  <div class="row user-languages-container user-profile-block">
-    <div class="language-details details-container">
-      <h3 class="col-xs-12">Languages</h3>
-      <div class="language-list list">
-        <ul>
-          <li class="col-xs-6 col-sm-3" ng-repeat="language in user.languages">
-            <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{language.nameEncoded}}.jpg')"></span>
-            <span class="tech-name">{{language.name}}</span>
-          </li>
-        </ul>
-      </div>
+<div class="row user-languages-container user-profile-block">
+  <div class="language-details details-container">
+    <h3 class="col-xs-12">Languages</h3>
+    <div class="language-list list">
+      <ul>
+        <li class="col-xs-6 col-sm-3" ng-repeat="language in user.languages">
+          <span class="tech-icon" style="background-image:url('http://mks-thesis-project.s3-us-west-1.amazonaws.com/pictures/techs/{{language.nameEncoded}}.jpg')"></span>
+          <span class="tech-name">{{language.name}}</span>
+        </li>
+      </ul>
     </div>
   </div>
+</div>
 
-  <div class="row user-recents-container user-profile-block">
-    <div class="recents-details details-container">
-      <h3 class="col-xs-12">Recent activities</h3>
+<div class="row user-recents-container user-profile-block">
+  <div class="recents-details details-container">
+    <h3 class="col-xs-12">Recent activities</h3>
 
       <!-- 
       <div class="col-xs-12 recent participation">
@@ -150,26 +154,26 @@
         </div>-->
 
 
+      </div>
     </div>
-  </div>
 
     <!-- Modal -->
-  <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Delete Profile</h4>
-        </div>
-        <div class="modal-body">
-          {{user.username}},<br>are you sure you want to delete your profile?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" ng-click="deleteProfile()">Delete</button>
+    <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Delete Profile</h4>
+          </div>
+          <div class="modal-body">
+            {{user.username}},<br>are you sure you want to delete your profile?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" ng-click="deleteProfile()">Delete</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>

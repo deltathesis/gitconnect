@@ -43,8 +43,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   $scope.defaultUsers = matches;
 
   $scope.users = matches;
-  console.log($scope.users)
-  console.log($scope.selectedUser)
 
   $scope.selections = [];
 

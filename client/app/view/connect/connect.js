@@ -40,11 +40,8 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   // get user information, disable if availability is false
   $scope.user = getProfile;
 
-  $scope.defaultUsers = matches;
-
-  $scope.users = matches;
   $scope.positiveMatches = true;
-  
+
   User.getMatches().then(function(matches){
     $scope.users = matches;
     $scope.defaultUsers = matches;

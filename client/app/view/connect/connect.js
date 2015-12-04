@@ -234,6 +234,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
           username: $scope.user.username
         }
       }).then(function successCallback(response) {
+        $scope.swiper.destroy()
         $scope.users = response.data.matches;
 
         //Conditional for an ng-show to tell user that they need to update their filters

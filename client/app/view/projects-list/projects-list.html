@@ -1,4 +1,4 @@
-<div class="container page projects-page">
+<div class="container page projects-page fadein-effect">
   <div class="projects-container">
 
     <div class="row">
@@ -16,7 +16,7 @@
 
   
   <div class="projects-list">
-    <div class="project-post" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText" ng-click="projectPageRedirect(project.projectId)">
+    <div class="project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText | orderBy:'-upVote'" ng-click="projectPageRedirect(project.projectId)">
       <a class="vote-block" ng-click="$event.stopPropagation(); increment(project, projects.indexOf(project))">
         <span class="project-vote-button"><i class="fa fa-caret-up fa-lg"></i></span>
         <span class="project-vote-count">{{project.upVote}}</span>

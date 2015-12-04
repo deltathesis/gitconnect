@@ -17,7 +17,7 @@
   
   <div class="projects-list">
     <div class="project-post" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText">
-      <a href="#" class="vote-block">
+      <a class="vote-block" ng-click="increment(project, projects.indexOf(project))">
         <span class="project-vote-button"><i class="fa fa-caret-up fa-lg"></i></span>
         <span class="project-vote-count">{{project.upVote}}</span>
       </a>

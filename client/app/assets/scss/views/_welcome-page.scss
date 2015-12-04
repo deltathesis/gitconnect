@@ -5,7 +5,230 @@
     .inner-section {
     }
     &.second, &.fourth {
-      background-color: #2682D5
+      background-color: #333333;
+    }
+
+    &.first {
+      display: table;
+      width: 100%;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      background-image:url('../../assets/pictures/welcome/background/head-bg.jpg');
+      .inner-section {
+        display: table-cell;
+        vertical-align: middle;
+        overflow: hidden;
+        h1, h2 {
+          color: white;
+          text-align: center;
+        }
+        h1 {
+          font-size: 100px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+      }
+    }
+
+    &.second {
+      .inner-section {
+        h1, h2, h3 {
+          color: white;
+          // width: 55%;
+          display: block;
+          float: left;
+        }
+        .picture-container {
+          position: relative;
+          height: 200px;
+          .picture {
+            position: absolute;
+            max-width: 200px;
+            width: 100%;
+            &:after {
+              background-position: 50% 50%;
+              background-size: cover;
+              content: "";
+              display: block;
+              width: 100%;
+              padding-top: 100%;
+              border-radius: 50%;
+              border: 2px solid #FFF;
+            }
+            &.user-1 {
+              top: -50px;
+              right: 0px;
+              &:after {
+                background-image:url('../../assets/pictures/welcome/user/user-picture.jpeg');
+              }
+            }
+            &.user-2 {
+              bottom: -50px;
+              left: 0px;
+              &:after {
+                background-image:url('../../assets/pictures/welcome/user/user-picture2.jpg');
+              }
+            }
+          }
+          .tech {
+            background-position: 50% 50%;
+            background-size: cover;
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid #FFF;
+            &.angular {
+              background-image:url('../../assets/pictures/welcome/tech/AngularJS.jpg');
+              top: 0%;
+              left: 10%;
+            }
+            &.c {
+              background-image:url('../../assets/pictures/welcome/tech/c.jpg');
+              bottom: 0%;
+              right: 0%;
+            }
+            &.html {
+              background-image:url('../../assets/pictures/welcome/tech/HTML.jpg');
+              top: -20%;
+              right: -5%;
+            }
+            &.mongo {
+              background-image:url('../../assets/pictures/welcome/tech/mongoDB.jpg');
+              bottom: -30%;
+              left: 5%;
+            }
+            &.sass {
+              background-image:url('../../assets/pictures/welcome/tech/Sass.jpg');
+              top: 75%;
+              left: 35%;
+            }
+            &.python {
+              background-image:url('../../assets/pictures/welcome/tech/Python.jpg');
+              top: 50%;
+              left: 50%;
+            }
+            &.ruby {
+              background-image:url('../../assets/pictures/welcome/tech/Ruby.jpg');
+              top: 90%;
+              left: 60%;
+            }
+            &.swift {
+              background-image:url('../../assets/pictures/welcome/tech/Swift.jpg');
+              top: -15%;
+              left: 30%;
+            }
+          }
+        }
+      }
+    }
+
+    &.third {
+      .inner-section {
+        h1, h2 {
+          text-align: right;
+        }
+      }
+    }
+
+    &.fourth {
+      .inner-section {
+        h1, h2 {
+          text-align: center;
+          color: #FFF;
+        }
+      }
     }
   }
 }
+@media (max-width: 991px) {
+  .welcome-page {
+    .section {
+      &.second {
+        .inner-section {
+          .picture-container {
+            .picture {
+              width: 150px;
+              &.user-1 {
+                top: -20px;
+                right: 0px;
+              }
+              &.user-2 {
+                bottom: -50px;
+                left: 0px;
+              }
+            }
+            .tech {
+              &.angular {
+                top: 20%;
+                left: 10%;
+              }
+              &.c {
+                bottom: 0%;
+                right: 0%;
+              }
+              &.html {
+                top: -20%;
+                right: -5%;
+              }
+              &.mongo {
+                bottom: -50%;
+                left: 5%;
+              }
+              &.sass {
+                top: 85%;
+                left: 35%;
+              }
+              &.python {
+                top: 35%;
+                left: 50%;
+              }
+              &.ruby {
+                top: 100%;
+                left: 60%;
+              }
+              &.swift {
+                top: -15%;
+                left: 30%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 650px) {
+  .welcome-page {
+    .section {
+      &.first {
+        .inner-section {
+          h1 {
+            font-size: 50px; 
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 767px) {
+  .welcome-page {
+    .section {
+      &.second {
+        .inner-section {
+          .picture-container {
+            margin-top: 60px;
+            margin-bottom: 30px;
+            .tech {
+              width: 50px;
+              height: 50px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+

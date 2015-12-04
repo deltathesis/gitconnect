@@ -1,6 +1,11 @@
 .requests-page {
   min-height: 800px;
 
+  .no-requests {
+    text-align: center;
+    margin-top: 50px;
+  }
+
   .requests-form {
     margin-top: 20px;
     margin-bottom: 30px;

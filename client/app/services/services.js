@@ -275,8 +275,7 @@ angular.module('myApp.services', [])
     updateProject: updateProject,
     deleteProject: deleteProject,
     getLanguages: getLanguages,
-    signRequest: signRequest,
-    upload_file: upload_file
+    signRequest: signRequest
   };
 
 }])

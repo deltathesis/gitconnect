@@ -152,11 +152,13 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       resolve: {
         project: function(){
           return $scope.projectInfos
+        },
+        username: function(){
+          return $scope.username
         }
       }
     });
     modalInstance.result.then(function(updatedResources){
-      //TODO SET AVAILABILITY FOR BOTH USES WHEN DELETING THE PROJECT
       Project.deleteProject($scope.projectInfos.projectId, $scope.projectUsers[0].username, $scope.projectUsers[1].username);
       $rootScope.$broadcast('projectPublished')
       $location.path('/projects')

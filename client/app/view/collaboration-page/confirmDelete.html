@@ -1,12 +1,12 @@
 <form name="myForm">
     <div class="modal-body">
         <div class="form-group">
-            <label>To confirm delete please enter the name of your project</label>
+            <label>To confirm delete please enter your github username</label>
             <input type="text" ng-model="userInput" class="form-control">
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="sign-small" ng-disabled="userInput !== projectInfo.name" ng-click="ok()">Submit</button>
+        <button type="submit" class="sign-small" ng-disabled="userInput !== username" ng-click="ok()">Submit</button>
         <button class="cancel-small" ng-click="cancel()">Cancel</button>
     </div>
 </form>

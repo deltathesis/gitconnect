@@ -53,9 +53,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     $('#city-input').val($scope.user.relationships.Lives[0].city)
   }
 
-  // Set default min height regarding screen height
-  $('.page').css('min-height', window.innerHeight - 40 + 'px');
-
   // Check availability status on page render
   $scope.statusCheck = function() {
     $scope.availability = JSON.parse($scope.user.availability);

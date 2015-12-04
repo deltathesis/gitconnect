@@ -12,55 +12,28 @@
         <input type="text" class="form-control" ng-model='searchText' placeholder="Search a project">
       </div>
     </div>
-    <div class="row project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText">
-      <div class="col-xs-12 post-top-info">
-        <div class="post-thumbnail thumbnail-pic">
-          <a href="" alt="" style="background-image:url({{project.picture}})"></a>
-        </div>
-        <div class="post-top-details">
-          <div class="post-title project-name">
-            <a href="#/project/{{project.projectId}}">{{project.name}}</a>
-          </div>
-          <div class="post-subdetails">
-            <div class="subdetail">
-              <i class="fa fa-clock-o"></i> {{project.publishDate | date:'mediumDate'}}
-              <i class="fa fa-comment comments"></i> {{project.commentCount}}
-            </div>
-          </div>
-        </div>
-        <div class="voting">
-          <div class="upvote vote">
-            <button ng-click="increment(project, projects.indexOf(project))"><i class="fa fa-chevron-circle-up"></i></button>
-            <span class="count">{{project.upVote}}</span>
-          </div>
-          <div class="downvote vote">
-            <button ng-click="decrement(project, projects.indexOf(project))"><i class="fa fa-chevron-circle-down"></i></button>
-            <span class="count">{{project.downVote}}</span>
-          </div>
-        </div>
+  </div>
+
+  
+  <div class="projects-list">
+    <div class="project-post" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText">
+      <a href="#" class="vote-block">
+        <span class="project-vote-button"><i class="fa fa-caret-up fa-lg"></i></span>
+        <span class="project-vote-count">{{project.upVote}}</span>
+      </a>
+      <div class="project-thumbnail" style="background-image:url({{project.picture}})">
       </div>
-      <div class="col-xs-12 post-content">
-        <p class="description">
-          {{project.shortDesc}}
-        </p>
-        <ul class="developers-list cf">
-          <li class="developer" ng-repeat="developer in project.teams">
-            <a href="#/user/{{developer.username}}" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
-            <p class="developer-name">{{developer.name}}</p>
-          </li>
-        </ul>
-        <div class="row project-picture-container">
-          <div class="col-xs-12 col-sm-5 picture-container">
-            <a href="" class="project-picture" style="background-image:url({{project.picture}})"></a>
-          </div>
-          <div class="col-xs-12 col-sm-7 project-desc-container">
-            <p class="project-subdescription">
-              {{project.longDesc}}
-            </p>
-          </div>
+      <div class="post-text">
+        <div class="date-and-comments">
+          <span class="post-date"><i class="fa fa-clock-o"></i> {{project.publishDate | date:'mediumDate'}}</span>
+          <span class="post-comments"><i class="fa fa-comments-o fa-lg comments"></i> {{project.commentCount}}</span>
         </div>
+        <a href="#" class="project-name">{{project.name}}</a>
+        <span class="project-short-description">{{project.shortDesc}}</span>
+      </div>
+      <div class="post-user-info">
+        <a href="#" class="user-image" ng-repeat="developer in project.teams"style="background-image: url({{developer.avatar_url}})"></a>
       </div>
     </div>
-
   </div>
 </div>

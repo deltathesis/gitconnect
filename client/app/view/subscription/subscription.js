@@ -26,7 +26,6 @@ angular.module('myApp.subscription', ['ngRoute'])
     // Check cookies and if current user own the profile page
     var cookie = $cookies.get('gitConnectDeltaKS');
     if(cookie){
-      console.log("test");
       var cookieObj = Cookie.parseCookie(cookie);
       // console.log(cookieObj.username,$scope.user.username);
       if (cookieObj.username === $scope.user.username) {

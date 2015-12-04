@@ -7,9 +7,9 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     controller: 'connectCtrl',
     resolve: {
       //The view will not load until this promise is resolved.
-      matches: ['User', function(User) {
-        return User.getMatches();
-      }],
+      // matches: ['User', function(User) {
+      //   return User.getMatches();
+      // }],
       getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
         var cookie = $cookies.get('gitConnectDeltaKS');
         var cookieObj = Cookie.parseCookie(cookie);
@@ -35,7 +35,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'matches', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', '$timeout', function($scope, matches, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope, $timeout) {
+.controller('connectCtrl', ['$scope', 'User', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', '$timeout', function($scope, User, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope, $timeout) {
 
   // get user information, disable if availability is false
   $scope.user = getProfile;
@@ -43,6 +43,14 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   $scope.defaultUsers = matches;
 
   $scope.users = matches;
+  $scope.positiveMatches = true;
+  
+  User.getMatches().then(function(matches){
+    $scope.users = matches;
+    $scope.defaultUsers = matches;
+    $scope.positiveMatches = true;
+  })
+
 
   $scope.selections = [];
 
@@ -66,7 +74,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
       $scope.swiper = new Swiper('.swiper-container', {
         effect: 'coverflow',
         grabCursor: true,
-        noSwiping: true,
         centeredSlides: true,
         slidesPerView: 'auto',
         coverflow: {
@@ -167,9 +174,16 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   });
 
   $scope.$watchCollection('users', function(newUsers, oldUsers){
+
+    // Conditional to avoid an error when $scope.users is loading initially
+    if(!newUsers) return;
+
+    // Conditional to avoid an error when filters returns an empty array.
     if(!newUsers.length){
       $scope.selectedUser = {};
     }
+
+    // Loop to URI encode each user's skills for the call to AWS to get tech icons
     newUsers.forEach(function(user){
       if(user.relationships.KNOWS){
         user.relationships.KNOWS.forEach(function(skill){
@@ -209,7 +223,8 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
     $('#filters').modal('hide');
     if(!$scope.selections.length){
-      $scope.users = $scope.defaultUsers;      
+      $scope.users = $scope.defaultUsers;
+      $scope.positiveMatches = true;      
     } else {
 
       // If filters is not empty --> submit a POST request with filters
@@ -223,6 +238,11 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         }
       }).then(function successCallback(response) {
         $scope.users = response.data.matches;
+
+        //Conditional for an ng-show to tell user that they need to update their filters
+        if(!$scope.users.length){
+          $scope.positiveMatches = false;
+        }
       }, function errorCallback(response) {
         console.log('error: ', response);
       });

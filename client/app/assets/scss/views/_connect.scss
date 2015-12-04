@@ -32,6 +32,11 @@
       }
     }
   }
+  .loading-spinner {
+    position: absolute;
+    left: 45%;
+    top: 40%;
+  }
   .availability-required, .no-matches {
     text-align: center;
     margin: 40px 0px;
@@ -126,7 +131,7 @@
         border-radius: 3px;
         transition: background-color 0.2s ease;
         &.fadein-effect {
-          @include animationEffect(0.3s, fadeEffect);
+          @include animationEffect(0.4s, fadeEffect);
         }
         i {
           margin-left: 5px;

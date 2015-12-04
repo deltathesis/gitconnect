@@ -1,7 +1,7 @@
 <div class="container page subscription-page fadein-effect" ng-init="statusCheck()">
   <h2 ng-show='!ownership'>You are not allowed to modify this information!</h2>
   <h1 ng-show='ownership'>Welcome</h1>
-  <h2 ng-show='ownership'>Thanks for joining us, {{user.name}}</h2>
+  <h2 ng-show='ownership'>Thanks for joining us</h2>
   <h4 ng-show='ownership'>We just need some information about you</h4>
 
   <form class="form-horizontal subscription-form row" ng-submit="formSubmit()" ng-init="googleMapInit()" ng-show='ownership'>

@@ -12,13 +12,15 @@
         <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
       </div>
       <div class="user-subdetails">
-        <a href="" class="user-name">{{user.username}}</a>
-       <!--  <div class="subdetail time">
-          <i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}
-        </div> -->
-        <div class="subdetail ratings">
-         <!--  <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div> -->  <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
+        <a href="" class="user-name">{{user.name}} ({{user.username}})</a>
+        <div class="subdetail time">
+          <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
+          {{user.bio}}
         </div>
+        <!--<div class="subdetail ratings">
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
+         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
+        </div>-->
       </div>
       <div class="action-button requests">
         <button ng-click="requestAccept(user.username, user.email)" class="btn accept"><i class="fa fa-check-circle"></i></button>

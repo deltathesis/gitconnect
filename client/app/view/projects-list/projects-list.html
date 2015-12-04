@@ -12,6 +12,8 @@
         <input type="text" class="form-control" ng-model='searchText' placeholder="Search a project">
       </div>
     </div>
+  </div>
+
   
   <div class="projects-list">
     <div class="project-post" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText">
@@ -30,7 +32,7 @@
         <span class="project-short-description">{{project.shortDesc}}</span>
       </div>
       <div class="post-user-info">
-        <a href="#" class="user-image" ng-repeat="developer in project.teams" style="background-image: url({{developer.avatar_url}})"></a>
+        <a href="#" class="user-image" ng-repeat="developer in project.teams"style="background-image: url({{developer.avatar_url}})"></a>
       </div>
     </div>
   </div>

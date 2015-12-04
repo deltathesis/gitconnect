@@ -1,11 +1,14 @@
 angular.module('myApp.collaboration-page')
 
 
-.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', '$rootScope', function($scope, $uibModal, techList, $uibModalInstance, project, $rootScope){
+.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', '$rootScope', 'Project', function($scope, $uibModal, techList, $uibModalInstance, project, $rootScope, Project){
   
   $scope.projectInfo = project
   $scope.techList = techList.getTechList();
   $scope.yourTechList = [];
+
+  var fileNamePrefix = Math.random().toString(36).substr(2, 15);
+
   $scope.addTech = function(tech, index){
     if ($scope.yourTechList.indexOf(tech) !== -1) {
       $scope.techList.splice(index, 1);
@@ -24,6 +27,12 @@ angular.module('myApp.collaboration-page')
     $scope.yourTechList.splice(index, 1);  
   };
 
+  $scope.submitPicture = function(){
+    var fileName = fileNamePrefix + $scope.profilePic.name;
+    Project.signRequest($scope.profilePic, fileName)
+    $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
+  }
+
 
   $scope.ok = function(){
     // pass change published property to true, add published date and pass in list of languages used to previous controller to relate project node to those technologies
@@ -41,7 +50,12 @@ angular.module('myApp.collaboration-page')
       obj.techs.push({name: $scope.yourTechList[i]});
     }
 
-    $uibModalInstance.close(obj);
+    if($scope.profilePic.size < 5242880){
+      var fileName = fileNamePrefix + $scope.profilePic.name;
+      Project.signRequest($scope.profilePic, fileName)
+      $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
+      $uibModalInstance.close(obj);
+    }
 
   }
 
@@ -78,4 +92,21 @@ angular.module('myApp.collaboration-page')
   }
 
 }])
+
+.directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                scope.$apply(function () {
+                    scope.fileread = changeEvent.target.files[0];
+                    // or all selected files:
+                    // scope.fileread = changeEvent.target.files;
+                });
+            });
+        }
+    }
+}]);
 

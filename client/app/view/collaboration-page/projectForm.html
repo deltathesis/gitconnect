@@ -11,6 +11,12 @@
             <label>Short decription of the project</label>
             <input ng-model="projectInfo.shortDesc" type="text" class="form-control">
             <label>Project picture</label>
+
+            
+            <input type="file" id="file_input" fileread="profilePic">
+            <button ng-click="submitPicture()">upload</button>
+
+
             <input ng-model="projectInfo.picture" type="text" class="form-control">
             <label>Project repo link</label>
             <input type="url" class="form-control" ng-model="projectInfo.projectRepo" name="repo">
@@ -24,14 +30,7 @@
               <span class="error" ng-show="myForm.input.$error.url">
                 Not valid url!</span>
             </div>
-            <label>Project Snippet</label>
-            <span class="description">Tip: you can include a snippet of code on jsfiddle or plnkr</span>
-            <input type="url" class="form-control" ng-model="projectInfo.projectSnippet" name="snippet">
-            <div role="alert">
-              <span class="error" ng-show="myForm.snippet.$error.url">
-                Not valid url!</span>
-            </div>
-            <!-- Recycled Html from projile-updat.html -->
+            <!-- Recycled Html from projile-update.html -->
             <div class="techs user-selection" >
               <h4>Technologies you used in this project</h4>
               <ul>

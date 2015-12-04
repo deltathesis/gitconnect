@@ -4,6 +4,7 @@ var auth = require('./routes/auth');
 var user = require('./routes/user');
 var connectionslist = require('./routes/connectionslist');
 var project = require('./routes/project');
+var aws_s3 = require('./routes/aws');
 
 var router = express.Router();
 
@@ -41,5 +42,8 @@ router.get('/api/project/:id', project.get);
 router.get('/api/project/languages/:id', project.getLanguages);
 router.get('/api/project/users/:id', project.getUsers);
 router.get('/api/project/current/:username', project.getCurrent);
+
+// AWS Routes
+router.get('/api/sign_s3', aws_s3.getSignedRequest);
 
 module.exports = router;

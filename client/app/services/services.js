@@ -246,11 +246,8 @@ angular.module('myApp.services', [])
       xhr.onreadystatechange = function(){
           if(xhr.readyState === 4){
               if(xhr.status === 200){
-                  console.log('XHR response:  ', xhr.responseText);
                   var response = JSON.parse(xhr.responseText);
                   upload_file(file, response.signed_request, response.url);
-                  console.log('response url', response.url)
-                  picUrl = response.url;
               }
               else{
                   alert("Could not get signed URL.");
@@ -259,8 +256,6 @@ angular.module('myApp.services', [])
       };
       xhr.send();
   }
-
-  var picUrl = '';
 
   var upload_file = function(file, signed_request, url){
     var xhr = new XMLHttpRequest();

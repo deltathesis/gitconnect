@@ -19,6 +19,11 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 .controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', '$rootScope', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location, $rootScope) {
 
   var projectInfos = getProjectInfo.project;
+  for(var key in projectInfos){
+    if(projectInfos[key]=== 'null'){
+      projectInfos[key] = '';
+    }
+  }
   $scope.projectInfos = projectInfos;
   //store old project info for database lookup
   var oldProjectInfo = projectInfos

@@ -16,13 +16,13 @@ angular.module('myApp.team', ['ngRoute'])
   $scope.team = [
     {
       name: 'Renan Deswarte',
-      role: 'Product owner - Frontend Engineer',
+      role: 'Product Owner & Frontend Engineer',
       picture: 'https://avatars2.githubusercontent.com/u/10079250',
       github: 'https://github.com/renandeswarte'
     },
     {
       name: 'Royce Leung',
-      role: 'Scrum master - Software Engineer',
+      role: 'Scrum Master & Software Engineer',
       picture: 'https://avatars3.githubusercontent.com/u/7980073',
       github: 'https://github.com/xrkl2x'
     },

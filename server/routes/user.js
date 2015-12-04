@@ -191,6 +191,11 @@ user.contactMessage = function(req, res) {
         //console.log('Message sent: ' + info.response);
     });
   res.end()
-}
+};
+
+user.rate = function(req, res) {
+  User.rate(req.body.id, req.body.rating)
+    .then(res.end);
+};
 
 module.exports = user;

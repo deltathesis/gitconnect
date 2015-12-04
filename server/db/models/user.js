@@ -107,10 +107,9 @@ User.data = function(data){
     company: !data.company ? 'null' : data.company,
     blog: !data.blog ? 'null' : data.blog,
     avatar_url: data.avatar_url,
-    ratingTotal: 0,
-    availability: "true",
-    ratingTotal: 0,
-    ratingAverage: 'null'
+    ratingTotal: 5,
+    ratings: 1,
+    availability: "true"
   };
   storage.languages = data.languages;
   return storage;
@@ -324,8 +323,19 @@ User.makeAvailable = function(username){
   objUser.userNode.then(function(users) {
     require('./node').update(users[0], {availability: "true"})
   });
-}
+};
+
+User.rate = function(id, rating) {
+  return new Promise(function(resolve) {
+    var cypher = 'match (n) where id(n) = ' + id + ' set n.ratingTotal = n.ratingTotal + ' + rating + ', n.ratings = n.ratings + 1';
+    db.queryAsync(cypher)
+      .then(resolve)
+      .catch(function(err) {
+        console.log(err);
+      });
+  });
+};
 
 Promise.promisifyAll(User);
-//console.log(User);
+
 module.exports = User;

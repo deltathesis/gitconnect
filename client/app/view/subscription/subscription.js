@@ -18,18 +18,17 @@ angular.module('myApp.subscription', ['ngRoute'])
   function($scope, $location, Cookie, $cookies, UserForm, getProfile, userOwnTech, techList) {
 
   $scope.user = getProfile;
-  console.log(getProfile);
+  // console.log(getProfile);
 
   // Check if page of the user
   $scope.ownership = false;
   $scope.statusCheck = function() {
     // Check cookies and if current user own the profile page
     var cookie = $cookies.get('gitConnectDeltaKS');
-    console.log(cookie);
     if(cookie){
       console.log("test");
       var cookieObj = Cookie.parseCookie(cookie);
-      console.log(cookieObj.username,$scope.user.username);
+      // console.log(cookieObj.username,$scope.user.username);
       if (cookieObj.username === $scope.user.username) {
         $scope.ownership = true;
       }
@@ -137,7 +136,7 @@ angular.module('myApp.subscription', ['ngRoute'])
 
   $scope.getUserName = function() {
     // Updated User FullName display
-    console.log($scope.user.name);
+    // console.log($scope.user.name);
       if ($scope.user.name !== 'null') {
         $scope.userFullName = $scope.user.name;
       }

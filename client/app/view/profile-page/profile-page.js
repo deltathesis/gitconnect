@@ -13,6 +13,31 @@ angular.module('myApp.profilepage', ['ngRoute'])
   });
 }])
 
+.directive('ratingMouseover', function() {
+  return {
+    link: function(scope, el, attrs) {
+      el.on('mouseenter', function() {
+        if (scope.rated) return;
+        for (var i = 0; i < 5; i++) {
+          $('.position-' + i).removeClass('fa-star').addClass('fa-star-o');
+        }
+        for(var j = 0; j <= attrs.idx; j++) {
+          $('.position-' + j).removeClass('fa-star-o').addClass('fa-star');
+        }
+      });
+      el.on('mouseleave', function() {
+        if (scope.rated) return;
+        for (var l = 0; l < 5; l++) {
+          $('.position-' + l).removeClass('fa-star').addClass('fa-star-o');
+        }
+        for (var k = 0; k < scope.averageRatings; k++) {
+          $('.position-' + k).removeClass('fa-star-o').addClass('fa-star');
+        }
+      });  
+    }
+  };
+})
+
 .controller('profilePage', [
   '$scope', '$compile', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket', '$location', 'User',
   function($scope, $compile, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket, $location, User) {
@@ -177,7 +202,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
     // Ratings Module
     $ratings = $('.stars');
     for (var pos = 1; pos <= 5; pos++) {
-      var html = angular.element("<i ng-click='rate(" + pos + ")' class='fa fa-star-o position-" + (pos - 1) + "'></i>");
+      var html = angular.element("<i ng-click='rate(" + pos + ")' rating-mouseover idx="+(pos - 1)+" class='fa fa-star-o position-" + (pos - 1) + "'></i>");
       $compile(html)($scope);
       $ratings.append(html);
     }
@@ -207,9 +232,16 @@ angular.module('myApp.profilepage', ['ngRoute'])
     });
   };
 
+  $scope.rated = false;
   $scope.rate = function(index) {
+    if ($scope.rated) return;
     $scope.averageRatings = Math.round(($scope.user.ratingTotal + index) / ($scope.user.ratings + 1) * 10) / 10;
     User.postRating($scope.user, index)
+      .then(function() {
+        $('.stars').append('<p class="rate-success" style="size:5">\tRating sent!</p>');
+        $scope.rated = true;
+        //$('.rate-success').fadeOut(1000);
+      })
       .catch(function(err) {
         console.log(err);
       });

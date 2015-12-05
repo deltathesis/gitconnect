@@ -17,10 +17,10 @@
           <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
           {{user.bio}}
         </div>
-        <!--<div class="subdetail ratings">
-         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
-         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
-        </div>-->
+        <div class="subdetail ratings">
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'requests')"></div>
+         <!--<div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>-->
+        </div>
       </div>
       <div class="action-button requests">
         <button ng-click="requestAccept(user.username, user.email)" class="btn accept"><i class="fa fa-check-circle"></i></button>
@@ -41,10 +41,10 @@
           <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
           {{user.bio}}
         </div>
-        <!--<div class="subdetail ratings">
-         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
-         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
-        </div>-->
+        <div class="subdetail ratings">
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'demands')"></div>
+         <!--<div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>-->
+        </div>
       </div>
       <div class="action-button remove">
         <button ng-click="deleteDemand(user.username)" class="btn">Remove</button>

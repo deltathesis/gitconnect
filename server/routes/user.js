@@ -196,7 +196,9 @@ user.contactMessage = function(req, res) {
 
 user.rate = function(req, res) {
   User.rate(req.body.id, req.body.rating)
-    .then(res.end);
+    .then(function() {
+      res.end();
+    });
 };
 
 user.getNewsFeed = function(req, res) {

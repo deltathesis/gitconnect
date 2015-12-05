@@ -14,8 +14,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
 }])
 
 .controller('profilePage', [
-  '$scope', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket', '$location', 'User',
-  function($scope, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket, $location, User) {
+  '$scope', '$compile', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket', '$location', 'User',
+  function($scope, $compile, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket, $location, User) {
 
   // var user = {
   //   ratings: Math.round(4.2),
@@ -35,11 +35,11 @@ angular.module('myApp.profilepage', ['ngRoute'])
 
   $scope.init = function() {  
       $scope.user = getProfile;
-
-      console.log('profile', getProfile);
-
-      // TODO get from DB
-      $scope.user.ratings = Math.round(4.2); //dummy data
+      // var rating = Math.ceil($scope.user.ratingTotal / $scope.user.ratings);
+      // var ratingArray = [];
+      // for(var i = 0; i < rating; i++) ratingArray.push(i);
+      // $scope.user.ratings = ratingArray;
+      $scope.user.ratings = Math.ceil($scope.user.ratingTotal / $scope.user.ratings);
 
       // Updated User Tech list display
       var techList = userOwnTech.getTech();
@@ -175,8 +175,10 @@ angular.module('myApp.profilepage', ['ngRoute'])
   $scope.ratings = function() {
     // Ratings Module
     $ratings = $('.stars');
-    for (var pos = 0; pos < 5; pos++) {
-      $ratings.append("<i class='fa fa-star-o position-" + pos + "'></i>");
+    for (var pos = 1; pos <= 5; pos++) {
+      var html = angular.element("<i ng-click='rate(" + pos + ")' class='fa fa-star-o position-" + (pos - 1) + "'></i>");
+      $compile(html)($scope);
+      $ratings.append(html);
     }
     for (var i = 0; i < $scope.user.ratings; i++) {
       $('.position-' + i).removeClass('fa-star-o').addClass('fa-star');
@@ -198,7 +200,14 @@ angular.module('myApp.profilepage', ['ngRoute'])
     }, function errorCallback(response) {
       console.log('error: ', response);
     });
-  }
+  };
+
+  $scope.rate = function(index) {
+    User.postRating($scope.user, index)
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
 
   /** Socket Message Sending **/
 

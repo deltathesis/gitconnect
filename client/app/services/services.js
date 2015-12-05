@@ -53,13 +53,13 @@ angular.module('myApp.services', [])
   var postRating = function(user, rating) {
     return $http({
       cache: false,
-      method: 'GET',
-      url: '/api/user/' + user + '/rate',
+      method: 'POST',
+      url: '/api/user/' + user.username + '/rate',
       data: {
         id: user.id,
         rating: rating
       }
-    })
+    });
   };
 
   var getAllUsers = function() {
@@ -98,7 +98,8 @@ angular.module('myApp.services', [])
 		getMatches: getMatches,
 		getProfileAndRelations: getProfileAndRelations,
 		getProfile: getProfile,
-    getAllUsers: getAllUsers
+    getAllUsers: getAllUsers,
+    postRating: postRating
 	};
 
 }])

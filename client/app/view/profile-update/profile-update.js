@@ -41,10 +41,14 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
     }
   }
 
-  $scope.user.languages = [];
-  $scope.user.relationships.KNOWS.forEach(function(tech) {
-    $scope.user.languages.push(tech.name);
-  })
+  $scope.user.languages = []
+
+  //Conditional to make sure that user has languages relationships
+  if($scope.user.relationships.KNOWS){
+    $scope.user.relationships.KNOWS.forEach(function(tech){
+      $scope.user.languages.push(tech.name);
+    });
+  }
 
   $scope.userEmail = $scope.user.email;
   $scope.userBio = $scope.user.bio;
@@ -113,7 +117,8 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
         username: $scope.user.username,
         email: userEmail,
         bio: userBio,
-        name: userFullName
+        name: userFullName,
+        location: $scope.cityId
       }
 
       // Prepare data to be posted

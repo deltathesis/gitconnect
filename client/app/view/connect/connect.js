@@ -213,9 +213,14 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
   $scope.applyFilters = function(){
     $('#filters').modal('show');
+    $scope.googleMapInit();
   }
 
   $scope.submitFilters = function(){
+    // Capture location filter
+    var location = $('#city-input').val()
+    console.log($scope.cityId)
+
     // Check to see if filters is empty and if so, return default results
 
     $('#filters').modal('hide');
@@ -231,7 +236,8 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         url: '/api/user/:name/matches',
         data: {
           filters: $scope.selections,
-          username: $scope.user.username
+          username: $scope.user.username,
+          location: $scope.cityId
         }
       }).then(function successCallback(response) {
         $scope.swiper.destroy()
@@ -251,11 +257,12 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     var input = document.getElementById('city-input');
     var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
     autocomplete.addListener('place_changed', function() {
+      console.log('hey')
       // Get city name only
       var place = autocomplete.getPlace();
 
-      cityId = place.place_id;
-      cityName = place.name;
+      $scope.cityId = place.place_id;
+      $scope.cityName = place.name;
       // $('#user-location').val(place.name);
     });
   }

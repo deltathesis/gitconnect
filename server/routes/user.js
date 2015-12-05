@@ -35,7 +35,7 @@ user.getRelationships = function(req, res) {
 };
 
 user.getMatchesPOST = function(req, res) {
-  User.matches(req.body.filters, req.body.username).then(function(users){
+  User.matches(req.body.filters, req.body.username, req.body.location || null).then(function(users){
     res.json({matches: users})
   });
 };
@@ -86,7 +86,8 @@ user.updateForm = function(req, res) {
   var userInfos = {
     email: req.body.data.userInfos.email,
     bio: req.body.data.userInfos.bio,
-    name: req.body.data.userInfos.name
+    name: req.body.data.userInfos.name,
+    location: req.body.data.userInfos.location
   }
   // Get User Node
   var objUser = {

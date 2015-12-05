@@ -2,13 +2,6 @@
 
   <div class="top-container row">
     <button type="button" class="btn select-filters" ng-click="applyFilters()"><i class="fa fa-filter"></i> Filters</button>
-    <!-- <form class="form-inline city-form col-xs-12 col-sm-6" ng-init="googleMapInit()">
-      <div class="form-group">
-        <label for="city">Your City</label>
-        <input type="text" class="form-control" id="city-input" placeholder="Select a different city">
-      </div>
-      <button type="submit" class="btn btn-default">Send</button>
-    </form> -->
     <div class="availability">
       <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
       <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button>
@@ -103,9 +96,12 @@
         </div>
         <div class="modal-body cf">
           <div class="tech-selection col-xs-12">
+            <label for="city">Location</label>
+            <input type="text" class="form-control" id="city-input" placeholder="Search by City">
             <div class="techs propositions">
               <h4>Add Filters</h4>
-              <label class="search-form">Search: <input class="tech-search-input" ng-model="searchText"></label>
+              <label class="search-form">Search:</label> 
+              <input type="text" class="tech-search-input" ng-model="searchText"></label>
               <p ng-show="existed" class="error-addition"> Already added</p>
               <ul>
                 <li class="tech fadein-effect" ng-repeat="tech in techList | filter:searchText track by $index" data-tech="{{tech}}" ng-click="addFilter(tech, $index)">
@@ -113,8 +109,6 @@
                 </li>
               </ul>
             </div>
-          </div>
-          <div class="tech-selection col-xs-12">
             <div class="techs user-selection" >
               <h4>Current Filters</h4>
               <ul>

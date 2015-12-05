@@ -302,6 +302,7 @@
       }
       .cmn-toggle-round + label:after {
         width: 28px;
+        margin-left: 30px;
         background-color: #fff;
         border-radius: 100%;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -317,8 +318,8 @@
         .cmn-toggle-round + label:before {
           background-color: $greenColor;
         }
-        .cmn-toggle-round:checked + label:after {
-          margin-left: 60px;
+        .cmn-toggle-round + label:after {
+          margin-left: 0px;
         }
       }
     }

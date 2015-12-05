@@ -1,98 +1,61 @@
-# gitconnect ![](https://travis-ci.org/deltathesis/gitconnect.svg?branch=dev)
+# GitConnect
+[GitConnect Website](http://gitconnect.me)  
 
-### Neo4j DB Operations
+GitConnect is a social network application that extends the functionality of GitHub. With GitConnect, you are able to discover, message, and collaborate with other developers to create meaningful projects.
 
-### get(predicate, any, label)
-Returns a node with the given properties. Matches against all properties. Returns an array of matching node(s).
+## Documentation
+Please read [DOCUMENTATION.md](DOCUMENTATION.md) to understand our custom-built neo4j queries.
 
-__Example__
+## Architecture 
 
-```javascript
-db.get({username: 'ccnixon'}).then(function(result){
-  console.log(result) --> 
-  /* 
-  [ { avatar_url: 'https://avatars.githubusercontent.com/u/12958606?v=3',
-    location: '',
-    ratingAverage: 'null',
-    blog: 'null',
-    ratingTotal: 0,
-    username: 'ccnixon',
-    bio: 'asdada',
-    email: 'chrisnxn@gmail.com',
-    company: 'null',
-    name: 'Chris Nixon',
-    apiUrl: 'https://api.github.com/users/ccnixon',
-    githubId: 12958606,
-    availability: true,
-    id: 756 } ]
-    */
-  })
-```
-
-## getRelationshipData(baseNode, relDirection, relLabel)
-Returns an array of all the nodes that have a relationship to the base node matching the defined parameters.
-
-__Arguments__
-
-* `baseNode` - {object} - Partially defined object, needs to contain unique data. This is the node that relationships will be found for
-* `relDirection` - 'String' - Set the direction of the relationships from the node you want to find. Options are: 'out', 'in', 'all'.
-* `relLabel` - Choose the labels of the relationships you want to find. Empty string finds all.
-
-__Example__
-
-```javascript
-db.getRelationshipData({username: 'ccnixon'}, 'all', '').then(function(result){
-  console.log(result) --> 
-  /* 
-  { relationships:
-   { KNOWS:
-      [ [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object] ],
-     WATCHES:
-      [ [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object],
-        [Object] ],
-     Lives: [ [Object] ] },
-  user:
-   { avatar_url: 'https://avatars.githubusercontent.com/u/12958606?v=3',
-     location: '',
-     ratingAverage: 'null',
-     blog: 'null',
-     ratingTotal: 0,
-     username: 'ccnixon',
-     bio: 'asdada',
-     email: 'chrisnxn@gmail.com',
-     company: 'null',
-     name: 'Chris Nixon',
-     apiUrl: 'https://api.github.com/users/ccnixon',
-     githubId: 12958606,
-     availability: true,
-     id: 756 } }
-    */
-  })
-```
+Show images on the structure of our application.
 
 
+## Technology Stack 
+
+- AngularJS
+- Node/Express
+- Neo4j
+- Firebase
+- Travis CI
+- Jasmine
+- Protractor
+- Gulp
+- AWS S3
+- Socket.io
+- Sass
+- GitHub API
+- Google Maps and Analytics
+
+## Installation 
+
+`npm install`  
+`npm start`  
+Navigate to http://localhost:3000 to start using the application.
+
+
+## Testing
+Please read [TESTING.md](TESTING.md) on how to setup our testing suite with Protractor.
+
+## Contributing
+
+1. Fork our repo and clone it to your local computer.
+2. Create your feature branch from the dev branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -m '(type)Add some feature'`  
+  __Allowed type values:__
+  - **feat** (new feature for the user, not a new feature for build script)
+  - **fix** (bug fix for the user, not a fix to a build script)
+  - **docs** (changes to the documentation)
+  - **style** (formatting, missing semi colons, etc; no production code change)
+  - **refactor** (refactoring production code, eg. renaming a variable)
+  - **test** (adding missing tests, refactoring tests; no production code change)
+  - **chore** (updating grunt tasks etc; no production code change)
+4. Push to the branch: `git push origin my-new-feature`.  
+5. Submit a pull request to the dev branch.
+
+## Authors 
+- Renan Deswarte
+- Chris Nixon
+- Yusuf Modan
+- Jake Garelick
+- Royce Leung

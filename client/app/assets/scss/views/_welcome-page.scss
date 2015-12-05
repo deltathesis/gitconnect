@@ -152,9 +152,20 @@
 
     &.fourth {
       .inner-section {
+        position: relative;
         h1, h2 {
           text-align: center;
           color: #FFF;
+        }
+        .share {
+          width: 100px;
+          height: 100px;
+          position: absolute;
+          background-position: 50% 50%;
+          background-size: cover;
+          background-image:url('../../assets/pictures/welcome/share.png'); 
+          top: -30%;
+          right: 0%;
         }
       }
     }
@@ -260,6 +271,16 @@
         .inner-section {
           h1 {
             font-size: 50px; 
+          }
+        }
+      }
+      &.fourth {
+        .inner-section {
+          .share {
+            width: 70px;
+            height: 70px;
+            top: -35%;
+            right: 0%;
           }
         }
       }

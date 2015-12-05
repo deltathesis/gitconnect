@@ -5,8 +5,64 @@
   <button class="btn btn-warning request" style="position:absolute;top:60px;right:150px;z-index:999" onclick="$('.header-menu .requests').toggleClass('notifications')">Request Notif</button>
   -->
 
+  <!-- Developer around Post example *** START *** -->
+  <div ng-show="hasDevAround" class="row post developer-around-post">
+    <div class="col-xs-12 post-top-info">
+      <div class="post-thumbnail developer-number">
+        <span>{{devAroundCount}}</span>
+      </div>
+      <div class="post-top-details">
+        <div class="post-title">
+          <p>Developers around your location</p>
+        </div>
+        <!-- <div class="post-subdetails">
+          <div class="subdetail time">
+            <i class="fa fa-clock-o"></i> 2 hours ago
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-xs-12 post-content">
+      <ul class="developers-list cf">
+        <li class="developer" ng-repeat="dev in devAround">
+          <a href="#/user/{{dev.username}}" class="developer-pic" style="background-image:url('{{dev.avatar_url}}')"></a>
+          <p class="developer-name">{{dev.name}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Developer Around example *** END *** -->
+
   <!-- User Post example *** START *** -->
-  <div class="row post user-project-post">
+  <div class="row post user-project-post" ng-show="hasNewProjects" ng-repeat="project in newProjects">
+    <div class="col-xs-12 post-top-info">
+      <div class="post-thumbnail user-pic">
+        <a href="#/user/{{project.x.username}}" alt="" style="background-image:url('{{project.x.avatar_url}}')"></a>
+      </div>
+      <div class="post-top-details">
+        <div class="post-title user-name">
+          <a href="">{{project.x.name}}</a>
+        </div>
+        <div class="post-subdetails">
+          <div class="subdetail time">
+            <i class="fa fa-clock-o"></i> {{project.y.publishDate | date:'mediumDate'}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 post-content">
+      <p class="description">
+        {{project.x.name}} just posted a new project : <a href="#/project/{{project.y.projectId}}" class="project-link">{{project.y.name}}</a>{{project.y.projectId}}
+      </p>
+      <div class="project-picture-container">
+        <a href="#/project/{{project.y.projectId}}" class="project-picture" style="background-image:url('{{project.y.picture}}')"></a>
+      </div>
+    </div>
+  </div>
+  <!-- User Post example *** END *** -->
+
+  <!-- User Post example *** START *** -->
+<!--   <div class="row post user-project-post">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url('assets/pictures/users/chris.jpg')"></a>
@@ -30,11 +86,11 @@
         <a href="" class="project-picture" style="background-image:url('assets/pictures/projects/fetch.jpg')"></a>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- User Post example *** END *** -->
 
   <!-- Highlighted Project example *** START *** -->
-  <div class="row post highlight-project-post">
+ <!--  <div class="row post highlight-project-post">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail highlight-pic">
         <a href="" alt="" style="background-image:url('assets/pictures/projects-thumbnails/koti.jpg')"></a>
@@ -73,55 +129,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- Highlighted Project example *** END *** -->
 
-  <!-- Developer around Post example *** START *** -->
-  <div class="row post developer-around-post">
-    <div class="col-xs-12 post-top-info">
-      <div class="post-thumbnail developer-number">
-        <span>32</span>
-      </div>
-      <div class="post-top-details">
-        <div class="post-title">
-          <a href="">Developers around your location</a>
-        </div>
-        <div class="post-subdetails">
-          <div class="subdetail time">
-            <i class="fa fa-clock-o"></i> 2 hours ago
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 post-content">
-      <ul class="developers-list cf">
-        <li class="developer">
-          <a href="" class="developer-pic" style="background-image:url('assets/pictures/users/yumo.jpg')"></a>
-          <p class="developer-name">Yumo</p>
-        </li>
-        <li class="developer">
-          <a href="" class="developer-pic" style="background-image:url('assets/pictures/users/renan.jpg')"></a>
-          <p class="developer-name">Renan</p>
-        </li>
-        <li class="developer">
-          <a href="" class="developer-pic" style="background-image:url('assets/pictures/users/jake.jpg')"></a>
-          <p class="developer-name">Jake</p>
-        </li>
-        <li class="developer">
-          <a href="" class="developer-pic" style="background-image:url('assets/pictures/users/chris.jpg')"></a>
-          <p class="developer-name">Chris</p>
-        </li>
-        <li class="developer">
-          <a href="" class="developer-pic" style="background-image:url('assets/pictures/users/royce.jpg')"></a>
-          <p class="developer-name">Royce</p>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!-- Developer Around example *** END *** -->
+
 
   <!-- User Post example DUPLICATE *** START *** -->
-  <div class="row post user-project-post">
+  <!-- <div class="row post user-project-post">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url('assets/pictures/users/royce.jpg')"></a>
@@ -145,11 +159,11 @@
         <a href="" class="project-picture" style="background-image:url('assets/pictures/projects/devmag.jpg')"></a>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- User Post example DUPLICATE *** END *** -->
 
  <!-- User Comment example *** START *** -->
-  <div class="row post user-comment-post">
+  <!-- <div class="row post user-comment-post">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url('assets/pictures/users/chris.jpg')"></a>
@@ -178,7 +192,7 @@
         </p>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- User Comment example *** END *** -->
 
 </div>

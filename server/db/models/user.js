@@ -336,6 +336,44 @@ User.rate = function(id, rating) {
   });
 };
 
+// Get user connection demands
+User.getUserByCity = function(cityId, username){
+  return new Promise(function(resolve){
+    var cypher = 'MATCH (City {uniq_id: "'+cityId+'"})-[:Lives]-(n {availability: "true"})'
+               + ' WHERE NOT n.username = "'+username+'" RETURN n';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
+// Get friends latest projects
+User.getFriendsProjects = function(username){
+  return new Promise(function(resolve){
+    var date = new Date();
+    var dateMs = date.getTime();
+    // Get from 7 days
+    var pastWeek = dateMs - 1000 * 60 * 60 * 24 * 7
+    console.log(dateMs,pastWeek);
+    var cypher = 'MATCH (User {username: "'+username+'"})-[:WORKED]-(n)-[:WORKED]-(x:User)-[:WORKED]-(y:Project {published: "true"}) WHERE y.publishDate > '+pastWeek
+                + ' RETURN x,y';
+    db.queryAsync(cypher).then(function(nodes){
+      resolve(nodes.map(function(element){
+        return element
+      }))
+    })
+    .catch(function(err){
+      console.log(err)
+    })
+  })
+};
+
+
 Promise.promisifyAll(User);
 
 module.exports = User;

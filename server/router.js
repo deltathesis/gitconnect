@@ -26,6 +26,7 @@ router.get('/api/user/delete/:name', user.deleteUser);
 router.post('/api/user/connection-request', user.requestFriend);
 router.post('/api/contactmessage', user.contactMessage);
 router.post('/api/user/:name/rate', user.rate);
+router.get('/api/newsfeed/:name', user.getNewsFeed);
 
 // Connection Routes
 router.get('/api/connectionslistDemands/:name', connectionslist.getDemands);

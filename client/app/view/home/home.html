@@ -6,6 +6,9 @@
   -->
 
   <!-- Developer around Post example *** START *** -->
+  <div class="row post user-project-post" ng-hide="hasDevAround">
+    <h3 class="no-data">There is no one available in your area right now</h3>
+  </div>
   <div ng-show="hasDevAround" class="row post developer-around-post">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail developer-number">
@@ -34,6 +37,9 @@
   <!-- Developer Around example *** END *** -->
 
   <!-- User Post example *** START *** -->
+  <div class="row post user-project-post" ng-hide="hasNewProjects">
+    <h3 class="no-data">Your network has no recent activities</h3>
+  </div>
   <div class="row post user-project-post" ng-show="hasNewProjects" ng-repeat="project in newProjects">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail user-pic">

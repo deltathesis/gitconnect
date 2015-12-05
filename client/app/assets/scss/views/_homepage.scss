@@ -57,7 +57,7 @@
         }
       }
       .project-picture-container {
-        height: 300px;
+        height: 500px;
         .project-picture {
           background-size: cover;
           background-position: 50% 50%;
@@ -138,7 +138,7 @@
           float: left;
           width: 80px;
           text-align: center;
-          margin: 0 20px 0 0;
+          margin: 10px 20px 0 0;
           &:first-child {
             margin-left: 0px;
           }
@@ -177,6 +177,18 @@
       }
     }
   }
-
-
 }
+
+@media (max-width: 479px) {
+  .home-page {
+    // User Project Post Model
+    .user-project-post {
+      .post-content {
+        .project-picture-container {
+          height: 200px;
+        }
+      }
+    }
+  }
+}
+

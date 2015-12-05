@@ -3,16 +3,16 @@
   <div class="top-container row">
     <button type="button" class="btn select-filters" ng-click="applyFilters()"><i class="fa fa-filter"></i> Filters</button>
     <div class="availability">
-    <span class="title">Availability</span>
-    <div ng-show="!availability" ng-click="availabilityOn()" class="switch turn-on">
-      <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
-      <label for="cmn-toggle-1">On</label>
-    </div>
+      <span class="title">Availability</span>
+      <div ng-show="!availability" ng-click="availabilityOn()" class="switch turn-on">
+        <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
+        <label for="cmn-toggle-1">On</label>
+      </div>
 
-    <div ng-show="availability" ng-click="availabilityOff()" class="switch turn-off">
-      <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
-      <label for="cmn-toggle-1">On</label>
-    </div>
+      <div ng-show="availability" ng-click="availabilityOff()" class="switch turn-off">
+        <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
+        <label for="cmn-toggle-1">On</label>
+      </div>
 
      <!--  <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
       <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button> -->

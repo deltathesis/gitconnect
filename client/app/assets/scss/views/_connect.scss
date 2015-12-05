@@ -21,20 +21,20 @@
         font-weight: bold;
         margin-right: 5px;
       }
-      .btn {
-        font-size: 12px;
-        font-weight: bold;
-        color: #FFF;
-        float: right;
-        &.turn-on {
-          background-color: $greenColor;
-          i { color: $greenColor; }
-        }
-        &.turn-off {
-          background-color: $redColor;
-          i { color: $redColor; }
-        }
-      }
+      // .btn {
+      //   font-size: 12px;
+      //   font-weight: bold;
+      //   color: #FFF;
+      //   float: right;
+      //   &.turn-on {
+      //     background-color: $greenColor;
+      //     i { color: $greenColor; }
+      //   }
+      //   &.turn-off {
+      //     background-color: $redColor;
+      //     i { color: $redColor; }
+      //   }
+      // }
     }
   }
   .loading-spinner {

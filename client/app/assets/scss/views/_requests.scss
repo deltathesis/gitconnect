@@ -94,7 +94,14 @@
   @media (max-width: 480px) {
     .requests-form {
       .btn {
-        margin: 0px 10px;
+        margin: 0px 5px;
+        font-size: 12px;
+        &.received {
+          margin-left: 0px;
+        }
+        &.sent {
+          margin-right: 0px;
+        }
       }
     }
     .user-details-container {

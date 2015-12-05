@@ -19,12 +19,8 @@
         </div>
         <div class="voting">
           <div class="upvote vote">
-            <button ng-click="increment(myproject)"><i class="fa fa-chevron-circle-up"></i></button>
+            <button ng-click="increment(myproject)"><i class="fa fa-caret-up fa-lg"></i></button>
             <span class="count">{{myproject.upVote}}</span>
-          </div>
-          <div class="downvote vote">
-            <button ng-click="decrement(myproject)"><i class="fa fa-chevron-circle-down"></i></button>
-            <span class="count">{{myproject.downVote}}</span>
           </div>
         </div>
       </div>
@@ -32,6 +28,7 @@
         <p class="description">
           {{myproject.shortDesc}}
         </p>
+        <h2 class="section-title">Languages</h2>
         <div class="tech-list">
           <ul class="row">
             <li class="col-xs-6 col-sm-3" ng-repeat="tech in myproject.languages">
@@ -40,6 +37,7 @@
             </li>
           </ul>
         </div>
+        <h2 class="section-title">Team</h2>
         <div class="github-link">
           <i class="fa fa-github"></i>
           <a href="{{myproject.projectRepo}}">{{myproject.projectRepo}}</a>
@@ -90,7 +88,7 @@
   </div> -->
     <div class="row team-messages">
       <div class="col-xs-12">
-        <h1>Comments</h1>
+        <h2 class="section-title">Comments</h2>
         <ul class="list-group">
           <li class="list-group-item cf" ng-repeat="message in messages">
             <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>

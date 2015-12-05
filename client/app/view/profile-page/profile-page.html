@@ -33,10 +33,23 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-show='ownership' ng-init="statusCheck()">
-      <h5>Your current status</h5>
+
+      <span class="title">Availability</span>
+      <div ng-show="!availability" ng-click="availabilityOn()" class="switch turn-on">
+        <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
+        <label for="cmn-toggle-1">On</label>
+      </div>
+
+      <div ng-show="availability" ng-click="availabilityOff()" class="switch turn-off">
+        <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
+        <label for="cmn-toggle-1">On</label>
+      </div>
+
+      <!-- <h5>Your current status</h5>
       <p ng-class="{'turn-on': availability, 'turn-off': !availability}"><i class="fa fa-circle"></i> {{availabilityStatus}}</p>
       <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
-      <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button>
+      <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button> -->
+
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-init="statusCheck()" ng-show="!ownership">
       <button type="button" class="btn btn-primary" ng-click="sendConnectionRequests()">Connect with {{user.name}}!</button>

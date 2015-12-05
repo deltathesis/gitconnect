@@ -3,7 +3,11 @@
   .project-post {
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    // border-bottom: 1px dotted #CCC;
+    .section-title {
+      border-top: 1px dotted #CCC;
+      padding-top: 10px;
+    }
     .post-top-info {
       position: relative;
       .thumbnail-pic {
@@ -38,10 +42,14 @@
         float: left;
         padding-left: 30px;
         .vote {
+          text-align: center;
           button {
             background: none;
             border: none;
             height: 22px;
+          }
+          .count {
+            display: block;
           }
         }
       }
@@ -81,7 +89,8 @@
         }
       }
       .github-link {
-        margin-bottom: 30px;
+        margin-top: 10px;
+        margin-bottom: 20px;
         i {
           font-size: 15px;
           margin-right: 5px;
@@ -92,8 +101,10 @@
         margin-bottom: 20px;
         .developer {
           float: left;
-          width: 50px;
-          margin: 0 10px;
+          width: 80px;
+          height: 95px;
+          text-align: center;
+          margin: 10px 10px 0 0;
           &:first-child {
             margin-left: 0px;
           }
@@ -101,6 +112,7 @@
             margin-right: 0px;
           }
           .developer-pic {
+            margin: 0 auto;
             width: 50px;
             height: 50px;
             display: block;
@@ -132,6 +144,10 @@
 
   // Post
   .team-messages {
+    .section-title {
+      border-top: 1px dotted #CCC;
+      padding-top: 10px;
+    }
     padding-bottom: 20px;
     .list-group {overflow: hidden;}
     .team-member-chat-picture {
@@ -202,6 +218,18 @@
       }
     }
   }
-
-
 }
+
+@media (max-width: 767px) {
+  .project-page {
+    .project-post {
+      .post-top-info {
+        .voting {
+          width: 100%;
+          padding: 20px 0px;
+        }
+      }
+    }
+  }
+}
+

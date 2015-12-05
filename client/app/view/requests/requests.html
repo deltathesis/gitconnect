@@ -1,8 +1,8 @@
 <div class="container page requests-page">
 
   <div class="col-xs-12 requests-form fadein-effect" ng-init="selected = 'requests'">
-      <button class="btn" ng-class="{'active':selected === 'requests'}" ng-click="selected = 'requests'">Received Requests</button>
-      <button class="btn" ng-class="{'active':selected === 'demands'}" ng-click="selected = 'demands'">Sent Requests</button>
+      <button class="btn received" ng-class="{'active':selected === 'requests'}" ng-click="selected = 'requests'">Received Requests</button>
+      <button class="btn sent" ng-class="{'active':selected === 'demands'}" ng-click="selected = 'demands'">Sent Requests</button>
   </div>
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'requests'">

@@ -1,6 +1,6 @@
 angular.module('myApp.header', [])
 
-.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', function($scope, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location) {
+.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', '$window', function($scope, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location, $window) {
   var cookie = $cookies.get('gitConnectDeltaKS');
   if(cookie){
 
@@ -37,6 +37,13 @@ angular.module('myApp.header', [])
       });
     }
   };
+  $scope.login = function() {
+    $window.location.href='/auth/github'
+  }
+
+  $scope.logout = function() {
+    $window.location.href='/auth/logout'
+  }
 
   // Catch call and return if user already in a project
   $rootScope.$on('hasProjectCheck', function() { 

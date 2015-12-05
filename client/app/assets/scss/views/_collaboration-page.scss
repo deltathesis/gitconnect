@@ -19,8 +19,7 @@
     .team-members-list {
       .team-member {
         float: left;
-        width: 50px;
-        margin: 0 10px;
+        width: 80px;
         &:first-child {
           margin-left: 0px;
         }
@@ -36,6 +35,7 @@
         background-position: 50% 50%;
         border-radius: 50%;
         border: 2px solid $mainColor;
+        margin: 0 auto;
       }
       .team-member-name {
         margin-top: 5px;

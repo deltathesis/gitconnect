@@ -108,7 +108,8 @@ angular.module('myApp.subscription', ['ngRoute'])
         username: $scope.user.username,
         email: userEmail,
         bio: userBio,
-        name: userFullName
+        name: userFullName,
+        location: $scope.cityId
       }
 
       // Prepare data to be posted

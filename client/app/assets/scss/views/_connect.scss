@@ -1,14 +1,11 @@
 @import "animated-check";
-
+.pac-container {
+    z-index: 1051 !important;
+}
 .connect-page {
   min-height: 1000px;
   .top-container {
     margin:20px 0px;
-    .city-form {
-      label {
-        margin-right: 5px;
-      }
-    }
     .select-filters{
       background-color: #FFF;
       border-color: #adadad;

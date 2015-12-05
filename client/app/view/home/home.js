@@ -18,6 +18,9 @@ angular.module('myApp.homepage', ['ngRoute'])
 
 .controller('homepage', ['$scope', 'getNewsFeed', function($scope, getNewsFeed) {
 
+  // Set default min height regarding screen height
+  $('.page').css('min-height', window.innerHeight - 40 + 'px');
+
   var user = getNewsFeed;
   $scope.news = user.news;
 

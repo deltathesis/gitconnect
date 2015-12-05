@@ -24,8 +24,6 @@ angular.module('myApp.homepage', ['ngRoute'])
   $scope.hasDevAround = false;
   $scope.hasNewProjects = false;
 
-  console.log($scope.news);
-
   if ($scope.news.people.length > 0) {
     $scope.hasDevAround = true;
     $scope.devAroundCount = $scope.news.people.length;

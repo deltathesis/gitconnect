@@ -51,14 +51,14 @@
       <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button> -->
 
     </div>
-    <div class="col-xs-12 col-sm-4 user-status" ng-init="statusCheck()" ng-show="!ownership">
-      <button type="button" class="btn btn-primary" ng-click="sendConnectionRequests()">Connect with {{user.name}}!</button>
+    <div class="col-xs-12 col-sm-4 user-status interact" ng-init="statusCheck()" ng-show="!ownership">
+      <button type="button" class="btn btn-primary" ng-click="sendConnectionRequests()">Connect</button>
     </div>
 
     <!-- Button trigger modal for Message Sending-->
-    <div class="col-xs-12 col-sm-4 user-status" ng-hide="ownership" ng-init="statusCheck()">
-      <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">
-       Send a Message to {{user.name}}!
+    <div class="col-xs-12 col-sm-4 user-status interact" ng-hide="ownership" ng-init="statusCheck()">
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+       Send a message
      </button>
 
      <!-- Modal -->

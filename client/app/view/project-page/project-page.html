@@ -89,25 +89,27 @@
     </div>
   </div> -->
     <div class="row team-messages">
-      <h1>Comments</h1>
-      <ul class="list-group">
-        <li class="list-group-item cf" ng-repeat="message in messages">
-          <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
-          <div class="message-content">
-            <span class="username">{{message.username}}</span>
-            <span class="date">{{ message.date | date: 'short' }}</span>
-            <p class="message-content-body">
-              {{message.message}}
-            </p>
+      <div class="col-xs-12">
+        <h1>Comments</h1>
+        <ul class="list-group">
+          <li class="list-group-item cf" ng-repeat="message in messages">
+            <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
+            <div class="message-content">
+              <span class="username">{{message.username}}</span>
+              <span class="date">{{ message.date | date: 'short' }}</span>
+              <p class="message-content-body">
+                {{message.message}}
+              </p>
+            </div>
+          </li>
+        </ul>
+        <form ng-submit="messageSubmit()">
+          <div class="input-group input-group-lg">
+            <span class="input-group-addon" id="sizing-addon1">+</span>
+            <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">
           </div>
-        </li>
-      </ul>
-      <form ng-submit="messageSubmit()">
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon" id="sizing-addon1">+</span>
-          <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   <!-- User Comment example *** END *** -->
 

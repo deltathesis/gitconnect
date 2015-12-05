@@ -14,12 +14,61 @@
     </div>
   </div>
 
-  
+  <!-- ********* block *********** -->
+
+  <div class="projects-list">
+
+    <div class="project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText | orderBy:'-upVote'" ng-click="projectPageRedirect(project.projectId)">
+      <div class="top-container-post">
+        <div class="vote-block" ng-click="$event.stopPropagation(); increment(project, projects.indexOf(project))">
+          <span class="project-vote-button">
+            <i class="fa fa-caret-up fa-lg"></i>
+          </span>
+          <span class="project-vote-count truncate">
+            {{project.upVote}}
+          </span>
+        </div>
+        <div class="project-thumbnail" style="background-image:url({{project.picture}})" ng-click="projectPageRedirect(project.projectId)">
+        </div>
+        <div class="post-text">
+          <div class="date-and-comments">
+            <span class="post-date"><i class="fa fa-clock-o"></i> {{project.publishDate | date:'mediumDate'}}</span>
+            <span class="post-comments"><i class="fa fa-comments-o fa-lg comments"></i> {{project.commentCount}}</span>
+          </div>
+          <div>
+            <a href="#/project/{{project.projectId}}" class="project-name ">{{project.name}}</a>
+            <p class="project-short-description ">{{project.shortDesc}}</p>
+          </div>
+        </div>
+        <div class="post-user-info">
+          <a href="#/user/{{developer.username}}" class="user-image" ng-repeat="developer in project.teams" style="background-image: url({{developer.avatar_url}})">
+          </a>
+        </div>
+      </div>
+      <div class="post-user-info-mobile">
+        <a href="#/user/{{developer.username}}" class="user-image" ng-repeat="developer in project.teams" style="background-image: url({{developer.avatar_url}})">
+        </a>
+      </div>
+      <div class="project-thumbnail-mobile">
+        <div class="picture" style="background-image:url({{project.picture}})" ng-click="projectPageRedirect(project.projectId)">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ********* block *********** -->
+<!--   
   <div class="projects-list">
     <div class="project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText | orderBy:'-upVote'" ng-click="projectPageRedirect(project.projectId)">
       <a class="vote-block" ng-click="$event.stopPropagation(); increment(project, projects.indexOf(project))">
-        <span class="project-vote-button"><i class="fa fa-caret-up fa-lg"></i></span>
-        <span class="project-vote-count">{{project.upVote}}</span>
+        <span class="project-vote-button">
+          <i class="fa fa-caret-up fa-lg"></i>
+        </span>
+        <span class="project-vote-count">
+          {{project.upVote}}
+        </span>
       </a>
       <div class="project-thumbnail" style="background-image:url({{project.picture}})" ng-click="projectPageRedirect(project.projectId)">
       </div>
@@ -32,8 +81,12 @@
         <span class="project-short-description">{{project.shortDesc}}</span>
       </div>
       <div class="post-user-info">
-        <a href="#/user/{{developer.username}}" class="user-image" ng-click = "$event.stopPropagation()" ng-repeat="developer in project.teams"style="background-image: url({{developer.avatar_url}})"></a>
+        <div href="#/user/{{developer.username}}" class="user-image" ng-click = "$event.stopPropagation()" ng-repeat="developer in project.teams" style="background-image: url({{developer.avatar_url}})">
+        </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <!-- ********* block *********** -->
+
 </div>

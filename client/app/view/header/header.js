@@ -13,6 +13,7 @@ angular.module('myApp.header', [])
     socket.on('theDATA', function(data){
       $scope.unreadMessages = data.messageNotifications;
       $scope.friendRequests = data.friendRequests;
+      console.log('theData information', data)
     })
 
     socket.on('youveGotMail', function(data){

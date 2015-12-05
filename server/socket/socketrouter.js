@@ -38,7 +38,7 @@ module.exports = function (socket) {
   //init data for the user
   socket.on('myusername', function(data) {
     name = data;
-    people[data] = socket;
+    // people[data] = socket;
     var peopleArray = [];
     var roomsObj = {};
     // console.log('peeeple in socket io people object', people.yusufmodan.id)
@@ -207,6 +207,16 @@ module.exports = function (socket) {
     socket.emit('notify:potentialFriendSuccess')
     friendRequests.transaction(function(number){
      return (number || 0) + 1;
+    }, function(error, committed, snapshot){
+      // console.log('data.target ', data.target)
+      // console.log('people[data.target].id ', people[data.target].id)
+      firebase.once("value", function(values) {
+        if(values.val()) {  
+          users = values.val().users;
+          socket.emit('theDATA', users[data.currentUser]);
+          socket.broadcast.to(people[data.target].id).emit('friendRequest:notification', {data:'livenotify'});
+        }
+      });
     });
   });
 
@@ -263,6 +273,7 @@ module.exports = function (socket) {
     if(users) {
       socket.emit('theDATA', users[data.username]);
     }
+    people[data.username] = socket;
   })
 
   socket.on('notify:otherUser', function(data){
@@ -272,7 +283,7 @@ module.exports = function (socket) {
           socket.broadcast.to(people[data.username].id).emit('youveGotMail', {data:'livenotify'});
           break;
         case "friendRequest":
-          console.log('friendRequest triggered')
+          console.log('friendRequest triggered data.username ', data.username)
           socket.broadcast.to(people[data.username].id).emit('friendRequest:notification', {data:'livenotify'});
           break;
         case "showCollabPage":

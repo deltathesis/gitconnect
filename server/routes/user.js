@@ -198,4 +198,25 @@ user.rate = function(req, res) {
     .then(res.end);
 };
 
+user.getNewsFeed = function(req, res) {
+  var newsDataObj = {};
+  var city;
+
+  Node.getRelationshipData({username: req.params.name}, 'all', '')
+  .then(function(user){
+    User.getUserByCity(user.relationships.Lives[0].uniq_id, req.params.name).then(function(people) {
+      newsDataObj.people = people;
+      city = user.relationships.Lives[0].uniq_id;
+    }).then(function(user){
+      // console.log("toto",req.params.name);
+      User.getFriendsProjects(req.params.name).then(function(projects) {
+      newsDataObj.projects = projects;
+      }).then(function(user){
+        // res.end();
+        res.json({news: newsDataObj});
+      });
+    });
+  })
+};
+
 module.exports = user;

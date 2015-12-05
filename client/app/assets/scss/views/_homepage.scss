@@ -113,9 +113,21 @@
   .developer-around-post {
     .post-top-info {
       .developer-number {
+        text-align: center;
         span {
           font-weight: bold;
           font-size: 30px;
+        }
+      }
+      .post-top-details {
+        .post-title {
+          p {
+            margin-top: 11px;
+            font-size: 18px;
+            margin-bottom: 0px;
+            line-height: 18px;
+            font-weight: bold;
+          }
         }
       }
     }
@@ -124,8 +136,9 @@
         margin-bottom: 0px;
         .developer {
           float: left;
-          width: 50px;
-          margin: 0 10px;
+          width: 80px;
+          text-align: center;
+          margin: 0 20px 0 0;
           &:first-child {
             margin-left: 0px;
           }
@@ -140,6 +153,7 @@
             background-position: 50% 50%;
             border-radius: 50%;
             border: 2px solid $mainColor;
+            margin: 0 auto;
           }
           .developer-name {
             margin-top: 5px;

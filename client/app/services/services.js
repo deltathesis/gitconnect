@@ -335,3 +335,21 @@ angular.module('myApp.services', [])
 	};
 
 }])
+
+.factory('newsfeed', ['$http', function($http) {
+
+  var getNewsFeed = function(username) {
+    return $http({
+      cache: true,
+      method: 'GET',
+      url: '/api/newsfeed/' + username
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
+  return {
+    getNewsFeed: getNewsFeed
+  };
+
+}])

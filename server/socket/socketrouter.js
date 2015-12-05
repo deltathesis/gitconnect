@@ -41,6 +41,7 @@ module.exports = function (socket) {
     people[data] = socket;
     var peopleArray = [];
     var roomsObj = {};
+    // console.log('peeeple in socket io people object', people.yusufmodan.id)
 
     for(var key in people) {
       peopleArray.push(key);
@@ -257,10 +258,27 @@ module.exports = function (socket) {
     });
     delete people[name];
   });
-//TODO EMIT ACTUAL FIREBASE DATA SOCKET.EMIT THEDATA
+
   socket.on('giveMeDATA', function(data){
     if(users) {
       socket.emit('theDATA', users[data.username]);
     }
   })
+
+  socket.on('notify:otherUser', function(data){
+    if(people[data.username]){
+      switch (data.subject){
+        case "messages":
+          socket.broadcast.to(people[data.username].id).emit('youveGotMail', {data:'livenotify'});
+          break;
+        case "friendRequest":
+          console.log('friendRequest triggered')
+          socket.broadcast.to(people[data.username].id).emit('friendRequest:notification', {data:'livenotify'});
+          break;
+        case "showCollabPage":
+          socket.broadcast.to(people[data.username].id).emit('showCollabPage:notification', {data:'livenotify'});
+          break;
+      }
+    }
+  });
 };

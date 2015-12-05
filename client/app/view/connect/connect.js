@@ -125,6 +125,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         socket.emit('notify:potentialFriend', {
           target: angular.copy($scope.selectedUser.username), currentUser: angular.copy($scope.user.username)
         })
+        socket.emit('notify:otherUser', {username: angular.copy($scope.selectedUser.username), subject: 'friendRequest'});
     }, function errorCallback(response) {
       console.log('error: ', response);
     });

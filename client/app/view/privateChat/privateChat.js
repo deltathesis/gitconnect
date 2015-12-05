@@ -60,7 +60,6 @@ angular.module('myApp.privateChat', ['ngRoute'])
   socket.on('bigInit', function (data) {
     $scope.users = data.users;
   })
-
   //listener for message being sent
   socket.on('send:message', function (message) {
 
@@ -168,6 +167,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
     scrollToBottom();
     socket.emit('storeData', angular.copy($scope.roomMessages));
     socket.emit('notify:message', {target: angular.copy($scope.currentTarget), currentUser: angular.copy($scope.name)});
+    socket.emit('notify:otherUser', {username: angular.copy($scope.currentTarget), subject: 'messages'});
     // socket.emit('notify:potentialFriend', {target: angular.copy($scope.currentTarget), currentUser: angular.copy($scope.name)});
   };
 

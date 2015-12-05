@@ -15,6 +15,17 @@ angular.module('myApp.header', [])
       $scope.friendRequests = data.friendRequests;
     })
 
+    socket.on('youveGotMail', function(data){
+      socket.emit('giveMeDATA', {username: cookieObj.username});
+    })
+    socket.on('friendRequest:notification', function(data){
+      console.log('hellooooo');
+      socket.emit('giveMeDATA', {username: cookieObj.username});
+    })
+    // socket.on('showCollabPage:notification', function(data){
+      // socket.emit('giveMeDATA', {username: cookieObj.username});
+    // })
+
   }
   $scope.clearFriendRequestNotifications = function(){
     socket.emit('clear:friendRequests', {currentUser: angular.copy($scope.username)});

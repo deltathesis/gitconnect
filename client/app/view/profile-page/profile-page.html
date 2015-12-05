@@ -16,12 +16,12 @@
         </div>
         <div class="subdetail ratings" ng-show="!ratingBool">
           <span id="stars-existing" class="stars"></span>
-          <button type="button" class="btn btn-default" ng-click="toggleRate()" ng-show="!ownership">Rate</button> 
+          <!--<button type="button" class="btn btn-default" ng-click="toggleRate()" ng-show="!ownership">Rate</button> -->
         </div>
 
-        <div class="rating savingrating" ng-show="ratingBool">
+        <!--<div class="rating savingrating" ng-show="ratingBool">
           <span ng-repeat="value in [5,4,3,2,1]" ng-click="rate(value); clicked=true;" ng-mouseover="clicked=false" ng-class="{rated: clicked}">☆</span>
-        </div> 
+        </div>-->
       </div>
       <a href="#/profile-update/{{user.username}}" class="update-profile" ng-show='ownership'>
         <i class="fa fa-cog"></i> Update your profile

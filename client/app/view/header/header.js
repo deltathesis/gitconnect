@@ -13,19 +13,20 @@ angular.module('myApp.header', [])
     socket.on('theDATA', function(data){
       $scope.unreadMessages = data.messageNotifications;
       $scope.friendRequests = data.friendRequests;
-      console.log('theData information', data)
     })
 
     socket.on('youveGotMail', function(data){
       socket.emit('giveMeDATA', {username: cookieObj.username});
     })
     socket.on('friendRequest:notification', function(data){
-      console.log('hellooooo');
       socket.emit('giveMeDATA', {username: cookieObj.username});
     })
-    // socket.on('showCollabPage:notification', function(data){
+    socket.on('showCollabPage:notification', function(data){
+      $scope.hasProject = true;
+      $scope.projectLink = data.projectId;
+      $location.path('/collaboration-page/' + data.projectId);
       // socket.emit('giveMeDATA', {username: cookieObj.username});
-    // })
+    })
 
   }
   $scope.clearFriendRequestNotifications = function(){

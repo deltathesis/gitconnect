@@ -213,6 +213,7 @@ module.exports = function (socket) {
           if(values.val()) {  
             users = values.val().users;
             socket.emit('theDATA', users[data.currentUser]);
+            socket.emit('waitForFirebase');
           }
         });
       }
@@ -282,11 +283,10 @@ module.exports = function (socket) {
           socket.broadcast.to(people[data.username].id).emit('youveGotMail', {data:'livenotify'});
           break;
         case "friendRequest":
-          console.log('friendRequest triggered')
           socket.broadcast.to(people[data.username].id).emit('friendRequest:notification', {data:'livenotify'});
           break;
         case "showCollabPage":
-          socket.broadcast.to(people[data.username].id).emit('showCollabPage:notification', {data:'livenotify'});
+          socket.broadcast.to(people[data.username].id).emit('showCollabPage:notification', {data:'livenotify', projectId: data.projectId});
           break;
       }
     }

@@ -111,7 +111,9 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   //     $scope.swiper.removeSlide($scope.selectedUserIndex)
   //   },1500)
   // })
-
+  socket.on('waitForFirebase',function(){
+    socket.emit('notify:otherUser', {username: angular.copy($scope.selectedUser.username), subject: 'friendRequest'});
+  })
   $scope.connectionRequest = function(){
     $scope.users[$scope.swiper.activeIndex].connectionRequest = true;
     $('.swiper-slide-active').addClass('requested');
@@ -122,10 +124,10 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
               selectedUser: $scope.selectedUser
             }
     }).then(function successCallback(response) {
-        socket.emit('notify:potentialFriend', {
+        socket.emit('notify:potentialFriend', { //increment their notification count in the database
           target: angular.copy($scope.selectedUser.username), currentUser: angular.copy($scope.user.username)
         })
-        socket.emit('notify:otherUser', {username: angular.copy($scope.selectedUser.username), subject: 'friendRequest'});
+        // socket.emit('notify:otherUser', {username: angular.copy($scope.selectedUser.username), subject: 'friendRequest'});
     }, function errorCallback(response) {
       console.log('error: ', response);
     });

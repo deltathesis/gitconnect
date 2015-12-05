@@ -30,12 +30,16 @@
       </form> -->
       <ul class="nav navbar-nav navbar-right">
         <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" data-message={{friendRequests}} ng-click="clearFriendRequestNotifications()">
-          <span class="badge">{{friendRequests}}</span>
-          <a href="#/requests" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-user-plus"></i></a>
+          <a href="#/requests" data-toggle="collapse" data-target=".navbar-collapse.in">
+            <span class="badge">{{friendRequests}}</span>
+            <i class="fa fa-user-plus"></i>
+          </a>
         </li>
         <li ng-show='user' ng-class="unreadMessages ? 'notifications' : 'nothing'" class="notify messaging" data-messages={{unreadMessages}} ng-click="clearMessageNotifications()">
-          <span class="badge">{{unreadMessages}}</span>
-          <a href="#/privateChat" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-comments"></i></a>
+          <a href="#/privateChat" data-toggle="collapse" data-target=".navbar-collapse.in">
+            <span class="badge">{{unreadMessages}}</span>
+            <i class="fa fa-comments"></i>
+          </a>
         </li>
         <li class="splitter"></li>
         <li ng-show='!user'><a ng-click="login()" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-login">Login | Signup</a></li>

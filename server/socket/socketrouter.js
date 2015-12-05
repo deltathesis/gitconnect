@@ -38,9 +38,10 @@ module.exports = function (socket) {
   //init data for the user
   socket.on('myusername', function(data) {
     name = data;
-    people[data] = socket;
+    // people[data] = socket;
     var peopleArray = [];
     var roomsObj = {};
+    // console.log('peeeple in socket io people object', people.yusufmodan.id)
 
     for(var key in people) {
       peopleArray.push(key);
@@ -206,6 +207,16 @@ module.exports = function (socket) {
     socket.emit('notify:potentialFriendSuccess')
     friendRequests.transaction(function(number){
      return (number || 0) + 1;
+    }, function(error, committed, snapshot){
+      if(!error){
+        firebase.once("value", function(values) {
+          if(values.val()) {  
+            users = values.val().users;
+            socket.emit('theDATA', users[data.currentUser]);
+            socket.emit('waitForFirebase');
+          }
+        });
+      }
     });
   });
 
@@ -257,10 +268,27 @@ module.exports = function (socket) {
     });
     delete people[name];
   });
-//TODO EMIT ACTUAL FIREBASE DATA SOCKET.EMIT THEDATA
+
   socket.on('giveMeDATA', function(data){
     if(users) {
       socket.emit('theDATA', users[data.username]);
     }
+    people[data.username] = socket;
   })
+
+  socket.on('notify:otherUser', function(data){
+    if(people[data.username]){
+      switch (data.subject){
+        case "messages":
+          socket.broadcast.to(people[data.username].id).emit('youveGotMail', {data:'livenotify'});
+          break;
+        case "friendRequest":
+          socket.broadcast.to(people[data.username].id).emit('friendRequest:notification', {data:'livenotify'});
+          break;
+        case "showCollabPage":
+          socket.broadcast.to(people[data.username].id).emit('showCollabPage:notification', {data:'livenotify', projectId: data.projectId});
+          break;
+      }
+    }
+  });
 };

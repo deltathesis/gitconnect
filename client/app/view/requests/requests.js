@@ -67,9 +67,11 @@ angular.module('myApp.requests', ['ngRoute'])
     };
     
     UserConnection.createConnection(usersObject).then(function(project) {
+      socket.emit('notify:otherUser', {username: username, subject: 'showCollabPage', projectId: project.projectId})
       $scope.linktoProject = project.projectId;
       $('#projectPageRedirect').modal('show');
     });
+
   };
 
   $scope.deleteRequest = function(username) {
@@ -101,6 +103,7 @@ angular.module('myApp.requests', ['ngRoute'])
 
     $timeout(function() {
       $rootScope.$broadcast('projectStarted', {projectId: id});
+      socket.emit('notify:otherUser', {username: username, subject: 'showCollabPage', projectId: id})
     }, 1000);
 
     // window.location = '#/collaboration-page/' + id;

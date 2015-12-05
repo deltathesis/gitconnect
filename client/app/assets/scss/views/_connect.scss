@@ -1,6 +1,6 @@
 @import "animated-check";
 .pac-container {
-    z-index: 1051 !important;
+  z-index: 1051 !important;
 }
 .connect-page {
   min-height: 1000px;
@@ -12,7 +12,15 @@
       float: left;
     }
     .availability {
+      position: relative;
       text-align: right;
+      .title {
+        position: relative;
+        top: 3px;
+        line-height: 14px;
+        font-weight: bold;
+        margin-right: 5px;
+      }
       .btn {
         font-size: 12px;
         font-weight: bold;
@@ -31,7 +39,8 @@
   }
   .loading-spinner {
     position: absolute;
-    left: 45%;
+    left: 50%;
+    margin-left: -60px;
     top: 40%;
   }
   .availability-required, .no-matches {
@@ -216,7 +225,7 @@
             .project-post {
               margin-top: 20px;
               .picture-container {
-              height: 200px;
+                height: 200px;
                 a {
                   width: 100%;
                   height: 100%;
@@ -234,20 +243,83 @@
 }
 
 @media (max-width: 480px) {
-   .connect-page {
-    .swiper-container {
-      .swiper-slide {
-        height: 250px;
-      }
+ .connect-page {
+  .swiper-container {
+    .swiper-slide {
+      height: 250px;
     }
   }
 }
+}
 
 @media (max-width: 320px) {
-   .connect-page {
-    .swiper-container {
-      .swiper-slide {
-        height: 200px;
+ .connect-page {
+  .swiper-container {
+    .swiper-slide {
+      height: 200px;
+    }
+  }
+}
+}
+
+.connect-page {
+  .availability {
+    .switch {
+      display: inline-block;
+      .cmn-toggle {
+        position: absolute;
+        margin-left: -9999px;
+        visibility: hidden;
+      }
+      .cmn-toggle + label {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+      }
+      input.cmn-toggle-round + label {
+        padding: 2px;
+        width: 60px;
+        height: 30px;
+        background-color: #dddddd;
+        border-radius: 60px;
+      }
+      input.cmn-toggle-round + label:before,
+      input.cmn-toggle-round + label:after {
+        display: block;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        bottom: 1px;
+        content: "";
+      }
+      input.cmn-toggle-round + label:before {
+        right: 1px;
+        background-color: $redColor;
+        border-radius: 60px;
+        transition: background 0.4s;
+      }
+      input.cmn-toggle-round + label:after {
+        width: 28px;
+        background-color: #fff;
+        border-radius: 100%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        // transition: margin 0.4s;
+      }
+      input.cmn-toggle-round:checked + label:before {
+        // background-color: #8ce196;
+      }
+      input.cmn-toggle-round:checked + label:after {
+        // margin-left: 60px;
+      }
+      &.turn-off {
+        input.cmn-toggle-round + label:before {
+          background-color: $greenColor;
+        }
+        input.cmn-toggle-round:checked + label:after {
+          margin-left: 60px;
+        }
       }
     }
   }

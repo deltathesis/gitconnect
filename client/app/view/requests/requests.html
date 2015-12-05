@@ -18,7 +18,7 @@
           {{user.bio}}
         </div>
         <div class="subdetail ratings">
-         <!--<div id="stars-existing" class="stars" ng-init="ratings(Math.round(user.ratingsTotal / user.ratings), $index, 'requests')"></div>-->
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'requests')"></div>
          <!--<div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>-->
         </div>
       </div>
@@ -42,7 +42,7 @@
           {{user.bio}}
         </div>
         <div class="subdetail ratings">
-         <!--<div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>-->
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'demands')"></div>
          <!--<div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>-->
         </div>
       </div>

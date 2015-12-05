@@ -44,6 +44,7 @@ angular.module('myApp.requests', ['ngRoute'])
   $('.page').css('min-height', window.innerHeight - 40 + 'px');
 
   $scope.ratings = function(ratings, index, type) {
+    ratings = Math.round(ratings);
     // Ratings Module
     index = index + 2;
     $ratings = $('.user-details.' + type + ':nth-child(' + index + ') .stars');

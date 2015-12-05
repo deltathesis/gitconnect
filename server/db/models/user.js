@@ -102,7 +102,7 @@ User.data = function(data){
     apiUrl: data.apiUrl,
     name: data.name,
     username: data.username,
-    location: '',
+    location: 'ChIJIQBpAG2ahYAR_6128GcTUEo',
     githubId: data.githubId,
     company: !data.company ? 'null' : data.company,
     blog: !data.blog ? 'null' : data.blog,
@@ -148,6 +148,16 @@ User.saveNewUser = function(username){
         relLabel: 'KNOWS'
       })
       return data;
+    })
+    .then(function(data){
+      var Node = require('./node');
+      Node.addRelationships({
+        baseNode: {username: githubData.userData.username},
+        relNodes: [{name: 'San Francisco'}, {uniq_id: 'ChIJIQBpAG2ahYAR_6128GcTUEo'}],
+        relDirection: 'out',
+        relNodeLabels: ['City'],
+        relLabel: 'Lives'
+      })
     })
     .then(function(data){
       resolve(node)

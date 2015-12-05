@@ -20,22 +20,25 @@
       .user-subdetails {
         float: left;
         padding-left: 15px;
-         .rating, .posted-rating {
-      display: inline-block;
-      unicode-bidi: bidi-override;
-      direction: rtl;
-      font-size: 150%;
-    }
-    // >: the child combinator
-    .rating > span, .posted-rating > span {
-      display: inline-block;
-      position: relative;
-    }
+        .saved-rating {
+          color: #e3cf7a;
+        }
+        .rating {
+          display: inline-block;
+          unicode-bidi: bidi-override;
+          direction: rtl;
+          font-size: 170%;
+        }
+        // >: the child combinator
+        .rating > span, .posted-rating > span {
+          display: inline-block;
+          position: relative;
+        }
         .rating > span:hover:before,
         .rating > span:hover ~ span:before,
         span.rated:before,
         span.rated ~ span:before {
-         color: #e3cf7a;
+         color: gold;
          content: "\2605";
          position: absolute;
        }

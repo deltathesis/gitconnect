@@ -29,6 +29,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
   // }
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
+  $scope.ratingBool = 0;
   User.getProfileAndRelations(cookieObj.username).then(function(data) {
     $scope.cookieUser = data;
   })
@@ -39,8 +40,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
       // var ratingArray = [];
       // for(var i = 0; i < rating; i++) ratingArray.push(i);
       // $scope.user.ratings = ratingArray;
-      $scope.user.ratings = Math.ceil($scope.user.ratingTotal / $scope.user.ratings);
-
+      $scope.averageRatings =$scope.user.ratingTotal / $scope.user.ratings;
+      $scope.averageRatings = Math.round($scope.averageRatings * 10) / 10;
       // Updated User Tech list display
       var techList = userOwnTech.getTech();
       if (techList.length !== 0) {
@@ -180,9 +181,13 @@ angular.module('myApp.profilepage', ['ngRoute'])
       $compile(html)($scope);
       $ratings.append(html);
     }
-    for (var i = 0; i < $scope.user.ratings; i++) {
+    for (var i = 0; i < $scope.averageRatings; i++) {
       $('.position-' + i).removeClass('fa-star-o').addClass('fa-star');
     }
+  }
+
+  $scope.toggleRate = function() {
+    $scope.ratingBool = 1 - $scope.ratingBool;
   }
 
   $scope.sendConnectionRequests = function() {
@@ -203,6 +208,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
   };
 
   $scope.rate = function(index) {
+    $scope.averageRatings = Math.round(($scope.user.ratingTotal + index) / ($scope.user.ratings + 1) * 10) / 10;
     User.postRating($scope.user, index)
       .catch(function(err) {
         console.log(err);

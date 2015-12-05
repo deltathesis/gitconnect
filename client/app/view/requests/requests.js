@@ -6,10 +6,10 @@ angular.module('myApp.requests', ['ngRoute'])
     templateUrl: 'view/requests/requests.html',
     controller: 'requestsPage',
     resolve: {
-      getUserDemands: ['userRequests', function(userRequests) {
+      recievedRequests: ['userRequests', function(userRequests) {
           return userRequests.getDemands();
       }],
-      getUserRequests: ['userRequests', function(userRequests) {
+      sentRequests: ['userRequests', function(userRequests) {
           return userRequests.getRequests();
       }],
       getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
@@ -23,13 +23,9 @@ angular.module('myApp.requests', ['ngRoute'])
 }])
 
 .controller('requestsPage', [
-  '$scope', 'getUserDemands', 'getUserRequests', 'getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
-  function($scope, getUserDemands, getUserRequests, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
-
-  // var userDemands = getUserDemands;
-  // console.log('demands: ',userDemands);
-  // var usersRequest = getUserRequests;
-  // console.log('requests: ',usersRequest);
+  '$scope', 'recievedRequests', 'sentRequests', 'getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
+  function($scope, recievedRequests, sentRequests, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
+    
   var userInfos = getProfile;
 
   // Get User username
@@ -37,10 +33,10 @@ angular.module('myApp.requests', ['ngRoute'])
   var cookieObj = Cookie.parseCookie(cookie);
   var userUsername = cookieObj.username;
 
-  $scope.usersRequest = getUserRequests;
-  console.log($scope.usersRequest)
-  $scope.userDemands = getUserDemands;
-  console.log($scope.userDemands);
+  $scope.sentRequests = sentRequests;
+  $scope.recievedRequests = recievedRequests;
+  console.log($scope.sentRequests)
+  console.log($scope.recievedRequests)
 
   // Set default min height regarding screen height
   $('.page').css('min-height', window.innerHeight - 40 + 'px');

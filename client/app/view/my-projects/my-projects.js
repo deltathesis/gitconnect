@@ -24,7 +24,7 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
   $scope.publishedProjects = [];
   $scope.inProgressProjects = [];
   userInfos.relationships.WORKED.forEach(function(project){
-    if(project.published = 'true'){
+    if(project.published === 'true'){
       $scope.publishedProjects.push(project)
     } else {
       $scope.inProgressProjects.push(project);

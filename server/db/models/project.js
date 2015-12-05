@@ -133,7 +133,7 @@ Project.createRevised = function(projectOwner, collaboratorsArray){
       Node.addRelationships({
         baseNode: {projectId: projectNode.projectId},
         relNodes: collaboratorsArray,
-        relDirection: 'out',
+        relDirection: 'in',
         relNodeLabels: ['Project'],
         relLabel: 'WORKED'
       })

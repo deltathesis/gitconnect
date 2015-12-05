@@ -21,7 +21,7 @@
 
   <!--show div if user is unavailable -->
 
-  <img class="loading-spinner" src="../assets/pictures/default.gif" alt="" ng-hide="users">
+  <img class="loading-spinner" src="../assets/pictures/default.gif" alt="" ng-hide="!availability || users">
 
   <div class="availability-required" ng-show="!availability">
     <h3>You must set yourself available<br>in order to match with other developpers</h3>

@@ -126,8 +126,26 @@
 
     &.third {
       .inner-section {
+        position: relative;
         h1, h2 {
           text-align: right;
+        }
+        .talk {
+          position: absolute;
+          background-position: 50% 50%;
+          background-size: cover;
+          width: 130px;
+          height: 100px;
+          &.left-talk {
+            background-image:url('../../assets/pictures/welcome/chat-bubble-2.png');
+            top: -30%;
+            left: 15%;
+          }
+          &.right-talk {
+            background-image:url('../../assets/pictures/welcome/chat-bubble-1.png'); 
+            bottom: -35%;
+            left: 5%;
+          }
         }
       }
     }
@@ -196,9 +214,45 @@
           }
         }
       }
+      &.third {
+        .inner-section {
+          .talk {
+            width: 100px;
+            height: 80px;
+            &.left-talk {
+              top: -30%;
+              left: 20%;
+            }
+            &.right-talk {
+              top: -20%;
+              left: 5%;
+            }
+          }
+        }
+      }
     }
   }
 }
+
+@media (max-width: 767px) {
+  .welcome-page {
+    .section {
+      &.second {
+        .inner-section {
+          .picture-container {
+            margin-top: 60px;
+            margin-bottom: 30px;
+            .tech {
+              width: 50px;
+              height: 50px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 650px) {
   .welcome-page {
     .section {
@@ -212,17 +266,22 @@
     }
   }
 }
-@media (max-width: 767px) {
+
+@media (max-width: 440px) {
   .welcome-page {
     .section {
-      &.second {
+      &.third {
         .inner-section {
-          .picture-container {
-            margin-top: 60px;
-            margin-bottom: 30px;
-            .tech {
-              width: 50px;
-              height: 50px;
+          .talk {
+            width: 100px;
+            height: 80px;
+            &.left-talk {
+              top: 100%;
+              left: 20%;
+            }
+            &.right-talk {
+              top: -40%;
+              left: 60%;
             }
           }
         }

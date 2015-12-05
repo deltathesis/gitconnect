@@ -39,5 +39,5 @@ angular.module('myApp.welcome', ['ngRoute'])
   var windowHeight = $(window).height();
 
   // Set first section height
-  $('.section.first').height(windowHeight - 51)
+  $('.section.first').height(windowHeight - 51);
 }]);

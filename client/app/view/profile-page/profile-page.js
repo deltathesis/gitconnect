@@ -36,6 +36,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
   $scope.init = function() {  
       $scope.user = getProfile;
 
+      console.log('profile', getProfile);
+
       // TODO get from DB
       $scope.user.ratings = Math.round(4.2); //dummy data
 

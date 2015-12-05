@@ -50,6 +50,18 @@ angular.module('myApp.services', [])
 		});
 	};
 
+  var postRating = function(user, rating) {
+    return $http({
+      cache: false,
+      method: 'GET',
+      url: '/api/user/' + user + '/rate',
+      data: {
+        id: user.id,
+        rating: rating
+      }
+    })
+  };
+
   var getAllUsers = function() {
     return $http({
       cache: true,

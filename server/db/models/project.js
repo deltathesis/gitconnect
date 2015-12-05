@@ -19,7 +19,7 @@ Project.getAll = function() {
 	        });
 	        var finished = 0;
 	        nodes.forEach(function(node, i) {
-	          cypher = 'match (n)-[:WORKED*]->(m) where id(m)=' + node.id + ' return n';
+	          cypher = 'match (n:User)-[:WORKED*]->(m) where id(m)=' + node.id + ' return n';
 	          db.queryAsync(cypher)
 	            .then(function(teams) {
 	              node.teams = teams;

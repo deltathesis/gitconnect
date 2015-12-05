@@ -362,8 +362,8 @@ User.getFriendsProjects = function(username){
   return new Promise(function(resolve){
     var date = new Date();
     var dateMs = date.getTime();
-    // Get from 7 days
-    var pastWeek = dateMs - 1000 * 60 * 60 * 24 * 7
+    // Get News from one month
+    var pastWeek = dateMs - 1000 * 60 * 60 * 24 * 31
     var cypher = 'MATCH (User {username: "'+username+'"})-[:WORKED]-(n)-[:WORKED]-(x:User)-[:WORKED]-(y:Project {published: "true"}) WHERE y.publishDate > '+pastWeek
                 + ' RETURN x,y';
     db.queryAsync(cypher).then(function(nodes){

@@ -1,5 +1,5 @@
 .project-page {
-
+  overflow: hidden;
   .project-post {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -133,6 +133,7 @@
   // Post
   .team-messages {
     padding-bottom: 20px;
+    .list-group {overflow: hidden;}
     .team-member-chat-picture {
       float: left;
       width: 50px;

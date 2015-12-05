@@ -208,15 +208,14 @@ module.exports = function (socket) {
     friendRequests.transaction(function(number){
      return (number || 0) + 1;
     }, function(error, committed, snapshot){
-      // console.log('data.target ', data.target)
-      // console.log('people[data.target].id ', people[data.target].id)
-      firebase.once("value", function(values) {
-        if(values.val()) {  
-          users = values.val().users;
-          socket.emit('theDATA', users[data.currentUser]);
-          socket.broadcast.to(people[data.target].id).emit('friendRequest:notification', {data:'livenotify'});
-        }
-      });
+      if(!error){
+        firebase.once("value", function(values) {
+          if(values.val()) {  
+            users = values.val().users;
+            socket.emit('theDATA', users[data.currentUser]);
+          }
+        });
+      }
     });
   });
 
@@ -283,7 +282,7 @@ module.exports = function (socket) {
           socket.broadcast.to(people[data.username].id).emit('youveGotMail', {data:'livenotify'});
           break;
         case "friendRequest":
-          console.log('friendRequest triggered data.username ', data.username)
+          console.log('friendRequest triggered')
           socket.broadcast.to(people[data.username].id).emit('friendRequest:notification', {data:'livenotify'});
           break;
         case "showCollabPage":

@@ -1,4 +1,5 @@
 var User = require('../db/models/user');
+var Relationship = require('../db/models/relationship')
 
 var connectionslist = {};
 
@@ -25,5 +26,11 @@ connectionslist.deleteDemand = function(req, res) {
     res.json(data)
   });
 };
+
+connectionslist.createMutualConnection = function(req, res){
+  Relationship.createMutualConnection(req.body.data.requestingUserId, req.body.data.acceptingUserId, req.body.data.relId).then(function(){
+    res.end;
+  });
+}
 
 module.exports = connectionslist;

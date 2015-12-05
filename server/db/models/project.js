@@ -93,6 +93,58 @@ Project.getLanguages = function(id) {
 };
 
 // Project creation
+
+Project.createRevised = function(projectOwner, collaboratorsArray){
+  var node = {};
+  return new Promise(function(resolve, reject){
+    var storage = {};
+    var dateNow = new Date();
+
+    storage.projectData = {
+      // Generate Random Id
+      projectId: '_' + Math.random().toString(36).substr(2, 15),
+      name: 'null',
+      creationDate: dateNow.getTime(),
+      publishDate : 'null',
+      published: 'false',
+      shortDesc: 'null',
+      longDesc: 'null',
+      picture: 'null',
+      thumbnail: 'null',
+      voteTotal: 0,
+      upVote: 0,
+      downVote: 0,
+      projectRepo: 'null',
+      scrumBoard: 'null',
+      projectSnippet: 'null',
+      projectWebsite: 'null',
+      cloudStorage: 'null',
+      database: 'null'
+    };
+
+    db.saveAsync(storage.projectData, 'Project')
+
+    .then(function(newNode){
+      node = newNode;
+      return newNode;
+    })
+
+    .then(function(projectNode){
+      Node.addRelationships({
+        baseNode: {projectId: projectNode.projectId},
+        relNodes: collaboratorsArray,
+        relDirection: 'out',
+        relNodeLabels: ['Project'],
+        relLabel: 'WORKED'
+      })
+    })
+
+    .then(function(){
+      resolve(node);
+    })
+
+  })
+}
 Project.create = function(usersData){
   var node = {};
   return new Promise(function(resolve, reject){

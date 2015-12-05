@@ -13,6 +13,13 @@ var transporter = nodemailer.createTransport({
 
 var project = {};
 
+project.createRevised = function(req, res){
+  Project.createRevised(req.body.projectCreator, req.body.collaborators)
+  .then(function(project){
+    res.json(project);
+  })
+}
+
 project.create = function(req, res) {
   Project.create(req.body.data).then(function(project){
     res.json(project)

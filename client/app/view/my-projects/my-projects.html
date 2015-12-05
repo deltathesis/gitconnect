@@ -1,0 +1,50 @@
+<div class="container page my-projects-page">
+
+  <div class="col-xs-12 requests-form fadein-effect" ng-init="selected = 'requests'">
+      <button class="btn" ng-class="{'active':selected === 'requests'}" ng-click="selected = 'requests'">Published</button>
+      <button class="btn" ng-class="{'active':selected === 'demands'}" ng-click="selected = 'demands'">In Progress</button>
+  </div>
+
+  <div class="row user-details-container fadein-effect" ng-show="selected === 'requests'">
+    <h2 class="col-xs-12 no-requests" ng-show="publishedProjects.length === 0">You have no published projects :(</h2>
+    <div class="col-xs-12 user-details requests" ng-repeat="project in publishedProjects">
+      <div class="post-thumbnail user-pic">
+        <a href="" alt="" style="background-image:url({{project.picture}})"></a>
+      </div>
+      <div class="user-subdetails">
+        <a href="" class="user-name">{{project.name}}</a>
+        <div class="subdetail time">
+          <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
+          {{user.bio}}
+        </div>
+        <!--<div class="subdetail ratings">
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
+         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
+        </div>-->
+      </div>
+    </div>
+  </div>
+
+  <div class="row user-details-container fadein-effect" ng-show="selected === 'demands'">
+  <h2 class="col-xs-12 no-requests" ng-show="userDemands.length === 0">You have no requests :(</h2>
+    <div class="col-xs-12 user-details demands {{user.username}}" ng-repeat="user in userDemands track by $index">
+      <div class="post-thumbnail user-pic">
+        <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
+      </div>
+      <div class="user-subdetails">
+        <a href="" class="user-name">{{user.name}} ({{user.username}})</a>
+        <div class="subdetail time">
+          <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
+          {{user.bio}}
+        </div>
+        <!--<div class="subdetail ratings">
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
+         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
+        </div>-->
+      </div>
+      <div class="action-button remove">
+        <button ng-click="deleteDemand(user.username)" class="btn">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>

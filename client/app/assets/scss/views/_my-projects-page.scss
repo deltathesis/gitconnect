@@ -1,0 +1,115 @@
+.my-projects-page {
+  min-height: 800px;
+
+  .no-requests {
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .requests-form {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    .btn {
+      margin: 0px 20px;
+      background-color: #CCC;
+      color: #FFF;
+      &.active {
+        background-color: $mainColor;
+      }
+    }
+  }
+
+  .user-details-container {
+    .user-details {
+      margin-top: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px dotted #CCC;
+      .user-pic {
+        float: left;
+        a {
+          display: inline-block;
+          background-image:url('../../assets/pictures/users/default-user.jpg');
+          background-size: cover;
+          background-position: 50% 50%;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border: 2px solid $mainColor;
+        }
+      }
+      .user-subdetails {
+        float: left;
+        padding-left: 15px;
+        .user-name {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        .subdetail {
+          &.time {
+            font-size: 14px;
+            margin-top: 6px;
+          }
+          &.ratings {
+            font-size: 20px;
+            margin-top: 5px;
+            .fa-star {
+              color: gold;
+            }
+          }
+        }
+      }
+      .action-button {
+        float: right;
+        .btn {
+          margin-top: 26px;
+          color: #FFF;
+        }
+        &.requests {
+          .btn {
+            height: 50px;
+            font-size: 50px;
+            line-height: 50px;
+            margin-top: 17px;
+            padding: 0px;
+            border: 0px;
+            background: none;
+            &.accept {
+              color: $greenColor;
+              margin-right: 10px;
+            }
+            &.decline {
+              color: $redColor;
+            }
+          }
+        }
+        &.remove {
+          .btn { background-color: $redColor; }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .requests-form {
+      .btn {
+        margin: 0px 10px;
+      }
+    }
+    .user-details-container {
+      .user-details {
+        text-align: center;
+        .user-pic, .user-subdetails {
+          float: none;
+          padding:0px;
+        }
+        .action-button {
+          float: none;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+}

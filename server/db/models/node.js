@@ -77,7 +77,9 @@ Node.getRelationshipData = function(baseNode, relDirection, relLabel){
             if(!results.relationships[node.type]){
               results.relationships[node.type] = [];
             }
-            results.relationships[node.type].push(nodeData);
+            var newNode = nodeData;
+            newNode.relId = node.id;
+            results.relationships[node.type].push(newNode);
             return nodeData;
         }));
       })

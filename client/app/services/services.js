@@ -221,6 +221,20 @@ angular.module('myApp.services', [])
       return res.data;
     })
   }
+
+  var createProject = function(projectCreator, collaborators){
+    return $http({
+      method: 'POST',
+      url: 'api/project/creation',
+      data: {
+        projectCreator: projectCreator,
+        collaborators: collaborators
+      }
+    }).then(function(res){
+      return res;
+    })
+  }
+
   var updateProject = function(projectObj, oldProject, langArray, user1, user2){
     return $http({
       method: 'POST',
@@ -283,6 +297,7 @@ angular.module('myApp.services', [])
 
 
   return {
+    createProject: createProject,
     getInfos: getInfos,
     getUsers: getUsers,
     updateProject: updateProject,

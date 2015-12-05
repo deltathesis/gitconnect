@@ -33,9 +33,10 @@ router.get('/api/connectionslistDemands/:name', connectionslist.getDemands);
 router.get('/api/connectionslistRequests/:name', connectionslist.getRequests);
 router.post('/api/request/delete', connectionslist.deleteRequest);
 router.post('/api/demand/delete', connectionslist.deleteDemand);
+router.post('/api/connect/mutualConnection', connectionslist.createMutualConnection);
 
 // Project Routes
-router.post('/api/project/creation', project.create);
+router.post('/api/project/creation', project.createRevised);
 router.post('/api/project/update', project.update);
 router.post('/api/project/delete', project.deleteProject);
 router.get('/api/project/list', project.getAll);

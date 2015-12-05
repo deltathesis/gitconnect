@@ -183,11 +183,13 @@ User.findOrCreateUser = function(username){
 // Get user connection demands
 User.getUserDemands = function(username){
   return new Promise(function(resolve){
-    var cypher = 'MATCH ({username: "'+username+'"})-[:CONNECTION_REQUEST]->(n)'
-               + 'RETURN n';
+    var cypher = 'MATCH ({username: "'+username+'"})-[r:CONNECTION_REQUEST]->(n)'
+               + 'RETURN n,r';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){
-        return element
+        var data = element.n;
+        data.relId = element.r.id;
+        return data;
       }))
     })
     .catch(function(err){
@@ -199,11 +201,13 @@ User.getUserDemands = function(username){
 // Get user connection requests
 User.getUserRequests = function(username){
   return new Promise(function(resolve){
-    var cypher = 'MATCH ({username: "'+username+'"})<-[:CONNECTION_REQUEST]-(n)'
-               +'RETURN n';
+    var cypher = 'MATCH ({username: "'+username+'"})<-[r:CONNECTION_REQUEST]-(n)'
+               +'RETURN n, r';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){
-        return element
+        var data = element.n;
+        data.relId = element.r.id;
+        return data;
       }))
     })
     .catch(function(err){

@@ -1,14 +1,19 @@
-# GitConnect
+# GitConnect ![](https://travis-ci.org/deltathesis/gitconnect.svg?branch=dev)
 [GitConnect Website](http://gitconnect.me)  
 
-GitConnect is a social network application that extends the functionality of GitHub. With GitConnect, you are able to discover, message, and collaborate with other developers to create meaningful projects.
+GitConnect is a social application designed to help you meet new developers in your area. 
+Our matching algorithm uses your GitHub account to find other people with similar interests,
+and allows you to connect with them and collaborate on projects. After you work on a project with your
+new friend, you can publish it to our project page and see how it ranks against other community members.
 
 ## Documentation
-Please check out [DOCUMENTATION.md](DOCUMENTATION.md) for information on our custom-built neo4j queries.
+For this application, we created several functions that helped simplify the process of interacting with the neo4j database.  
+Please check out [DOCUMENTATION.md](DOCUMENTATION.md) for more information on our custom-built neo4j queries.
 
 ## Architecture 
+Test Image with the help of Dage
 
-Show images on the structure of our application.
+![alt text](http://s19.postimg.org/dspbo6w1f/Slide1.jpg)
 
 
 ## Technology Stack 
@@ -29,17 +34,18 @@ Show images on the structure of our application.
 
 ## Installation 
 
-`npm install`  
-`npm start`  
-Navigate to http://localhost:3000 to start using the application.
+- `npm install`  
+- `npm start`  
+- Before running the application on your local machine, you must create a .env file in the root directory. A [env template](dotenvTemplate) is created for you. Please fill it out and rename it to ".env" before launching the server.  
+- Afterwards, navigate to http://localhost:3000 to start using the application.
 
 
 ## Testing
 
 __Install__  
 First, we install Protractor and update our webdriver-manager that is used for our selenium server.    
-`npm install -g protractor`  
-`webdriver-manager update`
+- `npm install -g protractor`  
+- `webdriver-manager update`
 
 Chrome Browser and Java JDK is necessary for Protractor to run.  
 [Oracle JDK Download Page](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)  
@@ -57,12 +63,12 @@ password: "PASSWORD"
 
 __Launch__  
 Launch Selenium Server and launch Protractor    
-`webdriver-manager start`  
-`protractor client/testing/conf.js`
+- `webdriver-manager start`  
+- `protractor client/testing/conf.js`
 
 ## Contributing
 
-1. Fork our repo and clone it to your local computer.
+1. Fork our repo and clone your fork to your local computer.
 2. Create your feature branch from the dev branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -m '(type)Add some feature'`  
   __Allowed type values:__
@@ -74,7 +80,8 @@ Launch Selenium Server and launch Protractor
   - **test** (adding missing tests, refactoring tests; no production code change)
   - **chore** (updating grunt tasks etc; no production code change)
 4. Push to the branch: `git push origin my-new-feature`.  
-5. Submit a pull request to the dev branch.
+5. Submit a pull request to the dev branch.  
+__Please try to write self-documenting code and comments when contributing!__
 
 ## Authors 
 - Renan Deswarte

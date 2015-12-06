@@ -169,6 +169,33 @@
         }
       }
     }
+
+    &.fifth {
+      .inner-section {
+        position: relative;
+        text-align: center;
+        h1, h3 {
+          text-align: center;
+          color: #000;
+        }
+        h1, h3 {
+          margin-bottom: 30px;
+        }
+        h3 {
+          &.first{
+            margin-bottom: 0px;
+          }
+          &.second{
+            margin-top: 5px;
+          }
+        }
+        .phone {
+          max-width: 100%;
+          margin:0 auto;
+        }
+      }
+    }
+
   }
 }
 @media (max-width: 991px) {

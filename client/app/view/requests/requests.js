@@ -57,7 +57,7 @@ angular.module('myApp.requests', ['ngRoute'])
   };
 
 
-  $scope.requestAccept = function(requestedUserId, relId) {
+  $scope.requestAccept = function(requestedUserId, relId, username) {
     var userInfo = {
       acceptingUserId: userInfos.id,
       requestingUserId: requestedUserId,

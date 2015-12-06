@@ -15,16 +15,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse links-menu" id="bs-example-navbar-collapse-1" ng-controller='AuthController'>
       <ul class="nav navbar-nav navbar-left" bs-active-link>
-        <li ng-show='!user'><a href="#/welcome" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-welcome">Welcome</a></li>
-        <li ng-show='user' class="active"><a href="#/" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-home">Home <span class="sr-only">(current)</span></a></li>
-        <li ng-show='user'><a href="#/connect" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-connect">Connect</a></li>
+        <li ng-show='!user'><a href="#/welcome" title="Welcome" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-welcome">Welcome</a></li>
+        <li ng-show='user' class="active"><a href="#/" title="Home page" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-home">Home <span class="sr-only">(current)</span></a></li>
+        <li ng-show='user'><a href="#/connect" title="Connect" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-connect">Connect</a></li>
         <!--<li ng-show='user'><a href="#/user/{{user.githubUserName}}" class="link-profile">Profile</a></li>-->
-        <li ng-show='user'><a href="#/projects" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-projects">Projects</a></li>
+        <li ng-show='user'><a href="#/projects" title="Projects list" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-projects">Projects</a></li>
         <!-- <li ng-show='user'><a href="#/project" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-project">Project</a></li> -->
-        <li ng-show='user'><a href="#/my-connections" data-toggle="collapse" data-target=".navbar-collapse.in">My Connections</a></li>
-        <li ng-show='user'><a href="#/my-projects" data-toggle="collapse" data-target=".navbar-collapse.in">My Projects</a></li>
+        <li ng-show='user'><a href="#/my-connections" title="My connections" data-toggle="collapse" data-target=".navbar-collapse.in">My Connections</a></li>
+        <li ng-show='user'><a href="#/my-projects" title="My projects" data-toggle="collapse" data-target=".navbar-collapse.in">My Projects</a></li>
         
-        <li ng-show='user && hasProject'><a href="#/collaboration-page/{{projectLink}}" data-toggle="collapse" data-target=".navbar-collapse.in">Collab Page</a></li>
+        <li ng-show='user && hasProject'><a href="#/collaboration-page/{{projectLink}}" title="Collaboration page" data-toggle="collapse" data-target=".navbar-collapse.in">Collab Page</a></li>
       </ul>
  <!--      <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -34,16 +34,16 @@
       </form> -->
       <ul class="nav navbar-nav navbar-right">
         <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" ng-click="createProject()">
-          <a href="" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-plus"></i></a>
+          <a href="" title="Add a project" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-plus"></i></a>
         </li>
         <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" data-message={{friendRequests}} ng-click="clearFriendRequestNotifications()">
-          <a href="#/requests" data-toggle="collapse" data-target=".navbar-collapse.in">
+          <a href="#/requests" title="Requests" data-toggle="collapse" data-target=".navbar-collapse.in">
             <span class="badge">{{friendRequests}}</span>
             <i class="fa fa-user-plus"></i>
           </a>
         </li>
         <li ng-show='user' ng-class="unreadMessages ? 'notifications' : 'nothing'" class="notify messaging" data-messages={{unreadMessages}} ng-click="clearMessageNotifications()">
-          <a href="#/privateChat" data-toggle="collapse" data-target=".navbar-collapse.in">
+          <a href="#/privateChat" title="Messages" data-toggle="collapse" data-target=".navbar-collapse.in">
             <span class="badge">{{unreadMessages}}</span>
             <i class="fa fa-comments"></i>
           </a>

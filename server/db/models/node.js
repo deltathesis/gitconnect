@@ -28,12 +28,13 @@ Node.addRelationships = function(params){
 
     }).then(function(relNodes){
 
-      /* If the relationship direction we want to add is 'out' then we want to ending
+      /* If the relationship direction we want to add is 'out' then we want the ending
       relationship nodes for the base node. If the rel direction is 'in' we want the start
       node ids. Using a conditional to check and defaulting to in relationships if there is
       an error */
 
-      if(params.relDirection = 'in'){
+      if(params.relDirection === 'in'){
+        console.log('in')
         relNodeIds = relNodes.map(function(rel){
           return rel.start
         })
@@ -67,7 +68,8 @@ Node.addRelationships = function(params){
       */
       var txn = db.batch()
 
-      if(params.relDirection = 'in'){
+      if(params.relDirection === 'in'){
+        console.log('in')
         nodes.forEach(function(node){
           txn.relate(node.id, params.relLabel, userId)
         })

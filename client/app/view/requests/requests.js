@@ -6,10 +6,12 @@ angular.module('myApp.requests', ['ngRoute'])
     templateUrl: 'view/requests/requests.html',
     controller: 'requestsPage',
     resolve: {
-      recievedRequests: ['userRequests', function(userRequests) {
+      sentRequests: ['userRequests', function(userRequests) {
+        //getUserDemands cypher: MATCH ({username: "'+username+'"})-[r:CONNECTION_REQUEST]->(n)
           return userRequests.getDemands();
       }],
-      sentRequests: ['userRequests', function(userRequests) {
+      recievedRequests: ['userRequests', function(userRequests) {
+        //getUserRequests: 'MATCH ({username: "'+username+'"})<-[r:CONNECTION_REQUEST]-(n)'
           return userRequests.getRequests();
       }],
       getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
@@ -63,6 +65,7 @@ angular.module('myApp.requests', ['ngRoute'])
     }
     
     UserConnection.createConnection(userInfo).then(function() {
+      $('.requests.'+ username).slideUp();
       socket.emit('notify:otherUser', {username: username, subject: 'showCollabPage', projectId: project.projectId})
       // $scope.linktoProject = project.projectId;
       // $('#projectPageRedirect').modal('show');
@@ -70,24 +73,26 @@ angular.module('myApp.requests', ['ngRoute'])
 
   };
 
-  $scope.deleteRequest = function(username) {
+  $scope.deleteReceivedRequest = function(username) {
     console.log('Delete Request');
     var usersObject = {
       userFirst: userUsername,
       userSecond: username
     };
+    console.log(usersObject)
     
     UserConnection.deleteRequest(usersObject).then(function() {
-      $('.requests.'+ username).slideUp();
+      $('.requests.'+ username).slideUp(); 
     });
   };
 
-  $scope.deleteDemand = function(username) {
+  $scope.deleteSentRequest = function(username) {
     console.log('Delete Request');
     var usersObject = {
       userFirst: userUsername,
       userSecond: username
     };
+    console.log(usersObject)
     
     UserConnection.deleteDemand(usersObject).then(function() {
       $('.demands.'+username).slideUp();

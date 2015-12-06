@@ -31,7 +31,7 @@ angular.module('myApp.header', [])
   }
 
   $scope.createProject = function(){
-    Project.createProject({username: $scope.username}, [{username: 'renandeswarte'}, {username: 'jakegarelick'}])
+    Project.createProject({username: $scope.username}, [{username: 'renandeswarte'}, {username: 'jakegarelick'}, {username: 'ccnixon'}])
     .then(function(res){
       console.log(res)
       $scope.linktoProject = res.data.projectId;

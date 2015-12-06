@@ -37,6 +37,18 @@ Relationship.update = function(id, properties) {
   });
 };
 
+Relationship.createMutualConnection = function(requestingUserId, acceptingUserId, relId){
+  return new Promise(function(resolve){
+    Relationship.delete(relId).then(function(){
+      return db.relateAsync(requestingUserId, 'CONNECTED', acceptingUserId);
+    }).then(function(){
+      resolve()
+    })
+  }).catch(function(err){
+    console.log(err)
+  })
+}
+
 Promise.promisifyAll(Relationship);
 
 module.exports = Relationship;

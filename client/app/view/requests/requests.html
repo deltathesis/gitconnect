@@ -6,8 +6,8 @@
   </div>
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'requests'">
-    <h2 class="col-xs-12 no-requests" ng-show="usersRequest.length === 0">You have no requests :(</h2>
-    <div class="col-xs-12 user-details requests {{user.username}}" ng-repeat="user in usersRequest track by $index">
+    <h2 class="col-xs-12 no-requests" ng-show="recievedRequests.length === 0">You have no requests :(</h2>
+    <div class="col-xs-12 user-details requests {{user.username}}" ng-repeat="user in recievedRequests track by $index">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
       </div>
@@ -23,15 +23,15 @@
         </div>
       </div>
       <div class="action-button requests">
-        <button ng-click="requestAccept(user.username, user.email)" class="btn accept"><i class="fa fa-check-circle"></i></button>
+        <button ng-click="requestAccept(user.id, user.relId)" class="btn accept"><i class="fa fa-check-circle"></i></button>
         <button ng-click="deleteRequest(user.username)" class="btn decline"><i class="fa fa-times-circle"></i></button>
       </div>
     </div>
   </div>
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'demands'">
-  <h2 class="col-xs-12 no-requests" ng-show="userDemands.length === 0">You have no requests :(</h2>
-    <div class="col-xs-12 user-details demands {{user.username}}" ng-repeat="user in userDemands track by $index">
+  <h2 class="col-xs-12 no-requests" ng-show="sentRequests.length === 0">You have no requests :(</h2>
+    <div class="col-xs-12 user-details demands {{user.username}}" ng-repeat="user in sentRequests track by $index">
       <div class="post-thumbnail user-pic">
         <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
       </div>

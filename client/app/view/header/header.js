@@ -1,6 +1,6 @@
 angular.module('myApp.header', [])
 
-.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', '$window', function($scope, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location, $window) {
+.controller('headerController', ['$scope', 'Project','socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', '$window', function($scope, Project, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location, $window) {
   var cookie = $cookies.get('gitConnectDeltaKS');
   if(cookie){
 
@@ -29,6 +29,22 @@ angular.module('myApp.header', [])
     })
 
   }
+
+  $scope.createProject = function(){
+    Project.createProject({username: $scope.username}, [{username: 'renandeswarte'}, {username: 'jakegarelick'}])
+    .then(function(res){
+      console.log(res)
+      $scope.linktoProject = res.data.projectId;
+      $('#projectPageRedirect').modal('show');
+    })
+  }
+
+  $scope.projectPageRedirect = function(projectId){
+    console.log('hello')
+    $('#projectPageRedirect').modal('hide');
+    $location.path('/collaboration-page/' + projectId)
+  };
+
   $scope.clearFriendRequestNotifications = function(){
     socket.emit('clear:friendRequests', {currentUser: angular.copy($scope.username)});
   };  

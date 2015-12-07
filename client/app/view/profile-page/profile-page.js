@@ -199,6 +199,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
   };
 
   $scope.ratings = function() {
+    $scope.averageRatings = Math.round($scope.averageRatings);
     // Ratings Module
     $ratings = $('.stars');
     for (var pos = 1; pos <= 5; pos++) {

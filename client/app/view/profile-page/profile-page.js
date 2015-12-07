@@ -261,7 +261,6 @@ angular.module('myApp.profilepage', ['ngRoute'])
       target: $scope.user.username,
       room: cookieObj.username + $scope.user.username
     });
-    $scope.message = '';
   }
   socket.on('send:foundRoom', function(data) {
     socket.emit('send:privateMessage', {
@@ -271,6 +270,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
       },
       room: data.room
     });
+    $scope.message = '';
   })
 
   /** End of Socket **/

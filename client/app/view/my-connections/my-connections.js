@@ -16,9 +16,40 @@ angular.module('myApp.myConnections', ['ngRoute'])
   });
 }])
 
+.controller('publishMessaging', ['$scope', '$uibModal', 'theUser', '$uibModalInstance', 'currentUser', 'socket', function($scope, $uibModal, theUser, $uibModalInstance, currentUser, socket) {
+  $scope.theUser = theUser;
+   /** Socket Message Sending **/
+
+  $scope.sendMessage = function(targetUser) {
+    console.log('message', $scope.message);
+    console.log('targetUser', targetUser);
+    socket.emit('store:firstMessageData', {
+      message: {
+        text: $scope.message,
+        user: currentUser
+      },
+      user: currentUser,
+      target: theUser,
+      room: currentUser + theUser
+    });
+    $uibModalInstance.close();
+  }
+  socket.on('send:foundRoom', function(data) {
+    socket.emit('send:privateMessage', {
+      message: {
+        text: $scope.message,
+        user: currentUser
+      },
+      room: data.room
+    });
+    $scope.message = '';
+  })
+
+}])
+
 .controller('myConnections', [
-  '$scope', 'getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', 
-  function($scope, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location) {
+  '$scope', 'getProfile', 'socket', '$uibModal', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', 
+  function($scope, getProfile, socket, $uibModal, Cookie, $cookies, UserConnection, $window, $rootScope, $location) {
     
   $scope.user = getProfile;
 

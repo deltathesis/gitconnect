@@ -21,9 +21,20 @@ angular.module('myApp.myConnections', ['ngRoute'])
   function($scope, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location) {
     
   $scope.user = getProfile;
-  console.log($scope.user)
 
   $scope.connections = $scope.user.relationships.CONNECTED;
-  console.log('asdasdsad',$scope.connections)
+
+  $scope.ratings = function(ratings, index, type) {
+    ratings = Math.round(ratings);
+    // Ratings Module
+    index = index + 2;
+    $ratings = $('.user-details.' + type + ':nth-child(' + index + ') .stars');
+    for (var pos = 0; pos < 5; pos++) {
+      $ratings.append("<i class='fa fa-star-o position-" + pos + "'></i>");
+    }
+    for (var i = 0; i < ratings; i++) {
+      $('.user-details.' + type + ':nth-child(' + index + ') .position-' + i).removeClass('fa-star-o').addClass('fa-star');
+    }
+  };
 
 }]);

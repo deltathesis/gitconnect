@@ -5,7 +5,7 @@
       </div>
     </div>
   <div class="row user-details-container fadein-effect">
-    <h2 class="col-xs-12 no-requests" ng-show="connections.length === 0">You have no requests :(</h2>
+    <h2 class="col-xs-12 no-requests" ng-show="connections.length === 0">You have no connections :(</h2>
     <div class="col-xs-12 user-details requests {{user.username}}" ng-repeat="user in connections | filter:searchText">
       <div class="post-thumbnail user-pic">
         <a href="#/user/{{user.username}}" alt="" style="background-image:url({{user.avatar_url}})"></a>
@@ -16,10 +16,11 @@
           <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
           {{user.bio}}
         </div>
-        <!--<div class="subdetail ratings">
-         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
-         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
-        </div>-->
+        <div class="subdetail ratings">
+         <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'requests')"></div>
+         <!--<div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>-->
+        </div>
+      </div>
       </div>
     </div>
   </div>

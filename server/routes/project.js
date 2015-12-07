@@ -123,10 +123,11 @@ project.update = function(req, res) {
 };
 
 project.deleteProject = function(req, res) {
-  Project.deleteProject(req.body.projectId).then(function(){
+  Project.deleteProject(req.body.projectId).then(function(users){
     res.sendStatus(200);
-    User.makeAvailable(req.body.user1);
-    User.makeAvailable(req.body.user2);
+    for(var i = 0; i < users.length; i++) {
+      User.makeAvailable(users[i].username);
+    }
   });
 };
 

@@ -202,7 +202,8 @@ angular.module('myApp.profilepage', ['ngRoute'])
     // Ratings Module
     $ratings = $('.stars');
     for (var pos = 1; pos <= 5; pos++) {
-      var html = angular.element("<i ng-click='rate(" + pos + ")' rating-mouseover idx="+(pos - 1)+" class='fa fa-star-o position-" + (pos - 1) + "'></i>");
+      var ownPage = $scope.user.username === cookieObj.username;
+      var html = angular.element("<i " + (ownPage  ? "": "ng-click='rate(" + pos + ")' rating-mouseover") + " idx="+(pos - 1)+" class='fa fa-star-o position-" + (pos - 1) + "'></i>");
       $compile(html)($scope);
       $ratings.append(html);
     }

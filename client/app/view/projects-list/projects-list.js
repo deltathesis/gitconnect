@@ -51,7 +51,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
   //   }
   // ];
 
-  $scope.weekly = true;
+  $scope.tab = 'newest';
 
   $scope.projects = projects;
   console.log($scope.projects);
@@ -79,6 +79,10 @@ angular.module('myApp.projectslist', ['ngRoute'])
           project.downVote += 1;
         }
       });
+  };
+
+  $scope.orderByFn = function() {
+    return $scope.tab === 'newest' ? '-publishDate' : '-upVote';
   };
 
 }])

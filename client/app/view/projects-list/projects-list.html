@@ -3,8 +3,9 @@
 
     <div class="row">
       <div class="col-xs-12 time-range-form">
-        <button class="btn" ng-class="{'active':weekly}" ng-click="weekly = true">Weekly</button>
-        <button class="btn" ng-class="{'active':!weekly}" ng-click="weekly = false">Overall</button>
+        <button class="btn" ng-class="{'active':tab === 'newest'}" ng-click="tab = 'newest'">Newest</button>
+        <button class="btn" ng-class="{'active':tab === 'weekly'}" ng-click="tab = 'weekly'">Top Weekly</button>
+        <button class="btn" ng-class="{'active':tab === 'overall'}" ng-click="tab = 'overall'">Top Overall</button>
       </div>
     </div>
     <div class="row project-list-search">
@@ -18,7 +19,7 @@
 
   <div class="projects-list">
 
-    <div class="project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:weekly | filter:searchText | orderBy:'-upVote'" ng-click="projectPageRedirect(project.projectId)">
+    <div class="project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:(tab === 'weekly' || tab === 'newest') | filter:searchText | orderBy:orderByFn()" ng-click="projectPageRedirect(project.projectId)">
       <div class="top-container-post">
         <div class="vote-block" ng-click="$event.stopPropagation(); increment(project, projects.indexOf(project))">
           <span class="project-vote-button">

@@ -262,14 +262,17 @@ Project.create = function(usersData){
 
 Project.deleteProject = function(projectId){
   return new Promise(function(resolve){
-    var cypher = 'MATCH (n { projectId:"'+projectId+'" })'
-                + ' DETACH DELETE n';
-    db.queryAsync(cypher).then(function(node){
-      resolve();
-    })
-    .catch(function(err){
-      console.log(err)
-    })
+    Node.getRelationshipData({projectId: projectId}, 'all', 'WORKED')
+      .then(function(nodes) {
+        var cypher = 'MATCH (n { projectId:"'+projectId+'" })'
+                    + ' DETACH DELETE n';
+        db.queryAsync(cypher).then(function(){
+          resolve(nodes.relationships.WORKED);
+        })
+        .catch(function(err){
+          console.log(err)
+        });
+      });
   })
 };
 

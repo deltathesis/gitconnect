@@ -17,8 +17,8 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
 }])
 
 .controller('myProjectsList', [
-  '$scope','getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
-  function($scope, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
+  '$scope','getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 'Project',
+  function($scope, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout, Project) {
 
   var userInfos = getProfile;
   $scope.publishedProjects = [];
@@ -39,6 +39,13 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
 
   // Set default min height regarding screen height
   $('.page').css('min-height', window.innerHeight - 40 + 'px');
+
+  $scope.deleteProject = function(projectId) {
+    Project.deleteProject(projectId)
+      .then(function() {
+        $('.demands.' + projectId).slideUp();
+      });
+  };
 
 
 }]);

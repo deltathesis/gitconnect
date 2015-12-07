@@ -95,6 +95,22 @@ Project.getLanguages = function(id) {
 // Project creation
 
 Project.createRevised = function(collaboratorsArray, projectName){
+  var defaultImages = [
+  'http://cdn.wikimg.net/strategywiki/images/4/44/SSF2T_Chun-Li.gif',
+  'http://cdn.wikimg.net/strategywiki/images/0/06/SSF2T_T._Hawk.gif',
+  'http://cdn.wikimg.net/strategywiki/images/e/ee/SSF2T_Sagat.gif',
+  'http://cdn.wikimg.net/strategywiki/images/7/70/SSF2T_M._Bison.gif',
+  'http://cdn.wikimg.net/strategywiki/images/a/a2/SSF2T_Balrog.gif',
+  'http://cdn.wikimg.net/strategywiki/images/0/01/SSF2T_Dhalsim.gif',
+  'http://cdn.wikimg.net/strategywiki/images/4/48/SSF2T_Zangief.gif',
+  'http://cdn.wikimg.net/strategywiki/images/5/57/SSF2T_Fei_Long.gif',
+  'http://cdn.wikimg.net/strategywiki/images/4/4b/SSF2T_Dee_Jay.gif',
+  'http://cdn.wikimg.net/strategywiki/images/6/65/SSF2T_Ryu.gif',
+  'http://cdn.wikimg.net/strategywiki/images/c/c8/SSF2T_Guile.gif',
+  'http://cdn.wikimg.net/strategywiki/images/d/dc/SSF2T_Blanka.gif',
+  'http://cdn.wikimg.net/strategywiki/images/1/14/SSF2T_E._Honda.gif',
+  'http://cdn.wikimg.net/strategywiki/images/a/a4/SSF2T_Ken.gif'
+  ]
   var node = {};
   return new Promise(function(resolve, reject){
     var storage = {};
@@ -109,7 +125,7 @@ Project.createRevised = function(collaboratorsArray, projectName){
       published: 'false',
       shortDesc: 'null',
       longDesc: 'null',
-      picture: 'https://i.ytimg.com/vi/3pn2SI4KGJc/maxresdefault.jpg',
+      picture: defaultImages[Math.floor(Math.random()*defaultImages.length)],
       thumbnail: 'null',
       voteTotal: 0,
       upVote: 0,

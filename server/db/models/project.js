@@ -109,7 +109,7 @@ Project.createRevised = function(collaboratorsArray, projectName){
       published: 'false',
       shortDesc: 'null',
       longDesc: 'null',
-      picture: 'null',
+      picture: 'https://i.ytimg.com/vi/3pn2SI4KGJc/maxresdefault.jpg',
       thumbnail: 'null',
       voteTotal: 0,
       upVote: 0,

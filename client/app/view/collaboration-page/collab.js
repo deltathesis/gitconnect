@@ -167,7 +167,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     modalInstance.result.then(function(updatedResources){
       Project.deleteProject($scope.projectInfos.projectId, $scope.projectUsers[0].username, $scope.projectUsers[1].username);
       $rootScope.$broadcast('projectPublished')
-      $location.path('/projects')
+      $location.path('/my-projects')
     })
   }
 

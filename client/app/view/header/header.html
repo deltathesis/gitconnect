@@ -67,34 +67,34 @@
     </div>
   </div>
 </nav>
-<div ng-contoller="createProject" class="modal fade" id="project-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">New Project Setup</h4>
-      </div>
-      <div class="modal-body">
-        <h4>Add Collaborators</h4>
-        <input ng-model="collabForm" type="text" ng-model="selected" uib-typeahead="user as user.name for user in connections | filter:$viewValue | limitTo:8" class="form-control" typeahead-no-results="noResults" typeahead-on-select="addCollaborator($item, $model, $label)">
-        <div ng-show="noResults">
-            <i class="fa fa-exclamation"></i> No Results Found
-          </div>
-        <ul class="collaborators-list">
-          <li class="collaborator" ng-repeat="user in newProjectCollaborators track by $index" ng-click="removeCollaborator($index)">
-            {{user}} <i class="fa fa-times-circle"></i>
-          </li>
-        </ul>
-        <h4>Project Name</h4>
-        <form ng-submit="createProject()">
-          <input type="text" class="form-control" ng-model="projectName">
-          <input type="submit" hidden>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="createProject()">Go to your project page now</button>
+  <div class="modal fade" id="project-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">New Project Setup</h4>
+        </div>
+        <div class="modal-body">
+          <h4>Add Collaborators</h4>
+          <input ng-model="collabForm" type="text" ng-model="selected" uib-typeahead="user as user.name for user in connections | filter:$viewValue | limitTo:8" class="form-control" typeahead-no-results="noResults" typeahead-on-select="addCollaborator($item, $model, $label)">
+          <div ng-show="noResults">
+              <i class="fa fa-exclamation"></i> No Results Found
+            </div>
+          <ul class="collaborators-list">
+            <li class="collaborator" ng-repeat="user in newProjectCollaborators track by $index" ng-click="removeCollaborator($index)">
+              {{user}} <i class="fa fa-times-circle"></i>
+            </li>
+          </ul>
+          <h4>Project Name</h4>
+          <form ng-submit="createProject()">
+            <input type="text" class="form-control" ng-model="projectName">
+            <input type="submit" hidden>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="createProject()">Go to your project page now</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

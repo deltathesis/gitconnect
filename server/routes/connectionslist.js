@@ -29,7 +29,7 @@ connectionslist.deleteDemand = function(req, res) {
 
 connectionslist.createMutualConnection = function(req, res){
   Relationship.createMutualConnection(req.body.data.requestingUserId, req.body.data.acceptingUserId, req.body.data.relId).then(function(){
-    res.end;
+    res.end();
   });
 }
 

@@ -12,7 +12,7 @@
       <ul class="team-members-list cf">
         <li class="team-member" ng-repeat="user in projectUsers">
           <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
-          <p class="team-member-name">{{user.name}}</p>
+          <p class="team-member-name"><a href="#/user/{{user.username}}">{{user.name}}</a></p>
         </li>
       </ul>
     </div>

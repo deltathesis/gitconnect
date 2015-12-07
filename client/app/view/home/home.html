@@ -29,7 +29,7 @@
       <ul class="developers-list cf">
         <li class="developer" ng-repeat="dev in devAround">
           <a href="#/user/{{dev.username}}" class="developer-pic" style="background-image:url('{{dev.avatar_url}}')"></a>
-          <p class="developer-name">{{dev.name}}</p>
+          <p class="developer-name"><a href="#/user/{{dev.username}}">{{dev.name}}</a></p>
         </li>
       </ul>
     </div>
@@ -47,7 +47,7 @@
       </div>
       <div class="post-top-details">
         <div class="post-title user-name">
-          <a href="">{{project.x.name}}</a>
+          <a href="#/user/{{project.x.username}}">{{project.x.name}}</a>
         </div>
         <div class="post-subdetails">
           <div class="subdetail time">
@@ -58,7 +58,7 @@
     </div>
     <div class="col-xs-12 post-content">
       <p class="description">
-        {{project.x.name}} just posted a new project : <a href="#/project/{{project.y.projectId}}" class="project-link">{{project.y.name}}</a>
+        {{project.x.name}} just posted a new project: <a href="#/project/{{project.y.projectId}}" class="project-link">{{project.y.name}}</a>
       </p>
       <div class="project-picture-container">
         <a href="#/project/{{project.y.projectId}}" class="project-picture" style="background-image:url('{{project.y.picture}}')"></a>

@@ -12,7 +12,7 @@
       <p ng-show="showModal" class="error" ng-click="showModal=false; createNewRoom(newUser)">User Not Found. Try Again</p>
     </form>
 </div>
-    <ul class="allUsers-list">
+    <ul class="allUsers-list" style="cursor:pointer;">
       <li ng-repeat="(key, value) in roomMessages"  class="allUsers-list-elm" ng-click="changeRoom(key)">
         <div class="listOverview cf">
           <img class="user-pic" ng-src="{{roomMessages[key].avatar}}" />
@@ -29,7 +29,7 @@
   <!-- Message Box -->
   <div class="chat-messages col-xs-12 col-sm-7 col-sm-offset-1" id="chat-messages">
     <button class='return-chat'><i class="fa fa-chevron-circle-right"></i></button>
-    <h3>{{currentTarget}}</h3>
+    <h3><a style="color: inherit;" href="#/user/{{currentTarget}}">{{currentTarget}}</a></h3>
     <div class="bigMessage-container" id="bigMessage-container">
       <div ng-repeat="message in roomMessages[currentRoom].messages" class="messages-container">
         <div ng-show="message.user === name" class="message-body personnal fadein-effect"> <p>{{message.text}} </p>

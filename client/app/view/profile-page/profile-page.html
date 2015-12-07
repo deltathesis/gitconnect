@@ -3,10 +3,10 @@
   <div class="row user-details-container">
     <div class="col-xs-12 col-sm-8 user-details">
       <div class="post-thumbnail user-pic">
-        <a href="" alt="" style="background-image:url({{user.avatar_url}})"></a>
+        <a href="#/user/{{user.username}}" alt="" style="background-image:url({{user.avatar_url}})"></a>
       </div>
       <div class="user-subdetails">
-        <a href="" class="user-name">{{ user.name }} ({{user.username}})</a>
+        <a href="#/user/{{user.username}}" class="user-name">{{ user.name }} ({{user.username}})</a>
         <div class="subdetail time">
           <!-- 
             Right now we don't record when the user is created. We can save this feature for a later date.
@@ -103,7 +103,7 @@
 
     <div class="project-list list">
       <ul>
-        <li class="project col-xs-12 col-sm-4" ng-repeat="project in user.projects" ng-click="redirect(project.projectId)">
+        <li class="project col-xs-12 col-sm-4" ng-repeat="project in user.projects" ng-click="redirect(project.projectId)" style="cursor: pointer;">
           <div class="inner-container">
             <a href="" class="project-name truncate">{{project.name}}</a>
             <div class="project-picture" style="background-image:url('{{project.picture}}')"></div>

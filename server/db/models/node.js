@@ -34,7 +34,6 @@ Node.addRelationships = function(params){
       an error */
 
       if(params.relDirection === 'in'){
-        console.log('in')
         relNodeIds = relNodes.map(function(rel){
           return rel.start
         })

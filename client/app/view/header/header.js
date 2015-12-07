@@ -1,12 +1,14 @@
-angular.module('myApp.header', [])
+angular.module('myApp.header', ['ui.bootstrap'])
 
-.controller('headerController', ['$scope', 'Project','socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', '$window', function($scope, Project, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location, $window) {
+.controller('headerController', ['$scope', '$route', 'User', 'Project','socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', '$window', function($scope, $route, User, Project, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location, $window) {
   var cookie = $cookies.get('gitConnectDeltaKS');
   if(cookie){
 
     var cookieObj = Cookie.parseCookie(cookie);
 
     $scope.username = cookieObj.username;
+
+    $scope.newProjectCollaborators = []
     
     socket.emit('giveMeDATA', {username: cookieObj.username});
 
@@ -31,18 +33,42 @@ angular.module('myApp.header', [])
   }
 
   $scope.createProject = function(){
-    Project.createProject({username: $scope.username}, [{username: 'renandeswarte'}, {username: 'jakegarelick'}, {username: 'ccnixon'}])
+    $('#project-create').modal('hide');
+    var revisedProjectCollaborators = $scope.newProjectCollaborators.map(function(username){
+      return {username: username};
+    })
+    revisedProjectCollaborators.push({username: $scope.username});
+    Project.createProject(revisedProjectCollaborators, $scope.projectName)
     .then(function(res){
       console.log(res)
-      $scope.linktoProject = res.data.projectId;
-      $('#projectPageRedirect').modal('show');
+      $scope.newProjectCollaborators = [];
+      $scope.projectName = ''
+      $scope.projectPageRedirect(res.data.projectId)
     })
   }
 
+  $scope.openProjectCreateModal = function(){
+    $('#project-create').modal('show');
+    User.getProfileAndRelations($scope.username, 'CONNECTED').then(function(data){
+      $scope.connections = data.relationships.CONNECTED;
+    })
+  }
+
+  $scope.addCollaborator = function(user){
+    if($scope.newProjectCollaborators.indexOf(user.username) === -1){
+      $scope.newProjectCollaborators.push(user.username)
+    }
+    $scope.collabForm = ''
+  }
+
+  $scope.removeCollaborator = function(index){
+    $scope.newProjectCollaborators.splice(index, 1);
+  }
+
   $scope.projectPageRedirect = function(projectId){
-    console.log('hello')
     $('#projectPageRedirect').modal('hide');
-    $location.path('/collaboration-page/' + projectId)
+    $route.reload();
+    $location.path('/collaboration-page/' + projectId);
   };
 
   $scope.clearFriendRequestNotifications = function(){

@@ -19,6 +19,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 .controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', '$rootScope', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location, $rootScope) {
 
   var projectInfos = getProjectInfo.project;
+  $scope.projectInfo = projectInfos
   for(var key in projectInfos){
     if(projectInfos[key]=== 'null'){
       projectInfos[key] = '';

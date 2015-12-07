@@ -15,6 +15,7 @@ angular.module('myApp.header', ['ui.bootstrap'])
     socket.on('theDATA', function(data){
       $scope.unreadMessages = data.messageNotifications;
       $scope.friendRequests = data.friendRequests;
+      $scope.cashew = data.friendAccepted;
     })
 
     socket.on('youveGotMail', function(data){
@@ -23,10 +24,8 @@ angular.module('myApp.header', ['ui.bootstrap'])
     socket.on('friendRequest:notification', function(data){
       socket.emit('giveMeDATA', {username: cookieObj.username});
     })
-    socket.on('showCollabPage:notification', function(data){
-      $scope.hasProject = true;
-      $scope.projectLink = data.projectId;
-      $location.path('/collaboration-page/' + data.projectId);
+    socket.on('friendAccepted:notification', function(data){
+      $scope.cashew = 1;
       // socket.emit('giveMeDATA', {username: cookieObj.username});
     })
 
@@ -98,6 +97,11 @@ angular.module('myApp.header', ['ui.bootstrap'])
 
   $scope.logout = function() {
     $window.location.href='/auth/logout'
+  }
+
+  $scope.clearConnectionNotification = function(){
+    socket.emit('clear:friendAccepted', {currentUser: angular.copy($scope.username)});
+    $scope.cashew = 0;
   }
 
   // Catch call and return if user already in a project

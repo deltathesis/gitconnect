@@ -170,12 +170,14 @@
       .projects-details {
         .project-list {
           .project {
+            transition: all 0.3s ease;
             margin-bottom: 10px;
             padding-bottom:10px;
             .inner-container {
+              transition: all 0.3s ease;
               padding: 10px;
               border:1px solid #CCC;
-              border-radius: 3px;
+              // border-radius: 3px;
               overflow: hidden;
               -moz-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
               -webkit-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
@@ -196,6 +198,12 @@
                 height: 60px;
                 margin-top: 10px;
                 margin-bottom: 0px;
+              }
+            }
+            &:hover {
+              transform: translateY(3px);
+              .inner-container {
+                box-shadow: none;
               }
             }
           }

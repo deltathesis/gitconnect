@@ -33,7 +33,7 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form> -->
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" ng-click="createProject()">
+        <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" ng-click="openProjectCreateModal()">
           <a href="" title="Add a project" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-plus"></i></a>
         </li>
         <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" data-message={{friendRequests}} ng-click="clearFriendRequestNotifications()">
@@ -67,20 +67,32 @@
     </div>
   </div>
 </nav>
-<div class="modal fade" id="projectPageRedirect" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div ng-contoller="createProject" class="modal fade" id="project-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Start working together</h4>
+        <h4 class="modal-title" id="myModalLabel">New Project Setup</h4>
       </div>
       <div class="modal-body">
-        <h3>Congratulations</h3>
-        <h4>We just created a page for your team to help you working on your new project</h4>
-        <h4>Your status has been set to unavailable, until to publish or delete your project</h4>
+        <h4>Add Collaborators</h4>
+        <input ng-model="collabForm" type="text" ng-model="selected" uib-typeahead="user as user.name for user in connections | filter:$viewValue | limitTo:8" class="form-control" typeahead-no-results="noResults" typeahead-on-select="addCollaborator($item, $model, $label)">
+        <div ng-show="noResults">
+            <i class="fa fa-exclamation"></i> No Results Found
+          </div>
+        <ul class="collaborators-list">
+          <li class="collaborator" ng-repeat="user in newProjectCollaborators track by $index" ng-click="removeCollaborator($index)">
+            {{user}} <i class="fa fa-times-circle"></i>
+          </li>
+        </ul>
+        <h4>Project Name</h4>
+        <form ng-submit="createProject()">
+          <input type="text" class="form-control" ng-model="projectName">
+          <input type="submit" hidden>
+        </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="projectPageRedirect(linktoProject)">Go to your project page now</button>
+        <button class="btn btn-primary" ng-click="createProject()">Go to your project page now</button>
       </div>
     </div>
   </div>

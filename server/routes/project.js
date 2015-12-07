@@ -14,7 +14,7 @@ var transporter = nodemailer.createTransport({
 var project = {};
 
 project.createRevised = function(req, res){
-  Project.createRevised(req.body.projectCreator, req.body.collaborators)
+  Project.createRevised(req.body.collaborators, req.body.projectName)
   .then(function(project){
     res.json(project);
   })

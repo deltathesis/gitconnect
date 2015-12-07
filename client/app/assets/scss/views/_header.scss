@@ -105,6 +105,32 @@
     }
   }
 }
+.modal {
+  .collaborators-list {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    .collaborator {
+      display: inline-block;
+      cursor: pointer;
+      padding: 5px 10px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      background-color: $mainColor;
+      color: #FFF;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+      &.fadein-effect {
+        @include animationEffect(0.4s, fadeEffect);
+      }
+      i {
+        margin-left: 5px;
+      }
+      &:hover {
+        background-color: $redColor;
+      }
+    }
+  }
+}
 
 @media (max-width: 768px) {
   .header {

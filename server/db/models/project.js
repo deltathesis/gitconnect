@@ -94,7 +94,7 @@ Project.getLanguages = function(id) {
 
 // Project creation
 
-Project.createRevised = function(projectOwner, collaboratorsArray){
+Project.createRevised = function(collaboratorsArray, projectName){
   var node = {};
   return new Promise(function(resolve, reject){
     var storage = {};
@@ -103,7 +103,7 @@ Project.createRevised = function(projectOwner, collaboratorsArray){
     storage.projectData = {
       // Generate Random Id
       projectId: '_' + Math.random().toString(36).substr(2, 15),
-      name: 'null',
+      name: projectName,
       creationDate: dateNow.getTime(),
       publishDate : 'null',
       published: 'false',

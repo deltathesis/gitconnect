@@ -72,11 +72,12 @@ angular.module('myApp.services', [])
     })
   }
 
-	var getProfileAndRelations = function(username) {
+	var getProfileAndRelations = function(username, relLabel) {
+    relLabel = relLabel || '';
 		return $http({
 			cache: false,
 			method: 'GET',
-			url: '/api/user/relations/' + username
+			url: '/api/user/relations/' + username + '?relLabel=' + relLabel
 		}).then(function(res) {
 			return res.data.user;
 		});
@@ -222,13 +223,13 @@ angular.module('myApp.services', [])
     })
   }
 
-  var createProject = function(projectCreator, collaborators){
+  var createProject = function(collaborators, projectName){
     return $http({
       method: 'POST',
       url: 'api/project/creation',
       data: {
-        projectCreator: projectCreator,
-        collaborators: collaborators
+        collaborators: collaborators,
+        projectName: projectName
       }
     }).then(function(res){
       return res;

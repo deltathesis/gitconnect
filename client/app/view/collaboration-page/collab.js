@@ -1,4 +1,4 @@
-angular.module('myApp.collaboration-page', ['ngRoute'])
+angular.module('myApp.collaboration-page', ['ngRoute', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/collaboration-page/:id', {
@@ -16,7 +16,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   });
 }])
 
-.controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', '$rootScope', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location, $rootScope) {
+.controller('collaboration-page', ['$scope', '$window', 'User', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', '$rootScope', function($scope, $window, User, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location, $rootScope) {
 
   var projectInfo = getProjectInfo.project;
 
@@ -39,6 +39,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
+  $scope.newProjectCollaborators = []
   $scope.username = cookieObj.username;
   $scope.currentRoom = $scope.projectInfo.projectId;
   $scope.avatar = cookieObj.avatar;
@@ -46,6 +47,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   $scope.currentTime;
   $scope.displayName;
   $scope.actualName;
+  $scope.collaboratorTooltip = "Add Collaborator"
 
   // Set default min height regarding screen height
   $('.page').css('min-height', window.innerHeight - 40 + 'px');
@@ -79,6 +81,36 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
   socket.on('send:collabMessage' , function(data) {
     $scope.messages.push(data);
   })
+
+  $scope.loadConnections = function(){
+    User.getProfileAndRelations($scope.username, 'CONNECTED')
+
+    .then(function(user){
+      $scope.connections = user.relationships.CONNECTED;
+    })
+  }
+
+  $scope.addCollaborator = function(user){
+    if($scope.newProjectCollaborators.indexOf(user.username) === -1){
+      $scope.newProjectCollaborators.push(user.username)
+    }
+    $scope.collabForm = ''
+  }
+
+  $scope.removeCollaborator = function(index){
+    $scope.newProjectCollaborators.splice(index, 1);
+  }
+
+  $scope.submitCollaborators = function(){
+    $('#myModal').modal('hide');
+    var revisedProjectCollaborators = $scope.newProjectCollaborators.map(function(collaborator){
+      return {username: collaborator}
+    })
+    Project.addCollaborators($scope.projectInfo.projectId, revisedProjectCollaborators)
+      .then(function(){
+        $window.location.reload();
+      })
+  }
 
   $scope.messageSubmit = function(){
     if($scope.text){

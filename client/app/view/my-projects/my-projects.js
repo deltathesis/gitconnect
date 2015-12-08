@@ -32,6 +32,7 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
       }
     });
   }
+  console.log($scope.inProgressProjects)
 
   // Get User username
   var cookie = $cookies.get('gitConnectDeltaKS');

@@ -10,13 +10,13 @@
         <button type="button" class="btn btn-default project-actions" ng-click="editResources()">
           <i class="fa fa-pencil"></i> Edit</button>
       </div>
-      <ul class="team-members-list cf">
+      <ul class="team-members-list">
         <li class="team-member" ng-repeat="user in projectUsers">
           <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
           <p class="team-member-name"><a href="#/user/{{user.username}}">{{user.name}}</a></p>
         </li>
         <li>
-          <i class="fa fa-plus add-collaborator"></i>
+          <button type="button" data-toggle="modal" class="add-collaborator" data-target="#myModal" ng-click="loadConnections()" uib-tooltip="{{collaboratorTooltip}}"><i class="fa fa-plus"></i></button>
         </li>
       </ul>
     </div>
@@ -93,6 +93,33 @@
           <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">
         </div>
       </form>
+    </div>
+  </div>
+
+  <!--Add Collaborator Modal -->
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Collaborator</h4>
+        </div>
+        <div class="modal-body">
+          <input ng-model="collabForm" type="text" ng-model="selected" uib-typeahead="user as user.name for user in connections | filter:$viewValue | limitTo:8" class="form-control" typeahead-no-results="noResults" typeahead-on-select="addCollaborator($item, $model, $label)">
+          <ul class="collaborators-list">
+            <li class="collaborator" ng-repeat="user in newProjectCollaborators track by $index" ng-click="removeCollaborator($index)">
+              {{user}} <i class="fa fa-times-circle"></i>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="submitCollaborators()">Submit</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

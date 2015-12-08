@@ -39,6 +39,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
   // get user information, disable if availability is false
   $scope.user = getProfile;
+  $scope.swiperLoaded = false;
 
   $scope.positiveMatches = true;
 
@@ -70,6 +71,9 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       $scope.swiper = new Swiper('.swiper-container', {
         effect: 'coverflow',
+        fade: {
+          crossFade: true
+        },
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: 'auto',
@@ -84,6 +88,10 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
         keyboardControl: true,
+        onInit: function(){
+          $scope.swiperLoaded = true;
+          console.log($scope.swiperLoaded)
+        },
         // CallBack functions
         // Might define onInit if necessary
         onTransitionStart: function() {

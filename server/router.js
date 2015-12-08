@@ -46,6 +46,7 @@ router.get('/api/project/:id', project.get);
 router.get('/api/project/languages/:id', project.getLanguages);
 router.get('/api/project/users/:id', project.getUsers);
 router.get('/api/project/current/:username', project.getCurrent);
+router.post('/api/project/addCollaborators', project.addCollaborators);
 
 // AWS Routes
 router.get('/api/sign_s3', aws_s3.getSignedRequest);

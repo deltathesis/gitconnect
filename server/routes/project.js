@@ -139,4 +139,17 @@ project.getLanguages = function(req, res) {
   });
 };
 
+project.addCollaborators = function(req, res){
+  Node.addRelationships({
+    baseNode: {projectId: req.body.projectId},
+    relNodes: req.body.newCollaborators,
+    relNodeLabels: ['User'],
+    relDirection: 'in',
+    relLabel: 'WORKED'
+  })
+    .then(function(){
+      res.end()
+    });
+};
+
 module.exports = project;

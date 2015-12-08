@@ -201,6 +201,19 @@ angular.module('myApp.services', [])
 
 .factory('Project', ['$http', '$cookies', 'Cookie', function($http, $cookies, Cookie) {
 
+  var addCollaborators = function(projectId, newCollaborators){
+    return $http({
+      method: 'POST',
+      url: '/api/project/addCollaborators',
+      data: {
+        projectId: projectId,
+        newCollaborators: newCollaborators
+      }
+    }).then(function(res){
+      return res.status;
+    })
+  }
+
   var getInfos = function(id) {
     return $http({
       cache: true,
@@ -303,6 +316,7 @@ angular.module('myApp.services', [])
 
 
   return {
+    addCollaborators: addCollaborators,
     createProject: createProject,
     getInfos: getInfos,
     getUsers: getUsers,

@@ -17,16 +17,10 @@
           <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
           {{user.bio}}
         </div>
-        <!--<div class="subdetail ratings">
-         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
-         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
-        </div>-->
-      </div>
-        <div class="action-button remove">
-        <button ng-click="deleteProject(project.projectId)" class="btn">Remove</button>
       </div>
     </div>
   </div>
+
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'demands'">
   <h2 class="col-xs-12 no-requests" ng-show="!inProgressProjects.length">You have no projects in progress :(</h2>
@@ -37,16 +31,7 @@
       <div class="user-subdetails">
         <a href="#/collaboration-page/{{project.projectId}}" class="user-name">{{project.name}}</a>
         <div class="subdetail time">
-          <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
-          {{user.bio}}
         </div>
-        <!--<div class="subdetail ratings">
-         <div id="stars-existing" class="stars" ng-init="ratings(user.ratings, $index, 'requests')"></div>
-         <div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>
-        </div>-->
-      </div>
-      <div class="action-button remove">
-        <button ng-click="deleteProject(project.projectId)" class="btn">Remove</button>
       </div>
     </div>
   </div>

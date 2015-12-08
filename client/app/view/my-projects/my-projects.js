@@ -23,14 +23,15 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
   var userInfos = getProfile;
   $scope.publishedProjects = [];
   $scope.inProgressProjects = [];
-  userInfos.relationships.WORKED.forEach(function(project){
-    if(project.published === 'true'){
-      $scope.publishedProjects.push(project)
-    } else {
-      $scope.inProgressProjects.push(project);
-    }
-  })
-  console.log($scope.publishedProject)
+  if (userInfos.relationships.WORKED) {
+    userInfos.relationships.WORKED.forEach(function(project){
+      if(project.published === 'true'){
+        $scope.publishedProjects.push(project)
+      } else {
+        $scope.inProgressProjects.push(project);
+      }
+    });
+  }
 
   // Get User username
   var cookie = $cookies.get('gitConnectDeltaKS');

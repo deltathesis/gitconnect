@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row user-details-container fadein-effect">
-    <h2 class="col-xs-12 no-requests" ng-show="connections.length === 0">You have no connections :(</h2>
+    <h2 class="col-xs-12 no-requests" ng-show="!connections">You have no connections :(</h2>
     <div class="col-xs-12 user-details requests {{user.username}}" ng-repeat="user in connections | filter:searchText">
       <div class="post-thumbnail user-pic">
         <a href="#/user/{{user.username}}" alt="" style="background-image:url({{user.avatar_url}})"></a>

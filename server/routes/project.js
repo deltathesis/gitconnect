@@ -13,6 +13,13 @@ var transporter = nodemailer.createTransport({
 
 var project = {};
 
+project.createRevised = function(req, res){
+  Project.createRevised(req.body.collaborators, req.body.projectName)
+  .then(function(project){
+    res.json(project);
+  })
+}
+
 project.create = function(req, res) {
   Project.create(req.body.data).then(function(project){
     res.json(project)
@@ -116,10 +123,11 @@ project.update = function(req, res) {
 };
 
 project.deleteProject = function(req, res) {
-  Project.deleteProject(req.body.projectId).then(function(){
+  Project.deleteProject(req.body.projectId).then(function(users){
     res.sendStatus(200);
-    User.makeAvailable(req.body.user1);
-    User.makeAvailable(req.body.user2);
+    for(var i = 0; i < users.length; i++) {
+      User.makeAvailable(users[i].username);
+    }
   });
 };
 
@@ -146,7 +154,9 @@ project.get = function(req, res) {
 };
 
 project.getUsers = function(req, res) {
+  console.log(req.params.id)
   Project.getUsers(req.params.id).then(function(userslist){
+    console.log('userslist ',userslist)
     res.json({users: userslist})
   });
 };

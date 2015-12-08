@@ -75,7 +75,7 @@ var createUser = function(username){
 User.getMatches = function(username){
   return new Promise(function(resolve){
     var cypher = "MATCH (user {username:'"+username+"'})-[r*1..2]-(x:User) "
-               + "WHERE NOT (user)-->(x) AND NOT x.username = '"+username+"' AND x.availability = 'true'"
+               + "WHERE NOT (user)--(x) AND NOT x.username = '"+username+"' AND x.availability = 'true'"
                + "RETURN DISTINCT x,  "
                + "COUNT(x) ORDER BY COUNT(x) DESC LIMIT 20";
     db.queryAsync(cypher).then(function(nodes){
@@ -183,11 +183,13 @@ User.findOrCreateUser = function(username){
 // Get user connection demands
 User.getUserDemands = function(username){
   return new Promise(function(resolve){
-    var cypher = 'MATCH ({username: "'+username+'"})-[:CONNECTION_REQUEST]->(n)'
-               + 'RETURN n';
+    var cypher = 'MATCH ({username: "'+username+'"})-[r:CONNECTION_REQUEST]->(n)'
+               + 'RETURN n,r';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){
-        return element
+        var data = element.n;
+        data.relId = element.r.id;
+        return data;
       }))
     })
     .catch(function(err){
@@ -199,11 +201,13 @@ User.getUserDemands = function(username){
 // Get user connection requests
 User.getUserRequests = function(username){
   return new Promise(function(resolve){
-    var cypher = 'MATCH ({username: "'+username+'"})<-[:CONNECTION_REQUEST]-(n)'
-               +'RETURN n';
+    var cypher = 'MATCH ({username: "'+username+'"})<-[r:CONNECTION_REQUEST]-(n)'
+               +'RETURN n, r';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){
-        return element
+        var data = element.n;
+        data.relId = element.r.id;
+        return data;
       }))
     })
     .catch(function(err){
@@ -374,7 +378,7 @@ User.getFriendsProjects = function(username){
     var dateMs = date.getTime();
     // Get News from one month
     var pastWeek = dateMs - 1000 * 60 * 60 * 24 * 31
-    var cypher = 'MATCH (User {username: "'+username+'"})-[:WORKED]-(n)-[:WORKED]-(x:User)-[:WORKED]-(y:Project {published: "true"}) WHERE y.publishDate > '+pastWeek
+    var cypher = 'MATCH (User {username: "'+username+'"})-[:CONNECTED]-(x:User)-[:WORKED]-(y:Project {published: "true"}) WHERE y.publishDate > '+pastWeek
                 + ' RETURN x,y';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){

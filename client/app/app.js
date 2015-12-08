@@ -28,6 +28,8 @@ angular.module('myApp', [
   'myApp.legal',
   'myApp.techlistService',
   'myApp.requestsServices',
+  'myApp.myProjectsList',
+  'myApp.myConnections',
   'ui.bootstrap'
 ])
 

@@ -21,7 +21,7 @@
 
   <!--show div if user is unavailable -->
 
-  <img class="loading-spinner" src="../assets/pictures/default.gif" alt="" ng-hide="users">
+  <img class="loading-spinner" src="../assets/pictures/default.gif" alt="" ng-hide="!availability || users">
 
   <div class="availability-required" ng-show="!availability">
     <h3>You must set yourself available<br>in order to match with other developpers</h3>
@@ -88,7 +88,7 @@
         <div class="project-list list">
           <ul>
             <li class="col-xs-6 col-sm-4" ng-repeat="project in selectedUser.relationships.WORKED">
-              <a href="">{{project.name}}</a>
+              <a href="#/project/{{project.projectId}}">{{project.name}}</a>
             </li>
           </ul>
         </div>

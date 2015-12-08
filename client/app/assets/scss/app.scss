@@ -23,6 +23,8 @@
 @import "views/legal";
 @import "views/profile-update";
 @import "views/publish-modal";
+@import "views/my-projects-page";
+@import "views/my-connections";
 
 html {
   background-color: $bgColor;
@@ -37,6 +39,12 @@ html {
 }
 body {
   background: none;
+}
+
+.btn.active,
+.connect-btn,
+.btn-primary {
+  background-color: $secondaryColor !important;
 }
 
 // Style for all pages

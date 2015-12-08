@@ -29,7 +29,7 @@ user.getUser = function(req, res) {
 };
 
 user.getRelationships = function(req, res) {
-  Node.getRelationshipData({username: req.params.name}, 'all', '').then(function(user){
+  Node.getRelationshipData({username: req.params.name}, 'all', req.query.relLabel).then(function(user){
   	res.json({user: user});
   });
 };

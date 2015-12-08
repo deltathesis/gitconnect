@@ -3,13 +3,16 @@
   .inner-footer-container {
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: #EEEEEE;
+    background-color: $mainColor;
     .footer-links {
       ul {
         margin-bottom: 0px;
         li {
           display: inline-block;
           padding: 0px 10px;
+          a {
+            color: #FFF;
+          }
         }
       }
     }

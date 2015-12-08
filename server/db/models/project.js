@@ -93,6 +93,74 @@ Project.getLanguages = function(id) {
 };
 
 // Project creation
+
+Project.createRevised = function(collaboratorsArray, projectName){
+  var defaultImages = [
+  'http://cdn.wikimg.net/strategywiki/images/4/44/SSF2T_Chun-Li.gif',
+  'http://cdn.wikimg.net/strategywiki/images/0/06/SSF2T_T._Hawk.gif',
+  'http://cdn.wikimg.net/strategywiki/images/e/ee/SSF2T_Sagat.gif',
+  'http://cdn.wikimg.net/strategywiki/images/7/70/SSF2T_M._Bison.gif',
+  'http://cdn.wikimg.net/strategywiki/images/a/a2/SSF2T_Balrog.gif',
+  'http://cdn.wikimg.net/strategywiki/images/0/01/SSF2T_Dhalsim.gif',
+  'http://cdn.wikimg.net/strategywiki/images/4/48/SSF2T_Zangief.gif',
+  'http://cdn.wikimg.net/strategywiki/images/5/57/SSF2T_Fei_Long.gif',
+  'http://cdn.wikimg.net/strategywiki/images/4/4b/SSF2T_Dee_Jay.gif',
+  'http://cdn.wikimg.net/strategywiki/images/6/65/SSF2T_Ryu.gif',
+  'http://cdn.wikimg.net/strategywiki/images/c/c8/SSF2T_Guile.gif',
+  'http://cdn.wikimg.net/strategywiki/images/d/dc/SSF2T_Blanka.gif',
+  'http://cdn.wikimg.net/strategywiki/images/1/14/SSF2T_E._Honda.gif',
+  'http://cdn.wikimg.net/strategywiki/images/a/a4/SSF2T_Ken.gif'
+  ]
+  var node = {};
+  return new Promise(function(resolve, reject){
+    var storage = {};
+    var dateNow = new Date();
+
+    storage.projectData = {
+      // Generate Random Id
+      projectId: '_' + Math.random().toString(36).substr(2, 15),
+      name: projectName,
+      creationDate: dateNow.getTime(),
+      publishDate : 'null',
+      published: 'false',
+      shortDesc: 'null',
+      longDesc: 'null',
+      picture: defaultImages[Math.floor(Math.random()*defaultImages.length)],
+      thumbnail: 'null',
+      voteTotal: 0,
+      upVote: 0,
+      downVote: 0,
+      projectRepo: 'null',
+      scrumBoard: 'null',
+      projectSnippet: 'null',
+      projectWebsite: 'null',
+      cloudStorage: 'null',
+      database: 'null'
+    };
+
+    db.saveAsync(storage.projectData, 'Project')
+
+    .then(function(newNode){
+      node = newNode;
+      return newNode;
+    })
+
+    .then(function(projectNode){
+      return Node.addRelationships({
+        baseNode: {projectId: projectNode.projectId},
+        relNodes: collaboratorsArray,
+        relDirection: 'in',
+        relNodeLabels: ['Project'],
+        relLabel: 'WORKED'
+      })
+    })
+
+    .then(function(){
+      resolve(node);
+    })
+
+  })
+}
 Project.create = function(usersData){
   var node = {};
   return new Promise(function(resolve, reject){
@@ -210,14 +278,17 @@ Project.create = function(usersData){
 
 Project.deleteProject = function(projectId){
   return new Promise(function(resolve){
-    var cypher = 'MATCH (n { projectId:"'+projectId+'" })'
-                + ' DETACH DELETE n';
-    db.queryAsync(cypher).then(function(node){
-      resolve();
-    })
-    .catch(function(err){
-      console.log(err)
-    })
+    Node.getRelationshipData({projectId: projectId}, 'all', 'WORKED')
+      .then(function(nodes) {
+        var cypher = 'MATCH (n { projectId:"'+projectId+'" })'
+                    + ' DETACH DELETE n';
+        db.queryAsync(cypher).then(function(){
+          resolve(nodes.relationships.WORKED);
+        })
+        .catch(function(err){
+          console.log(err)
+        });
+      });
   })
 };
 

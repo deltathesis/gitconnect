@@ -6,10 +6,12 @@ angular.module('myApp.requests', ['ngRoute'])
     templateUrl: 'view/requests/requests.html',
     controller: 'requestsPage',
     resolve: {
-      getUserDemands: ['userRequests', function(userRequests) {
+      sentRequests: ['userRequests', function(userRequests) {
+        //getUserDemands cypher: MATCH ({username: "'+username+'"})-[r:CONNECTION_REQUEST]->(n)
           return userRequests.getDemands();
       }],
-      getUserRequests: ['userRequests', function(userRequests) {
+      recievedRequests: ['userRequests', function(userRequests) {
+        //getUserRequests: 'MATCH ({username: "'+username+'"})<-[r:CONNECTION_REQUEST]-(n)'
           return userRequests.getRequests();
       }],
       getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
@@ -23,13 +25,9 @@ angular.module('myApp.requests', ['ngRoute'])
 }])
 
 .controller('requestsPage', [
-  '$scope', 'getUserDemands', 'getUserRequests', 'getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
-  function($scope, getUserDemands, getUserRequests, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
-
-  var userDemands = getUserDemands;
-  console.log('demands: ',userDemands);
-  var usersRequest = getUserRequests;
-  console.log('requests: ',usersRequest);
+  '$scope', 'recievedRequests', 'sentRequests', 'getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 
+  function($scope, recievedRequests, sentRequests, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout) {
+    
   var userInfos = getProfile;
 
   // Get User username
@@ -37,8 +35,10 @@ angular.module('myApp.requests', ['ngRoute'])
   var cookieObj = Cookie.parseCookie(cookie);
   var userUsername = cookieObj.username;
 
-  $scope.usersRequest = usersRequest;
-  $scope.userDemands = userDemands;
+  $scope.sentRequests = sentRequests;
+  $scope.recievedRequests = recievedRequests;
+  console.log($scope.sentRequests)
+  console.log($scope.recievedRequests)
 
   // Set default min height regarding screen height
   $('.page').css('min-height', window.innerHeight - 40 + 'px');
@@ -57,57 +57,47 @@ angular.module('myApp.requests', ['ngRoute'])
   };
 
 
-  $scope.requestAccept = function(username, useremail) {
-    console.log('project creation');
-    var usersObject = {
-      userFirst: userUsername,
-      userSecond: username,
-      userFirstEmail:userInfos.email,
-      userSecondEmail:useremail
-    };
+  $scope.requestAccept = function(requestedUserId, relId, username) {
+    var userInfo = {
+      acceptingUserId: userInfos.id,
+      requestingUserId: requestedUserId,
+      relId: relId
+    }
     
-    UserConnection.createConnection(usersObject).then(function(project) {
-      socket.emit('notify:otherUser', {username: username, subject: 'showCollabPage', projectId: project.projectId})
-      $scope.linktoProject = project.projectId;
-      $('#projectPageRedirect').modal('show');
+    UserConnection.createConnection(userInfo).then(function() {
+      $('.requests.'+ username).slideUp();
+      socket.emit('notify:otherUser', {username: username, subject: 'myConnections'});
+      socket.emit('store:otherUser', {username: username});
+      // $scope.linktoProject = project.projectId;
+      // $('#projectPageRedirect').modal('show');
     });
 
   };
 
-  $scope.deleteRequest = function(username) {
+  $scope.deleteReceivedRequest = function(username) {
     console.log('Delete Request');
     var usersObject = {
       userFirst: userUsername,
       userSecond: username
     };
+    console.log(usersObject)
     
     UserConnection.deleteRequest(usersObject).then(function() {
-      $('.requests.'+ username).slideUp();
+      $('.requests.'+ username).slideUp(); 
     });
   };
 
-  $scope.deleteDemand = function(username) {
+  $scope.deleteSentRequest = function(username) {
     console.log('Delete Request');
     var usersObject = {
       userFirst: userUsername,
       userSecond: username
     };
+    console.log(usersObject)
     
     UserConnection.deleteDemand(usersObject).then(function() {
       $('.demands.'+username).slideUp();
     });
   };
-
-  $scope.projectRedirect = function(id) {
-    $('#projectPageRedirect').modal('hide');
-
-    $timeout(function() {
-      $rootScope.$broadcast('projectStarted', {projectId: id});
-      socket.emit('notify:otherUser', {username: username, subject: 'showCollabPage', projectId: id})
-    }, 1000);
-
-    // window.location = '#/collaboration-page/' + id;
-    // window.location.reload();
-  }
 
 }]);

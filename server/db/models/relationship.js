@@ -9,7 +9,9 @@ Relationship.delete = function(id) {
   return new Promise(function(resolve) {
     var cypher = 'start r=rel(' + id + ') delete r;';
     db.queryAsync(cypher)
-      .then(resolve);
+      .then(function(){
+        resolve()
+      });
   })
   .catch(function(err) {
     console.log(err);
@@ -36,6 +38,18 @@ Relationship.update = function(id, properties) {
     console.log(err);
   });
 };
+
+Relationship.createMutualConnection = function(requestingUserId, acceptingUserId, relId){
+  return new Promise(function(resolve){
+    Relationship.delete(relId).then(function(){
+      return db.relateAsync(requestingUserId, 'CONNECTED', acceptingUserId);
+    }).then(function(){
+      resolve();
+    })
+  }).catch(function(err){
+    console.log(err)
+  })
+}
 
 Promise.promisifyAll(Relationship);
 

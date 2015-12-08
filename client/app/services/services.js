@@ -72,11 +72,12 @@ angular.module('myApp.services', [])
     })
   }
 
-	var getProfileAndRelations = function(username) {
+	var getProfileAndRelations = function(username, relLabel) {
+    relLabel = relLabel || '';
 		return $http({
 			cache: false,
 			method: 'GET',
-			url: '/api/user/relations/' + username
+			url: '/api/user/relations/' + username + '?relLabel=' + relLabel
 		}).then(function(res) {
 			return res.data.user;
 		});
@@ -94,12 +95,20 @@ angular.module('myApp.services', [])
 		});
 	};
 
+  var removeConnection = function (user1Id, user2Id) {
+    return $http({
+      method: 'GET',
+      url: '/api/connection/delete?user1Id=' + user1Id + '&user2Id=' + user2Id + '&type=CONNECTED' 
+    });
+  };
+
 	return {
 		getMatches: getMatches,
 		getProfileAndRelations: getProfileAndRelations,
 		getProfile: getProfile,
     getAllUsers: getAllUsers,
-    postRating: postRating
+    postRating: postRating,
+    removeConnection: removeConnection
 	};
 
 }])
@@ -221,6 +230,20 @@ angular.module('myApp.services', [])
       return res.data;
     })
   }
+
+  var createProject = function(collaborators, projectName){
+    return $http({
+      method: 'POST',
+      url: 'api/project/creation',
+      data: {
+        collaborators: collaborators,
+        projectName: projectName
+      }
+    }).then(function(res){
+      return res;
+    })
+  }
+
   var updateProject = function(projectObj, oldProject, langArray, user1, user2){
     return $http({
       method: 'POST',
@@ -237,14 +260,12 @@ angular.module('myApp.services', [])
     });
   };
 
-  var deleteProject = function(projectId, user1, user2){
+  var deleteProject = function(projectId){
     return $http({
       method: 'POST',
       url: '/api/project/delete',
       data: {
-        projectId: projectId,
-        user1: user1,
-        user2: user2
+        projectId: projectId
       }
     }).then(function(res){
       return res.status
@@ -283,6 +304,7 @@ angular.module('myApp.services', [])
 
 
   return {
+    createProject: createProject,
     getInfos: getInfos,
     getUsers: getUsers,
     updateProject: updateProject,

@@ -14,29 +14,68 @@ Node.getRelationships = function(baseNodeId, relDirection, relLabel){
 };
 
 Node.addRelationships = function(params){
-  //baseNode, relNodes, relNodeLabel, relDirection, relLabel
+  //baseNode, relNodes, relNodeLabels, relDirection, relLabel
   var userId;
   var relNodeIds;
   return new Promise(function(resolve){
+
+    //Get request for the base node
     User.get(params.baseNode).then(function(userNode){
       userId = userNode[0].id;
+
+      // Get all of the relationship nodes for the base node
       return Node.getRelationships(userId, params.relDirection, params.relLabel); 
+
     }).then(function(relNodes){
+
+      /* If the relationship direction we want to add is 'out' then we want the ending
+      relationship nodes for the base node. If the rel direction is 'in' we want the start
+      node ids. Using a conditional to check and defaulting to in relationships if there is
+      an error */
+
+      if(params.relDirection === 'in'){
+        relNodeIds = relNodes.map(function(rel){
+          return rel.start
+        })
+      } else {
         relNodeIds = relNodes.map(function(rel){
           return rel.end
         })
+      }
       return;
+
     }).then(function(){
+
+      /* Running a findOrCreateNode function on all nodes in the relNodes
+      array. Then running a filter to ensure we are not adding relationships
+      to newly returned we do not want to add a relationship to.
+      */
+
+
       return Promise.map(params.relNodes, function(element){
         return Node.findOrCreateNode(element, params.relNodeLabels)
       }).filter(function(element){
         return !_.contains(relNodeIds, element.id)
       })
-    }).then(function(nodes){
+    })
+
+    .then(function(nodes){
+
+      /* Running a batch query on each new relationship node to add a relationship
+      to the base node running another conditional to check which direction we want 
+      to add the relationship to.
+      */
       var txn = db.batch()
-      nodes.forEach(function(node){
-        txn.relate(userId, params.relLabel, node.id)
-      })
+
+      if(params.relDirection === 'in'){
+        nodes.forEach(function(node){
+          txn.relate(node.id, params.relLabel, userId)
+        })
+      } else {
+        nodes.forEach(function(node){
+          txn.relate(userId, params.relLabel, node.id)
+        })
+      }
       return txn.commit(function(err, results){
         if(err){
           console.log(err)
@@ -45,7 +84,10 @@ Node.addRelationships = function(params){
           return results;
         }
       })
-    }).then(function(results){
+    })
+
+    //Resolving results
+    .then(function(results){
       resolve(results)
     }).catch(function(err){
       console.log(err)
@@ -63,21 +105,40 @@ Node.getNodesWithLabel = function(label){
 
 Node.getRelationshipData = function(baseNode, relDirection, relLabel){
   return new Promise(function(resolve){
+
+    // Set up an object to build the database results as we progress
+
     var results = {};
-    User.get(baseNode).then(function(node){
+
+    User.get(baseNode)
+
+    .then(function(node){
       results = node[0];
       return node[0];
-    }).then(function(node){
+    })
+
+    .then(function(node){
+      // get all relationships for the base node
         return Node.getRelationships(node.id, relDirection, relLabel)
-    }).then(function(relArray){
+    })
+
+    .then(function(relArray){
         results.relationships = {};
         var relNodes = [];
+
+         //loop through array of all the relationships
         relArray.forEach(function(node){
-          relNodes.push(db.readAsync(node.end).then(function(nodeData){
+          var nodeId;
+          //Check to see if the relationship is inward or outward
+          
+          node.start === results.id ? nodeId = node.end : nodeId = node.start;
+          relNodes.push(db.readAsync(nodeId).then(function(nodeData){
             if(!results.relationships[node.type]){
               results.relationships[node.type] = [];
             }
-            results.relationships[node.type].push(nodeData);
+            var newNode = nodeData;
+            newNode.relId = node.id;
+            results.relationships[node.type].push(newNode);
             return nodeData;
         }));
       })
@@ -123,6 +184,17 @@ Node.findOrCreateNode = function(props, labels){
     }).catch(function(err){
         console.log(err.body)
   })
+};
+
+Node.deleteRelationship = function(node1Id, node2Id, type) {
+  return new Promise(function(resolve) {
+    console.log(node1Id, node2Id, type)
+    var cypher = 'match n-[rel:' + type + ']-m where id(n) = ' + node1Id + ' and id(m) = ' + node2Id + ' delete rel';
+    db.queryAsync(cypher)
+      .then(resolve)
+    }).catch(function(err) {
+      console.log(err);
+    });
 };
 
 Promise.promisifyAll(Node);

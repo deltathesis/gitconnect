@@ -1,34 +1,74 @@
-angular.module('myApp.header', [])
+angular.module('myApp.header', ['ui.bootstrap'])
 
-.controller('headerController', ['$scope', 'socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', '$window', function($scope, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location, $window) {
+.controller('headerController', ['$scope', '$route', 'User', 'Project','socket', '$cookies', 'Cookie', '$log', 'projectCheck', '$rootScope', '$location', '$window', function($scope, $route, User, Project, socket, $cookies, Cookie, $log, projectCheck, $rootScope, $location, $window) {
   var cookie = $cookies.get('gitConnectDeltaKS');
   if(cookie){
 
     var cookieObj = Cookie.parseCookie(cookie);
 
     $scope.username = cookieObj.username;
+
+    $scope.newProjectCollaborators = []
     
     socket.emit('giveMeDATA', {username: cookieObj.username});
 
     socket.on('theDATA', function(data){
       $scope.unreadMessages = data.messageNotifications;
       $scope.friendRequests = data.friendRequests;
+      $scope.cashew = data.friendAccepted;
     })
 
     socket.on('youveGotMail', function(data){
-      socket.emit('giveMeDATA', {username: cookieObj.username});
+      $scope.unreadMessages++;
     })
     socket.on('friendRequest:notification', function(data){
-      socket.emit('giveMeDATA', {username: cookieObj.username});
+      $scope.friendRequests++;
     })
-    socket.on('showCollabPage:notification', function(data){
-      $scope.hasProject = true;
-      $scope.projectLink = data.projectId;
-      $location.path('/collaboration-page/' + data.projectId);
+    socket.on('friendAccepted:notification', function(data){
+      $scope.cashew = 1;
       // socket.emit('giveMeDATA', {username: cookieObj.username});
     })
 
   }
+
+  $scope.createProject = function(){
+    $('#project-create').modal('hide');
+    var revisedProjectCollaborators = $scope.newProjectCollaborators.map(function(username){
+      return {username: username};
+    })
+    revisedProjectCollaborators.push({username: $scope.username});
+    Project.createProject(revisedProjectCollaborators, $scope.projectName)
+    .then(function(res){
+      // console.log(res)
+      $scope.newProjectCollaborators = [];
+      $scope.projectName = ''
+      $scope.projectPageRedirect(res.data.projectId)
+    })
+  }
+
+  $scope.openProjectCreateModal = function(){
+    $('#project-create').modal('show');
+    User.getProfileAndRelations($scope.username, 'CONNECTED').then(function(data){
+      $scope.connections = data.relationships.CONNECTED;
+    })
+  }
+
+  $scope.addCollaborator = function(user){
+    if($scope.newProjectCollaborators.indexOf(user.username) === -1){
+      $scope.newProjectCollaborators.push(user.username)
+    }
+    $scope.collabForm = ''
+  }
+
+  $scope.removeCollaborator = function(index){
+    $scope.newProjectCollaborators.splice(index, 1);
+  }
+
+  $scope.projectPageRedirect = function(projectId){
+    $('#projectPageRedirect').modal('hide');
+    $location.path('/collaboration-page/' + projectId);
+  };
+
   $scope.clearFriendRequestNotifications = function(){
     socket.emit('clear:friendRequests', {currentUser: angular.copy($scope.username)});
   };  
@@ -56,6 +96,11 @@ angular.module('myApp.header', [])
 
   $scope.logout = function() {
     $window.location.href='/auth/logout'
+  }
+
+  $scope.clearConnectionNotification = function(){
+    socket.emit('clear:friendAccepted', {currentUser: angular.copy($scope.username)});
+    $scope.cashew = 0;
   }
 
   // Catch call and return if user already in a project

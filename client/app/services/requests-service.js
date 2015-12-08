@@ -38,12 +38,11 @@ angular.module('myApp.requestsServices', [])
     return $http({
       cache: false,
       method: 'POST',
-      url: '/api/project/creation',
+      url: '/api/connect/mutualConnection',
       data: { data: object }
     }).then(function successCallback(response) {
-        console.log('success project creation', response)
-        var project = response.data;
-        return response.data;
+        console.log('success')
+        return;
     }, function errorCallback(response) {
       console.log('error project creation', response);
     });

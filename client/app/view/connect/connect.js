@@ -46,7 +46,11 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   User.getMatches().then(function(matches){
     $scope.users = matches;
     $scope.defaultUsers = matches;
-    $scope.positiveMatches = true;
+    if(!matches.length){
+      $scope.positiveMatches = false;
+    } else {
+      $scope.positiveMatches = true;
+    }
   })
 
 

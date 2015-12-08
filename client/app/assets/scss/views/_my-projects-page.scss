@@ -54,8 +54,12 @@
         }
       }
       .user-subdetails {
+        margin-top: 13px;
         float: left;
-        padding-left: 15px;
+        padding-left: 26px;
+        a {
+          color: $darkGreyColor
+        }
         .user-name {
           font-size: 18px;
           font-weight: bold;

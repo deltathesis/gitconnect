@@ -66,7 +66,6 @@ angular.module('myApp.header', ['ui.bootstrap'])
 
   $scope.projectPageRedirect = function(projectId){
     $('#projectPageRedirect').modal('hide');
-    $route.reload();
     $location.path('/collaboration-page/' + projectId);
   };
 

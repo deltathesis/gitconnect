@@ -146,7 +146,7 @@ Project.createRevised = function(collaboratorsArray, projectName){
     })
 
     .then(function(projectNode){
-      Node.addRelationships({
+      return Node.addRelationships({
         baseNode: {projectId: projectNode.projectId},
         relNodes: collaboratorsArray,
         relDirection: 'in',

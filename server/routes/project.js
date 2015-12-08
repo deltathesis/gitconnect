@@ -154,7 +154,9 @@ project.get = function(req, res) {
 };
 
 project.getUsers = function(req, res) {
+  console.log(req.params.id)
   Project.getUsers(req.params.id).then(function(userslist){
+    console.log('userslist ',userslist)
     res.json({users: userslist})
   });
 };

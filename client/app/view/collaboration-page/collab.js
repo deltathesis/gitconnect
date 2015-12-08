@@ -18,24 +18,29 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
 .controller('collaboration-page', ['$scope', '$cookies', 'Cookie', 'socket', 'getProjectInfo', 'getProjectUsers', '$uibModal', 'Project', '$location', '$rootScope', function($scope, $cookies, Cookie, socket, getProjectInfo, getProjectUsers, $uibModal, Project, $location, $rootScope) {
 
-  var projectInfos = getProjectInfo.project;
-  $scope.projectInfo = projectInfos
-  for(var key in projectInfos){
-    if(projectInfos[key]=== 'null'){
-      projectInfos[key] = '';
+  var projectInfo = getProjectInfo.project;
+
+
+  var projectUsers = getProjectUsers;
+  
+  console.log('project-info', projectInfo);
+  console.log('project-users', projectUsers)
+  
+  for(var key in projectInfo){
+    if(projectInfo[key]=== 'null'){
+      projectInfo[key] = '';
     }
   }
-  $scope.projectInfos = projectInfos;
   //store old project info for database lookup
-  var oldProjectInfo = projectInfos
+  var oldProjectInfo = projectInfo
   
-  var projectUsers = getProjectUsers;
+  $scope.projectInfo = projectInfo;
   $scope.projectUsers = projectUsers.users;
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
-  $scope.currentRoom = $scope.projectInfos.projectId;
+  $scope.currentRoom = $scope.projectInfo.projectId;
   $scope.avatar = cookieObj.avatar;
   $scope.messages = [];
   $scope.currentTime;
@@ -60,7 +65,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
   socket.emit('initCollab', {
     name: $scope.username,
-    collabRoom: $scope.projectInfos.projectId
+    collabRoom: $scope.projectInfo.projectId
   });
 
   // listen to initializer
@@ -116,7 +121,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       controller: 'publish',
       resolve: {
         project: function(){
-          return $scope.projectInfos
+          return $scope.projectInfo
         }
       },
       size: size
@@ -124,7 +129,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
 
     modalInstance.result.then(function(obj){
       Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs, $scope.projectUsers[0].username, $scope.projectUsers[1].username);     
-      $scope.projectInfos = obj.updatedProjectInfo;
+      $scope.projectInfo = obj.updatedProjectInfo;
       $rootScope.$broadcast('projectPublished')
       $location.path('/projects')
     })
@@ -139,13 +144,13 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       size: size,
       resolve: {
         project: function(){
-          return $scope.projectInfos
+          return $scope.projectInfo
         }
       }
     });
     modalInstance.result.then(function(updatedResources){
       Project.updateProject(updatedResources, oldProjectInfo);
-      $scope.projectInfos = updatedResources;
+      $scope.projectInfo = updatedResources;
     })
   }
 
@@ -157,7 +162,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       size: size,
       resolve: {
         project: function(){
-          return $scope.projectInfos
+          return $scope.projectInfo
         },
         username: function(){
           return $scope.username
@@ -165,7 +170,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
       }
     });
     modalInstance.result.then(function(updatedResources){
-      Project.deleteProject($scope.projectInfos.projectId, $scope.projectUsers[0].username, $scope.projectUsers[1].username);
+      Project.deleteProject($scope.projectInfo.projectId, $scope.projectUsers[0].username, $scope.projectUsers[1].username);
       $rootScope.$broadcast('projectPublished')
       $location.path('/my-projects')
     })

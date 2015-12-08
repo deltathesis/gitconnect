@@ -269,6 +269,8 @@ module.exports = function (socket) {
     delete people[name];
   });
 
+
+  //sends user data stored in users object to header.js
   socket.on('giveMeDATA', function(data){
     if(users) {
       socket.emit('theDATA', users[data.username]);
@@ -285,10 +287,41 @@ module.exports = function (socket) {
         case "friendRequest":
           socket.broadcast.to(people[data.username].id).emit('friendRequest:notification', {data:'livenotify'});
           break;
-        case "showCollabPage":
-          socket.broadcast.to(people[data.username].id).emit('showCollabPage:notification', {data:'livenotify', projectId: data.projectId});
+        case "myConnections":
+          socket.broadcast.to(people[data.username].id).emit('friendAccepted:notification', {data:'blinkyblinkBlinkityBlink'});
           break;
       }
     }
   });
+//store my connections notification in firebase
+  socket.on('store:otherUser', function(data){
+    if(data.username){
+      var fireUsers = firebase.child('users');
+      var friendAccepted = fireUsers.child(data.username).child('friendAccepted');
+
+      for(var key in people){
+       if(key === data){
+         return
+       }
+      }
+      friendAccepted.transaction(function(number){
+       return (number || 0) + 1;
+      });
+
+    }
+  });
+
+// clear friendAccepted field in firebase 
+  socket.on('clear:friendAccepted', function(data){
+    var fireUsers = firebase.child('users');
+    var friendAccepted = fireUsers.child(data.currentUser).child('friendAccepted');
+
+    friendAccepted.set(0);
+    firebase.once("value", function(values) {
+      if(values.val()) {  
+        users = values.val().users;
+        socket.emit('theDATA', users[data.currentUser]);
+      }
+    });
+  })
 };

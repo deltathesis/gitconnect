@@ -21,8 +21,6 @@ angular.module('myApp.myConnections', ['ngRoute'])
    /** Socket Message Sending **/
 
   $scope.sendMessage = function(targetUser) {
-    console.log('message', $scope.message);
-    console.log('targetUser', targetUser);
     socket.emit('store:firstMessageData', {
       message: {
         text: $scope.message,
@@ -32,14 +30,21 @@ angular.module('myApp.myConnections', ['ngRoute'])
       target: theUser,
       room: currentUser + theUser
     });
+    console.log('theUser', theUser);
+    console.log('currentUser ', currentUser);
+    socket.emit('notify:otherUser', {
+      username: theUser,
+      subject: 'messages'
+    })
+    socket.emit('notify:message', {
+      target: theUser,
+      currentUser: currentUser
+    })
     $uibModalInstance.close();
   }
   socket.on('send:foundRoom', function(data) {
     socket.emit('send:privateMessage', {
-      message: {
-        text: $scope.message,
-        user: currentUser
-      },
+      message: $scope.message,
       room: data.room
     });
     $scope.message = '';
@@ -68,11 +73,30 @@ angular.module('myApp.myConnections', ['ngRoute'])
     }
   };
 
+
   $scope.removeConnection = function (user) {
     User.removeConnection($scope.user.id, user.id)
       .then(function() {
         $('.' + user.username).slideUp();
       });
   };
+
+  $scope.sendMessageButton = function(target){
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'view/my-connections/messageModal.html',
+      controller: 'publishMessaging',
+      size: 'md',
+      resolve: {
+        theUser: function(){
+          return target
+        },
+        currentUser: function(){
+          return $scope.user.username
+        }
+      }
+    })
+  }
+
 
 }]);

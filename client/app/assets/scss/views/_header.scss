@@ -32,6 +32,31 @@
       .navbar-nav>.open>a:focus {
         background-color: $mainColor;
       }
+      .navbar-left {
+        .notify{
+          display: inline-block;
+          position: absolute;
+          top: 2px;
+          right: 10px;
+          font-size: 5px;
+          text-align: center;
+          border-radius: 10px;
+          z-index: 999;
+          background-color: $redColor;
+          color: #FFF;
+          font-weight: bold;
+          min-width: 20px;
+          border-radius: 10px;
+          .fa{
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            padding: 7px 0;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+          }
+        }
+      }
       .navbar-right {
         li {
           .badge {

@@ -66,7 +66,8 @@ angular.module('myApp.requests', ['ngRoute'])
     
     UserConnection.createConnection(userInfo).then(function() {
       $('.requests.'+ username).slideUp();
-      // socket.emit('notify:otherUser', {username: username, subject: 'showCollabPage', projectId: project.projectId})
+      socket.emit('notify:otherUser', {username: username, subject: 'myConnections'});
+      socket.emit('store:otherUser', {username: username});
       // $scope.linktoProject = project.projectId;
       // $('#projectPageRedirect').modal('show');
     });

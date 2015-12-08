@@ -46,6 +46,7 @@ project.create = function(req, res) {
 };
 
 project.update = function(req, res) {
+  res.sendStatus(200);
   Node.update(req.body.oldProject, req.body.data).then(function(){
     if(req.body.langArray.length){
       Node.addRelationships({
@@ -57,56 +58,20 @@ project.update = function(req, res) {
        })
     }
     // The project is being published
-    if(req.body.user1 || req.body.user2){
-      User.makeAvailable(req.body.user1);
-      User.makeAvailable(req.body.user2);
-      var objUser1 = {
-        userNode: User.get({username: req.body.user1})
-      }
-      // Update user availability into the DB
-      objUser1.userNode.then(function(users) {
-        Node.update(users[0], {availability: "true"})
-      });
-      // Toggle availability for user 2
-      //Get User Node
-      var objUser2 = {
-        userNode: User.get({username: req.body.user2})
-      }
-      // Update user availability into the DB
-      objUser2.userNode.then(function(users) {
-        Node.update(users[0], {availability: "true"})
-      });
-      User.get({username: req.body.user1})
-        .then(function(users) {
-          var user1 = users[0];
-          User.get({username: req.body.user2})
-            .then(function(users) {
-              var user2 = users[0];
-              var mailOptions = {
-              from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
-              to: user1.email,
-              subject: 'Your project was published!', // Subject line
-              text: 'Your project was published!', // plaintext body
-              html: '<h2>Hello '+ user1.name + '!</h2>'
-                    + '<p>Congratulations on publishing your project.</p>'
-                    + '<p>You can rate your partner by clicking <a href="http://gitconnect.me/#/user/' + user2.username + '">here.</a></p>'
-                    + '<p>Have fun!</p>' // html body
-            };
-            // send mail with defined transport object
-            transporter.sendMail(mailOptions, function(error, info){
-                if(error){
-                    return console.log(error);
-                }
-                console.log('Message sent: ' + info.response);
-            });
+    if(req.body.data.users){
+      for(var i = 0; i < users.length; i++) {
+        User.makeAvailable(req.body.users[i].username);
+        User.get({username: req.body.users[i].username})
+          .then(function(users) {
+            Node.update(users[0], {availability: 'true'});
             var mailOptions = {
               from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
-              to: user2.email,
+              to: users[0].email,
               subject: 'Your project was published!', // Subject line
               text: 'Your project was published!', // plaintext body
-              html: '<h2>Hello '+ user2.name + '!</h2>'
+              html: '<h2>Hello '+ users[0].name + '!</h2>'
                     + '<p>Congratulations on publishing your project.</p>'
-                    + '<p>You can rate your partner by clicking <a href="http://gitconnect.me/#/user/' + user1.username + '">here.</a></p>'
+                    + '<p>Please remember to rate your team members by visiting their profile./p>'
                     + '<p>Have fun!</p>' // html body
             };
             // send mail with defined transport object
@@ -116,8 +81,8 @@ project.update = function(req, res) {
                 }
                 console.log('Message sent: ' + info.response);
             });
-            });
-        });
+          });
+      }
     }
   })
 };

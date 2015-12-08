@@ -244,7 +244,7 @@ angular.module('myApp.services', [])
     })
   }
 
-  var updateProject = function(projectObj, oldProject, langArray, user1, user2){
+  var updateProject = function(projectObj, oldProject, langArray, users){
     return $http({
       method: 'POST',
       url: '/api/project/update',
@@ -252,8 +252,7 @@ angular.module('myApp.services', [])
         data: projectObj, 
         oldProject: oldProject, 
         langArray: langArray,
-        user1: user1,
-        user2: user2
+        users: users
       }
     }).then(function(res){
       return res.status;

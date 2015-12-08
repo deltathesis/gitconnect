@@ -128,7 +128,7 @@ angular.module('myApp.collaboration-page', ['ngRoute'])
     });
 
     modalInstance.result.then(function(obj){
-      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs, $scope.projectUsers[0].username, $scope.projectUsers[1].username);     
+      Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs, $scope.projectUsers);     
       $scope.projectInfo = obj.updatedProjectInfo;
       $rootScope.$broadcast('projectPublished')
       $location.path('/projects')

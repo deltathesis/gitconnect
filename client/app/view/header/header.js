@@ -19,10 +19,10 @@ angular.module('myApp.header', ['ui.bootstrap'])
     })
 
     socket.on('youveGotMail', function(data){
-      socket.emit('giveMeDATA', {username: cookieObj.username});
+      $scope.unreadMessages++;
     })
     socket.on('friendRequest:notification', function(data){
-      socket.emit('giveMeDATA', {username: cookieObj.username});
+      $scope.friendRequests++;
     })
     socket.on('friendAccepted:notification', function(data){
       $scope.cashew = 1;
@@ -39,7 +39,7 @@ angular.module('myApp.header', ['ui.bootstrap'])
     revisedProjectCollaborators.push({username: $scope.username});
     Project.createProject(revisedProjectCollaborators, $scope.projectName)
     .then(function(res){
-      console.log(res)
+      // console.log(res)
       $scope.newProjectCollaborators = [];
       $scope.projectName = ''
       $scope.projectPageRedirect(res.data.projectId)

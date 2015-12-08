@@ -81,6 +81,7 @@ angular.module('myApp.privateChat', ['ngRoute'])
 
     $scope.roomMessages[message.room].users = users;
     $scope.roomMessages[message.room].messages.push(message);
+    scrollToBottom();
   });
 
   // add a message to the conversation when a user disconnects or leaves the room

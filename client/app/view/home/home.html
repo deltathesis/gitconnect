@@ -27,7 +27,7 @@
     </div>
     <div class="col-xs-12 post-content">
       <ul class="developers-list cf">
-        <li class="developer" ng-repeat="dev in devAround">
+        <li class="developer" ng-repeat="dev in devAround"  ng-init="init()">
           <a href="#/user/{{dev.username}}" class="developer-pic" style="background-image:url('{{dev.avatar_url}}')"></a>
           <p class="developer-name"><a href="#/user/{{dev.username}}">{{dev.name}}</a></p>
         </li>

@@ -43,25 +43,30 @@ module.exports = function (socket) {
     var roomsObj = {};
     // console.log('peeeple in socket io people object', people.yusufmodan.id)
 
-    for(var key in people) {
-      peopleArray.push(key);
-    }
-
-    for(var key in rooms) {
-      if(rooms[key].users.indexOf(name) > -1) {
-        socket.join(key);
-        roomsObj[key] = rooms[key];
-        // console.log('joined ' + name + ' to room: ', key);
+    firebase.once("value", function(bigData) {
+      if(bigData.val()) {
+        rooms = bigData.val().privateRooms;
       }
-    }
+      for(var key in people) {
+        peopleArray.push(key);
+      }
 
-    socket.emit('init', {
-      name: data,
-      users: peopleArray,
-      rooms: roomsObj
-    })
-    socket.broadcast.emit('bigInit', {
-      users: peopleArray
+      for(var key in rooms) {
+        if(rooms[key].users.indexOf(name) > -1) {
+          socket.join(key);
+          roomsObj[key] = rooms[key];
+          // console.log('joined ' + name + ' to room: ', key);
+        }
+      }
+
+      socket.emit('init', {
+        name: name,
+        users: peopleArray,
+        rooms: roomsObj
+      })
+      socket.broadcast.emit('bigInit', {
+        users: peopleArray
+      })
     })
   });
 

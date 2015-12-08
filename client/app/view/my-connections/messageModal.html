@@ -1,12 +1,17 @@
 <form name="myForm" role="form" class="publish-project">
   <div class="modal-header cf">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span></button>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
     <h4 class="modal-title col-xs-12" id="myModalLabel">Message {{theUser}}</h4>
   </div>
   <div class="modal-body">
     <textarea type="text" class="form-control" rows="5" placeholder="Type message here" ng-model="message" required>
     </textarea>
-    <button type="submit" class="btn btn-primary sign-small" ng-click="sendMessage()">Send</button>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary sign-small" ng-click="sendMessage()">
+      Send
+    </button>
   </div>
 </form>

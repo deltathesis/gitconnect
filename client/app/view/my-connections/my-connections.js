@@ -50,6 +50,10 @@ angular.module('myApp.myConnections', ['ngRoute'])
     $scope.message = '';
   })
 
+  $scope.close = function() {
+    $uibModalInstance.close();
+  }
+  
 }])
 
 .controller('myConnections', [

@@ -22,13 +22,18 @@
        </div>
      </div>
    <!-- Button trigger modal for Message Sending-->
-   <div class="send-message-button" style="float:right;">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="sendMessageButton(user.username)">
-     Send a message to {{user.name}}!
-    </button>
-    <button type="button" class="btn btn-danger" ng-click="removeConnection(user)">
-     Remove connection
-    </button>
+   <div class="buttons-container col-xs-12 col-sm-4 cf">
+     <div class="button-container">
+      <button type="button" class="btn btn-primary message" data-toggle="modal" data-target="#myModal" ng-click="sendMessageButton(user.username)">
+       Send a message
+      </button>
+      </div>
+     <div class="button-container remove connection">
+      <button type="button" class="btn btn-danger" ng-click="removeConnection(user)">
+       Remove connection
+      </button>
+    </div>
+  </div>
  </div>
  <!-- end of trigger modal for Message Sending -->
    </div>

@@ -16,7 +16,7 @@
     text-align: center;
     .btn {
       margin: 0px 20px;
-      background-color: #CCC;
+      background-color: $lightGreyColor;
       color: #FFF;
       &.active {
         background-color: $mainColor;
@@ -28,7 +28,7 @@
     .user-details {
       margin-top: 20px;
       padding-bottom: 15px;
-      border-bottom: 1px dotted #CCC;
+      border-bottom: 1px dotted $lightGreyColor;
       .user-pic {
         float: left;
         a {
@@ -49,6 +49,7 @@
           font-size: 18px;
           font-weight: bold;
           margin-bottom: 5px;
+          color: $darkGreyColor;
         }
         .subdetail {
           &.time {
@@ -92,10 +93,26 @@
           .btn { background-color: $redColor; }
         }
       }
+      .buttons-container {
+        float: right;
+        padding-right: 0px;
+        max-width: 200px;
+        .button-container {
+          float:right;
+          text-align: right;
+          .btn {
+            float: right;
+            display: block;
+            &.message {
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 767px) {
     .requests-form {
       .btn {
         margin: 0px 10px;
@@ -111,6 +128,21 @@
         .action-button {
           float: none;
           text-align: center;
+        }
+        .buttons-container {
+          min-width: 100%;
+          padding-right: 15px;
+          .button-container {
+            text-align: center;
+            float: none;
+            .btn {
+              float: none;
+              display: inline-block;
+              &.message {
+                margin-top: 10px;
+              }
+            }
+          }
         }
       }
     }

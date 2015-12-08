@@ -45,6 +45,8 @@ body {
 .connect-btn,
 .btn-primary {
   background-color: $secondaryColor !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 // Style for all pages

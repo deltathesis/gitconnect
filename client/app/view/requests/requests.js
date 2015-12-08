@@ -99,16 +99,4 @@ angular.module('myApp.requests', ['ngRoute'])
     });
   };
 
-  $scope.projectRedirect = function(id) {
-    $('#projectPageRedirect').modal('hide');
-
-    $timeout(function() {
-      $rootScope.$broadcast('projectStarted', {projectId: id});
-      socket.emit('notify:otherUser', {username: username, subject: 'showCollabPage', projectId: id})
-    }, 1000);
-
-    // window.location = '#/collaboration-page/' + id;
-    // window.location.reload();
-  }
-
 }]);

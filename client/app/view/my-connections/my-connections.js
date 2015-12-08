@@ -48,8 +48,8 @@ angular.module('myApp.myConnections', ['ngRoute'])
 }])
 
 .controller('myConnections', [
-  '$scope', 'getProfile', 'socket', '$uibModal', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', 
-  function($scope, getProfile, socket, $uibModal, Cookie, $cookies, UserConnection, $window, $rootScope, $location) {
+  '$scope', 'getProfile', 'socket', '$uibModal', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', 'User',
+  function($scope, getProfile, socket, $uibModal, Cookie, $cookies, UserConnection, $window, $rootScope, $location, User) {
     
   $scope.user = getProfile;
 
@@ -66,6 +66,13 @@ angular.module('myApp.myConnections', ['ngRoute'])
     for (var i = 0; i < ratings; i++) {
       $('.user-details.' + type + ':nth-child(' + index + ') .position-' + i).removeClass('fa-star-o').addClass('fa-star');
     }
+  };
+
+  $scope.removeConnection = function (user) {
+    User.removeConnection($scope.user.id, user.id)
+      .then(function() {
+        $('.' + user.username).slideUp();
+      });
   };
 
 }]);

@@ -186,6 +186,16 @@ Node.findOrCreateNode = function(props, labels){
   })
 };
 
+Node.deleteRelationship = function(node1Id, node2Id, type) {
+  return new Promise(function(resolve) {
+    var cypher = 'match n-[rel:' + type + ']-m where id(n) = ' + node1Id + ' and id(m) = ' + node2Id + ' delete rel';
+    db.queryAsync(cypher)
+      .then(resolve)
+    }).catch(function(err) {
+      console.log(err);
+    });
+};
+
 Promise.promisifyAll(Node);
 
 module.exports = Node;

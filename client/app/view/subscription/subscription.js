@@ -14,8 +14,8 @@ angular.module('myApp.subscription', ['ngRoute'])
 }])
 
 .controller('subscriptionPage', [
-  '$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', 'userOwnTech', 'techList',
-  function($scope, $location, Cookie, $cookies, UserForm, getProfile, userOwnTech, techList) {
+  '$scope', '$location', 'Cookie', '$cookies', 'UserForm', 'getProfile', 'userOwnTech', 'techList', '$window',
+  function($scope, $location, Cookie, $cookies, UserForm, getProfile, userOwnTech, techList, $window) {
 
   $scope.user = getProfile;
   // console.log(getProfile);
@@ -129,10 +129,9 @@ angular.module('myApp.subscription', ['ngRoute'])
       userOwnTech.setBio(userBio);
       userOwnTech.setFullName(userFullName);
 
-      // Redirection to the home page
-      $location.path('/');
+      $window.location.assign('/');      
     }
-  }
+  };
 
   $scope.getUserName = function() {
     // Updated User FullName display

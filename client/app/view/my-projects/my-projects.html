@@ -6,7 +6,7 @@
   </div>
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'requests'">
-    <h2 class="col-xs-12 no-requests" ng-show="publishedProjects.length === 0">You have no published projects :(</h2>
+    <h2 class="col-xs-12 no-requests" ng-show="!publishedProjects.length">You have no published projects :(</h2>
     <div class="col-xs-12 user-details demands {{project.projectId}}" ng-repeat="project in publishedProjects">
       <div class="post-thumbnail user-pic">
         <a href="#/project/{{project.projectId}}" alt="" style="background-image:url({{project.picture}})"></a>
@@ -29,7 +29,7 @@
   </div>
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'demands'">
-  <h2 class="col-xs-12 no-requests" ng-show="inProgressProjects.length === 0">You have no projects in progress :(</h2>
+  <h2 class="col-xs-12 no-requests" ng-show="!inProgressProjects.length">You have no projects in progress :(</h2>
     <div class="col-xs-12 user-details demands {{project.projectId}}" ng-repeat="project in inProgressProjects">
       <div class="post-thumbnail user-pic">
         <a href="#/project/{{project.projectId}}" alt="" style="background-image:url({{project.picture}})"></a>

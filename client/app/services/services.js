@@ -98,7 +98,7 @@ angular.module('myApp.services', [])
   var removeConnection = function (user1Id, user2Id) {
     return $http({
       method: 'GET',
-      url: '/api/connection/delete?user1Id=' + user1Id + '&user2Id=' + user2Id + '&type=CONNECTION' 
+      url: '/api/connection/delete?user1Id=' + user1Id + '&user2Id=' + user2Id + '&type=CONNECTED' 
     });
   };
 

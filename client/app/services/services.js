@@ -95,12 +95,20 @@ angular.module('myApp.services', [])
 		});
 	};
 
+  var removeConnection = function (user1Id, user2Id) {
+    return $http({
+      method: 'GET',
+      url: '/api/connection/delete?user1Id=' + user1Id + '&user2Id=' + user2Id + '&type=CONNECTION' 
+    });
+  };
+
 	return {
 		getMatches: getMatches,
 		getProfileAndRelations: getProfileAndRelations,
 		getProfile: getProfile,
     getAllUsers: getAllUsers,
-    postRating: postRating
+    postRating: postRating,
+    removeConnection: removeConnection
 	};
 
 }])

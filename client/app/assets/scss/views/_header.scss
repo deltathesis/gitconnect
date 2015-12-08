@@ -16,7 +16,52 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#464e5b', endColorstr='#333333',GradientType=0 );
     border-color: $mainColor;
     .navbar-brand {
-        color: #FFF;
+      color: #FFF;
+    }
+    .navbar-toggle {
+      border-color: #888;
+      border: none;
+      position: relative;
+      .icon-bar {
+        background-color: #888;
+        position: relative;
+        transition: all 0.5s ease;
+        &.first{
+          transform:rotate(45deg);
+          top: 5px;
+        }
+        &.second{
+          opacity: 0;
+        }
+        &.third{
+          transform:rotate(-45deg);
+          bottom: 7px;
+        }
+      }
+      &.collapsed {
+        .icon-bar {
+          transform: all 0.5s ease;
+          &.first{
+            transform:rotate(0deg);
+            top: 0px;
+          }
+          &.second{
+            opacity: 1;
+          }
+          &.third{
+            transform:rotate(0deg);
+            bottom: 0px;
+          }
+        }
+      }
+    }
+    .navbar-toggle:hover {
+      background: none;
+      border: none;
+    }
+    .navbar-toggle:focus {
+      background-color: #aaa;
+      background:none;
     }
     .links-menu {
       .navbar-nav>li>a {

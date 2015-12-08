@@ -21,6 +21,24 @@ angular.module('myApp.homepage', ['ngRoute'])
   // Set default min height regarding screen height
   $('.page').css('min-height', window.innerHeight - 40 + 'px');
 
+  $scope.init = function() {
+
+    // Fix users display for mobile devices
+    var documentWidth = $(document).width();
+    // Check for mobile only
+    if ( documentWidth < 768 ) {
+      var listWidth = $('.developers-list').width();
+      var devWidth = $('.developer').width();
+      var devByRow = Math.floor(listWidth / 80);
+      var elementMargin = (listWidth - ((devByRow) * 80)) / (devByRow - 1);
+      // the the margin to the elements in the line
+      $('.developers-list li').css('margin-right', elementMargin + 'px' );
+      // Remove the right border on the last element in the line
+      $('.developers-list li:nth-child('+devByRow+'n)').css('margin-right', '0px' );
+   }
+
+  }
+
   var user = getNewsFeed;
   $scope.news = user.news;
 

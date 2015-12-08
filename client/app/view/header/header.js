@@ -9,13 +9,18 @@ angular.module('myApp.header', ['ui.bootstrap'])
     $scope.username = cookieObj.username;
 
     $scope.newProjectCollaborators = []
+
+    /************************SOCKETS***************************/
     
     socket.emit('giveMeDATA', {username: cookieObj.username});
 
     socket.on('theDATA', function(data){
-      $scope.unreadMessages = data.messageNotifications;
-      $scope.friendRequests = data.friendRequests;
-      $scope.cashew = data.friendAccepted;
+      if(data){
+        $scope.unreadMessages = data.messageNotifications;
+        $scope.friendRequests = data.friendRequests;
+        $scope.cashew = data.friendAccepted;
+        $scope.projectInvite = data.projectInvite;
+      }
     })
 
     socket.on('youveGotMail', function(data){
@@ -29,6 +34,12 @@ angular.module('myApp.header', ['ui.bootstrap'])
       // socket.emit('giveMeDATA', {username: cookieObj.username});
     })
 
+    socket.on('projectInvite:notification', function(){
+      console.log('inside of project invite listener')
+      $scope.projectInvite = 1;
+    })
+
+    /************************SOCKETS***************************/
   }
 
   $scope.createProject = function(){
@@ -58,6 +69,8 @@ angular.module('myApp.header', ['ui.bootstrap'])
       $scope.newProjectCollaborators.push(user.username)
     }
     $scope.collabForm = ''
+    socket.emit('notify:otherUser', {username: user.username, subject: 'projectInvite'});
+    socket.emit('store:projectInvite', {username: user.username});
   }
 
   $scope.removeCollaborator = function(index){
@@ -75,6 +88,11 @@ angular.module('myApp.header', ['ui.bootstrap'])
 
   $scope.clearMessageNotifications = function() {
     socket.emit('notify:message', {target: angular.copy($scope.username), currentUser: angular.copy($scope.username)});
+  }
+
+  $scope.clearProjectInviteNotification = function(){
+    $scope.projectInvite = 0;
+    socket.emit('clear:projectInvite', {currentUser: angular.copy($scope.username)});
   }
 
   $scope.hasProject = false;

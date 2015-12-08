@@ -2,7 +2,7 @@
   .user-details-container {
     margin-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    border-bottom: 1px dotted $lightGreyColor;
     .user-details {
       .user-pic {
         float: left;
@@ -46,6 +46,7 @@
           font-size: 18px;
           font-weight: bold;
           margin-bottom: 5px;
+          color: $darkGreyColor;
         }
         .subdetail {
           &.time {
@@ -88,47 +89,27 @@
         margin-right: 5px;
       }
       &.interact {
+        &.message {
+          .btn {
+            background-color: $blueColor !important;
+          }
+        }
         .btn {
           font-size: 14px;
           margin-bottom: 10px;
         }
       }
-      // text-align: right;
-      // h5 { 
-      //   margin-top: 0px;
-      //   font-weight: bold;
-      // }
-      // p {
-      //   &.turn-on {
-      //     i { color: $greenColor; }
-      //   }
-      //   &.turn-off {
-      //     i { color: $redColor; }
-      //   }
-      // }
-      // .btn {
-      //   font-size: 12px;
-      //   font-weight: bold;
-      //   color: #FFF;
-      //   &.turn-on {
-      //     background-color: $greenColor;
-      //     i { color: $greenColor; }
-      //   }
-      //   &.turn-off {
-      //     background-color: $redColor;
-      //     i { color: $redColor; }
-      //   }
-      // }
     }
   }
 
   .user-profile-block {
     margin-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    border-bottom: 1px dotted $lightGreyColor;
     .details-container {
       h3 {
         margin-top: 0px;
+        color: $darkGreyColor;
       }
       .list {
         ul {
@@ -176,7 +157,7 @@
             .inner-container {
               transition: all 0.3s ease;
               padding: 10px;
-              border:1px solid #CCC;
+              border:1px solid $lightGreyColor;
               // border-radius: 3px;
               overflow: hidden;
               -moz-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);

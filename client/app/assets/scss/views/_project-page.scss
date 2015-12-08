@@ -1,12 +1,16 @@
 .project-page {
   overflow: hidden;
+  h2 {
+    color: $darkGreyColor;
+  }
   .project-post {
     padding-top: 20px;
     padding-bottom: 20px;
-    // border-bottom: 1px dotted #CCC;
+    // border-bottom: 1px dotted $lightGreyColor;
     .section-title {
-      border-top: 1px dotted #CCC;
+      border-top: 1px dotted $lightGreyColor;
       padding-top: 10px;
+      color: $darkGreyColor;
     }
     .post-top-info {
       position: relative;
@@ -29,6 +33,10 @@
         padding-left: 10px;
         .project-name {
           font-weight: bold;
+          a {
+            color: $darkGreyColor;
+            font-size: 16px;
+          }
         }
         .post-subdetails {
           .subdetail {
@@ -151,7 +159,7 @@
           }
         }
         .description-title {
-          border-top: 1px dotted #CCC;
+          border-top: 1px dotted $lightGreyColor;
           padding-top: 20px;
         }
       }
@@ -162,7 +170,7 @@
   // Post
   .team-messages {
     .section-title {
-      border-top: 1px dotted #CCC;
+      border-top: 1px dotted $lightGreyColor;
       padding-top: 10px;
     }
     padding-bottom: 20px;
@@ -192,7 +200,7 @@
   .post {
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    border-bottom: 1px dotted $lightGreyColor;
     .post-top-info {
       position: relative;
       .user-pic {

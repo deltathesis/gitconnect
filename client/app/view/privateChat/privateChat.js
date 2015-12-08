@@ -1,4 +1,4 @@
-angular.module('myApp.privateChat', ['ngRoute'])
+angular.module('myApp.privateChat', ['ngRoute', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/privateChat', {

@@ -5,7 +5,7 @@
   <div class="search-container">
     <form class="form-inline">
       <div class="form-group">
-        <input type="text" class="form-control" id="User" placeholder="Search For User" ng-model="newUser">
+        <input type="text" class="form-control" id="User" placeholder="Search For User" ng-model="newUser" uib-typeahead="user as user.name for user in allUsers | filter:$viewValue | limitTo:5" typeahead-noresults="noResults" typeahead-on-select="createNewRoom($label)">
       </div>
       <button type="submit" class="btn btn-primary" ng-click="createNewRoom(newUser)"><i class="fa fa-search"></i>
       </button>

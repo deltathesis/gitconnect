@@ -47,6 +47,12 @@ user.getMatchesGET = function(req, res) {
 };
 
 user.updateForm = function(req, res) {
+
+  var techlist = [];
+  req.body.data.resultsTech.forEach(function(tech) {
+    techlist.push({name: tech});
+  })
+
   // Get user location
   var objLocation = { 
     baseNode: {username: req.body.data.resultsLocation.username},
@@ -56,18 +62,13 @@ user.updateForm = function(req, res) {
     relLabel: 'Lives'
   };
 
-  // Delete all previous city relationship 
-  User.deleteAllRelationships(objLocation.baseNode.username, objLocation.relLabel);
-
-  // Saving location / relationship into the DB
-  //console.log('city: ', objLocation);
-  Node.addRelationships(objLocation);
-
-  // Get all user techs list
-  var techlist = [];
-  req.body.data.resultsTech.forEach(function(tech) {
-    techlist.push({name: tech});
-  })
+  // Get user Bio and Email
+  var userInfos = {
+    email: req.body.data.userInfos.email,
+    bio: req.body.data.userInfos.bio,
+    name: req.body.data.userInfos.name,
+    location: req.body.data.userInfos.location
+  };
 
   var objTech = {
     baseNode: {username: req.body.data.resultsLocation.username},
@@ -75,48 +76,54 @@ user.updateForm = function(req, res) {
     relNodeLabels: ['Language'],
     relDirection: 'out',
     relLabel: 'KNOWS'
-  }
-  // Delete all previous city tech and languages 
-  User.deleteAllRelationships(objTech.baseNode.username, objTech.relLabel);
+  };
 
-  // Saving user tech / relationship into the DB
-  Node.addRelationships(objTech);
+  // Saving location / relationship into the DB
+  //console.log('city: ', objLocation);
+  Node.addRelationships(objLocation)
 
-  // Get user Bio and Email
-  var userInfos = {
-    email: req.body.data.userInfos.email,
-    bio: req.body.data.userInfos.bio,
-    name: req.body.data.userInfos.name,
-    location: req.body.data.userInfos.location
-  }
-  // Get User Node
-  var objUser = {
-    userNode: User.get({username: req.body.data.userInfos.username})
-  }
-  // Update user info into the DB
-  objUser.userNode.then(function(users) {
-    Node.update(users[0], userInfos)
+  .then(function(){
+
+    // Saving user tech / relationship into the DB
+    return Node.addRelationships(objTech);
+    
   })
 
-  if (req.body.data.formType === "subscription" ) {
-    // setup e-mail data with unicode symbols
-    var mailOptions = {
-        from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
-        to: req.body.data.userInfos.email, // list of receivers
-        subject: 'Welcome to GitConnect', // Subject line
-        text: 'Welcome ' + req.body.data.userInfos.name, // plaintext body
-        html: '<h2>Welcome '+ req.body.data.userInfos.name +'</h2>'
-              + '<p>You can know connect, work and share with developers all around the world</p>' // html body
-    };
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-            return console.log(error);
-        }
-        //console.log('Message sent: ' + info.response);
-    });
-  }
-  res.end();
+  .then(function(){
+
+    // Get User Node
+    return User.get({username: req.body.data.userInfos.username})
+
+  })
+
+  .then(function(user){
+
+    // Update user info into the DB
+    return Node.update(user[0], userInfos)
+
+  })
+
+  .then(function(){
+
+    if (req.body.data.formType === "subscription" ) {
+      // setup e-mail data with unicode symbols
+      var mailOptions = {
+          from: 'GitConnect <gitconnect.app@gmail.com>', // sender address
+          to: req.body.data.userInfos.email, // list of receivers
+          subject: 'Welcome to GitConnect', // Subject line
+          text: 'Welcome ' + req.body.data.userInfos.name, // plaintext body
+          html: '<h2>Welcome '+ req.body.data.userInfos.name +'</h2>'
+                + '<p>You can know connect, work and share with developers all around the world</p>' // html body
+      };
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+              return console.log(error);
+          }
+          res.end();
+      });
+    }
+  })
 };
 
 user.toggleAvailable = function(req, res) {
@@ -207,6 +214,7 @@ user.getNewsFeed = function(req, res) {
 
   Node.getRelationshipData({username: req.params.name}, 'all', '')
   .then(function(user){
+    console.log(user)
     User.getUserByCity(user.relationships.Lives[0].uniq_id, req.params.name).then(function(people) {
       newsDataObj.people = people;
       city = user.relationships.Lives[0].uniq_id;

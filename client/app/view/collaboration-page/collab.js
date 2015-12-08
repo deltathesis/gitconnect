@@ -166,7 +166,7 @@ angular.module('myApp.collaboration-page', ['ngRoute', 'ui.bootstrap'])
       Project.updateProject(obj.updatedProjectInfo, oldProjectInfo, obj.techs, $scope.projectUsers);     
       $scope.projectInfo = obj.updatedProjectInfo;
       $rootScope.$broadcast('projectPublished')
-      $location.path('/projects')
+      $location.path('/my-projects')
     })
   }
 

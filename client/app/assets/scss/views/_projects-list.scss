@@ -10,10 +10,21 @@
     text-align: center;
     .btn {
       margin: 0px 20px;
-      background-color: #CCC;
+      background-color: $lightGreyColor;
       color: #FFF;
       &.active {
         background-color: $mainColor;
+      }
+    }
+    @media (max-width: 480px) {
+      .btn {
+        margin: 0 10px;
+      }
+    }
+    @media (max-width: 400px) {
+      .btn {
+        font-size: 12px;
+        margin: 2px;
       }
     }
   }
@@ -26,7 +37,7 @@
       width: 100%;
       min-height: 160px;
       padding: 10px;
-      border-bottom: 1px dotted #CCC;
+      border-bottom: 1px dotted $lightGreyColor;
       transition: background 0.2s ease;
       &:hover {
         background: #f7f7fa;

@@ -68,7 +68,6 @@ Node.addRelationships = function(params){
       var txn = db.batch()
 
       if(params.relDirection === 'in'){
-        console.log('in')
         nodes.forEach(function(node){
           txn.relate(node.id, params.relLabel, userId)
         })

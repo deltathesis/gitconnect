@@ -7,11 +7,16 @@
           <i class="fa fa-ban"></i> Delete your Project
         </button>
         <button ng-click="publish('lg')" class='btn btn-success project-actions'>Publish</button>
+        <button type="button" class="btn btn-default project-actions" ng-click="editResources()">
+          <i class="fa fa-pencil"></i> Edit</button>
       </div>
       <ul class="team-members-list cf">
         <li class="team-member" ng-repeat="user in projectUsers">
           <a href="#/user/{{user.username}}" class="team-member-pic" style="background-image:url({{user.avatar_url}})"></a>
           <p class="team-member-name"><a href="#/user/{{user.username}}">{{user.name}}</a></p>
+        </li>
+        <li>
+          <i class="fa fa-plus add-collaborator"></i>
         </li>
       </ul>
     </div>
@@ -26,42 +31,42 @@
           <i class="fa fa-github fa-2x fa-fw link-icon"></i>
           <span class="link-options">
             <a href={{projectInfos.projectRepo}} ng-class="{'filled-link-info': projectInfos.projectRepo !== '', 'empty-link-info': projectInfos.projectRepo === ''}">Project Repo</a>
-            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+            <a href="" class="add-link" ng-click="editResources()"></a>
           </span>
         </li>
         <li class="col-xs-12 col-sm-4">
           <i class="fa fa-jsfiddle fa-2x fa-fw link-icon"></i>
           <span class="link-options">
             <a href={{projectInfos.projectSnippet}} ng-class="{'filled-link-info': projectInfos.projectSnippet !== '', 'empty-link-info': projectInfos.projectSnippet === ''}">Code Snippet</a>
-            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+            <a href="" class="add-link" ng-click="editResources()"></a>
           </span>
         </li>
         <li class="col-xs-12 col-sm-4">
           <i class="fa fa-cloud fa-2x fa-fw link-icon"></i> 
           <span class="link-options">
             <a href={{projectInfos.cloudStorage}} ng-class="{'filled-link-info': projectInfos.cloudStorage !== '', 'empty-link-info': projectInfos.cloudStorage === ''}">Cloud Storage</a>
-            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+            <a href="" class="add-link" ng-click="editResources()"></a>
           </span>
         </li>
         <li class="col-xs-12 col-sm-4">
           <i class="fa fa-trello fa-2x fa-fw link-icon"></i>
           <span class="link-options">
             <a href={{projectInfos.scrumBoard}} ng-class="{'filled-link-info': projectInfos.scrumBoard !== '', 'empty-link-info': projectInfos.scrumBoard === ''}">Scrum Board</a>
-            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+            <a href="" class="add-link" ng-click="editResources()"></a>
           </span>
         </li>
         <li class="col-xs-12 col-sm-4">
           <i class="fa fa-link fa-2x fa-fw link-icon"></i> 
           <span class="link-options">
             <a href={{projectInfos.projectWebsite}} ng-class="{'filled-link-info': projectInfos.projectWebsite !== '', 'empty-link-info': projectInfos.projectWebsite === ''}">Project Website</a>
-            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+            <a href="" class="add-link" ng-click="editResources()"></a>
           </span>
         </li>
         <li class="col-xs-12 col-sm-4">
           <i class="fa fa-database fa-2x fa-fw link-icon"></i>
           <span class="link-options">
             <a href={{projectInfos.database}} ng-class="{'filled-link-info': projectInfos.database !== '', 'empty-link-info': projectInfos.database === ''}">Database</a>
-            <a href="" class="add-link" ng-click="editResources()"><i class="fa fa-pencil"></i></a>
+            <a href="" class="add-link" ng-click="editResources()"></a>
           </span>
         </li>
       </ul>

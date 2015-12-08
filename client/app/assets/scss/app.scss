@@ -41,6 +41,12 @@ body {
   background: none;
 }
 
+.btn.active,
+.connect-btn,
+.btn-primary {
+  background-color: $secondaryColor !important;
+}
+
 // Style for all pages
 .page {
   padding-top: 52px;

@@ -30,6 +30,7 @@ angular.module('myApp', [
   'myApp.requestsServices',
   'myApp.myProjectsList',
   'myApp.myConnections',
+  'myApp.howToUse',
   'ui.bootstrap'
 ])
 

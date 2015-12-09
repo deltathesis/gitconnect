@@ -19,7 +19,7 @@ angular.module('myApp.projectpage', ['ngRoute'])
   });
 }])
 
-.controller('projectPage', ['$scope', '$cookies', 'Cookie', 'socket', '$rootScope', 'getProject', 'getUsers', 'getLanguages', 'ProjectList', function($scope, $cookies, Cookie, socket, $rootScope, getProject, getUsers, getLanguages, ProjectList) {
+.controller('projectPage', ['$scope', '$location', '$cookies', 'Cookie', 'socket', 'Project', '$rootScope', 'getProject', 'getUsers', 'getLanguages', 'ProjectList', function($scope, $location, $cookies, Cookie, socket, Project, $rootScope, getProject, getUsers, getLanguages, ProjectList) {
 
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
@@ -28,11 +28,21 @@ angular.module('myApp.projectpage', ['ngRoute'])
   $scope.avatar = cookieObj.avatar;
   $scope.currentTime;
   $scope.messages = [];
+  $scope.collaborator = false;
 
   $scope.init = function() {
+    $scope.projectInfo = getProject.project;
     $scope.myproject = getProject.project;
     console.log($scope.myproject);
     $scope.myproject.teams = getUsers.users;
+    //Check to see if current user is collaborator
+
+    $scope.myproject.teams.forEach(function(user){
+      if(user.username === $scope.username){
+        $scope.collaborator = true
+      }
+    })
+    console.log($scope.collaborator)
     var techList = getLanguages.languages;
     socket.emit('initProject', {
       name: $scope.username,
@@ -92,6 +102,13 @@ angular.module('myApp.projectpage', ['ngRoute'])
   socket.on('send:projectMessage' , function(data) {
     $scope.messages.push(data);
   })
+
+  $scope.deleteProject = function(){
+    $('#deleteProjectModal').modal('hide');
+    Project.deleteProject(getProject.project.projectId).then(function(){
+      $location.path('/my-projects')
+    })
+  }
 
   $scope.messageSubmit = function(){
     if($scope.text){

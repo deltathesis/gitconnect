@@ -14,7 +14,7 @@
       <div class="user-subdetails">
         <a href="#/project/{{project.projectId}}" class="user-name">{{project.name}}</a>
         <div class="subdetail time">
-          <i class="fa fa-clock-o"></i> Created On {{project.creationDate | date:'mediumDate'}}
+          <i class="fa fa-clock-o"></i> Published On - {{project.creationDate | date:'mediumDate'}}
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       <div class="user-subdetails">
         <a href="#/collaboration-page/{{project.projectId}}" class="user-name">{{project.name}}</a>
         <div class="subdetail time">
-          <i class="fa fa-clock-o"></i> {{project.creationDate | date:'mediumDate'}}
+          <i class="fa fa-clock-o"></i> Created On - {{project.creationDate | date:'mediumDate'}}
         </div>
       </div>
     </div>

@@ -52,8 +52,14 @@ angular.module('myApp.header', ['ui.bootstrap'])
     .then(function(res){
       // console.log(res)
       $scope.newProjectCollaborators = [];
-      $scope.projectName = ''
-      $scope.projectPageRedirect(res.data.projectId)
+      $scope.projectName = '';
+      $scope.projectPageRedirect(res.data.projectId);
+      for(var i = 0; i < revisedProjectCollaborators.length; i++){
+        if(revisedProjectCollaborators[i] !== $scope.username) {
+          socket.emit('notify:otherUser', {username: revisedProjectCollaborators[i].username, subject: 'projectInvite'});
+          socket.emit('store:projectInvite', {username: revisedProjectCollaborators[i].username});
+        }
+      }
     })
   }
 
@@ -69,8 +75,8 @@ angular.module('myApp.header', ['ui.bootstrap'])
       $scope.newProjectCollaborators.push(user.username)
     }
     $scope.collabForm = ''
-    socket.emit('notify:otherUser', {username: user.username, subject: 'projectInvite'});
-    socket.emit('store:projectInvite', {username: user.username});
+    // socket.emit('notify:otherUser', {username: user.username, subject: 'projectInvite'});
+    // socket.emit('store:projectInvite', {username: user.username});
   }
 
   $scope.removeCollaborator = function(index){

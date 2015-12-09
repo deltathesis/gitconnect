@@ -58,7 +58,6 @@ angular.module('myApp.profilepage', ['ngRoute'])
   User.getProfileAndRelations(cookieObj.username).then(function(data) {
     $scope.cookieUser = data;
   })
-
   $scope.init = function() {  
       $scope.user = getProfile;
       // var rating = Math.ceil($scope.user.ratingTotal / $scope.user.ratings);

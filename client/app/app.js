@@ -12,7 +12,6 @@ angular.module('myApp', [
   'myApp.projectslist',
   'myApp.projectpage',
   'myApp.connect',
-  'myApp.groupChat',
   'myApp.version',
   'myApp.auth',
   'myApp.services',

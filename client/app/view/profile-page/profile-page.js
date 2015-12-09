@@ -114,7 +114,7 @@ angular.module('myApp.profilepage', ['ngRoute'])
 
       // Get user projects
       $scope.user.projects = $scope.user.relationships.WORKED;
-      $scope.hasProjects = ($scope.user.projects === undefined) ? false:true;
+      // $scope.hasProjects = ($scope.user.projects === undefined) ? false:true;
   }
 
   
@@ -153,19 +153,15 @@ angular.module('myApp.profilepage', ['ngRoute'])
 
   // Get project status result and set availability 
   $rootScope.$on('hasProjectCheckReturn', function(event, hasProject) {
+    var cookie = $cookies.get('gitConnectDeltaKS');
+    var cookieObj = Cookie.parseCookie(cookie);
+    availabilityToggle.changeAvailability($scope.dataAvailability);
+    // Update cooking value
+    cookieObj.availability = "true";
+    $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
+    //refresh to apply cookie to the view
+    $window.location.reload();
 
-    if (hasProject) {
-      $('#availabilityInfo').modal('show');
-    } else {
-      var cookie = $cookies.get('gitConnectDeltaKS');
-      var cookieObj = Cookie.parseCookie(cookie);
-      availabilityToggle.changeAvailability($scope.dataAvailability);
-      // Update cooking value
-      cookieObj.availability = "true";
-      $cookies.put('gitConnectDeltaKS', JSON.stringify(cookieObj));
-      //refresh to apply cookie to the view
-      $window.location.reload();
-    }
   });
 
   $scope.availabilityOff = function() {

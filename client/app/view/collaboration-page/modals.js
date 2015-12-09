@@ -1,11 +1,14 @@
 angular.module('myApp.collaboration-page')
 
 
-.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', '$rootScope', 'Project', function($scope, $uibModal, techList, $uibModalInstance, project, $rootScope, Project){
+.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', 'projectUsers', '$rootScope', 'Project', function($scope, $uibModal, techList, $uibModalInstance, project, projectUsers, $rootScope, Project){
   
-  $scope.projectInfo = project
+  $scope.projectInfo = project;
+  $scope.projectUsers = projectUsers;
   $scope.techList = techList.getTechList();
   $scope.yourTechList = [];
+
+  console.log('projectInfo', $scope.projectInfo);
 
   var fileName = Math.random().toString(36).substr(2, 15);
 
@@ -49,6 +52,10 @@ angular.module('myApp.collaboration-page')
       Project.signRequest($scope.profilePic, fileName)
       $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
       $uibModalInstance.close(obj);
+    }
+
+    for(var k = 0; k < $scope.projectUsers.length; k++) {
+      socket.emit("store:projectInvite", {username: $scope.projectUsers[k].username});
     }
 
   }

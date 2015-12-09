@@ -9,7 +9,6 @@ angular.module('myApp.privateChat', ['ngRoute', 'ui.bootstrap'])
 }])
 
 .controller('privateChatController', ['$scope', 'socket', '$cookies', 'Cookie', 'User', function($scope, socket, $cookies, Cookie, User) {
-
   $scope.roomMessages; //key is roomName, value is another obj which has keys users and messages
   $scope.name;                            //users is an array [selfUser, targetuser]
   $scope.currentRoom;                     //messages is obj with props text, room, otheruser

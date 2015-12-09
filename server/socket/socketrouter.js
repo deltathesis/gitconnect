@@ -295,6 +295,10 @@ module.exports = function (socket) {
         case "myConnections":
           socket.broadcast.to(people[data.username].id).emit('friendAccepted:notification', {data:'blinkyblinkBlinkityBlink'});
           break;
+        case "projectInvite":
+          console.log('dayum bro');
+          socket.broadcast.to(people[data.username].id).emit('projectInvite:notification');
+          break;
       }
     }
   });
@@ -320,6 +324,36 @@ module.exports = function (socket) {
   socket.on('clear:friendAccepted', function(data){
     var fireUsers = firebase.child('users');
     var friendAccepted = fireUsers.child(data.currentUser).child('friendAccepted');
+
+    friendAccepted.set(0);
+    firebase.once("value", function(values) {
+      if(values.val()) {  
+        users = values.val().users;
+        socket.emit('theDATA', users[data.currentUser]);
+      }
+    });
+  })
+
+  socket.on('store:projectInvite', function(data) {
+    if(data.username){
+      var fireUsers = firebase.child('users');
+      var friendAccepted = fireUsers.child(data.username).child('projectInvite');
+
+      for(var key in people){
+       if(key === data){
+         return
+       }
+      }
+      friendAccepted.transaction(function(number){
+       return (number || 0) + 1;
+      });
+
+    }
+  })
+
+  socket.on('clear:projectInvite', function(data){
+    var fireUsers = firebase.child('users');
+    var friendAccepted = fireUsers.child(data.currentUser).child('projectInvite');
 
     friendAccepted.set(0);
     firebase.once("value", function(values) {

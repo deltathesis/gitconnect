@@ -154,6 +154,9 @@ angular.module('myApp.collaboration-page', ['ngRoute', 'ui.bootstrap'])
       resolve: {
         project: function(){
           return $scope.projectInfo
+        },
+        projectUsers: function() {
+          return $scope.projectUsers;
         }
       },
       size: size

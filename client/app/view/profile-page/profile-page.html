@@ -100,7 +100,7 @@
 <div class="row user-projects-container user-profile-block">
   <div class="projects-details details-container">
     <h3 class="col-xs-12">Projects</h3>
-    <p class="no-projects col-xs-12" ng-hide="hasProjects">No project yet</p>
+    <p class="no-projects col-xs-12" ng-hide="hasProjects">No projects yet :(</p>
 
     <div class="project-list list">
       <ul>
@@ -119,6 +119,8 @@
 <div class="row user-languages-container user-profile-block">
   <div class="language-details details-container">
     <h3 class="col-xs-12">Languages</h3>
+    <p class="no-projects col-xs-12" ng-hide="user.languages.length">You have no languages :(</p>
+
     <div class="language-list list">
       <ul>
         <li class="col-xs-6 col-sm-3" ng-repeat="language in user.languages">

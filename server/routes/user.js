@@ -83,10 +83,12 @@ user.updateForm = function(req, res) {
   Node.addRelationships(objLocation)
 
   .then(function(){
-
-    // Saving user tech / relationship into the DB
-    return Node.addRelationships(objTech);
-    
+    // We need to do this in case they delete their languages pulled from GitHub.
+    User.deleteAllRelationships(req.body.data.resultsLocation.username, 'KNOWS')
+      .then(function() {
+        // Saving user tech / relationship into the DB
+        return Node.addRelationships(objTech);
+      });
   })
 
   .then(function(){

@@ -52,7 +52,8 @@
 
     </div>
     <div class="col-xs-12 col-sm-4 user-status interact" ng-init="statusCheck()" ng-show="!ownership">
-      <button type="button" class="btn btn-primary" ng-click="sendConnectionRequests()">Connect</button>
+      <button type="button" class="btn btn-primary connect" ng-click="sendConnectionRequests(); showConnectButton = 1" ng-hide="showConnectButton">Connect</button>
+      <button class="btn btn-danger connect" ng-show="showConnectButton" disabled><i class="fa fa-check-circle"></i></button>
     </div>
 
     <!-- Button trigger modal for Message Sending-->

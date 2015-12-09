@@ -136,11 +136,6 @@ user.toggleAvailable = function(req, res) {
     userNode: User.get({username: req.body.data.username})
   }
 
-  // Delete all user connection requests and demands
-  if (availability.availability === 'false') {
-    User.deleteAllRelationships(req.body.data.username, 'CONNECTION_REQUEST');
-  }
-
   // Update user availability into the DB
   objUser.userNode.then(function(users) {
     Node.update(users[0], availability)

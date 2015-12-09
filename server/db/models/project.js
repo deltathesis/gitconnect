@@ -96,18 +96,19 @@ Project.getLanguages = function(id) {
 
 Project.createRevised = function(collaboratorsArray, projectName){
   var defaultImages = [
-  'http://origin.arstechnica.com/journals/thumbs.media/272/250/sstthd_ken-1.jpg',
-  'http://cdn.idigitaltimes.com/sites/idigitaltimes.com/files/styles/image_embed/public/2015/04/15/super-smash-bros-4-character-ryu-street-fighter.png',
-  'http://www.cinemablend.com/images/sections/15427/Street_Fighter_IV_15427.jpg',
-  'http://svgporn.com/logos/autocode.svg',
-  'http://www.fillmurray.com/284/196',
-  'https://upload.wikimedia.org/wikipedia/en/0/02/Charlie_Brown_Xmas_tree.jpg',
-  'http://cdn.hitfix.com/photos/78936/willferrell_headshot.jpg',
-  'http://www-tc.pbs.org/wgbh/americanexperience/media/uploads/films/heroImages/goldengate_film_landing1.jpg',
-  'http://dev.bowdenweb.com/a/i/style/textures/plaid/plaid-texture-04-1500px.jpg',
-  'https://media.timeout.com/images/101705313/image.jpg',
-  'http://cdn.wikimg.net/strategywiki/images/c/c8/SSF2T_Guile.gif',
-  'http://www.savetheredwoods.org/wp-content/uploads/Partner_Parks_large_HRSPrenedriversFCC.jpg',
+  'https://s3-us-west-1.amazonaws.com/mks-thesis-project/pictures/project-giconnect-default.jpg'
+  // 'http://origin.arstechnica.com/journals/thumbs.media/272/250/sstthd_ken-1.jpg',
+  // 'http://cdn.idigitaltimes.com/sites/idigitaltimes.com/files/styles/image_embed/public/2015/04/15/super-smash-bros-4-character-ryu-street-fighter.png',
+  // 'http://www.cinemablend.com/images/sections/15427/Street_Fighter_IV_15427.jpg',
+  // 'http://svgporn.com/logos/autocode.svg',
+  // 'http://www.fillmurray.com/284/196',
+  // 'https://upload.wikimedia.org/wikipedia/en/0/02/Charlie_Brown_Xmas_tree.jpg',
+  // 'http://cdn.hitfix.com/photos/78936/willferrell_headshot.jpg',
+  // 'http://www-tc.pbs.org/wgbh/americanexperience/media/uploads/films/heroImages/goldengate_film_landing1.jpg',
+  // 'http://dev.bowdenweb.com/a/i/style/textures/plaid/plaid-texture-04-1500px.jpg',
+  // 'https://media.timeout.com/images/101705313/image.jpg',
+  // 'http://cdn.wikimg.net/strategywiki/images/c/c8/SSF2T_Guile.gif',
+  // 'http://www.savetheredwoods.org/wp-content/uploads/Partner_Parks_large_HRSPrenedriversFCC.jpg',
   ]
   var node = {};
   return new Promise(function(resolve, reject){

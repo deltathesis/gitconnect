@@ -35,9 +35,11 @@ angular.module('myApp.subscription', ['ngRoute'])
   }
 
   $scope.user.languages = [];
-  $scope.user.relationships.KNOWS.forEach(function(tech) {
-    $scope.user.languages.push(tech.name);
-  })
+  if ($scope.user.relationships.KNOWS) {
+    $scope.user.relationships.KNOWS.forEach(function(tech) {
+      $scope.user.languages.push(tech.name);
+    });
+  }
 
   // Get global tech/languages list
   $scope.techList = [];

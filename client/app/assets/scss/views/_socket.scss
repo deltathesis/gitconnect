@@ -4,6 +4,22 @@
     text-align: center;
   }
   margin-bottom: 50px;
+  .dropdown-menu {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    li {
+      a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #FFF;
+      }
+    }
+  }
+  .dropdown-menu>.active>a,
+  .dropdown-menu>.active>a:hover,
+  .dropdown-menu>.active>a:focus {
+    background-color: $secondaryColor;
+  }
   .chat-users {
     background-color: white;
     padding: 0px;

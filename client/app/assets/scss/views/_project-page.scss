@@ -55,13 +55,23 @@
         padding-left: 30px;
         .vote {
           text-align: center;
+          margin-top: 9px;
           button {
             background: none;
             border: none;
-            height: 22px;
+            // height: 22px;
+            position: relative;
+            i {
+              position: relative;
+              top: -2px;
+              background-color: $secondaryColor;
+              color: #FFF;
+              border-radius: 50%;
+              padding: 5px 7px 5px 7px;
+            }
           }
           .count {
-            display: block;
+            display: inline-block;
           }
         }
       }
@@ -324,7 +334,7 @@
       .post-top-info {
         .voting {
           width: 100%;
-          padding: 20px 0px;
+          padding: 20px 0px 0px;
         }
       }
     }

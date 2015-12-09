@@ -165,7 +165,7 @@
               box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
               .project-name {
                 border: none;
-                margin-bottom: 5px;
+                padding:10px 0px;
                 font-weight: bold;
                 color: #000;
               }
@@ -173,6 +173,7 @@
                 height: 200px;
                 background-size: cover;
                 background-position: 50% 50%;
+                border-radius: 3px;
               }
               .description {
                 overflow: hidden;

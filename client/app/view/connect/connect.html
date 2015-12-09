@@ -84,8 +84,13 @@
         <h3 class="col-xs-12">Projects</h3>
         <div class="project-list list">
           <ul>
-            <li class="col-xs-6 col-sm-4" ng-repeat="project in selectedUser.relationships.WORKED">
-              <a href="#/project/{{project.projectId}}">{{project.name}}</a>
+            <li class="col-xs-12 col-sm-4 project" ng-repeat="project in selectedUser.relationships.WORKED" ng-click="redirect(project.projectId)" style="cursor: pointer;">
+              <!-- <a href="#/project/{{project.projectId}}">{{project.name}}</a> -->
+              <div class="inner-container">
+                <a href="" class="project-name truncate">{{project.name}}</a>
+                <div class="project-picture" style="background-image:url('{{project.picture}}')"></div>
+                <p class="description">{{project.shortDesc}}</p>
+              </div>
             </li>
           </ul>
         </div>
@@ -93,7 +98,7 @@
     </div>
   </div>
 
-<!-- Filters Modal -->
+  <!-- Filters Modal -->
 
   <div class="modal fade" id="filters" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -130,8 +135,8 @@
         <div class="modal-footer">
           <button class="btn btn-primary" ng-click="submitFilters()">Submit</button>
         </div>
+      </div>
     </div>
   </div>
-</div>
 
 

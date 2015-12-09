@@ -35,7 +35,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     }
 }])
 
-.controller('connectCtrl', ['$scope', 'User', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', '$timeout', function($scope, User, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope, $timeout) {
+.controller('connectCtrl', ['$scope', 'User', 'getProfile', '$http', 'availabilityToggle', '$window', 'Cookie', '$cookies', 'socket', 'techList', '$rootScope', '$timeout', '$location', function($scope, User, getProfile, $http, availabilityToggle, $window, Cookie, $cookies, socket, techList, $rootScope, $timeout, $location) {
 
   // get user information, disable if availability is false
   $scope.user = getProfile;
@@ -266,6 +266,10 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         console.log('error: ', response);
       });
     }
+  }
+
+  $scope.redirect = function(id) {
+    $location.path('/project/' + id);
   }
 
   function addressInitialize() {

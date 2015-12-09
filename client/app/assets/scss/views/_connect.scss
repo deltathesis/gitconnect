@@ -155,14 +155,51 @@
       h3 {
         color: $darkGreyColor;
         margin-top: 0px;
+        padding-bottom: 10px;
+      }
+      .bio {
+        font-size: 16px;
       }
       .list {
         ul {
-          li {
-            padding-top: 10px;
-            a {
-              border-bottom: 1px solid #AAA;
-              display: block;
+          .project {
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            padding-bottom:10px;
+            .inner-container {
+              transition: all 0.3s ease;
+              padding: 10px;
+              border:1px solid $lightGreyColor;
+              // border-radius: 3px;
+              overflow: hidden;
+              -moz-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
+              -webkit-box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
+              box-shadow: 0 3px 3px 0 rgba(0,0,0,0.3);
+              .project-name {
+                border: none;
+                padding:10px 0px;
+                font-weight: bold;
+                color: #000;
+              }
+              .project-picture {
+                height: 200px;
+                background-size: cover;
+                background-position: 50% 50%;
+                border-radius: 3px;
+                margin-top: 8px;
+              }
+              .description {
+                overflow: hidden;
+                height: 60px;
+                margin-top: 10px;
+                margin-bottom: 0px;
+              }
+            }
+            &:hover {
+              transform: translateY(3px);
+              .inner-container {
+                box-shadow: none;
+              }
             }
           }
         }
@@ -180,7 +217,7 @@
                 display: inline-block;
                 background-size: cover;
                 position: absolute;
-                top: 9px;
+                top: -1px;
               }
               .tech-name {
                 font-size: 14px;

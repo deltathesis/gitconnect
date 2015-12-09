@@ -55,7 +55,7 @@ angular.module('myApp.header', ['ui.bootstrap'])
       $scope.projectName = '';
       $scope.projectPageRedirect(res.data.projectId);
       for(var i = 0; i < revisedProjectCollaborators.length; i++){
-        if(revisedProjectCollaborators[i] !== $scope.username) {
+        if(revisedProjectCollaborators[i].username !== $scope.username) {
           socket.emit('notify:otherUser', {username: revisedProjectCollaborators[i].username, subject: 'projectInvite'});
           socket.emit('store:projectInvite', {username: revisedProjectCollaborators[i].username});
         }

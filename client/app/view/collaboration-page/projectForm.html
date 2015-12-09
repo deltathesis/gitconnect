@@ -14,6 +14,10 @@
       <input ng-model="projectInfo.shortDesc" type="text" class="form-control">
       <label>Project picture</label>
       <input type="file" id="file_input" fileread="profilePic" class="form-control" required>
+      <div role="alert">
+        <span class="error" ng-show="profilePic.size > 5242880">
+                please upload a pic smaller than 5mb!</span>
+      </div>
       <label>Project repo link</label>
       <input type="url" class="form-control" ng-model="projectInfo.projectRepo" name="repo" required>
       <div role="alert">

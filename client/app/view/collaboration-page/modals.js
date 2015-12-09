@@ -1,7 +1,7 @@
 angular.module('myApp.collaboration-page')
 
 
-.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', 'projectUsers', '$rootScope', 'Project', function($scope, $uibModal, techList, $uibModalInstance, project, projectUsers, $rootScope, Project){
+.controller('publish', ['$scope', '$uibModal', 'techList', '$uibModalInstance', 'project', 'projectUsers', '$rootScope', 'Project', 'socket', 'currentUser', function($scope, $uibModal, techList, $uibModalInstance, project, projectUsers, $rootScope, Project, socket, currentUser){
   
   $scope.projectInfo = project;
   $scope.projectUsers = projectUsers;
@@ -49,15 +49,19 @@ angular.module('myApp.collaboration-page')
       obj.techs.push({name: $scope.yourTechList[i]});
     }
 
+    for(var k = 0; k < $scope.projectUsers.length; k++) {
+      console.log('store projectinvite', $scope.projectUsers[k].username);
+      if($scope.projectUsers[k].username !== currentUser){
+        socket.emit("store:projectInvite", {username: $scope.projectUsers[k].username});
+        socket.emit('notify:otherUser', {username: $scope.projectUsers[k].username, subject: 'projectInvite'});
+      }
+    }
     if($scope.profilePic.size < 5242880){
       Project.signRequest($scope.profilePic, fileName)
       $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
       $uibModalInstance.close(obj);
     }
 
-    for(var k = 0; k < $scope.projectUsers.length; k++) {
-      socket.emit("store:projectInvite", {username: $scope.projectUsers[k].username});
-    }
 
   }
 

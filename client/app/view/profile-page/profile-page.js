@@ -113,7 +113,12 @@ angular.module('myApp.profilepage', ['ngRoute'])
       }
 
       // Get user projects
-      $scope.user.projects = $scope.user.relationships.WORKED;
+      $scope.user.projects = []
+      $scope.user.relationships.WORKED.forEach(function(project){
+        if(project.published === 'true'){
+          $scope.user.projects.push(project);
+        }
+      })
       // $scope.hasProjects = ($scope.user.projects === undefined) ? false:true;
   }
 

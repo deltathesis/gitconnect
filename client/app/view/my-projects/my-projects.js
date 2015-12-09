@@ -19,7 +19,7 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
 .controller('myProjectsList', [
   '$scope','getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 'Project',
   function($scope, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout, Project) {
-
+  console.log('how many times');
   var userInfos = getProfile;
   $scope.publishedProjects = [];
   $scope.inProgressProjects = [];

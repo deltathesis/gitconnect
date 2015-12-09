@@ -358,8 +358,8 @@ User.rate = function(id, rating) {
 // Get user connection demands
 User.getUserByCity = function(cityId, username){
   return new Promise(function(resolve){
-    var cypher = 'MATCH (City {uniq_id: "'+cityId+'"})-[:Lives]-(n {availability: "true"})'
-               + ' WHERE NOT n.username = "'+username+'" RETURN n';
+    var cypher = 'MATCH (n:User {location:"'+cityId+'"}) WHERE n.availability="true" AND NOT n.username="'+username+'" '
+                + ' RETURN n';
     db.queryAsync(cypher).then(function(nodes){
       resolve(nodes.map(function(element){
         return element

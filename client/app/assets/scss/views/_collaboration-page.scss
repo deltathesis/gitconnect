@@ -16,6 +16,7 @@
       .btn.project-actions {
         margin-left: 10px;
         float: right;
+        margin-bottom: 10px;
       }
     }
     .team-members-list {
@@ -190,12 +191,19 @@
           width: 100%;
         }
         .btn.project-actions {
-         float: left;
-         &.btn-danger {
-          margin-right: 10px;
+          margin-top: 10px;
+          font-size: 11px;
+          float: left;
+          margin-right: 5px;
+          margin-left: 5px;
+          &.btn-danger {
+            margin-left: 0px;
+          }
+          &.edit {
+            margin-right: 0px;
+          }
         }
       }
-    }
-  } 
-}
+    } 
+  }
 }

@@ -157,6 +157,9 @@ angular.module('myApp.collaboration-page', ['ngRoute', 'ui.bootstrap'])
         },
         projectUsers: function() {
           return $scope.projectUsers;
+        },
+        currentUser: function(){
+          return $scope.username;
         }
       },
       size: size

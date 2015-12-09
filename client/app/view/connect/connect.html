@@ -84,6 +84,7 @@
         <h3 class="col-xs-12">Projects</h3>
         <div class="project-list list">
           <ul>
+            <p ng-show="!selectedUser.relationships.WORKED" class="col-xs-12">No project yet</p>
             <li class="col-xs-12 col-sm-4 project" ng-repeat="project in selectedUser.relationships.WORKED" ng-click="redirect(project.projectId)" style="cursor: pointer;">
               <!-- <a href="#/project/{{project.projectId}}">{{project.name}}</a> -->
               <div class="inner-container">

@@ -16,7 +16,13 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#464e5b', endColorstr='#333333',GradientType=0 );
     border-color: $mainColor;
     .navbar-brand {
-      color: #FFF;
+      position: relative;
+      i {
+        color: $secondaryColor;
+        font-size: 25px;
+        top: -3px;
+        position: relative;
+      }
     }
     .navbar-toggle {
       border-color: #888;

@@ -4,7 +4,7 @@
   .post {
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    border-bottom: 1px dotted $lightGreyColor;
     .post-top-info {
       position: relative;
       .user-pic {
@@ -50,6 +50,16 @@
 
   // User Project Post Model
   .user-project-post {
+    .post-top-info {
+      .post-top-details {
+        .user-name {
+          a {
+            font-weight: bold;
+            color: $darkGreyColor;
+          }
+        }
+      }
+    }
     .post-content {
       .description {
         .project-link {
@@ -122,6 +132,7 @@
       .post-top-details {
         .post-title {
           p {
+            margin-top: 3px;
             margin-top: 11px;
             font-size: 18px;
             margin-bottom: 0px;
@@ -158,9 +169,11 @@
           }
           .developer-name {
             margin-top: 5px;
-            color: $mainColor;
             margin-bottom: 0px;
             text-align: center;
+            a {
+              color: $mainColor;
+            }
           }
         }
       }

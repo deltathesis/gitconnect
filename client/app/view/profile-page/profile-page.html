@@ -34,7 +34,7 @@
     </div>
     <div class="col-xs-12 col-sm-4 user-status" ng-show='ownership' ng-init="statusCheck()">
 
-      <span class="title">Availability</span>
+      <span class="title">Available</span>
       <div ng-show="!availability" ng-click="availabilityOn()" class="switch turn-on">
         <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
         <label for="cmn-toggle-1">On</label>
@@ -56,8 +56,8 @@
     </div>
 
     <!-- Button trigger modal for Message Sending-->
-    <div class="col-xs-12 col-sm-4 user-status interact" ng-hide="ownership" ng-init="statusCheck()">
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+    <div class="col-xs-12 col-sm-4 user-status interact message" ng-hide="ownership" ng-init="statusCheck()">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
        Send a message
      </button>
 

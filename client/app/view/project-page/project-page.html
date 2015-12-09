@@ -35,7 +35,7 @@
       <p class="description">
         {{myproject.shortDesc}}
       </p>
-      <h2 class="section-title">Languages</h2>
+      <h3 class="section-title">Tech Stack</h3>
       <div class="tech-list">
         <ul class="row">
           <li class="col-xs-6 col-sm-3" ng-repeat="tech in myproject.languages">
@@ -44,11 +44,7 @@
           </li>
         </ul>
       </div>
-      <h2 class="section-title">Team</h2>
-<!--         <div class="github-link">
-          <i class="fa fa-github"></i>
-          <a href="{{myproject.projectRepo}}">{{myproject.projectRepo}}</a>
-        </div> -->
+      <h3 class="section-title">Team</h3>
         <ul class="developers-list cf">
           <li class="developer" ng-repeat="developer in myproject.teams">
             <a href="#/user/{{developer.username}}" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>

@@ -393,7 +393,6 @@ User.getFriendsProjects = function(username){
   })
 };
 
-
 Promise.promisifyAll(User);
 
 module.exports = User;

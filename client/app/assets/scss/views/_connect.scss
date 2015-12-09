@@ -211,13 +211,14 @@
           ul {
             li {
               position: relative;
+              padding-top: 10px;
               .tech-icon {
                 width: 20px;
                 height: 20px;
                 display: inline-block;
                 background-size: cover;
                 position: absolute;
-                top: -1px;
+                top: 9px;
               }
               .tech-name {
                 font-size: 14px;

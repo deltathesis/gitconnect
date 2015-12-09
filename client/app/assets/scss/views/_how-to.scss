@@ -1,8 +1,26 @@
 .how-to-use-page {
   .how-to-use-container {
+    padding-bottom: 20px;
     h1 {
       text-align: center;
       margin-bottom: 40px;
+    }
+    i {
+      padding-left: 20px;
+    }
+    h2 {
+      border-top: 1px dotted $secondaryColor;
+      padding-top: 30px;
+      margin-top: 30px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    p {
+      font-size: 14px;
+    }
+    .redirect {
+      margin:30px 0px 20px;
+      text-align: center;
     }
   }
 }

@@ -35,7 +35,7 @@ user.getRelationships = function(req, res) {
 };
 
 user.getMatchesPOST = function(req, res) {
-  User.matches(req.body.filters, req.body.username, req.body.location || null).then(function(users){
+  User.matches(req.body.filters, req.body.username, req.body.location || null, req.body.queryUsername || null).then(function(users){
     res.json({matches: users})
   });
 };

@@ -18,3 +18,18 @@
     }
   }
 }
+
+@media (max-width:480px) {
+  .footer {
+    .inner-footer-container {
+      .footer-links {
+        ul {
+          li {
+            padding: 0px 5px;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}

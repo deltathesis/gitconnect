@@ -21,7 +21,7 @@
         <!--<li ng-show='user'><a href="#/user/{{user.githubUserName}}" class="link-profile">Profile</a></li>-->
         <li ng-show='user'><a href="#/projects" title="Projects list" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-projects">Projects</a></li>
         <!-- <li ng-show='user'><a href="#/project" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-project">Project</a></li> -->
-        <li ng-show='user'><a ng-click="clearConnectionNotification()" href="#/my-connections" title="My connections" data-toggle="collapse" data-target=".navbar-collapse.in">My Connections</a>
+        <li ng-show='user'><a ng-click="clearConnectionNotification()" href="#/my-connections" title="My connections" data-toggle="collapse" data-target=".navbar-collapse.in">Connections</a>
         <span ng-class="cashew ? 'notify': 'nothing'" ng-show="cashew"><i class="fa fa-circle"></i></span></li>
         <li ng-show='user'><a ng-click="clearProjectInviteNotification()" href="#/my-projects" title="My projects" data-toggle="collapse" data-target=".navbar-collapse.in">My Projects</a><span ng-class="projectInvite ? 'notify': 'nothing'" ng-show="projectInvite"><i class="fa fa-circle"></i></span></li>
       

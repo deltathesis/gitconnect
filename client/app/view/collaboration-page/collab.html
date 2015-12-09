@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-danger project-actions" ng-click="confirmDelete()">
           <i class="fa fa-ban"></i> Delete your Project
         </button>
-        <button ng-click="publish('lg')" class='btn btn-success project-actions'>Publish</button>
+        <button ng-click="publish('lg')" class='btn btn-primary project-actions'>Publish</button>
         <button type="button" class="btn btn-default project-actions" ng-click="editResources()">
           <i class="fa fa-pencil"></i> Edit</button>
       </div>
@@ -24,7 +24,7 @@
   <div class="row links">
     <div class="col-xs-12">
       <div class="link-header">
-        <h1>Resources</h1>
+        <h2>Resources</h2>
       </div>
       <ul class="row">
         <li class="col-xs-12 col-sm-4">
@@ -74,7 +74,7 @@
   </div>
   <div class="row team-messages">
     <div class="col-xs-12">
-      <h1>Messages</h1>
+      <h2>Messages</h2>
       <ul class="list-group">
         <li class="list-group-item cf" ng-repeat="message in messages">
           <a href="" class="team-member-chat-picture" style="background-image:url({{message.avatar}})"></a>
@@ -91,7 +91,7 @@
         <div class="input-group input-group-lg">
         <input type="text" class="form-control" ng-model="text" aria-describedby="sizing-addon1">
           <span class="input-group-btn" id="sizing-addon1">
-            <button class="btn btn-default" type="button" ng-click="messageSubmit()">Send</button>
+            <button class="btn btn-primary" type="button" ng-click="messageSubmit()">Send</button>
           </span>
           <!--<span class="input-group-addon" id="sizing-addon1">+</span>
           <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">-->
@@ -111,7 +111,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Add Collaborator</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body add-collaborator">
           <input ng-model="collabForm" type="text" ng-model="selected" uib-typeahead="user as user.name for user in connections | filter:$viewValue | limitTo:8" class="form-control" typeahead-no-results="noResults" typeahead-on-select="addCollaborator($item, $model, $label)">
           <ul class="collaborators-list">
             <li class="collaborator" ng-repeat="user in newProjectCollaborators track by $index" ng-click="removeCollaborator($index)">
@@ -120,7 +120,7 @@
           </ul>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" ng-click="submitCollaborators()">Submit</button>
+          <button type="button" class="btn btn-primary" ng-click="submitCollaborators()">Submit</button>
         </div>
       </div>
 

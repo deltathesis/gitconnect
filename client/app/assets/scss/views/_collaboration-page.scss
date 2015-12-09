@@ -1,13 +1,17 @@
 .collaboration-page {
+  h2 {
+    color: $darkGreyColor;
+  }
   .team-details {
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    border-bottom: 1px dotted $lightGreyColor;
     .top-container {
       margin-bottom: 10px;
       h1 {
         margin-top: 0px;
         float: left;
+        color: $darkGreyColor;
       }
       .btn.project-actions {
         margin-left: 10px;
@@ -37,9 +41,11 @@
       }
       .team-member-name {
         margin-top: 5px;
-        color: $mainColor;
         margin-bottom: 0px;
         text-align: center;
+        a {
+          color: $darkGreyColor;
+        }
       }
       .add-collaborator {
         font-size: 28px;
@@ -47,14 +53,14 @@
         cursor: pointer;
         border: none;
         i {
-          color: grey;
+          color: $secondaryColor;
         }
       }
     }
   }
   .links {
     padding-bottom: 20px;
-    border-bottom: 1px dotted #CCC;
+    border-bottom: 1px dotted $lightGreyColor;
     li {
       position: relative;
       padding: 8px;
@@ -101,8 +107,8 @@
         font-weight: bold;
       }
       .date {
-        font-style: italic;
         float: right;
+        font-size: 10px;
       }
       .message-content-body {
       }
@@ -115,23 +121,51 @@
     padding-top: 10px;
     .resource-label {
       width: 150px;
+      background-color: $secondaryColor;
+      color: #FFF;
     }
     .resource-input {
       width: 100%
     }
   }
 }
-.modal-body {
+.modal-body.add-collaborator {
+  .dropdown-menu {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    li {
+      a {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #FFF;
+      }
+    }
+  }
+  .dropdown-menu>.active>a,
+  .dropdown-menu>.active>a:hover,
+  .dropdown-menu>.active>a:focus {
+    background-color: $secondaryColor;
+  }
   .collaborators-list {
     padding-top: 15px;
     padding-bottom: 5px;
+    .dropdown-menu {
+      padding-top: 0px;
+      padding-bottom: 0px;
+      li {
+        a {
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+      }
+    }
     .collaborator {
       display: inline-block;
       cursor: pointer;
       padding: 5px 10px;
       margin-right: 5px;
       margin-bottom: 5px;
-      background-color: $mainColor;
+      background-color: $blueColor;
       color: #FFF;
       border-radius: 3px;
       transition: background-color 0.2s ease;
@@ -158,10 +192,10 @@
         .btn.project-actions {
          float: left;
          &.btn-danger {
-            margin-right: 10px;
-          }
+          margin-right: 10px;
         }
       }
-    } 
-  }
+    }
+  } 
+}
 }

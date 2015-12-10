@@ -19,7 +19,6 @@ angular.module('myApp.projectslist', ['ngRoute'])
   $('.page').css('min-height', window.innerHeight - 40 + 'px');
 
   $scope.tab = 'newest';
-
   $scope.projects = projects;
   console.log($scope.projects);
 

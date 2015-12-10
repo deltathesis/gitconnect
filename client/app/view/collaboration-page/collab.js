@@ -109,6 +109,13 @@ angular.module('myApp.collaboration-page', ['ngRoute', 'ui.bootstrap'])
     Project.addCollaborators($scope.projectInfo.projectId, revisedProjectCollaborators)
       .then(function(){
         $window.location.reload();
+      }).then(function(){
+        for(var i = 0; i < revisedProjectCollaborators.length; i++){
+          if(revisedProjectCollaborators[i].username !== $scope.username) {
+            socket.emit('notify:otherUser', {username: revisedProjectCollaborators[i].username, subject: 'projectInvite'});
+            socket.emit('store:projectInvite', {username: revisedProjectCollaborators[i].username});
+          }
+        }
       })
   }
 

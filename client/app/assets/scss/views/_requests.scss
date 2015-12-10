@@ -92,7 +92,27 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (min-width: 768px) {
+    .user-details .user-subdetails {
+      float: left;
+      position: absolute;
+      padding-left: 15px;
+      left: 100px;
+      right: 200px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .user-details-container .user-details {
+      .time {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: inherit;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
     .requests-form {
       .btn {
         margin: 0px 5px;

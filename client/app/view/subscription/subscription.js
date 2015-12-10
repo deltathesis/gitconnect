@@ -131,7 +131,7 @@ angular.module('myApp.subscription', ['ngRoute'])
       userOwnTech.setBio(userBio);
       userOwnTech.setFullName(userFullName);
 
-      $window.location.assign('#/how-to-use');      
+      $window.location.assign('/');      
     }
   };
 

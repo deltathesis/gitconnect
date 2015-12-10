@@ -41,6 +41,8 @@ angular.module('myApp', [
 
 .run(['$rootScope', '$location', 'Auth', '$window', function($rootScope, $location, Auth, $window) {
 
+  $rootScope.location = $location;
+
   $rootScope.$on("$routeChangeStart", function(event, next, curr) {
     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
       console.log('Please login before visiting ' + next.$$route.originalPath);

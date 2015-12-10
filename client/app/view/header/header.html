@@ -14,7 +14,7 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse links-menu" id="bs-example-navbar-collapse-1" ng-controller='AuthController'>
-      <ul class="nav navbar-nav navbar-left" bs-active-link>
+      <ul class="nav navbar-nav navbar-left" bs-active-link ng-hide="location.path().startsWith('/subscription')">
         <li ng-show='!user'><a href="#/welcome" title="Welcome" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-welcome">Welcome</a></li>
         <li ng-show='user' class="active"><a href="#/" title="Home page" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-home">Home <span class="sr-only">(current)</span></a></li>
         <li ng-show='user'><a href="#/connect" title="Connect" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-connect">Connect</a></li>
@@ -27,7 +27,7 @@
       
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" ng-hide="location.path().startsWith('/subscription')">
         <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" ng-click="openProjectCreateModal()">
           <a href="" title="Add a project" data-toggle="collapse" data-target=".navbar-collapse.in"><i class="fa fa-plus"></i></a>
         </li>

@@ -116,6 +116,9 @@
       padding-top: 20px;
       padding-bottom: 20px;
       &.user-selection { padding-top: 10px;}
+      .tech-search-input {
+        margin-bottom: 10px;
+      }
       .tech {
         display: inline-block;
         cursor: pointer;

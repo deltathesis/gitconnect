@@ -338,14 +338,7 @@
         background-color: #fff;
         border-radius: 100%;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        // transition: margin 0.4s;
       }
-      // input.cmn-toggle-round:checked + label:before {
-      //   // background-color: #8ce196;
-      // }
-      // input.cmn-toggle-round:checked + label:after {
-      //   // margin-left: 60px;
-      // }
       &.turn-off {
         .cmn-toggle-round + label:before {
           background-color: $greenColor;

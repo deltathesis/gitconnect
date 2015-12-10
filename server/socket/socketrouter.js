@@ -200,6 +200,12 @@ module.exports = function (socket) {
       avatar: data.avatar
     });
   });
+
+  socket.on('initListComments', function() {
+    socket.emit('initListComments', {
+      comment: projectComments
+    })
+  })
   
   /** End of Project-Page Page Socket Functions **/
 

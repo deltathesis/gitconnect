@@ -15,6 +15,9 @@ Test Image with the help of Dage
 
 ![alt text](http://s19.postimg.org/dspbo6w1f/Slide1.jpg)
 
+__Database Schema__
+![alt text](http://i.imgur.com/5M6qCse.png)
+
 
 ## Technology Stack 
 

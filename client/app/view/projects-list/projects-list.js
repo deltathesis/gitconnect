@@ -13,14 +13,26 @@ angular.module('myApp.projectslist', ['ngRoute'])
   });
 }])
 
-.controller('projectsPage', ['$scope', '$location', 'projects', 'ProjectList', '$cookies', 'Cookie', function($scope, $location, projects, ProjectList, $cookies, Cookie) {
+.controller('projectsPage', ['$scope', '$location', 'projects', 'ProjectList', '$cookies', 'Cookie', 'socket', function($scope, $location, projects, ProjectList, $cookies, Cookie, socket) {
 
   // Set default min height regarding screen height
   $('.page').css('min-height', window.innerHeight - 40 + 'px');
 
+  socket.emit('initListComments');
+
   $scope.tab = 'newest';
   $scope.projects = projects;
-  console.log($scope.projects);
+
+  socket.on('initListComments', function(data) {
+    var comments = data.comment;
+    for(var key in comments) {
+      for(var k = 0; k < $scope.projects.length; k++) {
+        if(key === $scope.projects[k].projectId) {
+          $scope.projects[k].commentCount = comments[key].length;
+        }
+      }
+    }
+  })
 
   var id = Cookie.parseCookie($cookies.get('gitConnectDeltaKS')).id;
 

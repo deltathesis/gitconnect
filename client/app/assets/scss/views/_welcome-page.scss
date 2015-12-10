@@ -15,6 +15,7 @@
       padding-bottom: 0px;
       background-size: cover;
       background-image:url('../../assets/pictures/welcome/background/head-bg.jpg');
+      position: relative;
       .inner-section {
         display: table-cell;
         vertical-align: middle;
@@ -31,6 +32,22 @@
         }
         .logo {
           color: $secondaryColor;
+        }
+        .scroll-container {
+          position: absolute;
+          bottom: 10px;
+          left: 50%;
+          margin-left: -80px;
+          width: 160px;
+          text-align: center;
+          .picture-arrow {
+            font-size: 25px;
+            color: white;
+          }
+          p {
+            color: white;
+            font-size: 15px;
+          }
         }
       }
     }

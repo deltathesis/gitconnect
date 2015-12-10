@@ -19,25 +19,6 @@
           <li ng-show='user' class="active"><a href="#/" title="Home page" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-home">News <span class="sr-only">(current)</span></a></li>
           <li ng-show='user'><a href="#/connect" title="Connect" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-connect">Connect</a></li>
           <!--<li ng-show='user'><a href="#/user/{{user.githubUserName}}" class="link-profile">Profile</a></li>-->
-          <li class="dropdown header-dropdown" ng-show='user'>
-            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Connections <span class="caret"></span></a>
-            <span ng-class="cashew ? 'notify': 'nothing'" ng-show="cashew"><i class="fa fa-circle"></i></span>
-            <ul class="dropdown-menu">
-              <li class="my-connections-tab">
-                <a ng-click="clearConnectionNotification()" href="#/my-connections" title="My connections" data-toggle="collapse" data-target=".navbar-collapse.in">My Connections</a>
-                <span ng-class="cashew ? 'notify': 'nothing'" ng-show="cashew"><i class="fa fa-circle"></i></span>
-              </li>
-
-              <li role="separator" class="divider"></li>
-
-              <li ng-class="friendRequests ? 'notifications' : 'nothing'" class="requests" data-message={{friendRequests}} ng-click="clearFriendRequestNotifications()">
-                <a href="#/requests" title="Requests" data-toggle="collapse" data-target=".navbar-collapse.in">
-                  Pending Requests
-                  <span ng-show="friendRequests" class="badge">{{friendRequests}}</span>
-                </a>
-              </li>
-            </ul>
-          </li>
 
           <li class="dropdown header-dropdown" ng-show='user'>
             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
@@ -63,6 +44,27 @@
             </li>
           </ul>
         </li>
+          
+          <li class="dropdown header-dropdown" ng-show='user'>
+            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Connections <span class="caret"></span></a>
+            <span ng-class="cashew ? 'notify': 'nothing'" ng-show="cashew"><i class="fa fa-circle"></i></span>
+            <ul class="dropdown-menu">
+              <li class="my-connections-tab">
+                <a ng-click="clearConnectionNotification()" href="#/my-connections" title="My connections" data-toggle="collapse" data-target=".navbar-collapse.in">My Connections</a>
+                <span ng-class="cashew ? 'notify': 'nothing'" ng-show="cashew"><i class="fa fa-circle"></i></span>
+              </li>
+
+              <li role="separator" class="divider"></li>
+
+              <li ng-class="friendRequests ? 'notifications' : 'nothing'" class="requests" data-message={{friendRequests}} ng-click="clearFriendRequestNotifications()">
+                <a href="#/requests" title="Requests" data-toggle="collapse" data-target=".navbar-collapse.in">
+                  Pending Requests
+                  <span ng-show="friendRequests" class="badge">{{friendRequests}}</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
       </ul>
 
       <ul class="nav navbar-nav navbar-right" ng-hide="location.path().startsWith('/subscription')">

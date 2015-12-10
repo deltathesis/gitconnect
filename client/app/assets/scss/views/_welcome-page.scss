@@ -64,14 +64,14 @@
               top: -50px;
               right: 0px;
               &:after {
-                background-image:url('../../assets/pictures/welcome/user/user-picture.jpeg');
+                background-image:url('../../assets/pictures/welcome/user/user-1.jpg');
               }
             }
             &.user-2 {
               bottom: -50px;
               left: 0px;
               &:after {
-                background-image:url('../../assets/pictures/welcome/user/user-picture2.jpg');
+                background-image:url('../../assets/pictures/welcome/user/user-2.jpg');
               }
             }
           }
@@ -322,6 +322,16 @@
 @media (max-width: 440px) {
   .welcome-page {
     .section {
+      &.second {
+        .inner-section .picture-container .tech {
+          &.sass {
+            top: 100%;
+          }
+          &.ruby {
+            top: 110%;
+          }
+        }
+      }
       &.third {
         .inner-section {
           .talk {

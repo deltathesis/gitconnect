@@ -322,6 +322,16 @@
 @media (max-width: 440px) {
   .welcome-page {
     .section {
+      &.second {
+        .inner-section .picture-container .tech {
+          &.sass {
+            top: 100%;
+          }
+          &.ruby {
+            top: 110%;
+          }
+        }
+      }
       &.third {
         .inner-section {
           .talk {

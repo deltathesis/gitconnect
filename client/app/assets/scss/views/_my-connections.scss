@@ -55,6 +55,9 @@
           &.time {
             font-size: 14px;
             margin-top: 6px;
+            // white-space: normal;
+            // overflow: visible;
+            // text-overflow: inherit;
           }
           &.ratings {
             font-size: 20px;
@@ -112,6 +115,16 @@
     }
   }
 
+  @media (min-width: 768px) {
+    .user-details-container .user-details .user-subdetails {
+      float: left;
+      position: absolute;
+      padding-left: 15px;
+      left: 100px;
+      right: 200px;
+    }
+  }
+
   @media (max-width: 767px) {
     .requests-form {
       .btn {
@@ -124,6 +137,11 @@
         .user-pic, .user-subdetails {
           float: none;
           padding:0px;
+        }
+        .time {
+          white-space: normal;
+          overflow: visible;
+          text-overflow: inherit;
         }
         .action-button {
           float: none;

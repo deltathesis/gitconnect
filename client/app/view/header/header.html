@@ -34,7 +34,7 @@
         <li ng-show='user' ng-class="friendRequests ? 'notifications' : 'nothing'" class="notify requests" data-message={{friendRequests}} ng-click="clearFriendRequestNotifications()">
           <a href="#/requests" title="Requests" data-toggle="collapse" data-target=".navbar-collapse.in">
             <span class="badge">{{friendRequests}}</span>
-            <i class="fa fa-user-plus"></i>
+            <i class="fa fa-bell"></i>
           </a>
         </li>
         <li ng-show='user' ng-class="unreadMessages ? 'notifications' : 'nothing'" class="notify messaging" data-messages={{unreadMessages}} ng-click="clearMessageNotifications()">

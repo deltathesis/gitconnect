@@ -39,6 +39,7 @@
       padding: 10px;
       border-bottom: 1px dotted $lightGreyColor;
       transition: background 0.2s ease;
+      cursor: pointer;
       &:hover {
         background: #f7f7fa;
       }

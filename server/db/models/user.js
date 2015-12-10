@@ -307,15 +307,17 @@ User.getAllUsers = function() {
   })
 }
 
-User.matches = function(skills, username, location){
+User.matches = function(skills, username, location, queryUsername){
   return new Promise(function(resolve){
     var cypher;
-    if(location){
+    if(queryUsername){
+      cypher = "MATCH (user {username:'"+username+"'}) MATCH (n:User)-[:KNOWS]-(x:Language) WHERE NOT n.username = '"+username+"' AND NOT (user)-->(n) AND n.availability='true' AND n.username='"+queryUsername+"' RETURN n, COUNT(x) AS nSkills ORDER BY nSkills DESC;";
+    } else if(location){
       cypher = "MATCH (user {username:'"+username+"'}) MATCH (n:User)-[:KNOWS]-(x:Language) WHERE NOT n.username = '"+username+"' AND NOT (user)-->(n) AND  x.name IN {skills} AND n.availability='true' AND n.location='"+location+"' RETURN n, COUNT(x) AS nSkills ORDER BY nSkills DESC;";
     } else {
       cypher = "MATCH (user {username:'"+username+"'}) MATCH (n:User)-[:KNOWS]-(x:Language) WHERE NOT n.username = '"+username+"' AND NOT (user)-->(n) AND  x.name IN {skills} AND n.availability='true' RETURN n, COUNT(x) AS nSkills ORDER BY nSkills DESC;";
     }
-    db.queryAsync(cypher, {skills: skills}).then(function(nodes){
+    db.queryAsync(cypher, {skills: skills} || {}).then(function(nodes){
       return nodes.map(function(element){
         return element.n;
       })
@@ -390,7 +392,6 @@ User.getFriendsProjects = function(username){
     })
   })
 };
-
 
 Promise.promisifyAll(User);
 

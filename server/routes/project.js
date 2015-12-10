@@ -90,9 +90,6 @@ project.update = function(req, res) {
 project.deleteProject = function(req, res) {
   Project.deleteProject(req.body.projectId).then(function(users){
     res.sendStatus(200);
-    for(var i = 0; i < users.length; i++) {
-      User.makeAvailable(users[i].username);
-    }
   });
 };
 

@@ -235,11 +235,12 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     // Capture location filter
     var location = $('#city-input').val()
     console.log($scope.cityId)
+    console.log($scope.queryUsername)
 
     // Check to see if filters is empty and if so, return default results
 
     $('#filters').modal('hide');
-    if(!$scope.selections.length){
+    if(!$scope.selections.length && !$scope.queryUsername){
       $scope.users = $scope.defaultUsers;
       $scope.positiveMatches = true;      
     } else {
@@ -252,7 +253,8 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
         data: {
           filters: $scope.selections,
           username: $scope.user.username,
-          location: $scope.cityId
+          location: $scope.cityId,
+          queryUsername: $scope.queryUsername
         }
       }).then(function successCallback(response) {
         $scope.swiper.destroy()

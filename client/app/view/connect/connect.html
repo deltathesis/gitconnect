@@ -106,10 +106,12 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Technology Interests</h4>
+          <h4 class="modal-title" id="myModalLabel">Add Search Filters</h4>
         </div>
         <div class="modal-body cf">
           <div class="tech-selection col-xs-12">
+            <label for="user">Username</label>
+            <input type="text" class="form-control" id="user-search" placeholder="Search by GitHub Username" ng-model="queryUsername">
             <label for="city">Location</label>
             <input type="text" class="form-control" id="city-input" placeholder="Search by City">
             <div class="techs propositions">

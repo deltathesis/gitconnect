@@ -93,188 +93,296 @@
         .navbar-nav>.active>a, 
         .navbar-nav>.active>a:hover,
         .navbar-nav>.active>a:focus {
-            background: none; 
-            position: relative;
-            &:after {
-              content:"";
-              display: block;
-              height: 100%;
-              width: 3px;
-              position: absolute;
-              top: 0px;
-              bottom: 0px;
-              left: 3px;
-              background-color: $secondaryColor;
-            }
-          }
-        }
-        .navbar-nav>.open>a,
-        .navbar-nav>.open>a:hover,
-        .navbar-nav>.open>a:focus {
-          background-color: $mainColor;
-        }
-        .navbar-left {
-          .notify{
-            display: inline-block;
+          background: none; 
+          position: relative;
+          &:after {
+            content:"";
+            display: block;
+            height: 100%;
+            width: 3px;
             position: absolute;
-            top: 2px;
-            right: 10px;
-            font-size: 5px;
-            text-align: center;
-            border-radius: 10px;
-            z-index: 999;
+            top: 0px;
+            bottom: 0px;
+            left: 3px;
             background-color: $secondaryColor;
-            color: #FFF;
-            font-weight: bold;
-            min-width: 20px;
-            border-radius: 10px;
-            .fa{
-              display: inline-block;
-              font: normal normal normal 14px/1 FontAwesome;
-              font-size: inherit;
-              padding: 7px 0;
-              text-rendering: auto;
-              -webkit-font-smoothing: antialiased;
-            }
           }
         }
-        .navbar-right {
-          li {
-            .badge {
-              display: none;
+      }
+      .navbar-nav>.open>a,
+      .navbar-nav>.open>a:hover,
+      .navbar-nav>.open>a:focus {
+        background: none;
+      }
+      .navbar-left {
+        .notify{
+          display: inline-block;
+          position: absolute;
+          top: 2px;
+          right: 10px;
+          font-size: 5px;
+          text-align: center;
+          border-radius: 10px;
+          z-index: 999;
+          background-color: $secondaryColor;
+          color: #FFF;
+          font-weight: bold;
+          min-width: 19px;
+          border-radius: 10px;
+          .fa{
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: inherit;
+            padding: 7px 0;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+          }
+        }
+        .header-dropdown {
+          >.notify {
+            width: 15px;
+            min-width: 15px;
+            height: 15px;
+            i {
+              padding: 5px 0px;
             }
-            &.notifications {
-              .badge {
-                display: inline-block;
-                position: absolute;
-                top: 5px;
-                left: 28px;
-                z-index: 999;
-                background-color: $secondaryColor;
+          }
+          .dropdown-menu {
+            border-top: 1px solid #FFF;
+            background-color: #333333;
+            padding:0px;
+            li {
+              padding:10px 0px;
+              a {
                 color: #FFF;
-                font-weight: bold;
+              }
+              &.divider {
+                padding:0px;
+                margin: 0px;
+              }
+              &.my-projects, &.my-connections-tab {
+                position: relative;
+              }
+              &.requests {
+                .badge {
+                  position: relative;
+                  right: -11px;
+                  background-color: $secondaryColor;
+                }
+              }
+              .notify {
+                top: 13px;
               }
             }
+          }
 
-            &.user-dropdown {
-              height: 50px;
-              a { 
+          .dropdown-menu>li>a:hover,
+          .dropdown-menu>li>a:focus {
+            background: none;
+          }
+          .dropdown-menu>.active>a {
+            background:none;
+          }
+        }
+      }
+      .navbar-right {
+        li {
+          .badge {
+            display: none;
+          }
+          &.notifications {
+            .badge {
+              display: inline-block;
+              position: absolute;
+              top: 5px;
+              left: 28px;
+              z-index: 999;
+              background-color: $secondaryColor;
+              color: #FFF;
+              font-weight: bold;
+            }
+          }
+
+          &.user-dropdown {
+            height: 50px;
+            a { 
+              display: inline-block;
+              &.dropdown-toggle {
+                position: relative;
+                top: -10px;
+              }
+              &.user-pic {
+                background-image:url('../../assets/pictures/users/default-user.jpg');
+                background-size: cover;
+                background-position: 50% 50%;
+                width: 40px;
+                height: 40px;
+                margin-left: 10px;
+                top: 5px;
+                border-radius: 50%;
+                border: 1px solid #FFF;
                 display: inline-block;
-                &.dropdown-toggle {
-                  position: relative;
-                  top: -10px;
-                }
-                &.user-pic {
-                  background-image:url('../../assets/pictures/users/default-user.jpg');
-                  background-size: cover;
-                  background-position: 50% 50%;
-                  width: 40px;
-                  height: 40px;
-                  margin-left: 10px;
-                  top: 5px;
-                  border-radius: 50%;
-                  border: 1px solid #FFF;
-                  display: inline-block;
-                }
               }
-              .dropdown-menu {
-                border-color: #FFF;
-                background-color: $mainColor;
-                min-width: 144px;
-                li {
-                  a {
-                    color: #FFF;
-                  }
-                  &:first-child {
-                    padding-top: 5px;
-                  }
-                  a:hover {
-                    background: none;
-                  }
+            }
+            .dropdown-menu {
+              border-color: #FFF;
+              background-color: #333333;
+              min-width: 144px;
+              li {
+                a {
+                  color: #FFF;
                 }
-                @media (max-width:767px){
-                  background:none;
+                &:first-child {
+                  padding-top: 5px;
                 }
-              }
-              &.open {
-                >a:focus {
+                a:hover {
                   background: none;
                 }
               }
-            }
-            &.notify {
-              a {
-                padding-top: 10px;
-                padding-bottom: 10px;
-                font-size: 28px;
+              @media (max-width:767px){
+                background:none;
               }
-              &.messaging {}
-              &.requests {}
             }
+            &.open {
+              >a:focus {
+                background: none;
+              }
+            }
+          }
+          &.notify {
+            a {
+              padding-top: 10px;
+              padding-bottom: 10px;
+              font-size: 28px;
+            }
+            &.messaging {}
+            &.requests {}
           }
         }
       }
     }
   }
-  #project-create {
-    .dropdown-menu {
-      padding-top: 0px;
-      padding-bottom: 0px;
-      li {
-        a {
-          padding-top: 5px;
-          padding-bottom: 5px;
-          background-color: #FFF;
-        }
-      }
-    }
-    .dropdown-menu>.active>a,
-    .dropdown-menu>.active>a:hover,
-    .dropdown-menu>.active>a:focus {
-      background-color: $secondaryColor;
-    }
-    .modal-body {
-      .collaborators-list {
-        padding-top: 15px;
+}
+#project-create {
+  .dropdown-menu {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    li {
+      a {
+        padding-top: 5px;
         padding-bottom: 5px;
-        .collaborator {
-          display: inline-block;
-          cursor: pointer;
-          padding: 5px 10px;
-          margin-right: 5px;
-          margin-bottom: 5px;
-          background-color: $blueColor;
-          color: #FFF;
-          border-radius: 3px;
-          transition: background-color 0.2s ease;
-          &.fadein-effect {
-            @include animationEffect(0.4s, fadeEffect);
-          }
-          i {
-            margin-left: 5px;
-          }
-          &:hover {
-            background-color: $redColor;
-          }
+        background-color: #FFF;
+      }
+    }
+  }
+  .dropdown-menu>.active>a,
+  .dropdown-menu>.active>a:hover,
+  .dropdown-menu>.active>a:focus {
+    background-color: $secondaryColor;
+  }
+  .modal-body {
+    .collaborators-list {
+      padding-top: 15px;
+      padding-bottom: 5px;
+      .collaborator {
+        display: inline-block;
+        cursor: pointer;
+        padding: 5px 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        background-color: $blueColor;
+        color: #FFF;
+        border-radius: 3px;
+        transition: background-color 0.2s ease;
+        &.fadein-effect {
+          @include animationEffect(0.4s, fadeEffect);
+        }
+        i {
+          margin-left: 5px;
+        }
+        &:hover {
+          background-color: $redColor;
         }
       }
     }
   }
-  @media (max-width: 768px) {
-    .header {
-      .header-menu {
-        .links-menu {
-          .navbar-right {
-            li {
-              &.messaging, &.requests {
-                display: inline-block;
-              } 
-              &.user-dropdown {
-                height: auto;
+}
+@media (max-width: 767px) {
+  .header {
+    .header-menu {
+      .links-menu {
+        .navbar-right {
+          li {
+            &.messaging, &.requests {
+              display: inline-block;
+            } 
+            &.user-dropdown {
+              height: auto;
+            }
+          }
+        }
+        .navbar-left {
+          .notify {
+            top: 12px;
+          }
+          .header-dropdown {
+            >.notify {
+              width: 15px;
+              min-width: 15px;
+              height: 15px;
+              i {
+                padding: 5px 0px;
               }
+            }
+            .dropdown-menu {
+              margin-top: 1px;
+              border-top: 1px solid #FFF;
+              background: none;
+              padding:0px;
+              li {
+                padding:10px 0px;
+                &:last-child {
+                  border-bottom: 1px solid #FFF;
+                }
+                a {
+                  color: #FFF;
+                }
+                &.active {
+                  position: relative;
+                  &:after {
+                    content:"";
+                    display: block;
+                    height: 50%;
+                    width: 3px;
+                    position: absolute;
+                    top: 25%;
+                    bottom: 0px;
+                    left: 3px;
+                    background-color: $secondaryColor;
+                  }
+                }
+                &.divider {
+                  padding:0px;
+                  margin: 0px;
+                }
+                &.my-projects {
+                  position: relative;
+                }
+                .notify {
+                  top: 13px;
+                }
+              }
+            }
+
+            .dropdown-menu>li>a:hover,
+            .dropdown-menu>li>a:focus {
+              background: none;
+            }
+            .dropdown-menu>.active>a {
+              background:none;
             }
           }
         }
       }
     }
   }
+}

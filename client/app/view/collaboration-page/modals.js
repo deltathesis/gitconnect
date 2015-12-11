@@ -7,6 +7,7 @@ angular.module('myApp.collaboration-page')
   $scope.projectUsers = projectUsers;
   $scope.techList = techList.getTechList();
   $scope.yourTechList = [];
+  $scope.profilePic = '';
 
   console.log('projectInfo', $scope.projectInfo);
 
@@ -30,7 +31,11 @@ angular.module('myApp.collaboration-page')
     Project.signRequest($scope.profilePic, fileName)
     $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
   }
-
+  $scope.$watch('profilePic', function(){
+    if($scope.profilePic.size < 5242880){
+      $scope.submitPicture();
+    }
+  })
 
   $scope.ok = function(){
     console.log('ok')
@@ -57,8 +62,6 @@ angular.module('myApp.collaboration-page')
       }
     }
     if($scope.profilePic.size < 5242880){
-      Project.signRequest($scope.profilePic, fileName)
-      $scope.projectInfo.picture = 'https://mks-thesis-project.s3.amazonaws.com/pictures/projects/'+fileName
       $uibModalInstance.close(obj);
     }
 

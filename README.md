@@ -11,6 +11,8 @@ For this application, we created several functions that helped simplify the proc
 Please check out [DOCUMENTATION.md](DOCUMENTATION.md) for more information on our custom-built neo4j queries.
 
 ## Architecture 
+__Overall Application Architecture__
+![alt text](http://i.imgur.com/RVy1MLQ.jpg)
 
 __Database Schema__
 ![alt text](http://i.imgur.com/5M6qCse.png)

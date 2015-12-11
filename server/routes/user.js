@@ -211,7 +211,6 @@ user.getNewsFeed = function(req, res) {
 
   Node.getRelationshipData({username: req.params.name}, 'all', '')
   .then(function(user){
-    console.log(user)
     User.getUserByCity(user.relationships.Lives[0].uniq_id, req.params.name).then(function(people) {
       newsDataObj.people = people;
       city = user.relationships.Lives[0].uniq_id;

@@ -11,10 +11,10 @@
       <label>About the project:</label>
       <textarea type="text" rows="5" class="form-control" ng-model="projectInfo.longDesc" required></textarea>
       <label>Short decription of the project</label>
-      <input ng-model="projectInfo.shortDesc" type="text" name="shortDesc" class="form-control" ng-maxlength="60">
+      <input ng-model="projectInfo.shortDesc" type="text" name="shortDesc" class="form-control" ng-maxlength="144">
       <div role="alert">
         <span class="error" ng-show="myForm.shortDesc.$error.maxlength">
-                Too long!</span>
+                Please do not exceed 144 characters!</span>
       </div>
       <label>Project picture</label>
       <input type="file" id="file_input" fileread="profilePic" class="form-control" required>

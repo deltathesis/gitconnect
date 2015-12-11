@@ -58,7 +58,7 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
 
   // Set default user address to the form
   if ($scope.user.relationships.Lives) {
-    $('#city-input').val($scope.user.relationships.Lives[0].city)
+    $('#city-input').val($scope.user.relationships.Lives[0].city);
   }
 
   // Check availability status on page render

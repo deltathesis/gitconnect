@@ -38,7 +38,7 @@
           </div>
           <div>
             <a href="#/project/{{project.projectId}}" class="project-name ">{{project.name}}</a>
-            <p class="project-short-description ">{{project.shortDesc}}</p>
+            <p class="project-short-description ">{{project.shortDesc | limitTo: 60}} ...</p>
           </div>
         </div>
         <div class="post-user-info">

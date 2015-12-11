@@ -40,7 +40,7 @@
   <div class="row post user-project-post" ng-hide="hasNewProjects">
     <h3 class="col-xs-12 no-data">Your network has no recent activities</h3>
   </div>
-  <div class="row post user-project-post" ng-show="hasNewProjects" ng-repeat="project in newProjects">
+  <div class="row post user-project-post" ng-show="hasNewProjects" ng-repeat="project in newProjects | orderBy:'-publishDate':reverse">
     <div class="col-xs-12 post-top-info">
       <div class="post-thumbnail user-pic">
         <a href="#/user/{{project.x.username}}" alt="" style="background-image:url('{{project.x.avatar_url}}')"></a>

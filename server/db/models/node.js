@@ -188,7 +188,6 @@ Node.findOrCreateNode = function(props, labels){
 
 Node.deleteRelationship = function(node1Id, node2Id, type) {
   return new Promise(function(resolve) {
-    console.log(node1Id, node2Id, type)
     var cypher = 'match n-[rel:' + type + ']-m where id(n) = ' + node1Id + ' and id(m) = ' + node2Id + ' delete rel';
     db.queryAsync(cypher)
       .then(resolve)

@@ -189,7 +189,6 @@ angular.module('myApp.profilepage', ['ngRoute'])
 
   $scope.deleteProfile = function() {
     if ($scope.ownership) {
-      console.log("inside");
       return $http({
         method: 'GET',
         url: '/api/user/delete/' + $scope.user.username
@@ -227,7 +226,6 @@ angular.module('myApp.profilepage', ['ngRoute'])
               selectedUser: $scope.user
             }
     }).then(function successCallback(response) {
-        console.log('it worked');
         socket.emit('notify:potentialFriend', {
           target: angular.copy($scope.user.username), currentUser: angular.copy($scope.cookieUser.username)
         })

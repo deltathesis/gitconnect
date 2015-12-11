@@ -40,7 +40,6 @@ project.create = function(req, res) {
         if(error){
             return console.log(error);
         }
-        console.log('Message sent: ' + info.response);
     });
   });
 };
@@ -79,7 +78,6 @@ project.update = function(req, res) {
                 if(error){
                     return console.log(error);
                 }
-                console.log('Message sent: ' + info.response);
             });
           });
       }
@@ -116,9 +114,7 @@ project.get = function(req, res) {
 };
 
 project.getUsers = function(req, res) {
-  console.log(req.params.id)
   Project.getUsers(req.params.id).then(function(userslist){
-    console.log('userslist ',userslist)
     res.json({users: userslist})
   });
 };

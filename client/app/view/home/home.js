@@ -67,5 +67,4 @@ angular.module('myApp.homepage', ['ngRoute'])
     $scope.newProjects = projectsFiltered;
   }
 
-
 }]);

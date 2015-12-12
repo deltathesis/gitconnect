@@ -1,5 +1,4 @@
 <div class="container page project-page" ng-init= "init()">
-  <!-- <div class="row project-container"> -->
 
   <div class="row project-post fadein-effect">
     <div class="col-xs-12 post-top-info">
@@ -24,8 +23,6 @@
         </div>
       </div>
       <div class="collaborator-options" ng-if="collaborator">
-        <!-- <button type="button" class="btn btn-default project-actions" data-toggle="modal" data-target="#editProjectModal">
-          <i class="fa fa-pencil"></i> Edit</button> -->
         <button type="button" class="btn btn-danger project-actions" data-toggle="modal" data-target="#deleteProjectModal" ng-click="confirmDelete()">
           <i class="fa fa-ban"></i> Delete your Project
         </button>
@@ -45,62 +42,37 @@
         </ul>
       </div>
       <h3 class="section-title">Team</h3>
-        <ul class="developers-list cf">
-          <li class="developer" ng-repeat="developer in myproject.teams">
-            <a href="#/user/{{developer.username}}" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
-            <p class="developer-name">{{developer.name}}</p>
-          </li>
-        </ul>
-        <div class="row project-picture-container">
-          <div class="col-xs-12 col-sm-6 picture-container">
-            <img class="project-picture" ng-src="{{myproject.picture}}" ng-click="displayPicture()">
-            <div class="magnifier" ng-click="displayPicture()">
-              <i class="fa fa-search"></i>
-            </div>
+      <ul class="developers-list cf">
+        <li class="developer" ng-repeat="developer in myproject.teams">
+          <a href="#/user/{{developer.username}}" class="developer-pic" style="background-image:url({{developer.avatar_url}})"></a>
+          <p class="developer-name">{{developer.name}}</p>
+        </li>
+      </ul>
+      <div class="row project-picture-container">
+        <div class="col-xs-12 col-sm-6 picture-container">
+          <img class="project-picture" ng-src="{{myproject.picture}}" ng-click="displayPicture()">
+          <div class="magnifier" ng-click="displayPicture()">
+            <i class="fa fa-search"></i>
           </div>
-          <div class="col-xs-12 col-sm-6 project-desc-container">
-            <div class="github-link">
-              <i class="fa fa-github"></i>
-              <a href="{{myproject.projectRepo}}">{{myproject.projectRepo}}</a>
-            </div>
-            <div class="website-link">
-              <i class="fa fa-globe"></i>
-              <a href="{{myproject.projectWebsite}}" target="_blank">{{myproject.projectWebsite}}</a>
-            </div>
-            <h3 class="description-title">Description</h3>
-            <p class="project-subdescription">
-              {{myproject.longDesc}}
-            </p>
+        </div>
+        <div class="col-xs-12 col-sm-6 project-desc-container">
+          <div class="github-link">
+            <i class="fa fa-github"></i>
+            <a href="{{myproject.projectRepo}}">{{myproject.projectRepo}}</a>
           </div>
+          <div class="website-link">
+            <i class="fa fa-globe"></i>
+            <a href="{{myproject.projectWebsite}}" target="_blank">{{myproject.projectWebsite}}</a>
+          </div>
+          <h3 class="description-title">Description</h3>
+          <p class="project-subdescription">
+            {{myproject.longDesc}}
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- User Comment example *** START *** -->
-  <!-- <div class="row post user-comment-post" ng-repeat="comment in comments">
-    <div class="col-xs-12 post-top-info">
-      <div class="post-thumbnail user-pic">
-        <a href="" alt="" style="background-image:url(assets/pictures/users/royce.jpg)"></a>
-      </div>
-      <div class="post-top-details">
-        <div class="post-title user-name">
-          <a href="">{{comment.user}}</a>
-        </div>
-        <div class="post-subdetails">
-          <div class="subdetail time">
-            <i class="fa fa-clock-o"></i> {{comment.publishDate | date:'MMM d, y h:mm:ss'}}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 post-content">
-      <div class="project-comment">
-        <p>
-          {{comment.message}}
-        </p>
-      </div>
-    </div>
-  </div> -->
   <div class="row team-messages">
     <div class="col-xs-12">
       <h2 class="section-title">Comments</h2>
@@ -118,20 +90,15 @@
       </ul>
       <form ng-submit="messageSubmit()">
         <div class="input-group input-group-lg">
-        <input type="text" class="form-control" ng-model="text" aria-describedby="sizing-addon1">
+          <input type="text" class="form-control" ng-model="text" aria-describedby="sizing-addon1">
           <span class="input-group-btn" id="sizing-addon1">
             <button class="btn btn-primary" type="button" ng-click="messageSubmit()">Send</button>
           </span>
-          <!--<span class="input-group-addon" id="sizing-addon1">+</span>
-          <input type="text" ng-model="text" class="form-control" aria-describedby="sizing-addon1">-->
         </div>
       </form>
     </div>
   </div>
-  <!-- User Comment example *** END *** -->
-
 </div>
-<!-- </div> -->
 
 <div id="picture-modal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
@@ -152,29 +119,29 @@
       </div>
       <div class="modal-body">
         <form name="myForm" ng-submit="deleteProject()">
-            <input type="text" ng-model="userInput" class="form-control">
-            <button ng-disabled="userInput !== username" hidden>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-danger sign-small" ng-disabled="userInput !== username" ng-click="deleteProject()">Submit</button>
-        <button class="btn btn-default cancel-small" data-dismiss="modal">Cancel</button>
+          <input type="text" ng-model="userInput" class="form-control">
+          <button ng-disabled="userInput !== username" hidden>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger sign-small" ng-disabled="userInput !== username" ng-click="deleteProject()">Submit</button>
+          <button class="btn btn-default cancel-small" data-dismiss="modal">Cancel</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Edit Modal-->
+  <!-- Edit Modal-->
 
-<div id="editProjectModal" class="modal fade edit-project" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">To confirm delete, please enter your github username</h4>
-      </div>
-      <div class="modal-body">
-        <form name="myForm" ng-submit="deleteProject()">
+  <div id="editProjectModal" class="modal fade edit-project" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">To confirm delete, please enter your github username</h4>
+        </div>
+        <div class="modal-body">
+          <form name="myForm" ng-submit="deleteProject()">
             <label>Project Name</label>
             <input type="text" class="form-control" ng-model="projectInfo.name" required>
             <label>About the project:</label>
@@ -187,44 +154,20 @@
             <input type="url" class="form-control" ng-model="projectInfo.projectRepo" name="repo" required>
             <div role="alert">
               <span class="error" ng-show="myForm.repo.$error.url">
-                      Not valid url!</span>
-            </div>
-            <label>Project Website</label>
-            <input type="url" class="form-control" ng-model="projectInfo.projectWebsite" name="input" required>
-            <div role="alert">
-              <span class="error" ng-show="myForm.input.$error.url">
-                      Not valid url!</span>
-            </div>
-            <!-- <div class="tech-selection">
-              <div class="techs user-selection">
-                <h4>Technologies you used in this project</h4>
-                <ul>
-                  <li class="tech fadein-effect" ng-repeat="tech in yourTechList track by $index " data-tech="{{tech}}" ng-click="removeTech(tech, $index)">
-                    {{tech}} <i class="fa fa-times-circle"></i>
-                  </li>
-                </ul>
+                Not valid url!</span>
               </div>
+              <label>Project Website</label>
+              <input type="url" class="form-control" ng-model="projectInfo.projectWebsite" name="input" required>
+              <div role="alert">
+                <span class="error" ng-show="myForm.input.$error.url">
+                  Not valid url!</span>
+                </div>
+              </form>
             </div>
-            <div class="tech-selection">
-              <div class="techs propositions" ng-init="initialTech()">
-                <h4>Add additional technologies</h4>
-                <label class="search-form">Search:
-                  <input type="text" class="tech-search-input" ng-model="searchText">
-                </label>
-                <p ng-show="existed" class="error-addition"> Already added</p>
-                <ul>
-                  <li class="tech fadein-effect" ng-repeat="tech in techList | filter:searchText track by $index" data-tech="{{tech}}" ng-click="addTech(tech, $index)">
-                    {{tech}} <i class="fa fa-plus-circle"></i>
-                  </li>
-                </ul>
-              </div>
-            </div> -->
-        </form>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary sign-small" ng-click="deleteProject()">Submit</button>
+              <button class="btn btn-default cancel-small" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary sign-small" ng-click="deleteProject()">Submit</button>
-        <button class="btn btn-default cancel-small" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>

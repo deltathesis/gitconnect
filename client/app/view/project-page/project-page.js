@@ -24,6 +24,7 @@ angular.module('myApp.projectpage', ['ngRoute'])
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   var id = cookieObj.id;
+
   $scope.username = cookieObj.username;
   $scope.avatar = cookieObj.avatar;
   $scope.currentTime;
@@ -35,19 +36,21 @@ angular.module('myApp.projectpage', ['ngRoute'])
     $scope.myproject = getProject.project;
     console.log($scope.myproject);
     $scope.myproject.teams = getUsers.users;
-    //Check to see if current user is collaborator
 
+    //Check to see if current user is collaborator
     $scope.myproject.teams.forEach(function(user){
       if(user.username === $scope.username){
         $scope.collaborator = true
       }
     })
-    console.log($scope.collaborator)
+
     var techList = getLanguages.languages;
+
     socket.emit('initProject', {
       name: $scope.username,
       projectRoom: $scope.myproject.projectId
     });
+
     $scope.displayName = getOwnName();
     $scope.myproject.languages = [];
 
@@ -89,8 +92,6 @@ angular.module('myApp.projectpage', ['ngRoute'])
 
   /** Socket Listeners **/
 
- 
-
   // listen to initializer
   socket.on('initProject', function(data) {
     if(data[$scope.myproject.projectId]) {
@@ -121,13 +122,13 @@ angular.module('myApp.projectpage', ['ngRoute'])
         avatar: $scope.avatar
       })
 
-   
       $scope.messages.push({
         username: $scope.username,
         message: $scope.text,
         date: currentTime,
         avatar: $scope.avatar
       });
+      
       var roomObj = {};
       roomObj[$scope.myproject.projectId] = $scope.messages;
       socket.emit('store:projectData', angular.copy(roomObj));

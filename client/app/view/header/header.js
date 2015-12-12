@@ -72,11 +72,9 @@ angular.module('myApp.header', ['ui.bootstrap'])
 
   $scope.addCollaborator = function(user){
     if($scope.newProjectCollaborators.indexOf(user.username) === -1){
-      $scope.newProjectCollaborators.push(user.username)
+      $scope.newProjectCollaborators.push(user.username);
     }
-    $scope.collabForm = ''
-    // socket.emit('notify:otherUser', {username: user.username, subject: 'projectInvite'});
-    // socket.emit('store:projectInvite', {username: user.username});
+    $scope.collabForm = '';
   }
 
   $scope.removeCollaborator = function(index){
@@ -142,6 +140,4 @@ angular.module('myApp.header', ['ui.bootstrap'])
     $location.path('/collaboration-page/' + project.projectId);
   });
 
-}])
-
-;
+}]);

@@ -4,6 +4,4 @@ angular.module('myApp.footerDirective', [])
   return {
     templateUrl: 'view/footer/footer.html'
   };
-})
-
-;
+});

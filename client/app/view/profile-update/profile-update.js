@@ -18,7 +18,6 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   function($scope, $location, Cookie, $cookies, UserForm, getProfile, $window, userOwnTech, techList) {
 
   $scope.user = getProfile;
-  console.log(getProfile);
 
   // Get global tech/languages list
   $scope.techList = [];
@@ -95,7 +94,6 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
   $scope.formSubmit = function() {
     if ($scope.ownership && !$scope.error) {
-      // var userCity = $('#user-location').val();
       var userSelectedTech = $scope.user.languages;
       var userEmail = $scope.userEmail;
       var userBio = $scope.userBio;
@@ -108,7 +106,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
         cityId: $scope.cityId,
         cityName: $scope.cityName
       }
-      console.log(resultsLocation);
+
       // Get User techs list
       var resultsTech = userSelectedTech;
 
@@ -139,7 +137,6 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
       userOwnTech.setFullName(userFullName);
 
       // Redirection to the home page
-      // $window.location.reload();
       $location.path('/user/' + $scope.user.username);
     }
   };
@@ -159,7 +156,6 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
 
       $scope.cityId = place.place_id;
       $scope.cityName = place.name;
-      // $('#user-location').val(place.name);
     });
   }
 

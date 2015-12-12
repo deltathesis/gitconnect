@@ -1,8 +1,8 @@
 <div class="container page requests-page">
 
   <div class="col-xs-12 requests-form fadein-effect" ng-init="selected = 'requests'">
-      <button class="btn received" ng-class="{'active':selected === 'requests'}" ng-click="selected = 'requests'">Received Requests</button>
-      <button class="btn sent" ng-class="{'active':selected === 'demands'}" ng-click="selected = 'demands'">Sent Requests</button>
+    <button class="btn received" ng-class="{'active':selected === 'requests'}" ng-click="selected = 'requests'">Received Requests</button>
+    <button class="btn sent" ng-class="{'active':selected === 'demands'}" ng-click="selected = 'demands'">Sent Requests</button>
   </div>
 
   <!--RECIEVED REQUESTS-->
@@ -16,12 +16,10 @@
       <div class="user-subdetails">
         <a href="#/user/{{user.username}}" class="user-name">{{user.name}} ({{user.username}})</a>
         <div class="subdetail time truncate">
-          <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
           {{user.bio}}
         </div>
         <div class="subdetail ratings">
-         <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'requests')"></div>
-         <!--<div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>-->
+          <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'requests')"></div>
         </div>
       </div>
       <div class="action-button requests">
@@ -34,7 +32,7 @@
   <!--SENT REQUESTS-->
 
   <div class="row user-details-container fadein-effect" ng-show="selected === 'demands'">
-  <h2 class="col-xs-12 no-requests" ng-show="sentRequests.length === 0">You have no requests :(</h2>
+    <h2 class="col-xs-12 no-requests" ng-show="sentRequests.length === 0">You have no requests :(</h2>
     <div class="col-xs-12 user-details demands {{user.username}}" ng-repeat="user in sentRequests track by $index">
       <div class="post-thumbnail user-pic">
         <a href="#/user/{{user.username}}" alt="" style="background-image:url({{user.avatar_url}})"></a>
@@ -42,12 +40,10 @@
       <div class="user-subdetails">
         <a href="#/user/{{user.username}}" class="user-name">{{user.name}} ({{user.username}})</a>
         <div class="subdetail time truncate">
-          <!--<i class="fa fa-clock-o"></i> Request made on {{user.requestedDate | date:'mediumDate'}}-->
           {{user.bio}}
         </div>
         <div class="subdetail ratings">
-         <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'demands')"></div>
-         <!--<div id="stars-existing" class="stars" ng-init="ratings(4, $index, 'requests')"></div>-->
+          <div id="stars-existing" class="stars" ng-init="ratings(user.ratingTotal / user.ratings, $index, 'demands')"></div>
         </div>
       </div>
       <div class="action-button remove">
@@ -56,25 +52,24 @@
     </div>
   </div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="projectPageRedirect" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Start working together</h4>
-      </div>
-      <div class="modal-body">
-        <h3>Congratulations</h3>
-        <h4>We just created a page for your team to help you working on your new project</h4>
-        <h4>Your status has been set to unavailable, until to publish or delete your project</h4>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="projectRedirect(linktoProject)">Go to your project page now</button>
+  <!-- Modal -->
+  <div class="modal fade" id="projectPageRedirect" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Start working together</h4>
+        </div>
+        <div class="modal-body">
+          <h3>Congratulations</h3>
+          <h4>We just created a page for your team to help you working on your new project</h4>
+          <h4>Your status has been set to unavailable, until to publish or delete your project</h4>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="projectRedirect(linktoProject)">Go to your project page now</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 </div>

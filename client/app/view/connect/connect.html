@@ -17,7 +17,6 @@
   </div>
 
   <!--show div if user is unavailable -->
-
   <img class="loading-spinner" src="../assets/pictures/default.gif" alt="" ng-hide="!availability || users">
 
   <div class="availability-required" ng-show="!availability">
@@ -25,13 +24,11 @@
   </div>
 
   <!--show div if user is available but there are no matches -->
-
   <div class="no-matches" ng-show="availability && !positiveMatches">
     <h3>Sorry, no matches :(<br>Please try adjusting some filters or check back later.</h3>
   </div>
 
   <!-- Slider main container -->
-
   <div class="swiper-container" ng-show="availability && users.length">
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper">
@@ -141,5 +138,3 @@
       </div>
     </div>
   </div>
-
-

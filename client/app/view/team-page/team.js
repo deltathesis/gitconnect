@@ -44,6 +44,6 @@ angular.module('myApp.team', ['ngRoute'])
       picture: 'https://avatars3.githubusercontent.com/u/13246305',
       github: 'https://github.com/yusufmodan'
     }
-  ]
+  ];
 
 }]);

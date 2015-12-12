@@ -64,7 +64,6 @@ angular.module('myApp.collaboration-page', ['ngRoute', 'ui.bootstrap'])
   $scope.displayName = getOwnName();
 
   /** Socket Listeners **/
-
   socket.emit('initCollab', {
     name: $scope.username,
     collabRoom: $scope.projectInfo.projectId
@@ -146,13 +145,8 @@ angular.module('myApp.collaboration-page', ['ngRoute', 'ui.bootstrap'])
   };
 
 
-  // // Remove modal backdrop bug display
-  // $scope.removeModal = function() {
-  //   $('.modal-backdrop').remove();
-  // }
-
   /***********************MODALS to publish your project ***************************/
-
+  
   $scope.publish = function(size){
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,

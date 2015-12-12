@@ -18,7 +18,6 @@ angular.module('myApp.subscription', ['ngRoute'])
   function($scope, $location, Cookie, $cookies, UserForm, getProfile, userOwnTech, techList, $window) {
 
   $scope.user = getProfile;
-  // console.log(getProfile);
 
   // Check if page of the user
   $scope.ownership = false;
@@ -27,7 +26,6 @@ angular.module('myApp.subscription', ['ngRoute'])
     var cookie = $cookies.get('gitConnectDeltaKS');
     if(cookie){
       var cookieObj = Cookie.parseCookie(cookie);
-      // console.log(cookieObj.username,$scope.user.username);
       if (cookieObj.username === $scope.user.username) {
         $scope.ownership = true;
       }
@@ -72,12 +70,12 @@ angular.module('myApp.subscription', ['ngRoute'])
       $scope.techList.splice(index, 1);
       $scope.searchText = '';
     }
-  }
+  };
 
   $scope.removeTech = function(tech, index) {
     $scope.techList.push(tech); 
     $scope.user.languages.splice(index, 1);  
-  }
+  };
 
   $scope.formChecking = function() {
     if ($scope.cityId === undefined || $scope.userEmail === undefined || $scope.userBio === undefined || $scope.userFullName === undefined) {
@@ -85,11 +83,11 @@ angular.module('myApp.subscription', ['ngRoute'])
     } else {
       $scope.error = false;
     }
-  }
+  };
 
   $scope.formSubmit = function() {
     if ($scope.ownership && !$scope.error) {
-      // var userCity = $('#user-location').val();
+
       var userSelectedTech = $scope.user.languages;
       var userEmail = $scope.userEmail;
       var userBio = $scope.userBio;
@@ -101,7 +99,7 @@ angular.module('myApp.subscription', ['ngRoute'])
         cityId: $scope.cityId,
         cityName: $scope.cityName
       }
-      console.log(resultsLocation);
+
       // Get User techs list
       var resultsTech = userSelectedTech;
 
@@ -137,16 +135,15 @@ angular.module('myApp.subscription', ['ngRoute'])
 
   $scope.getUserName = function() {
     // Updated User FullName display
-    // console.log($scope.user.name);
-      if ($scope.user.name !== 'null') {
-        $scope.userFullName = $scope.user.name;
-      }
-  }
+    if ($scope.user.name !== 'null') {
+      $scope.userFullName = $scope.user.name;
+    }
+  };
 
   $scope.googleMapInit = function() {
     // google.maps.event.addDomListener(window, 'load', addressInitialize);
     addressInitialize();
-  }
+  };
 
   function addressInitialize() {
     var input = document.getElementById('user-location');
@@ -154,11 +151,9 @@ angular.module('myApp.subscription', ['ngRoute'])
     autocomplete.addListener('place_changed', function() {
       // Get city name only
       var place = autocomplete.getPlace();
-      console.log(place.name, place.place_id);
 
       $scope.cityId = place.place_id;
       $scope.cityName = place.name;
-      // $('#user-location').val(place.name);
     });
   }
 

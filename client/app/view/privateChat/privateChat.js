@@ -9,10 +9,11 @@ angular.module('myApp.privateChat', ['ngRoute', 'ui.bootstrap'])
 }])
 
 .controller('privateChatController', ['$scope', 'socket', '$cookies', 'Cookie', 'User', function($scope, socket, $cookies, Cookie, User) {
-  $scope.roomMessages; //key is roomName, value is another obj which has keys users and messages
-  $scope.name;                            //users is an array [selfUser, targetuser]
-  $scope.currentRoom;                     //messages is obj with props text, room, otheruser
+  $scope.roomMessages;        //key is roomName, value is another obj which has keys users and messages
+  $scope.name;                //users is an array [selfUser, targetuser]
+  $scope.currentRoom;         //messages is obj with props text, room, otheruser
   $scope.currentTarget = 'Message your Connections!';
+
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.username = cookieObj.username;
@@ -32,7 +33,6 @@ angular.module('myApp.privateChat', ['ngRoute', 'ui.bootstrap'])
   /** Socket Listeners **/
 
   //send username to sockets
-
   //initialze private messages you have
   socket.on('init', function (data) {
     $scope.name = data.name;
@@ -51,7 +51,7 @@ angular.module('myApp.privateChat', ['ngRoute', 'ui.bootstrap'])
         }
       }
     }
-    $scope.changeRoom(Object.keys(data.rooms)[0])
+    $scope.changeRoom(Object.keys(data.rooms)[0]);
     scrollToBottom();
   });
 
@@ -124,7 +124,7 @@ angular.module('myApp.privateChat', ['ngRoute', 'ui.bootstrap'])
     }
 
     if(!userExists) {
-      console.log('User not Found');
+      //console.log('User not Found');
       $scope.showModal = true;
       return;
     } else {
@@ -140,6 +140,7 @@ angular.module('myApp.privateChat', ['ngRoute', 'ui.bootstrap'])
       roomName : newRoom,
       users : twoUsers
     };
+    
     socket.emit('join:privateRoom', roomObj);
     //init new Room
     $scope.roomMessages[newRoom] = {};

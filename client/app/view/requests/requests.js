@@ -45,6 +45,7 @@ angular.module('myApp.requests', ['ngRoute'])
 
   $scope.ratings = function(ratings, index, type) {
     ratings = Math.round(ratings);
+
     // Ratings Module
     index = index + 2;
     $ratings = $('.user-details.' + type + ':nth-child(' + index + ') .stars');
@@ -68,19 +69,15 @@ angular.module('myApp.requests', ['ngRoute'])
       $('.requests.'+ username).slideUp();
       socket.emit('notify:otherUser', {username: username, subject: 'myConnections'});
       socket.emit('store:otherUser', {username: username});
-      // $scope.linktoProject = project.projectId;
-      // $('#projectPageRedirect').modal('show');
     });
 
   };
 
   $scope.deleteReceivedRequest = function(username) {
-    console.log('Delete Request');
     var usersObject = {
       userFirst: userUsername,
       userSecond: username
     };
-    console.log(usersObject)
     
     UserConnection.deleteRequest(usersObject).then(function() {
       $('.requests.'+ username).slideUp(); 
@@ -88,12 +85,10 @@ angular.module('myApp.requests', ['ngRoute'])
   };
 
   $scope.deleteSentRequest = function(username) {
-    console.log('Delete Request');
     var usersObject = {
       userFirst: userUsername,
       userSecond: username
     };
-    console.log(usersObject)
     
     UserConnection.deleteDemand(usersObject).then(function() {
       $('.demands.'+username).slideUp();

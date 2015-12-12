@@ -2,16 +2,16 @@
 
   <!-- List of Messages -->
   <div class="chat-users col-xs-12 col-sm-4">
-  <div class="search-container">
-    <form class="form-inline">
-      <div class="form-group">
-        <input type="text" class="form-control" id="User" placeholder="Search For User" ng-model="newUser" uib-typeahead="user as user.name for user in allUsers | filter:$viewValue | limitTo:5" typeahead-noresults="noResults" typeahead-on-select="createNewRoom($label)">
-      </div>
-      <button type="submit" class="btn btn-primary" ng-click="createNewRoom(newUser)"><i class="fa fa-search"></i>
-      </button>
-      <p ng-show="showModal" class="error" ng-click="showModal=false; createNewRoom(newUser)">User Not Found. Try Again</p>
-    </form>
-</div>
+    <div class="search-container">
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" id="User" placeholder="Search For User" ng-model="newUser" uib-typeahead="user as user.name for user in allUsers | filter:$viewValue | limitTo:5" typeahead-noresults="noResults" typeahead-on-select="createNewRoom($label)">
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="createNewRoom(newUser)"><i class="fa fa-search"></i>
+        </button>
+        <p ng-show="showModal" class="error" ng-click="showModal=false; createNewRoom(newUser)">User Not Found. Try Again</p>
+      </form>
+    </div>
     <ul class="allUsers-list" style="cursor:pointer;">
       <li ng-repeat="(key, value) in roomMessages"  class="allUsers-list-elm" ng-click="changeRoom(key)">
         <div class="listOverview cf">
@@ -49,10 +49,3 @@
     </div>
   </div>
 </div>
-      <!-- <form ng-submit="sendMessage()">
-        <input ng-model="message" class="ng-pristine ng-valid">
-        <input type="submit" value="Send">
-      </form> -->
-      <!-- <script src="/socket.io/socket.io.js"></script> -->
-      <!-- <script async src="bower_components/socket.io-client/socket.io.js"></script> -->
-

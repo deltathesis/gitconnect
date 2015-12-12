@@ -19,10 +19,11 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
 .controller('myProjectsList', [
   '$scope','getProfile', 'socket', 'Cookie', '$cookies', 'UserConnection', '$window', '$rootScope', '$location', '$timeout', 'Project',
   function($scope, getProfile, socket, Cookie, $cookies, UserConnection, $window, $rootScope, $location, $timeout, Project) {
-  console.log('how many times');
+
   var userInfos = getProfile;
   $scope.publishedProjects = [];
   $scope.inProgressProjects = [];
+
   if (userInfos.relationships.WORKED) {
     userInfos.relationships.WORKED.forEach(function(project){
       if(project.published === 'true'){
@@ -32,7 +33,6 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
       }
     });
   }
-  console.log($scope.inProgressProjects)
 
   // Get User username
   var cookie = $cookies.get('gitConnectDeltaKS');
@@ -48,6 +48,5 @@ angular.module('myApp.myProjectsList', ['ngRoute'])
         $('.demands.' + projectId).slideUp();
       });
   };
-
 
 }]);

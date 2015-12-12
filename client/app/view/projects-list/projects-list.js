@@ -37,7 +37,6 @@ angular.module('myApp.projectslist', ['ngRoute'])
   var id = Cookie.parseCookie($cookies.get('gitConnectDeltaKS')).id;
 
   $scope.increment = function(project, index){
-    console.log('increment')
     ProjectList.vote($scope.projects[index].id, id, true)
       .then(function(data) {
         if (data.success) {

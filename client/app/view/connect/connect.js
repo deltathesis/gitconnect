@@ -7,9 +7,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
     controller: 'connectCtrl',
     resolve: {
       //The view will not load until this promise is resolved.
-      // matches: ['User', function(User) {
-      //   return User.getMatches();
-      // }],
       getProfile: ['$route', 'User', 'Cookie', '$cookies', function($route, User, Cookie, $cookies) {
         var cookie = $cookies.get('gitConnectDeltaKS');
         var cookieObj = Cookie.parseCookie(cookie);
@@ -52,7 +49,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
       $scope.positiveMatches = true;
     }
   })
-
 
   $scope.selections = [];
 
@@ -116,13 +112,6 @@ angular.module('myApp.connect', ['ngRoute', 'ui.bootstrap'])
   });
 
   /* Taking this out until we can figure out how to make it work */
-
-  // socket.on('notify:potentialFriendSuccess', function(){
-  //   return $timeout(function(){
-  //     $scope.users.splice($scope.selectedUserIndex, 1)
-  //     $scope.swiper.removeSlide($scope.selectedUserIndex)
-  //   },1500)
-  // })
   socket.on('waitForFirebase',function(){
     socket.emit('notify:otherUser', {username: angular.copy($scope.selectedUser.username), subject: 'friendRequest'});
   })

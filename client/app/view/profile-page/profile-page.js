@@ -42,30 +42,20 @@ angular.module('myApp.profilepage', ['ngRoute'])
   '$scope', '$compile', 'getProfile', 'Cookie', '$cookies', 'availabilityToggle', '$window', 'userOwnTech', '$http', '$rootScope', 'socket', '$location', 'User',
   function($scope, $compile, getProfile, Cookie, $cookies, availabilityToggle, $window, userOwnTech, $http, $rootScope, socket, $location, User) {
 
-  // var user = {
-  //   ratings: Math.round(4.2),
-  //   projects: [
-  //     {name:'Ballr', id:'123'},
-  //     {name:'GitConnect', id:'987'},
-  //     {name:'Foodly', id:'567'},
-  //     {name:'InstaCutz', id:'0987'},
-  //     {name:'Humus', id:'12883'}
-  //   ],
-  // }
   var cookie = $cookies.get('gitConnectDeltaKS');
   var cookieObj = Cookie.parseCookie(cookie);
   $scope.ratingBool = 0;
+
   User.getProfileAndRelations(cookieObj.username).then(function(data) {
     $scope.cookieUser = data;
   })
+
   $scope.init = function() {  
       $scope.user = getProfile;
-      // var rating = Math.ceil($scope.user.ratingTotal / $scope.user.ratings);
-      // var ratingArray = [];
-      // for(var i = 0; i < rating; i++) ratingArray.push(i);
-      // $scope.user.ratings = ratingArray;
+
       $scope.averageRatings =$scope.user.ratingTotal / $scope.user.ratings;
       $scope.averageRatings = Math.round($scope.averageRatings * 10) / 10;
+
       // Updated User Tech list display
       var techList = userOwnTech.getTech();
       if (techList.length !== 0) {
@@ -121,14 +111,12 @@ angular.module('myApp.profilepage', ['ngRoute'])
           }
         });
       }
-      // $scope.hasProjects = ($scope.user.projects === undefined) ? false:true;
   }
 
   
   $scope.redirect = function(id) {
     $location.path('/project/' + id);
   }
-
 
   // Check if page of the user
   $scope.ownership = false;
@@ -242,7 +230,6 @@ angular.module('myApp.profilepage', ['ngRoute'])
       .then(function() {
         $('.stars').append('<p class="rate-success" style="size:5">\tRating sent!</p>');
         $scope.rated = true;
-        //$('.rate-success').fadeOut(1000);
       })
       .catch(function(err) {
         console.log(err);

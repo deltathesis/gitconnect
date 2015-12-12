@@ -77,7 +77,6 @@ angular.module('myApp.myConnections', ['ngRoute'])
     }
   };
 
-
   $scope.removeConnection = function (user) {
     User.removeConnection($scope.user.id, user.id)
       .then(function() {
@@ -101,6 +100,5 @@ angular.module('myApp.myConnections', ['ngRoute'])
       }
     })
   }
-
 
 }]);

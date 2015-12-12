@@ -38,13 +38,10 @@ angular.module('myApp.collaboration-page')
   })
 
   $scope.ok = function(){
-    console.log('ok')
     // pass change published property to true, add published date and pass in list of languages used to previous controller to relate project node to those technologies
     var date = new Date();
     $scope.projectInfo.published = 'true';
     $scope.projectInfo.publishDate = date.getTime();
-
-
 
     var obj = {}
     obj.updatedProjectInfo = $scope.projectInfo;
@@ -64,8 +61,6 @@ angular.module('myApp.collaboration-page')
     if($scope.profilePic.size < 5242880){
       $uibModalInstance.close(obj);
     }
-
-
   }
 
   $scope.cancel = function(){
@@ -91,7 +86,6 @@ angular.module('myApp.collaboration-page')
   $scope.projectInfo = project;
   $scope.userInput = '';
   $scope.username = username;
-
 
   $scope.ok = function(){
     $uibModalInstance.close($scope.projectInfo);

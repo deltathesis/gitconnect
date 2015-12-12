@@ -8,20 +8,11 @@
       <div class="user-subdetails">
         <a href="#/user/{{user.username}}" class="user-name">{{ user.name }} ({{user.username}})</a>
         <div class="subdetail time">
-          <!-- 
-            Right now we don't record when the user is created. We can save this feature for a later date.
-            <i class="fa fa-clock-o"></i> Member since {{user.memberDate | date:'mediumDate'}}
-          -->
           {{ user.location }}
         </div>
         <div class="subdetail ratings" ng-show="!ratingBool">
           <span id="stars-existing" class="stars"></span>
-          <!--<button type="button" class="btn btn-default" ng-click="toggleRate()" ng-show="!ownership">Rate</button> -->
         </div>
-
-        <!--<div class="rating savingrating" ng-show="ratingBool">
-          <span ng-repeat="value in [5,4,3,2,1]" ng-click="rate(value); clicked=true;" ng-mouseover="clicked=false" ng-class="{rated: clicked}">☆</span>
-        </div>-->
       </div>
       <a href="#/profile-update/{{user.username}}" class="update-profile" ng-show='ownership'>
         <i class="fa fa-cog"></i> Update your profile
@@ -44,11 +35,6 @@
         <div id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round"></div>
         <label for="cmn-toggle-1">On</label>
       </div>
-
-      <!-- <h5>Your current status</h5>
-      <p ng-class="{'turn-on': availability, 'turn-off': !availability}"><i class="fa fa-circle"></i> {{availabilityStatus}}</p>
-      <button ng-show="!availability" class="btn turn-on" ng-click="availabilityOn()">Set as available</button>
-      <button ng-show="availability" class="btn turn-off" ng-click="availabilityOff()">Set as unavailable</button> -->
 
     </div>
     <div class="col-xs-12 col-sm-4 user-status interact" ng-init="statusCheck()" ng-show="!ownership">
@@ -85,7 +71,6 @@
      </div>
    </div>
    <!-- end of trigger modal for Message Sending -->
-
  </div>
 
  <div class="row user-bio-container user-profile-block">
@@ -113,6 +98,7 @@
         </li>
       </ul>
     </div>
+
   </div>
 </div>
 
@@ -129,72 +115,32 @@
         </li>
       </ul>
     </div>
+
   </div>
 </div>
 
 <div class="row user-recents-container user-profile-block">
   <div class="recents-details details-container">
-    <h3 class="col-xs-12">Recent activities</h3>
-
-      <!-- 
-      <div class="col-xs-12 recent participation">
-        <div class="time">
-          <i class="fa fa-clock-o"></i> 1 hour ago
-        </div>
-        <p class="subtitle">{{user.name}} participate a new project</p>
-      </div>
-
-      <div class="col-xs-12 recent project">
-        <div class="time">
-          <i class="fa fa-clock-o"></i> 2 hours ago
-        </div>
-        <p class="subtitle">{{user.name}} posted a new project: <a href="">Foodly</a></p>
-        <div class="row project-post">
-          <div class="col-xs-12 col-sm-5 picture-container">
-            <a href="" class="project-picture" style="background-image:url('assets/pictures/projects/koti.jpg')"></a>
-          </div>
-          <div class="col-xs-12 col-sm-7 project-desc-container">
-            <p class="project-subdescription">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat.<br>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xs-12 recent comments">
-        <div class="time">
-          <i class="fa fa-clock-o"></i> 3 hours ago
-        </div>
-        <p class="subtitle">{{user.name}} add a comment to the project <a href="">Foodly</a></p>
-        <p class="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-        </div>-->
-
-
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Delete Profile</h4>
-          </div>
-          <div class="modal-body">
-            {{user.username}},<br>are you sure you want to delete your profile?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" ng-click="deleteProfile()">Delete</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <!-- <h3 class="col-xs-12">Recent activities</h3> -->
   </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Delete Profile</h4>
+      </div>
+      <div class="modal-body">
+        {{user.username}},<br>are you sure you want to delete your profile?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" ng-click="deleteProfile()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+

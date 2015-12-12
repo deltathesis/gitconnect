@@ -6,31 +6,31 @@
         <div class="form-group">
             <div class="input-group resource">
                 <span class="input-group-addon resource-label" id="basic-addon1">Project Title</span>
-                <input name="projectTitle" type="text" class="form-control resource-input" ng-model="projectInfo.name" aria-describedby="basic-addon1">
+                <input name="projectTitle" type="text" class="form-control resource-input resource-title" ng-model="projectInfo.name" aria-describedby="basic-addon1">
             </div>
             <div class="input-group resource">
                 <span class="input-group-addon resource-label" id="basic-addon1">Project Repo</span>
-                <input name="repo" type="text" class="form-control resource-input" ng-model="projectInfo.projectRepo" aria-describedby="basic-addon1">
+                <input name="repo" type="text" class="form-control resource-input resource-repo" ng-model="projectInfo.projectRepo" aria-describedby="basic-addon1">
             </div>
             <div class="input-group resource">
                 <span class="input-group-addon resource-label" id="basic-addon1">Code Library</span>
-                <input name="codeSnippet" type="text" class="form-control resource-input" ng-model="projectInfo.projectSnippet" aria-describedby="basic-addon1">
+                <input name="codeSnippet" type="text" class="form-control resource-input resource-library" ng-model="projectInfo.projectSnippet" aria-describedby="basic-addon1">
             </div>
             <div class="input-group resource">
                 <span class="input-group-addon resource-label" id="basic-addon1">Cloud Storage</span>
-                <input name="cloudStorage" type="text" class="form-control resource-input" ng-model="projectInfo.cloudStorage" aria-describedby="basic-addon1">
+                <input name="cloudStorage" type="text" class="form-control resource-input resource-storage" ng-model="projectInfo.cloudStorage" aria-describedby="basic-addon1">
             </div>
             <div class="input-group resource">
                 <span class="input-group-addon resource-label" id="basic-addon1">Scrum Board</span>
-                <input name="scrumBoard" type="text" class="form-control resource-input" ng-model="projectInfo.scrumBoard" aria-describedby="basic-addon1">
+                <input name="scrumBoard" type="text" class="form-control resource-input resource-board" ng-model="projectInfo.scrumBoard" aria-describedby="basic-addon1">
             </div>
             <div class="input-group resource">
                 <span class="input-group-addon resource-label" id="basic-addon1">Project Website</span>
-                <input name="projectWebsite" type="text" class="form-control resource-input" ng-model="projectInfo.projectWebsite" aria-describedby="basic-addon1">
+                <input name="projectWebsite" type="text" class="form-control resource-input resource-website" ng-model="projectInfo.projectWebsite" aria-describedby="basic-addon1">
             </div>
             <div class="input-group resource">
                 <span class="input-group-addon resource-label" id="basic-addon1">Database</span>
-                <input name="database" type="text" class="form-control resource-input" ng-model="projectInfo.database" aria-describedby="basic-addon1">
+                <input name="database" type="text" class="form-control resource-input resource-database" ng-model="projectInfo.database" aria-describedby="basic-addon1">
             </div>
             <div role="alert">
               <span class="error" ng-show="myForm.projectRepo.$error.url">
@@ -40,6 +40,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-default cancel-small" ng-click="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-primary sign-small" ng-click="ok()">Submit</button>
+        <button type="submit" class="btn btn-primary sign-small resource-submit" ng-click="ok()">Submit</button>
     </div>
 </form>

@@ -6,7 +6,7 @@
         <button type="button" class="btn btn-danger project-actions" ng-click="confirmDelete()">
           <i class="fa fa-ban"></i> Delete your Project
         </button>
-        <button ng-click="publish('lg')" class='btn btn-primary project-actions'>Publish</button>
+        <button ng-click="publish('lg')" class='btn btn-primary project-actions publish-action'>Publish</button>
         <button type="button" class="edit btn btn-default project-actions" ng-click="editResources()">
           <i class="fa fa-pencil"></i> Edit</button>
       </div>
@@ -89,9 +89,9 @@
       </ul>
       <form ng-submit="messageSubmit()">
         <div class="input-group input-group-lg">
-        <input type="text" class="form-control" ng-model="text" aria-describedby="sizing-addon1">
+        <input type="text" class="form-control collaboration-text-input" ng-model="text" aria-describedby="sizing-addon1">
           <span class="input-group-btn" id="sizing-addon1">
-            <button class="btn btn-primary" type="button" ng-click="messageSubmit()">Send</button>
+            <button class="btn btn-primary message-send" type="button" ng-click="messageSubmit()">Send</button>
           </span>
         </div>
       </form>

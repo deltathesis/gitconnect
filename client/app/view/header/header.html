@@ -16,48 +16,47 @@
       <div class="collapse navbar-collapse links-menu" id="bs-example-navbar-collapse-1" ng-controller='AuthController'>
         <ul class="nav navbar-nav navbar-left" bs-active-link ng-hide="location.path().startsWith('/subscription')">
           <li ng-show='!user'><a href="#/welcome" title="Welcome" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-welcome">Welcome</a></li>
-          <li ng-show='user' class="active"><a href="#/" title="Home page" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-home">News <span class="sr-only">(current)</span></a></li>
+          <li ng-show='user' class="active"><a href="#/" title="Home page" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-news">News <span class="sr-only">(current)</span></a></li>
           <li ng-show='user'><a href="#/connect" title="Connect" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-connect">Connect</a></li>
-          <!--<li ng-show='user'><a href="#/user/{{user.githubUserName}}" class="link-profile">Profile</a></li>-->
 
           <li class="dropdown header-dropdown" ng-show='user'>
-            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+            <a href="" class="dropdown-toggle link-projects-container" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
             <span ng-class="projectInvite ? 'notify': 'nothing'" ng-show="projectInvite"><i class="fa fa-circle"></i></span>
             <ul class="dropdown-menu">
              <li>
-               <a href="#/projects" title="Projects list" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-projects">Community Projects</a>
+               <a href="#/projects" title="Projects list" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-community-projects">Community Projects</a>
              </li>
 
              <li role="separator" class="divider"></li>
 
              <li ng-show="user" class="my-projects">
-              <a ng-click="clearProjectInviteNotification()" href="#/my-projects" title="My projects" data-toggle="collapse" data-target=".navbar-collapse.in">My Projects</a>
+              <a ng-click="clearProjectInviteNotification()" href="#/my-projects" title="My projects" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-my-projects">My Projects</a>
               <span ng-class="projectInvite ? 'notify': 'nothing'" ng-show="projectInvite"><i class="fa fa-circle"></i></span>
             </li>
 
             <li role="separator" class="divider"></li>
 
             <li class="requests" ng-click="openProjectCreateModal()">
-              <a href="" title="Add a project" data-toggle="collapse" data-target=".navbar-collapse.in">
+              <a href="" title="Add a project" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-add-a-project">
                 <i class="fa fa-plus"></i> Add a new project
               </a>
             </li>
           </ul>
         </li>
           
-        <li class="dropdown header-dropdown" ng-show='user'>
+        <li class="dropdown header-dropdown link-connections-container" ng-show='user'>
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Connections <span class="caret"></span></a>
           <span ng-class="cashew ? 'notify': 'nothing'" ng-show="cashew"><i class="fa fa-circle"></i></span>
           <ul class="dropdown-menu">
             <li class="my-connections-tab">
-              <a ng-click="clearConnectionNotification()" href="#/my-connections" title="My connections" data-toggle="collapse" data-target=".navbar-collapse.in">My Connections</a>
+              <a ng-click="clearConnectionNotification()" href="#/my-connections" title="My connections" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-my-connections">My Connections</a>
               <span ng-class="cashew ? 'notify': 'nothing'" ng-show="cashew"><i class="fa fa-circle"></i></span>
             </li>
 
             <li role="separator" class="divider"></li>
 
             <li ng-class="friendRequests ? 'notifications' : 'nothing'" class="requests" data-message={{friendRequests}} ng-click="clearFriendRequestNotifications()">
-              <a href="#/requests" title="Requests" data-toggle="collapse" data-target=".navbar-collapse.in">
+              <a href="#/requests" title="Requests" data-toggle="collapse" data-target=".navbar-collapse.in" class="link-pending-requests">
                 Pending Requests
                 <span ng-show="friendRequests" class="badge">{{friendRequests}}</span>
               </a>
@@ -108,6 +107,7 @@
           <h4 class="modal-title" id="myModalLabel">New Project Setup</h4>
         </div>
         <div class="modal-body">
+        <form ng-submit="createProject()">
           <h4>Add Collaborators</h4>
           <input ng-model="collabForm" type="text" ng-model="selected" uib-typeahead="user as user.name for user in connections | filter:$viewValue | limitTo:8" class="form-control" typeahead-no-results="noResults" typeahead-on-select="addCollaborator($item, $model, $label)">
           <ul class="collaborators-list">
@@ -116,13 +116,13 @@
             </li>
           </ul>
           <h4>Project Name</h4>
-          <form ng-submit="createProject()">
-            <input type="text" class="form-control" ng-model="projectName">
+          
+            <input class="input-add-project-name form-control" type="text" ng-model="projectName">
             <input type="submit" hidden>
           </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" ng-click="createProject()">Go to your project page now</button>
+          <button class="btn btn-primary project-add-submit" ng-click="createProject()">Go to your project page now</button>
         </div>
       </div>
     </div>

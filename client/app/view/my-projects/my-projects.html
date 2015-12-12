@@ -12,7 +12,7 @@
         <a href="#/project/{{project.projectId}}" alt="" style="background-image:url({{project.picture}})"></a>
       </div>
       <div class="user-subdetails">
-        <a href="#/project/{{project.projectId}}" class="user-name">{{project.name}}</a>
+        <a href="#/project/{{project.projectId}}" class="user-name" data-project-name="{{project.name}}">{{project.name}}</a>
         <div class="subdetail time">
           <i class="fa fa-clock-o"></i> Published On - {{project.creationDate | date:'mediumDate'}}
         </div>

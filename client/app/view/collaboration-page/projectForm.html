@@ -9,27 +9,27 @@
       <label>Project Name</label>
       <input type="text" class="form-control" ng-model="projectInfo.name" required>
       <label>About the project:</label>
-      <textarea type="text" rows="5" class="form-control" ng-model="projectInfo.longDesc" required></textarea>
+      <textarea type="text" rows="5" class="form-control input-about" ng-model="projectInfo.longDesc" required></textarea>
       <label>Short decription of the project</label>
-      <input ng-model="projectInfo.shortDesc" type="text" name="shortDesc" class="form-control" ng-maxlength="144">
+      <input ng-model="projectInfo.shortDesc" type="text" name="shortDesc" class="form-control input-short-desc" ng-maxlength="144">
       <div role="alert">
         <span class="error" ng-show="myForm.shortDesc.$error.maxlength">
                 Please do not exceed 144 characters!</span>
       </div>
       <label>Project picture</label>
-      <input type="file" id="file_input" fileread="profilePic" class="form-control" required>
+      <input type="file" id="file_input" fileread="profilePic" class="form-control input-file" required>
       <div role="alert">
         <span class="error" ng-show="profilePic.size > 5242880">
                 please upload a pic smaller than 5mb!</span>
       </div>
       <label>Project repo link</label>
-      <input type="url" class="form-control" ng-model="projectInfo.projectRepo" name="repo" required>
+      <input type="url" class="form-control input-repo" ng-model="projectInfo.projectRepo" name="repo" required>
       <div role="alert">
         <span class="error" ng-show="myForm.repo.$error.url">
                 Not valid url!</span>
       </div>
       <label>Project Website</label>
-      <input type="url" class="form-control" ng-model="projectInfo.projectWebsite" name="input" required>
+      <input type="url" class="form-control input-website" ng-model="projectInfo.projectWebsite" name="input" required>
       <div role="alert">
         <span class="error" ng-show="myForm.input.$error.url">
                 Not valid url!</span>
@@ -63,6 +63,6 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-default cancel-small" ng-click="cancel()">Cancel</button>
-    <button type="submit" class="btn btn-primary sign-small" ng-click="ok()">Submit</button>
+    <button type="submit" class="btn btn-primary sign-small project-publish-submit" ng-click="ok()">Submit</button>
   </div>
 </form>

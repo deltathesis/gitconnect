@@ -56,7 +56,7 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   $scope.cityName;
 
   $scope.error = false;
-
+  $scope.cityIdGoogleError = false;
 
   // Remove user existing tech
   $scope.initialTech = function() {
@@ -85,15 +85,20 @@ angular.module('myApp.profileUpdate', ['ngRoute'])
   };
 
   $scope.formChecking = function() {
-    if ($scope.cityId === undefined || $scope.userEmail === undefined || $scope.userBio === undefined || $scope.userFullName === undefined) {
+    if ( $scope.cityId === undefined ) {
+      $scope.cityIdGoogleError = true;
+      $scope.error = false;
+    } else if ( $scope.userEmail === undefined || $scope.userBio === undefined || $scope.userFullName === undefined ) {
       $scope.error = true;
+      $scope.cityIdGoogleError = false;
     } else {
       $scope.error = false;
+      $scope.cityIdGoogleError = false;
     }
   }
 
   $scope.formSubmit = function() {
-    if ($scope.ownership && !$scope.error) {
+    if ($scope.ownership && !$scope.error && !$scope.cityIdGoogleError) {
       var userSelectedTech = $scope.user.languages;
       var userEmail = $scope.userEmail;
       var userBio = $scope.userBio;

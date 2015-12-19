@@ -93,6 +93,12 @@ user.updateForm = function(req, res) {
 
   .then(function(){
 
+    return User.deleteAllRelationships(req.body.data.resultsLocation.username, 'Lives')
+
+  })
+
+  .then(function(){
+
     // Get User Node
     return User.get({username: req.body.data.userInfos.username})
 

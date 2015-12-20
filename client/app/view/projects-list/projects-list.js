@@ -20,8 +20,16 @@ angular.module('myApp.projectslist', ['ngRoute'])
 
   socket.emit('initListComments');
 
-  $scope.tab = 'newest';
+  $scope.tab = 'overall';
   $scope.projects = projects;
+  $scope.newWeeklyProjects = false;
+
+  // Check if there is any new project posted this past week
+  projects.forEach(function(project, index){
+    if (new Date().getTime() - project.publishDate <= 604800000 ) {
+      $scope.newWeeklyProjects = true;
+    }
+  });
 
   socket.on('initListComments', function(data) {
     var comments = data.comment;

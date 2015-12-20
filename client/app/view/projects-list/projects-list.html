@@ -16,8 +16,8 @@
   </div>
 
   <div class="projects-list">
-
-    <div class="project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:(tab === 'weekly' || tab === 'newest') | filter:searchText | orderBy:orderByFn()" ng-click="projectPageRedirect(project.projectId)">
+    <p class="no-weekly-project" ng-show="!newWeeklyProjects && (tab === 'weekly' || tab === 'newest')">No new projects posted this week</p>
+    <div class="project-post fadein-effect" ng-repeat="project in projects | weeklyFilter:(tab === 'weekly' || tab === 'newest') | filter:searchText | orderBy:orderByFn()" ng-click="projectPageRedirect(project.projectId)">  
       <div class="top-container-post">
         <div class="vote-block" ng-click="$event.stopPropagation(); increment(project, projects.indexOf(project))">
           <span class="project-vote-button">

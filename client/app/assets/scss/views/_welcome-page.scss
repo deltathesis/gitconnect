@@ -2,8 +2,14 @@
   .section {
     padding-top: 100px;
     padding-bottom: 100px;
-    .inner-section {
+    
+    &.video {
+      .inner-video {
+        text-align: center;
+        max-width: 560px;
+      }
     }
+
     &.second, &.fourth {
       background-color: #333333;
     }

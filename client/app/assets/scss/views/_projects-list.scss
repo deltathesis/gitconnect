@@ -31,6 +31,10 @@
 
   .projects-list {
     overflow: hidden;
+    .no-weekly-project {
+      text-align: center;
+      margin-top: 20px;
+    }
     .project-post {
       position: relative;
       display:block;

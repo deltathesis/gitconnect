@@ -1,5 +1,6 @@
 # GitConnect ![](https://travis-ci.org/deltathesis/gitconnect.svg?branch=dev)
-[GitConnect Website](http://gitconnect.me)  
+[gitconnect.me](http://gitconnect.me)  
+[Check out our video here!](https://youtu.be/4qzaoea5gS0) 
 
 GitConnect is a social application designed to help you meet new developers in your area. 
 Our matching algorithm uses your GitHub account to find other people with similar interests,

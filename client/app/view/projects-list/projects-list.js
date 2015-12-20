@@ -20,7 +20,7 @@ angular.module('myApp.projectslist', ['ngRoute'])
 
   socket.emit('initListComments');
 
-  $scope.tab = 'newest';
+  $scope.tab = 'overall';
   $scope.projects = projects;
 
   socket.on('initListComments', function(data) {
